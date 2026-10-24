@@ -16,6 +16,7 @@ from collections import defaultdict, deque
 
 import httpx
 
+from ..envfile import load_dotenv
 from ..extract.ocr import read_text
 from ..extract.qr import decode_qr
 from ..ops import metrics
@@ -290,6 +291,7 @@ def offset_file():
 
 
 def run() -> None:
+    load_dotenv()
     token = os.environ.get("TELEGRAM_BOT_TOKEN", "")
     if not token:
         raise SystemExit("Set TELEGRAM_BOT_TOKEN (create a bot with @BotFather).")

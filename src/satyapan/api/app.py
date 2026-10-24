@@ -12,21 +12,10 @@ from pathlib import Path
 from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
 
+from ..envfile import load_dotenv
 from ..plugins import REGISTRY, include_ext_routers, load_plugins
 from . import routes_check, routes_pages, routes_review
 from .web import DEVICE_COOKIE, WEB
-
-
-def _load_dotenv() -> None:
-    """Read KEY=value lines from ./.env (git-ignored) without overriding real environment variables. Skipped under pytest."""
-    f = Path(".env")
-    if "PYTEST_CURRENT_TEST" in os.environ or not f.is_file():
-        return
-    for line in f.read_text(encoding="utf-8").splitlines():
-        line = line.strip()
-        if line and not line.startswith("#") and "=" in line:
-            k, v = line.split("=", 1)
-            os.environ.setdefault(k.strip(), v.strip().strip('"').strip("'"))
 
 
 def _warm_up() -> None:
@@ -59,7 +48,7 @@ def _warm_up() -> None:
 
 
 def create_app() -> FastAPI:
-    _load_dotenv()
+    load_dotenv()
     app = FastAPI(title="Satyapan", version="0.3.0")
     load_plugins()
 
