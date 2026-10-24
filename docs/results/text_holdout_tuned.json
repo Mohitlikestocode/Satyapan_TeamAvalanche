@@ -1,0 +1,781 @@
+{
+ "schema": 1,
+ "dataset": "data/kit/holdout_traction.jsonl",
+ "split": "80 messages",
+ "held_out": false,
+ "hardware": "CPU: Intel64 Family 6 Model 183 Stepping 1, GenuineIntel (Windows)",
+ "date": "2026-10-24 17:31 UTC",
+ "elapsed_s": 0.66,
+ "reproduce": "python -m satyapan.eval.report",
+ "rows": [
+  {
+   "name": "Rules only (baseline)",
+   "baseline": true,
+   "tpr": {
+    "k": 32,
+    "n": 40,
+    "rate": 0.8,
+    "lo": 0.6524239261814333,
+    "hi": 0.8950013502683314
+   },
+   "fpr": {
+    "k": 0,
+    "n": 40,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.08762453925039232
+   }
+  },
+  {
+   "name": "Whole system as deployed",
+   "baseline": false,
+   "tpr": {
+    "k": 36,
+    "n": 40,
+    "rate": 0.9,
+    "lo": 0.7694792561952611,
+    "hi": 0.9604211124044252
+   },
+   "fpr": {
+    "k": 0,
+    "n": 40,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.08762453925039232
+   }
+  },
+  {
+   "name": "Whole system: HIGH RISK only",
+   "baseline": false,
+   "tpr": {
+    "k": 4,
+    "n": 40,
+    "rate": 0.1,
+    "lo": 0.03957888759557486,
+    "hi": 0.23052074380473897
+   },
+   "fpr": {
+    "k": 0,
+    "n": 40,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.08762453925039232
+   }
+  }
+ ],
+ "conditions": [
+  {
+   "name": "family:account_takeover",
+   "row": "Whole system as deployed",
+   "tpr": {
+    "k": 1,
+    "n": 1,
+    "rate": 1.0,
+    "lo": 0.20654329147389294,
+    "hi": 1.0
+   },
+   "fpr": null
+  },
+  {
+   "name": "family:appointment",
+   "row": "Whole system as deployed",
+   "tpr": null,
+   "fpr": {
+    "k": 0,
+    "n": 1,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.7934567085261071
+   }
+  },
+  {
+   "name": "family:bank_alert",
+   "row": "Whole system as deployed",
+   "tpr": null,
+   "fpr": {
+    "k": 0,
+    "n": 4,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.48990002040399916
+   }
+  },
+  {
+   "name": "family:card_block",
+   "row": "Whole system as deployed",
+   "tpr": {
+    "k": 1,
+    "n": 1,
+    "rate": 1.0,
+    "lo": 0.20654329147389294,
+    "hi": 1.0
+   },
+   "fpr": null
+  },
+  {
+   "name": "family:changed_account",
+   "row": "Whole system as deployed",
+   "tpr": {
+    "k": 1,
+    "n": 1,
+    "rate": 1.0,
+    "lo": 0.20654329147389294,
+    "hi": 1.0
+   },
+   "fpr": null
+  },
+  {
+   "name": "family:collect_request",
+   "row": "Whole system as deployed",
+   "tpr": {
+    "k": 1,
+    "n": 1,
+    "rate": 1.0,
+    "lo": 0.20654329147389294,
+    "hi": 1.0
+   },
+   "fpr": null
+  },
+  {
+   "name": "family:crypto",
+   "row": "Whole system as deployed",
+   "tpr": {
+    "k": 1,
+    "n": 1,
+    "rate": 1.0,
+    "lo": 0.20654329147389294,
+    "hi": 1.0
+   },
+   "fpr": null
+  },
+  {
+   "name": "family:delivery",
+   "row": "Whole system as deployed",
+   "tpr": null,
+   "fpr": {
+    "k": 0,
+    "n": 4,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.48990002040399916
+   }
+  },
+  {
+   "name": "family:digital_arrest",
+   "row": "Whole system as deployed",
+   "tpr": {
+    "k": 1,
+    "n": 1,
+    "rate": 1.0,
+    "lo": 0.20654329147389294,
+    "hi": 1.0
+   },
+   "fpr": null
+  },
+  {
+   "name": "family:electricity",
+   "row": "Whole system as deployed",
+   "tpr": {
+    "k": 2,
+    "n": 3,
+    "rate": 0.6666666666666666,
+    "lo": 0.2076549551264879,
+    "hi": 0.9385096847238394
+   },
+   "fpr": null
+  },
+  {
+   "name": "family:family",
+   "row": "Whole system as deployed",
+   "tpr": null,
+   "fpr": {
+    "k": 0,
+    "n": 1,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.7934567085261071
+   }
+  },
+  {
+   "name": "family:family_emergency",
+   "row": "Whole system as deployed",
+   "tpr": {
+    "k": 2,
+    "n": 2,
+    "rate": 1.0,
+    "lo": 0.34237195288961925,
+    "hi": 1.0
+   },
+   "fpr": null
+  },
+  {
+   "name": "family:gift_parcel",
+   "row": "Whole system as deployed",
+   "tpr": {
+    "k": 1,
+    "n": 1,
+    "rate": 1.0,
+    "lo": 0.20654329147389294,
+    "hi": 1.0
+   },
+   "fpr": null
+  },
+  {
+   "name": "family:govt",
+   "row": "Whole system as deployed",
+   "tpr": null,
+   "fpr": {
+    "k": 0,
+    "n": 1,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.7934567085261071
+   }
+  },
+  {
+   "name": "family:insurance",
+   "row": "Whole system as deployed",
+   "tpr": null,
+   "fpr": {
+    "k": 0,
+    "n": 1,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.7934567085261071
+   }
+  },
+  {
+   "name": "family:investment",
+   "row": "Whole system as deployed",
+   "tpr": {
+    "k": 2,
+    "n": 2,
+    "rate": 1.0,
+    "lo": 0.34237195288961925,
+    "hi": 1.0
+   },
+   "fpr": {
+    "k": 0,
+    "n": 1,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.7934567085261071
+   }
+  },
+  {
+   "name": "family:job",
+   "row": "Whole system as deployed",
+   "tpr": null,
+   "fpr": {
+    "k": 0,
+    "n": 1,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.7934567085261071
+   }
+  },
+  {
+   "name": "family:job_fee",
+   "row": "Whole system as deployed",
+   "tpr": {
+    "k": 2,
+    "n": 2,
+    "rate": 1.0,
+    "lo": 0.34237195288961925,
+    "hi": 1.0
+   },
+   "fpr": null
+  },
+  {
+   "name": "family:kyc_block",
+   "row": "Whole system as deployed",
+   "tpr": {
+    "k": 3,
+    "n": 3,
+    "rate": 1.0,
+    "lo": 0.43849391955098227,
+    "hi": 1.0
+   },
+   "fpr": null
+  },
+  {
+   "name": "family:legal_threat",
+   "row": "Whole system as deployed",
+   "tpr": {
+    "k": 1,
+    "n": 1,
+    "rate": 1.0,
+    "lo": 0.20654329147389294,
+    "hi": 1.0
+   },
+   "fpr": null
+  },
+  {
+   "name": "family:library",
+   "row": "Whole system as deployed",
+   "tpr": null,
+   "fpr": {
+    "k": 0,
+    "n": 1,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.7934567085261071
+   }
+  },
+  {
+   "name": "family:loan_fee",
+   "row": "Whole system as deployed",
+   "tpr": {
+    "k": 1,
+    "n": 1,
+    "rate": 1.0,
+    "lo": 0.20654329147389294,
+    "hi": 1.0
+   },
+   "fpr": null
+  },
+  {
+   "name": "family:lottery",
+   "row": "Whole system as deployed",
+   "tpr": {
+    "k": 3,
+    "n": 3,
+    "rate": 1.0,
+    "lo": 0.43849391955098227,
+    "hi": 1.0
+   },
+   "fpr": null
+  },
+  {
+   "name": "family:olx_advance",
+   "row": "Whole system as deployed",
+   "tpr": {
+    "k": 1,
+    "n": 1,
+    "rate": 1.0,
+    "lo": 0.20654329147389294,
+    "hi": 1.0
+   },
+   "fpr": null
+  },
+  {
+   "name": "family:otp",
+   "row": "Whole system as deployed",
+   "tpr": null,
+   "fpr": {
+    "k": 0,
+    "n": 1,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.7934567085261071
+   }
+  },
+  {
+   "name": "family:parcel_fee",
+   "row": "Whole system as deployed",
+   "tpr": {
+    "k": 1,
+    "n": 1,
+    "rate": 1.0,
+    "lo": 0.20654329147389294,
+    "hi": 1.0
+   },
+   "fpr": null
+  },
+  {
+   "name": "family:personal",
+   "row": "Whole system as deployed",
+   "tpr": null,
+   "fpr": {
+    "k": 0,
+    "n": 7,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.35433884297520657
+   }
+  },
+  {
+   "name": "family:qr_collect",
+   "row": "Whole system as deployed",
+   "tpr": {
+    "k": 0,
+    "n": 1,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.7934567085261071
+   },
+   "fpr": null
+  },
+  {
+   "name": "family:receipt",
+   "row": "Whole system as deployed",
+   "tpr": null,
+   "fpr": {
+    "k": 0,
+    "n": 1,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.7934567085261071
+   }
+  },
+  {
+   "name": "family:refund",
+   "row": "Whole system as deployed",
+   "tpr": null,
+   "fpr": {
+    "k": 0,
+    "n": 1,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.7934567085261071
+   }
+  },
+  {
+   "name": "family:remote_access",
+   "row": "Whole system as deployed",
+   "tpr": {
+    "k": 2,
+    "n": 2,
+    "rate": 1.0,
+    "lo": 0.34237195288961925,
+    "hi": 1.0
+   },
+   "fpr": null
+  },
+  {
+   "name": "family:rent",
+   "row": "Whole system as deployed",
+   "tpr": null,
+   "fpr": {
+    "k": 0,
+    "n": 1,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.7934567085261071
+   }
+  },
+  {
+   "name": "family:rent_advance",
+   "row": "Whole system as deployed",
+   "tpr": {
+    "k": 0,
+    "n": 1,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.7934567085261071
+   },
+   "fpr": null
+  },
+  {
+   "name": "family:reward_points",
+   "row": "Whole system as deployed",
+   "tpr": {
+    "k": 1,
+    "n": 1,
+    "rate": 1.0,
+    "lo": 0.20654329147389294,
+    "hi": 1.0
+   },
+   "fpr": null
+  },
+  {
+   "name": "family:ride",
+   "row": "Whole system as deployed",
+   "tpr": null,
+   "fpr": {
+    "k": 0,
+    "n": 1,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.7934567085261071
+   }
+  },
+  {
+   "name": "family:scholarship",
+   "row": "Whole system as deployed",
+   "tpr": {
+    "k": 1,
+    "n": 1,
+    "rate": 1.0,
+    "lo": 0.20654329147389294,
+    "hi": 1.0
+   },
+   "fpr": null
+  },
+  {
+   "name": "family:school",
+   "row": "Whole system as deployed",
+   "tpr": null,
+   "fpr": {
+    "k": 0,
+    "n": 2,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.6576280471103807
+   }
+  },
+  {
+   "name": "family:security",
+   "row": "Whole system as deployed",
+   "tpr": null,
+   "fpr": {
+    "k": 0,
+    "n": 1,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.7934567085261071
+   }
+  },
+  {
+   "name": "family:sim_block",
+   "row": "Whole system as deployed",
+   "tpr": {
+    "k": 1,
+    "n": 1,
+    "rate": 1.0,
+    "lo": 0.20654329147389294,
+    "hi": 1.0
+   },
+   "fpr": null
+  },
+  {
+   "name": "family:society",
+   "row": "Whole system as deployed",
+   "tpr": null,
+   "fpr": {
+    "k": 0,
+    "n": 1,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.7934567085261071
+   }
+  },
+  {
+   "name": "family:subscription",
+   "row": "Whole system as deployed",
+   "tpr": {
+    "k": 1,
+    "n": 1,
+    "rate": 1.0,
+    "lo": 0.20654329147389294,
+    "hi": 1.0
+   },
+   "fpr": null
+  },
+  {
+   "name": "family:subsidy",
+   "row": "Whole system as deployed",
+   "tpr": {
+    "k": 1,
+    "n": 1,
+    "rate": 1.0,
+    "lo": 0.20654329147389294,
+    "hi": 1.0
+   },
+   "fpr": null
+  },
+  {
+   "name": "family:support",
+   "row": "Whole system as deployed",
+   "tpr": null,
+   "fpr": {
+    "k": 0,
+    "n": 1,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.7934567085261071
+   }
+  },
+  {
+   "name": "family:task_scam",
+   "row": "Whole system as deployed",
+   "tpr": {
+    "k": 2,
+    "n": 2,
+    "rate": 1.0,
+    "lo": 0.34237195288961925,
+    "hi": 1.0
+   },
+   "fpr": null
+  },
+  {
+   "name": "family:tax_refund",
+   "row": "Whole system as deployed",
+   "tpr": {
+    "k": 1,
+    "n": 1,
+    "rate": 1.0,
+    "lo": 0.20654329147389294,
+    "hi": 1.0
+   },
+   "fpr": null
+  },
+  {
+   "name": "family:telecom",
+   "row": "Whole system as deployed",
+   "tpr": null,
+   "fpr": {
+    "k": 0,
+    "n": 2,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.6576280471103807
+   }
+  },
+  {
+   "name": "family:trai",
+   "row": "Whole system as deployed",
+   "tpr": {
+    "k": 0,
+    "n": 1,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.7934567085261071
+   },
+   "fpr": null
+  },
+  {
+   "name": "family:travel",
+   "row": "Whole system as deployed",
+   "tpr": null,
+   "fpr": {
+    "k": 0,
+    "n": 2,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.6576280471103807
+   }
+  },
+  {
+   "name": "family:utility",
+   "row": "Whole system as deployed",
+   "tpr": null,
+   "fpr": {
+    "k": 0,
+    "n": 2,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.6576280471103807
+   }
+  },
+  {
+   "name": "family:work",
+   "row": "Whole system as deployed",
+   "tpr": null,
+   "fpr": {
+    "k": 0,
+    "n": 2,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.6576280471103807
+   }
+  },
+  {
+   "name": "family:wrong_transfer",
+   "row": "Whole system as deployed",
+   "tpr": {
+    "k": 1,
+    "n": 1,
+    "rate": 1.0,
+    "lo": 0.20654329147389294,
+    "hi": 1.0
+   },
+   "fpr": null
+  },
+  {
+   "name": "lang:en",
+   "row": "Whole system as deployed",
+   "tpr": {
+    "k": 24,
+    "n": 27,
+    "rate": 0.8888888888888888,
+    "lo": 0.7194181745602705,
+    "hi": 0.9614803521050127
+   },
+   "fpr": {
+    "k": 0,
+    "n": 28,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.12064720365810762
+   }
+  },
+  {
+   "name": "lang:hi",
+   "row": "Whole system as deployed",
+   "tpr": {
+    "k": 6,
+    "n": 6,
+    "rate": 1.0,
+    "lo": 0.6096569663469354,
+    "hi": 0.9999999999999999
+   },
+   "fpr": {
+    "k": 0,
+    "n": 6,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.3903430336530645
+   }
+  },
+  {
+   "name": "lang:hinglish",
+   "row": "Whole system as deployed",
+   "tpr": {
+    "k": 6,
+    "n": 7,
+    "rate": 0.8571428571428571,
+    "lo": 0.48686549668097007,
+    "hi": 0.9743210440510253
+   },
+   "fpr": {
+    "k": 0,
+    "n": 6,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.3903430336530645
+   }
+  }
+ ],
+ "failures": [
+  {
+   "kind": "missed",
+   "text": "Aapka electricity connection aaj raat 9:30 baje kat jayega kyunki last bill update nahi hua. Turant is number par call karein 98XXXXXX10 aur officer se baat kar",
+   "tier": "NO_RED_FLAGS",
+   "codes": [
+    "NO_PAYEE_FOUND",
+    "NO_FLAGS_NOT_GUARANTEE"
+   ]
+  },
+  {
+   "kind": "missed",
+   "text": "Dear sir, I am from TRAI. Your mobile number will be disconnected in 2 hours due to illegal activity. Press 9 to speak to the officer.",
+   "tier": "NO_RED_FLAGS",
+   "codes": [
+    "NO_PAYEE_FOUND",
+    "NO_FLAGS_NOT_GUARANTEE"
+   ]
+  },
+  {
+   "kind": "missed",
+   "text": "Pay Rs 1 to confirm your identity and win a free recharge. Scan the attached QR and approve the request on your UPI app.",
+   "tier": "NO_RED_FLAGS",
+   "codes": [
+    "NO_PAYEE_FOUND",
+    "NO_FLAGS_NOT_GUARANTEE"
+   ]
+  },
+  {
+   "kind": "missed",
+   "text": "Hi, I saw your flat for rent. I am in the Army, cannot visit. Pay Rs 5,000 token on this UPI to hold the flat, I will send the agreement.",
+   "tier": "NO_RED_FLAGS",
+   "codes": [
+    "NO_PAYEE_FOUND",
+    "NO_FLAGS_NOT_GUARANTEE"
+   ]
+  }
+ ],
+ "tuned_on": {
+  "holdout_traction": "the India rules were written after this file existed, by the same assistant (docs/results/holdout_traction_NOTE.md)"
+ }
+}

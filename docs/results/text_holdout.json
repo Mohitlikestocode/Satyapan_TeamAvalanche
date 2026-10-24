@@ -4,19 +4,19 @@
  "split": "80 messages",
  "held_out": true,
  "hardware": "CPU: Intel64 Family 6 Model 183 Stepping 1, GenuineIntel (Windows)",
- "date": "2026-10-24 17:20 UTC",
- "elapsed_s": 0.55,
+ "date": "2026-10-24 17:31 UTC",
+ "elapsed_s": 0.73,
  "reproduce": "python -m satyapan.eval.report",
  "rows": [
   {
    "name": "Rules only (baseline)",
    "baseline": true,
    "tpr": {
-    "k": 7,
+    "k": 18,
     "n": 40,
-    "rate": 0.175,
-    "lo": 0.08745302996883066,
-    "hi": 0.3195029205439244
+    "rate": 0.45,
+    "lo": 0.30705075280944694,
+    "hi": 0.6017117011155924
    },
    "fpr": {
     "k": 0,
@@ -30,11 +30,11 @@
    "name": "Whole system as deployed",
    "baseline": false,
    "tpr": {
-    "k": 12,
+    "k": 25,
     "n": 40,
-    "rate": 0.3,
-    "lo": 0.18074670915695296,
-    "hi": 0.454303106543204
+    "rate": 0.625,
+    "lo": 0.47032160054531913,
+    "hi": 0.7577722646420829
    },
    "fpr": {
     "k": 0,
@@ -48,11 +48,11 @@
    "name": "Whole system: HIGH RISK only",
    "baseline": false,
    "tpr": {
-    "k": 2,
+    "k": 3,
     "n": 40,
-    "rate": 0.05,
-    "lo": 0.013820377146101098,
-    "hi": 0.165041708179252
+    "rate": 0.075,
+    "lo": 0.025835556771858226,
+    "hi": 0.19864530159097524
    },
    "fpr": {
     "k": 0,
@@ -176,11 +176,11 @@
    "name": "family:digital_arrest",
    "row": "Whole system as deployed",
    "tpr": {
-    "k": 0,
+    "k": 2,
     "n": 3,
-    "rate": 0.0,
-    "lo": 0.0,
-    "hi": 0.5615060804490177
+    "rate": 0.6666666666666666,
+    "lo": 0.2076549551264879,
+    "hi": 0.9385096847238394
    },
    "fpr": null
   },
@@ -200,11 +200,11 @@
    "name": "family:electricity_cut",
    "row": "Whole system as deployed",
    "tpr": {
-    "k": 0,
+    "k": 1,
     "n": 2,
-    "rate": 0.0,
-    "lo": 0.0,
-    "hi": 0.6576280471103807
+    "rate": 0.5,
+    "lo": 0.09452865480086614,
+    "hi": 0.9054713451991339
    },
    "fpr": null
   },
@@ -224,11 +224,11 @@
    "name": "family:fake_loan_app",
    "row": "Whole system as deployed",
    "tpr": {
-    "k": 0,
+    "k": 1,
     "n": 2,
-    "rate": 0.0,
-    "lo": 0.0,
-    "hi": 0.6576280471103807
+    "rate": 0.5,
+    "lo": 0.09452865480086614,
+    "hi": 0.9054713451991339
    },
    "fpr": null
   },
@@ -320,11 +320,11 @@
    "name": "family:insurance_bonus",
    "row": "Whole system as deployed",
    "tpr": {
-    "k": 0,
+    "k": 1,
     "n": 1,
-    "rate": 0.0,
-    "lo": 0.0,
-    "hi": 0.7934567085261071
+    "rate": 1.0,
+    "lo": 0.20654329147389294,
+    "hi": 1.0
    },
    "fpr": null
   },
@@ -368,18 +368,6 @@
    "name": "family:job_task",
    "row": "Whole system as deployed",
    "tpr": {
-    "k": 1,
-    "n": 3,
-    "rate": 0.3333333333333333,
-    "lo": 0.0614903152761605,
-    "hi": 0.7923450448735121
-   },
-   "fpr": null
-  },
-  {
-   "name": "family:kyc_link",
-   "row": "Whole system as deployed",
-   "tpr": {
     "k": 2,
     "n": 3,
     "rate": 0.6666666666666666,
@@ -389,14 +377,26 @@
    "fpr": null
   },
   {
+   "name": "family:kyc_link",
+   "row": "Whole system as deployed",
+   "tpr": {
+    "k": 3,
+    "n": 3,
+    "rate": 1.0,
+    "lo": 0.43849391955098227,
+    "hi": 1.0
+   },
+   "fpr": null
+  },
+  {
    "name": "family:lottery",
    "row": "Whole system as deployed",
    "tpr": {
-    "k": 0,
+    "k": 2,
     "n": 2,
-    "rate": 0.0,
-    "lo": 0.0,
-    "hi": 0.6576280471103807
+    "rate": 1.0,
+    "lo": 0.34237195288961925,
+    "hi": 1.0
    },
    "fpr": null
   },
@@ -404,11 +404,11 @@
    "name": "family:matrimony",
    "row": "Whole system as deployed",
    "tpr": {
-    "k": 0,
+    "k": 1,
     "n": 1,
-    "rate": 0.0,
-    "lo": 0.0,
-    "hi": 0.7934567085261071
+    "rate": 1.0,
+    "lo": 0.20654329147389294,
+    "hi": 1.0
    },
    "fpr": null
   },
@@ -476,11 +476,11 @@
    "name": "family:refund_trap",
    "row": "Whole system as deployed",
    "tpr": {
-    "k": 0,
+    "k": 1,
     "n": 2,
-    "rate": 0.0,
-    "lo": 0.0,
-    "hi": 0.6576280471103807
+    "rate": 0.5,
+    "lo": 0.09452865480086614,
+    "hi": 0.9054713451991339
    },
    "fpr": null
   },
@@ -500,11 +500,11 @@
    "name": "family:rental_deposit",
    "row": "Whole system as deployed",
    "tpr": {
-    "k": 0,
+    "k": 1,
     "n": 1,
-    "rate": 0.0,
-    "lo": 0.0,
-    "hi": 0.7934567085261071
+    "rate": 1.0,
+    "lo": 0.20654329147389294,
+    "hi": 1.0
    },
    "fpr": null
   },
@@ -536,11 +536,11 @@
    "name": "family:tax_refund",
    "row": "Whole system as deployed",
    "tpr": {
-    "k": 0,
+    "k": 1,
     "n": 1,
-    "rate": 0.0,
-    "lo": 0.0,
-    "hi": 0.7934567085261071
+    "rate": 1.0,
+    "lo": 0.20654329147389294,
+    "hi": 1.0
    },
    "fpr": null
   },
@@ -572,11 +572,11 @@
    "name": "lang:en",
    "row": "Whole system as deployed",
    "tpr": {
-    "k": 4,
+    "k": 12,
     "n": 16,
-    "rate": 0.25,
-    "lo": 0.10181901984237346,
-    "hi": 0.49498768929398645
+    "rate": 0.75,
+    "lo": 0.5050123107060135,
+    "hi": 0.8981809801576265
    },
    "fpr": {
     "k": 0,
@@ -590,11 +590,11 @@
    "name": "lang:hi",
    "row": "Whole system as deployed",
    "tpr": {
-    "k": 4,
+    "k": 6,
     "n": 12,
-    "rate": 0.3333333333333333,
-    "lo": 0.13811783989736134,
-    "hi": 0.609382412602386
+    "rate": 0.5,
+    "lo": 0.2537781703934222,
+    "hi": 0.7462218296065778
    },
    "fpr": {
     "k": 0,
@@ -608,11 +608,11 @@
    "name": "lang:hinglish",
    "row": "Whole system as deployed",
    "tpr": {
-    "k": 4,
+    "k": 7,
     "n": 12,
-    "rate": 0.3333333333333333,
-    "lo": 0.13811783989736134,
-    "hi": 0.609382412602386
+    "rate": 0.5833333333333334,
+    "lo": 0.3195073356553728,
+    "hi": 0.8067425380947535
    },
    "fpr": {
     "k": 0,
@@ -626,33 +626,6 @@
  "failures": [
   {
    "kind": "missed",
-   "text": "This is Inspector Verma, Mumbai Cyber Cell. A SIM card in your name was used for illegal activity. Do not disconnect this video call or inform anyone. Transfer ",
-   "tier": "NO_RED_FLAGS",
-   "codes": [
-    "NO_PAYEE_FOUND",
-    "NO_FLAGS_NOT_GUARANTEE"
-   ]
-  },
-  {
-   "kind": "missed",
-   "text": "Dear consumer, your electricity connection will be disconnected tonight at 9.30 PM as your previous month bill is not updated. Call the officer immediately on 8",
-   "tier": "NO_RED_FLAGS",
-   "codes": [
-    "NO_PAYEE_FOUND",
-    "NO_FLAGS_NOT_GUARANTEE"
-   ]
-  },
-  {
-   "kind": "missed",
-   "text": "Instant personal loan up to Rs 5 lakh without documents. Install LoanEase from the link, allow access to contacts and gallery, pay Rs 1,500 processing fee to ac",
-   "tier": "NO_RED_FLAGS",
-   "codes": [
-    "NO_PAYEE_FOUND",
-    "NO_FLAGS_NOT_GUARANTEE"
-   ]
-  },
-  {
-   "kind": "missed",
    "text": "Join our USDT trading signals group. Members made 4x in 10 days. Deposit minimum 10,000 on our platform and withdraw anytime. Our manager Priya will guide you p",
    "tier": "NO_RED_FLAGS",
    "codes": [
@@ -662,52 +635,7 @@
   },
   {
    "kind": "missed",
-   "text": "Your old LIC policy has matured with a bonus of Rs 3,85,000. To release the amount, pay GST and clearance charges of Rs 7,800 to the nodal account.",
-   "tier": "NO_RED_FLAGS",
-   "codes": [
-    "NO_PAYEE_FOUND",
-    "NO_FLAGS_NOT_GUARANTEE"
-   ]
-  },
-  {
-   "kind": "missed",
-   "text": "I am a doctor settled in London, I want to send you a gift parcel worth 20,000 pounds. Customs has stopped it. Please pay Rs 25,000 as clearance fee so I can ma",
-   "tier": "NO_RED_FLAGS",
-   "codes": [
-    "NO_PAYEE_FOUND",
-    "NO_FLAGS_NOT_GUARANTEE"
-   ]
-  },
-  {
-   "kind": "missed",
-   "text": "Flat available at Rs 9,000 in Sector 62, owner is out of station. Pay the token amount Rs 5,000 to book it, my cousin will hand over the keys on Sunday.",
-   "tier": "NO_RED_FLAGS",
-   "codes": [
-    "NO_PAYEE_FOUND",
-    "NO_FLAGS_NOT_GUARANTEE"
-   ]
-  },
-  {
-   "kind": "missed",
    "text": "Sir please see I have paid Rs 4,500 for the order, screenshot attached. My bank server is slow so you may not get the SMS. Please dispatch the goods today itsel",
-   "tier": "NO_RED_FLAGS",
-   "codes": [
-    "NO_PAYEE_FOUND",
-    "NO_FLAGS_NOT_GUARANTEE"
-   ]
-  },
-  {
-   "kind": "missed",
-   "text": "Income Tax Dept: You are eligible for a refund of Rs 24,560. Confirm your bank account details and the OTP sent to you at the link below to receive it. incometa",
-   "tier": "NO_RED_FLAGS",
-   "codes": [
-    "NO_PAYEE_FOUND",
-    "NO_FLAGS_NOT_GUARANTEE"
-   ]
-  },
-  {
-   "kind": "missed",
-   "text": "Congratulations, you are selected for work from home. Rate hotels and earn Rs 800 per task. First 3 tasks are free, further tasks need a prepaid deposit that is",
    "tier": "NO_RED_FLAGS",
    "codes": [
     "NO_PAYEE_FOUND",
@@ -734,25 +662,7 @@
   },
   {
    "kind": "missed",
-   "text": "मैं सीबीआई अधिकारी बोल रहा हूँ। आपके आधार से मनी लॉन्ड्रिंग का केस दर्ज है। आप डिजिटल अरेस्ट में हैं, वीडियो कॉल चालू रखें और किसी को न बताएँ। जाँच के लिए सुरक्",
-   "tier": "NO_RED_FLAGS",
-   "codes": [
-    "NO_PAYEE_FOUND",
-    "NO_FLAGS_NOT_GUARANTEE"
-   ]
-  },
-  {
-   "kind": "missed",
    "text": "आपका ऑर्डर कैंसिल हो गया है और 2,299 रुपये रिफ़ंड होंगे। रिफ़ंड पाने के लिए अपने यूपीआई ऐप में आया अनुरोध स्वीकार करें और पिन डालें।",
-   "tier": "NO_RED_FLAGS",
-   "codes": [
-    "NO_PAYEE_FOUND",
-    "NO_FLAGS_NOT_GUARANTEE"
-   ]
-  },
-  {
-   "kind": "missed",
-   "text": "बधाई हो! केबीसी लकी ड्रॉ में आपका नंबर 25 लाख रुपये के लिए चुना गया है। इनाम लेने के लिए 12,500 रुपये टैक्स इस खाते में जमा करें।",
    "tier": "NO_RED_FLAGS",
    "codes": [
     "NO_PAYEE_FOUND",
@@ -798,33 +708,6 @@
   {
    "kind": "missed",
    "text": "बिजली विभाग: आपका पिछला बिल बकाया है, आज रात 9:30 बजे कनेक्शन काट दिया जाएगा। तुरंत इस नंबर पर बात करें और ऐप से भुगतान करें।",
-   "tier": "NO_RED_FLAGS",
-   "codes": [
-    "NO_PAYEE_FOUND",
-    "NO_FLAGS_NOT_GUARANTEE"
-   ]
-  },
-  {
-   "kind": "missed",
-   "text": "Aapka bank account aaj band ho jayega kyunki KYC pending hai. Turant is link par click karke update karo: hdfc-kyc-verify.in/update",
-   "tier": "NO_RED_FLAGS",
-   "codes": [
-    "NO_PAYEE_FOUND",
-    "NO_FLAGS_NOT_GUARANTEE"
-   ]
-  },
-  {
-   "kind": "missed",
-   "text": "Sir aapka Amazon ka refund 3,499 aa gaya hai. UPI app me request aayegi usse approve karke PIN daal do, paise turant mil jayenge.",
-   "tier": "NO_RED_FLAGS",
-   "codes": [
-    "NO_PAYEE_FOUND",
-    "NO_FLAGS_NOT_GUARANTEE"
-   ]
-  },
-  {
-   "kind": "missed",
-   "text": "Congratulations! Aapne Jio lucky draw me 15 lakh jeete hain. Prize claim karne ke liye 9,800 rupaye processing fee is account me bhejo.",
    "tier": "NO_RED_FLAGS",
    "codes": [
     "NO_PAYEE_FOUND",

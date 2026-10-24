@@ -4,19 +4,19 @@
  "split": "71 messages",
  "held_out": false,
  "hardware": "CPU: Intel64 Family 6 Model 183 Stepping 1, GenuineIntel (Windows)",
- "date": "2026-10-24 17:20 UTC",
- "elapsed_s": 8.22,
+ "date": "2026-10-24 17:31 UTC",
+ "elapsed_s": 8.04,
  "reproduce": "python -m satyapan.eval.report",
  "rows": [
   {
    "name": "Rules only (baseline)",
    "baseline": true,
    "tpr": {
-    "k": 37,
+    "k": 38,
     "n": 38,
-    "rate": 0.9736842105263158,
-    "lo": 0.8650482156319974,
-    "hi": 0.9953395324464698
+    "rate": 1.0,
+    "lo": 0.90818706741616,
+    "hi": 0.9999999999999999
    },
    "fpr": {
     "k": 0,
@@ -48,11 +48,11 @@
    "name": "Whole system: HIGH RISK only",
    "baseline": false,
    "tpr": {
-    "k": 8,
+    "k": 13,
     "n": 38,
-    "rate": 0.21052631578947367,
-    "lo": 0.1107466035209593,
-    "hi": 0.36346088376442165
+    "rate": 0.34210526315789475,
+    "lo": 0.21212220026458956,
+    "hi": 0.5010818837092545
    },
    "fpr": {
     "k": 0,

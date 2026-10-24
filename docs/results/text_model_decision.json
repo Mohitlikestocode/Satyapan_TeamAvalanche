@@ -1,15 +1,15 @@
 {
- "date": "2026-10-24 17:19 UTC",
+ "date": "2026-10-24 17:31 UTC",
  "sets": {
   "holdout": {
    "n": 80,
    "without_model": {
     "scams_flagged": {
-     "k": 7,
+     "k": 18,
      "n": 40,
-     "rate": 0.175,
-     "lo": 0.08745302996883066,
-     "hi": 0.3195029205439244
+     "rate": 0.45,
+     "lo": 0.30705075280944694,
+     "hi": 0.6017117011155924
     },
     "genuine_flagged": {
      "k": 0,
@@ -21,11 +21,11 @@
    },
    "with_model": {
     "scams_flagged": {
-     "k": 12,
+     "k": 25,
      "n": 40,
-     "rate": 0.3,
-     "lo": 0.18074670915695296,
-     "hi": 0.454303106543204
+     "rate": 0.625,
+     "lo": 0.47032160054531913,
+     "hi": 0.7577722646420829
     },
     "genuine_flagged": {
      "k": 0,
@@ -40,11 +40,11 @@
    "n": 71,
    "without_model": {
     "scams_flagged": {
-     "k": 37,
+     "k": 38,
      "n": 38,
-     "rate": 0.9736842105263158,
-     "lo": 0.8650482156319974,
-     "hi": 0.9953395324464698
+     "rate": 1.0,
+     "lo": 0.90818706741616,
+     "hi": 0.9999999999999999
     },
     "genuine_flagged": {
      "k": 0,
@@ -74,5 +74,5 @@
  },
  "decided_on": "holdout",
  "ship": true,
- "why": "on holdout: scams flagged 7 -> 12 of 40, genuine flagged 0 -> 0 of 40"
+ "why": "on holdout: scams flagged 18 -> 25 of 40, genuine flagged 0 -> 0 of 40"
 }

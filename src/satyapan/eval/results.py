@@ -211,10 +211,17 @@ def sections(results_dir: Path | None = None) -> list[Section]:
                  "जानबूझकर नहीं परखा गया: हम किसी का पेमेंट डेटा बिना अनुमति इस्तेमाल नहीं करते, इसलिए परखने के लिए हमारे पास असली पेमेंट स्क्रीनशॉट नहीं हैं। "
                  "ऊपर के स्क्रीनशॉट नतीजे सिर्फ़ बनाई गई स्क्रीन से हैं, और असली ऐप अलग दिखते हैं, इसलिए असली स्क्रीनशॉट पर कम नतीजे की उम्मीद रखें।"),
                 ("edited screenshots", "बदले गए स्क्रीनशॉट"), ("genuine screenshots", "असली स्क्रीनशॉट"), deliberate=True),
-        Section("text_holdout", ("Messages: held out, written by teammates", "संदेश: अलग रखे गए, टीम के लोगों ने लिखे"),
-                ("Scam and genuine messages written by teammates who did not read the rules. Never used to build or train anything.",
-                 "स्कैम और असली संदेश, जो उन टीम सदस्यों ने लिखे जिन्होंने नियम नहीं पढ़े। किसी चीज़ को बनाने या ट्रेन करने में इस्तेमाल नहीं हुए।"),
+        Section("text_holdout", ("Messages: held out (Tanish's set)", "संदेश: अलग रखे गए (तनिश का सेट)"),
+                ("40 scam and 40 genuine messages written by a teammate who did not read the rules. Never used to train anything; "
+                 "the rule author had seen a few of its lines, so treat it as close to, not perfectly, unseen.",
+                 "40 स्कैम और 40 असली संदेश, एक ऐसे टीम सदस्य ने लिखे जिसने नियम नहीं पढ़े। किसी चीज़ की ट्रेनिंग में इस्तेमाल नहीं हुए; "
+                 "नियम लिखने वाले ने इसकी कुछ लाइनें देखी थीं, इसलिए इसे लगभग, पूरी तरह नहीं, अनदेखा मानें।"),
                 ("scam messages", "स्कैम संदेश"), ("genuine messages", "असली संदेश"), dataset="data/kit/holdout_*.jsonl"),
+        Section("text_holdout_tuned", ("Messages: second held-out set, rules tuned on it (indicative only)",
+                                       "संदेश: दूसरा अलग रखा सेट, नियम इसी पर बनाए गए (सिर्फ़ संकेत के लिए)"),
+                ("Mohit's 40 scam and 40 genuine messages. New rules were written after this file existed, so these numbers are optimistic and are never added to the held-out number above.",
+                 "मोहित के 40 स्कैम और 40 असली संदेश। नए नियम इस फ़ाइल के बाद लिखे गए, इसलिए ये नतीजे आशावादी हैं और ऊपर वाले नतीजे में कभी नहीं जोड़े जाते।"),
+                ("scam messages", "स्कैम संदेश"), ("genuine messages", "असली संदेश"), held_out=False, dataset="data/kit/holdout_traction.jsonl"),
         Section("text_kit", ("Messages: development kit (optimistic)", "संदेश: डेवलपमेंट किट (आशावादी)"),
                 ("The messages we looked at while writing the rules. Numbers here are optimistic; the held-out row above is the honest one.",
                  "वे संदेश जिन्हें देखकर नियम लिखे गए। ये नतीजे आशावादी हैं; ऊपर वाला अलग रखा गया नतीजा ईमानदार है।"),
@@ -234,6 +241,7 @@ def sections(results_dir: Path | None = None) -> list[Section]:
         "screenshot_system": ["screenshot_system.json"],
         "screenshot_synthetic": ["tamper_test.json"] + sorted(p.name for p in d.glob("tamper_test_*.json")),
         "text_holdout": ["text_holdout.json"],
+        "text_holdout_tuned": ["text_holdout_tuned.json"],
         "text_kit": ["text_kit.json"],
         "text_model_cv": ["text_model_cv.json"],
         "voice": ["voice_test.json"],

@@ -60,9 +60,17 @@ def measure(paths: list[Path], held_out: bool) -> dict:
             "failures": failures}
 
 
-def kit_files() -> tuple[list[Path], list[Path]]:
-    """(development kit, held-out files). Derived lists such as holdout_*_missed.jsonl repeat messages and are skipped."""
-    return [KIT / "messages.jsonl"], sorted(p for p in KIT.glob("holdout_*.jsonl") if "missed" not in p.stem)
+# Held-out files that rules were later tuned on. Their numbers are indicative only and never pooled with the clean held-out set.
+TUNED_ON = {"holdout_traction": "the India rules were written after this file existed, by the same assistant (docs/results/holdout_traction_NOTE.md)"}
+
+
+def kit_files(include_tuned: bool = False) -> tuple[list[Path], list[Path]]:
+    """(development kit, clean held-out files). Derived lists such as holdout_*_missed.jsonl repeat messages and are skipped;
+    files in TUNED_ON are left out unless include_tuned (then they are the only held-out files returned)."""
+    held = sorted(p for p in KIT.glob("holdout_*.jsonl") if "missed" not in p.stem)
+    if include_tuned:
+        return [KIT / "messages.jsonl"], [p for p in held if p.stem in TUNED_ON]
+    return [KIT / "messages.jsonl"], [p for p in held if p.stem not in TUNED_ON]
 
 
 def main() -> None:
@@ -71,11 +79,14 @@ def main() -> None:
     a = ap.parse_args()
     a.out.mkdir(parents=True, exist_ok=True)
     dev, held = kit_files()
-    for name, paths, is_held in (("text_kit.json", dev, False), ("text_holdout.json", held, True)):
+    _, tuned = kit_files(include_tuned=True)
+    for name, paths, is_held in (("text_kit.json", dev, False), ("text_holdout.json", held, True), ("text_holdout_tuned.json", tuned, False)):
         if not paths:
             print(f"{name}: no files, not evaluated")
             continue
         res = measure(paths, is_held)
+        if paths is tuned:
+            res["tuned_on"] = {p.stem: TUNED_ON[p.stem] for p in paths}
         (a.out / name).write_text(json.dumps(res, ensure_ascii=False, indent=1), encoding="utf-8")
         for r in res["rows"]:
             t, f = r["tpr"], r["fpr"]

@@ -1,33 +1,35 @@
 {
- "n_scams": 78,
- "n_flagged_before": 50,
+ "n_scams": 118,
+ "n_flagged_before": 99,
  "attacks": [
   {
    "key": "spacing",
    "label_en": "Spacing and punctuation",
    "label_hi": "अक्षरों के बीच जगह और विराम चिह्न",
    "evasion": {
-    "k": 0,
-    "n": 50,
-    "rate": 0.0,
-    "lo": 0.0,
-    "hi": 0.07135003417431873
+    "k": 1,
+    "n": 99,
+    "rate": 0.010101010101010102,
+    "lo": 0.0017852613200520298,
+    "hi": 0.05501665541403223
    },
    "genuine_flagged_before": {
     "k": 2,
-    "n": 73,
-    "rate": 0.0273972602739726,
-    "lo": 0.007545600452515573,
-    "hi": 0.09450328973196781
+    "n": 113,
+    "rate": 0.017699115044247787,
+    "lo": 0.004867129823876968,
+    "hi": 0.06224595318765318
    },
    "genuine_flagged_after": {
-    "k": 8,
-    "n": 73,
-    "rate": 0.1095890410958904,
-    "lo": 0.056586041610119084,
-    "hi": 0.20162825897706282
+    "k": 14,
+    "n": 113,
+    "rate": 0.12389380530973451,
+    "lo": 0.07525390958545933,
+    "hi": 0.19726546707490825
    },
-   "examples": []
+   "examples": [
+    "We are hiring for Amazon. Earn Rs 3,000 per task. Contact on WhatsApp +44 7700 900123 and send Rs 1,500 for registration"
+   ]
   },
   {
    "key": "homoglyph",
@@ -35,24 +37,24 @@
    "label_hi": "हूबहू दिखने वाले दूसरे अक्षर",
    "evasion": {
     "k": 0,
-    "n": 50,
+    "n": 99,
     "rate": 0.0,
     "lo": 0.0,
-    "hi": 0.07135003417431873
+    "hi": 0.03735453357396229
    },
    "genuine_flagged_before": {
     "k": 2,
-    "n": 73,
-    "rate": 0.0273972602739726,
-    "lo": 0.007545600452515573,
-    "hi": 0.09450328973196781
+    "n": 113,
+    "rate": 0.017699115044247787,
+    "lo": 0.004867129823876968,
+    "hi": 0.06224595318765318
    },
    "genuine_flagged_after": {
-    "k": 13,
-    "n": 73,
-    "rate": 0.1780821917808219,
-    "lo": 0.10713272068797698,
-    "hi": 0.2812194219014537
+    "k": 16,
+    "n": 113,
+    "rate": 0.1415929203539823,
+    "lo": 0.08907227229207428,
+    "hi": 0.2176814866430995
    },
    "examples": []
   },
@@ -61,29 +63,30 @@
    "label_en": "Hinglish respelling",
    "label_hi": "हिंग्लिश में अलग स्पेलिंग",
    "evasion": {
-    "k": 2,
-    "n": 50,
-    "rate": 0.04,
-    "lo": 0.011038652660826577,
-    "hi": 0.13460337877954667
+    "k": 8,
+    "n": 99,
+    "rate": 0.08080808080808081,
+    "lo": 0.041513905489623,
+    "hi": 0.15141969336531508
    },
    "genuine_flagged_before": {
     "k": 2,
-    "n": 73,
-    "rate": 0.0273972602739726,
-    "lo": 0.007545600452515573,
-    "hi": 0.09450328973196781
+    "n": 113,
+    "rate": 0.017699115044247787,
+    "lo": 0.004867129823876968,
+    "hi": 0.06224595318765318
    },
    "genuine_flagged_after": {
     "k": 3,
-    "n": 73,
-    "rate": 0.0410958904109589,
-    "lo": 0.01407368523428873,
-    "hi": 0.1140027733506444
+    "n": 113,
+    "rate": 0.02654867256637168,
+    "lo": 0.009069309551816493,
+    "hi": 0.07516096459711677
    },
    "examples": [
-    "Withdrawal blocked. Pay a release fee of Rs 8000 to unlock your funds and withdraw today.",
-    "Refund lene ke liye PIN daalo, request accept karo, paise aa jayenge."
+    "Instant personal loan up to Rs 5 lakh without documents. Install LoanEase from the link, allow access to contacts and ga",
+    "I am a doctor settled in London, I want to send you a gift parcel worth 20,000 pounds. Customs has stopped it. Please pa",
+    "Flat available at Rs 9,000 in Sector 62, owner is out of station. Pay the token amount Rs 5,000 to book it, my cousin wi"
    ]
   },
   {
@@ -92,24 +95,24 @@
    "label_hi": "UPI ID कई लाइनों में तोड़ी",
    "evasion": {
     "k": 0,
-    "n": 50,
+    "n": 99,
     "rate": 0.0,
     "lo": 0.0,
-    "hi": 0.07135003417431873
+    "hi": 0.03735453357396229
    },
    "genuine_flagged_before": {
     "k": 2,
-    "n": 73,
-    "rate": 0.0273972602739726,
-    "lo": 0.007545600452515573,
-    "hi": 0.09450328973196781
+    "n": 113,
+    "rate": 0.017699115044247787,
+    "lo": 0.004867129823876968,
+    "hi": 0.06224595318765318
    },
    "genuine_flagged_after": {
     "k": 2,
-    "n": 73,
-    "rate": 0.0273972602739726,
-    "lo": 0.007545600452515573,
-    "hi": 0.09450328973196781
+    "n": 113,
+    "rate": 0.017699115044247787,
+    "lo": 0.004867129823876968,
+    "hi": 0.06224595318765318
    },
    "examples": []
   },
@@ -119,64 +122,64 @@
    "label_hi": "ऊपर के सभी एक साथ",
    "evasion": {
     "k": 0,
-    "n": 50,
+    "n": 99,
     "rate": 0.0,
     "lo": 0.0,
-    "hi": 0.07135003417431873
+    "hi": 0.03735453357396229
    },
    "genuine_flagged_before": {
     "k": 2,
-    "n": 73,
-    "rate": 0.0273972602739726,
-    "lo": 0.007545600452515573,
-    "hi": 0.09450328973196781
+    "n": 113,
+    "rate": 0.017699115044247787,
+    "lo": 0.004867129823876968,
+    "hi": 0.06224595318765318
    },
    "genuine_flagged_after": {
-    "k": 14,
-    "n": 73,
-    "rate": 0.1917808219178082,
-    "lo": 0.1178225404547499,
-    "hi": 0.29655717053513053
+    "k": 22,
+    "n": 113,
+    "rate": 0.19469026548672566,
+    "lo": 0.13223235600316086,
+    "hi": 0.2772245497564316
    },
    "examples": []
   }
  ],
- "dataset": "data/kit/holdout_community.jsonl, data/kit/messages.jsonl",
- "date": "2026-10-24 17:20 UTC",
+ "dataset": "data/kit/holdout_community.jsonl, data/kit/holdout_traction.jsonl, data/kit/messages.jsonl",
+ "date": "2026-10-24 17:32 UTC",
  "reproduce": "python -m satyapan.eval.attacks",
  "rules_only": {
-  "n_scams": 78,
-  "n_flagged_before": 44,
+  "n_scams": 118,
+  "n_flagged_before": 88,
   "attacks": [
    {
     "key": "spacing",
     "label_en": "Spacing and punctuation",
     "label_hi": "अक्षरों के बीच जगह और विराम चिह्न",
     "evasion": {
-     "k": 11,
-     "n": 44,
-     "rate": 0.25,
-     "lo": 0.14574066080685744,
-     "hi": 0.39440849808414946
+     "k": 29,
+     "n": 88,
+     "rate": 0.32954545454545453,
+     "lo": 0.240276916679746,
+     "hi": 0.4330737218108727
     },
     "genuine_flagged_before": {
      "k": 0,
-     "n": 73,
+     "n": 113,
      "rate": 0.0,
      "lo": 0.0,
-     "hi": 0.04999375338358389
+     "hi": 0.03287870073672391
     },
     "genuine_flagged_after": {
      "k": 0,
-     "n": 73,
+     "n": 113,
      "rate": 0.0,
      "lo": 0.0,
-     "hi": 0.04999375338358389
+     "hi": 0.03287870073672391
     },
     "examples": [
-     "Hi, I am interested in your sofa listing. I am posted in Army, I will send the money by UPI now. Please scan the QR I am",
-     "Sir trading mein guaranteed profit, daily 3% return. Telegram group join karo aur payment karo.",
-     "Your profit of Rs 1,20,000 is ready. To withdraw you must pay 18% tax first. Send Rs 21600 to tax.desk@ybl."
+     "Instant personal loan up to Rs 5 lakh without documents. Install LoanEase from the link, allow access to contacts and ga",
+     "I am a doctor settled in London, I want to send you a gift parcel worth 20,000 pounds. Customs has stopped it. Please pa",
+     "Flat available at Rs 9,000 in Sector 62, owner is out of station. Pay the token amount Rs 5,000 to book it, my cousin wi"
     ]
    },
    {
@@ -184,30 +187,30 @@
     "label_en": "Look-alike letters",
     "label_hi": "हूबहू दिखने वाले दूसरे अक्षर",
     "evasion": {
-     "k": 37,
-     "n": 44,
-     "rate": 0.8409090909090909,
-     "lo": 0.7063350943621745,
-     "hi": 0.920734234422816
+     "k": 75,
+     "n": 88,
+     "rate": 0.8522727272727273,
+     "lo": 0.7634870210099294,
+     "hi": 0.9115883261094588
     },
     "genuine_flagged_before": {
      "k": 0,
-     "n": 73,
+     "n": 113,
      "rate": 0.0,
      "lo": 0.0,
-     "hi": 0.04999375338358389
+     "hi": 0.03287870073672391
     },
     "genuine_flagged_after": {
      "k": 0,
-     "n": 73,
+     "n": 113,
      "rate": 0.0,
      "lo": 0.0,
-     "hi": 0.04999375338358389
+     "hi": 0.03287870073672391
     },
     "examples": [
      "Hi, I am interested in your sofa listing. I am posted in Army, I will send the money by UPI now. Please scan the QR I am",
-     "Your SIM will be blocked in 24 hours due to incomplete KYC. Download the QuickSupport app and share the 9 digit code wit",
-     "प्रिय ग्राहक, आपका बैंक खाता आज रात बंद हो जाएगा क्योंकि केवाईसी अपडेट नहीं है। तुरंत इस लिंक पर क्लिक करके अपडेट करें: "
+     "This is Inspector Verma, Mumbai Cyber Cell. A SIM card in your name was used for illegal activity. Do not disconnect thi",
+     "Dear consumer, your electricity connection will be disconnected tonight at 9.30 PM as your previous month bill is not up"
     ]
    },
    {
@@ -215,30 +218,30 @@
     "label_en": "Hinglish respelling",
     "label_hi": "हिंग्लिश में अलग स्पेलिंग",
     "evasion": {
-     "k": 7,
-     "n": 44,
-     "rate": 0.1590909090909091,
-     "lo": 0.07926576557718398,
-     "hi": 0.29366490563782555
+     "k": 21,
+     "n": 88,
+     "rate": 0.23863636363636365,
+     "lo": 0.1617092401848666,
+     "hi": 0.3374284055007487
     },
     "genuine_flagged_before": {
      "k": 0,
-     "n": 73,
+     "n": 113,
      "rate": 0.0,
      "lo": 0.0,
-     "hi": 0.04999375338358389
+     "hi": 0.03287870073672391
     },
     "genuine_flagged_after": {
      "k": 0,
-     "n": 73,
+     "n": 113,
      "rate": 0.0,
      "lo": 0.0,
-     "hi": 0.04999375338358389
+     "hi": 0.03287870073672391
     },
     "examples": [
-     "Sir trading mein guaranteed profit, daily 3% return. Telegram group join karo aur payment karo.",
-     "Your profit of Rs 1,20,000 is ready. To withdraw you must pay 18% tax first. Send Rs 21600 to tax.desk@ybl.",
-     "Withdrawal blocked. Pay a release fee of Rs 8000 to unlock your funds and withdraw today."
+     "Instant personal loan up to Rs 5 lakh without documents. Install LoanEase from the link, allow access to contacts and ga",
+     "I am a doctor settled in London, I want to send you a gift parcel worth 20,000 pounds. Customs has stopped it. Please pa",
+     "Flat available at Rs 9,000 in Sector 62, owner is out of station. Pay the token amount Rs 5,000 to book it, my cousin wi"
     ]
    },
    {
@@ -246,30 +249,30 @@
     "label_en": "UPI ID split across lines",
     "label_hi": "UPI ID कई लाइनों में तोड़ी",
     "evasion": {
-     "k": 4,
-     "n": 44,
-     "rate": 0.09090909090909091,
-     "lo": 0.035921611478836546,
-     "hi": 0.21159519397917487
+     "k": 3,
+     "n": 88,
+     "rate": 0.03409090909090909,
+     "lo": 0.011660785880160493,
+     "hi": 0.09549762599419709
     },
     "genuine_flagged_before": {
      "k": 0,
-     "n": 73,
+     "n": 113,
      "rate": 0.0,
      "lo": 0.0,
-     "hi": 0.04999375338358389
+     "hi": 0.03287870073672391
     },
     "genuine_flagged_after": {
      "k": 0,
-     "n": 73,
+     "n": 113,
      "rate": 0.0,
      "lo": 0.0,
-     "hi": 0.04999375338358389
+     "hi": 0.03287870073672391
     },
     "examples": [
      "Sir, Alpha Securities is SEBI registered. Daily 5% returns, zero risk. Scan the QR and pay now: upi://pay?pa=alphasec.pa",
      "Your profit of Rs 1,20,000 is ready. To withdraw you must pay 18% tax first. Send Rs 21600 to tax.desk@ybl.",
-     "Courier not delivered. Pay customs charge to upi://pay?pa=customs.clear@ybl&pn=Customs%20Desk&am=1850 immediately."
+     "Call from Amazon customer care. Pay Rs 1 to verify your identity on verify.amazon.care@paytm immediately."
     ]
    },
    {
@@ -277,30 +280,30 @@
     "label_en": "All of the above together",
     "label_hi": "ऊपर के सभी एक साथ",
     "evasion": {
-     "k": 37,
-     "n": 44,
-     "rate": 0.8409090909090909,
-     "lo": 0.7063350943621745,
-     "hi": 0.920734234422816
+     "k": 77,
+     "n": 88,
+     "rate": 0.875,
+     "lo": 0.7898806043001849,
+     "hi": 0.9287479910204541
     },
     "genuine_flagged_before": {
      "k": 0,
-     "n": 73,
+     "n": 113,
      "rate": 0.0,
      "lo": 0.0,
-     "hi": 0.04999375338358389
+     "hi": 0.03287870073672391
     },
     "genuine_flagged_after": {
      "k": 0,
-     "n": 73,
+     "n": 113,
      "rate": 0.0,
      "lo": 0.0,
-     "hi": 0.04999375338358389
+     "hi": 0.03287870073672391
     },
     "examples": [
      "Hi, I am interested in your sofa listing. I am posted in Army, I will send the money by UPI now. Please scan the QR I am",
-     "Your SIM will be blocked in 24 hours due to incomplete KYC. Download the QuickSupport app and share the 9 digit code wit",
-     "प्रिय ग्राहक, आपका बैंक खाता आज रात बंद हो जाएगा क्योंकि केवाईसी अपडेट नहीं है। तुरंत इस लिंक पर क्लिक करके अपडेट करें: "
+     "This is Inspector Verma, Mumbai Cyber Cell. A SIM card in your name was used for illegal activity. Do not disconnect thi",
+     "Dear consumer, your electricity connection will be disconnected tonight at 9.30 PM as your previous month bill is not up"
     ]
    }
   ]
