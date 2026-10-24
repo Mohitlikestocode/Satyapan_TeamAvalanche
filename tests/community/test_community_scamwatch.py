@@ -356,3 +356,9 @@ def test_database_has_no_unhashed_device():
     for path in db.home().glob("*.db"):
         assert dev.encode() not in path.read_bytes()
     assert sqlite3  # the file is a plain SQLite database
+
+
+def test_post_page_breadcrumb_says_scam_report():
+    c = client()
+    page = c.get(report(c).headers["location"]).text
+    assert '<span aria-current="page">Scam report</span>' in page and '<span aria-current="page">Report</span>' not in page
