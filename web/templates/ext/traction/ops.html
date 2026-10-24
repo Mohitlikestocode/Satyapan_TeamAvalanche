@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="ops-head"><div class="wrap">
+  <h1>{{ tr("Operations", "संचालन") }}</h1>
+  <p class="ops-sub">{{ tr("Staff only. Signed in as", "सिर्फ़ स्टाफ़ के लिए। साइन-इन:") }} <b>{{ me }}</b> · <a href="/impact">{{ tr("Public impact page", "सार्वजनिक असर पन्ना") }}</a> · <a href="/ops/daily.csv">{{ tr("Download daily CSV", "रोज़ का CSV डाउनलोड करें") }}</a></p>
+</div></section>
+<div class="wrap ops-body">
+  <section class="ops-kpis">
+    <div class="ops-kpi"><small>{{ tr("People", "लोग") }}</small><b>{{ s.people }}</b><span>{{ s.since or "-" }}</span></div>
+    <div class="ops-kpi"><small>{{ tr("Checks", "जाँचें") }}</small><b>{{ s.checks }}</b><span>p50 {{ s.p50_ms if s.p50_ms is not none else "-" }} ms · p95 {{ s.p95_ms if s.p95_ms is not none else "-" }} ms</span></div>
+    <div class="ops-kpi"><small>{{ tr("Pilot requests", "पायलट अनुरोध") }}</small><b>{{ s.pilots }}</b><span>{{ pilots|length }} {{ tr("listed below", "नीचे सूची में") }}</span></div>
+    <div class="ops-kpi"><small>{{ tr("Feedback answers", "फ़ीडबैक जवाब") }}</small><b>{{ s.feedback_n }}</b><span>{{ s.feedback_good }} {{ tr("rated 4 or 5", "ने 4 या 5 दिया") }}</span></div>
+  </section>
+
+  <section class="ops-card"><h2>{{ tr("By day (IST)", "दिन के हिसाब से (IST)") }}</h2>
+    <div class="ops-scroll"><table class="tbl"><thead><tr><th>{{ tr("Day", "दिन") }}</th><th>{{ tr("Checks", "जाँचें") }}</th><th>{{ tr("People", "लोग") }}</th></tr></thead><tbody>
+    {% for d in daily|reverse %}<tr><td>{{ d.day }}</td><td>{{ d.checks }}</td><td>{{ d.people }}</td></tr>{% endfor %}</tbody></table></div></section>
+
+  <section class="ops-card"><h2>{{ tr("By referral code (shops and partners)", "रेफ़रल कोड के हिसाब से (दुकानें और साझेदार)") }}</h2>
+    <div class="ops-scroll"><table class="tbl"><thead><tr><th>{{ tr("Code", "कोड") }}</th><th>{{ tr("Name", "नाम") }}</th><th>{{ tr("City", "शहर") }}</th><th>{{ tr("People", "लोग") }}</th><th>{{ tr("Checks", "जाँचें") }}</th></tr></thead><tbody>
+    {% for r in refs %}<tr><td class="mono">{{ r.code }}</td><td>{{ r.name }}</td><td>{{ r.city }}</td><td>{{ r.people }}</td><td>{{ r.checks }}</td></tr>
+    {% else %}<tr><td colspan="5" class="ops-empty">{{ tr("No referral codes used yet.", "अभी कोई रेफ़रल कोड इस्तेमाल नहीं हुआ।") }}</td></tr>{% endfor %}</tbody></table></div></section>
+
+  <section class="ops-card"><h2>{{ tr("Pilot requests", "पायलट अनुरोध") }}</h2>
+    <div class="ops-scroll"><table class="tbl"><thead><tr><th>{{ tr("When", "कब") }}</th><th>{{ tr("Organisation", "संस्था") }}</th><th>{{ tr("Type", "प्रकार") }}</th><th>{{ tr("City", "शहर") }}</th><th>{{ tr("Per week", "हफ़्ते में") }}</th><th>{{ tr("Contact", "संपर्क") }}</th><th>{{ tr("Purpose", "उद्देश्य") }}</th></tr></thead><tbody>
+    {% for p in pilots %}<tr><td>{{ fmt(p.ts) }}{% if p.internal %} <span class="pill pill-n">test</span>{% endif %}</td><td>{{ p.org }}</td><td>{{ p.org_type }}</td><td>{{ p.city }}</td><td>{{ p.weekly_checks or "-" }}</td><td>{{ p.contact or "-" }}</td><td>{{ p.purpose }}</td></tr>
+    {% else %}<tr><td colspan="7" class="ops-empty">{{ tr("None yet.", "अभी कोई नहीं।") }}</td></tr>{% endfor %}</tbody></table></div></section>
+
+  <section class="ops-card"><h2>{{ tr("Feedback", "फ़ीडबैक") }}</h2>
+    <div class="ops-scroll"><table class="tbl"><thead><tr><th>{{ tr("When", "कब") }}</th><th>{{ tr("Rating", "रेटिंग") }}</th><th>{{ tr("Result shown", "दिखाया गया नतीजा") }}</th><th>{{ tr("Comment", "टिप्पणी") }}</th></tr></thead><tbody>
+    {% for f in feedback %}<tr><td>{{ fmt(f.ts) }}{% if f.internal %} <span class="pill pill-n">test</span>{% endif %}</td><td>{{ f.rating }} / 5</td><td>{{ f.tier or "-" }}</td><td>{{ f.comment or "-" }}</td></tr>
+    {% else %}<tr><td colspan="4" class="ops-empty">{{ tr("None yet.", "अभी कोई नहीं।") }}</td></tr>{% endfor %}</tbody></table></div></section>
+</div>
+{% endblock %}
