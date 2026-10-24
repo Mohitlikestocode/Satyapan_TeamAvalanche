@@ -209,7 +209,7 @@ def sections(results_dir: Path | None = None) -> list[Section]:
         Section("text_holdout", ("Messages: held out, written by teammates", "संदेश: अलग रखे गए, टीम के लोगों ने लिखे"),
                 ("Scam and genuine messages written by teammates who did not read the rules. Never used to build or train anything.",
                  "स्कैम और असली संदेश, जो उन टीम सदस्यों ने लिखे जिन्होंने नियम नहीं पढ़े। किसी चीज़ को बनाने या ट्रेन करने में इस्तेमाल नहीं हुए।"),
-                ("scam messages", "स्कैम संदेश"), ("genuine messages", "असली संदेश"), dataset="data/kit/holdout_*.jsonl"),
+                ("scam messages", "स्कैम संदेश"), ("genuine messages", "असली संदेश"), dataset="data/kit/holdout_community.jsonl"),
         Section("text_kit", ("Messages: development kit (optimistic)", "संदेश: डेवलपमेंट किट (आशावादी)"),
                 ("The messages we looked at while writing the rules. Numbers here are optimistic; the held-out row above is the honest one.",
                  "वे संदेश जिन्हें देखकर नियम लिखे गए। ये नतीजे आशावादी हैं; ऊपर वाला अलग रखा गया नतीजा ईमानदार है।"),

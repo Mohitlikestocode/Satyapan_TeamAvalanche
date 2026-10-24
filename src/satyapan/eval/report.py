@@ -3,7 +3,7 @@
 usage: python -m satyapan.eval.report [--out docs/results]
 
 Writes text_kit.json (data/kit/messages.jsonl, which the rules were written against: optimistic) and, when teammates' held-out
-files exist, text_holdout.json (data/kit/holdout_*.jsonl: the honest number). Each has a rules-only baseline row and a row for the
+files exist, text_holdout.json (data/kit/holdout_community.jsonl: the honest number). Each has a rules-only baseline row and a row for the
 whole system as the site runs it (rules plus any installed text models). "Flagged" means SUSPICIOUS or worse.
 """
 from __future__ import annotations
@@ -62,7 +62,9 @@ def measure(paths: list[Path], held_out: bool) -> dict:
 
 def kit_files() -> tuple[list[Path], list[Path]]:
     """(development kit, held-out files). Derived lists such as holdout_*_missed.jsonl repeat messages and are skipped."""
-    return [KIT / "messages.jsonl"], sorted(p for p in KIT.glob("holdout_*.jsonl") if "missed" not in p.stem)
+    # holdout_traction.jsonl was drafted by the same assistant that wrote the rules, so it counts as optimistic, with the development kit
+    held = sorted(p for p in KIT.glob("holdout_*.jsonl") if "missed" not in p.stem and p.stem != "holdout_traction")
+    return [KIT / "messages.jsonl", KIT / "holdout_traction.jsonl"], held
 
 
 def main() -> None:
