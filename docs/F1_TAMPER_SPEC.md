@@ -19,7 +19,7 @@ Image-level score = max of the predicted mask. Input 384x704, mixed precision, 8
 1. Image-level TPR and FPR at one threshold fixed on `val`, on `test` styles. Bootstrap 95% intervals.
 2. Localisation: IoU of the predicted box with the true box on edited test images.
 3. Per condition: clean, JPEG q40, shrunk to 60%.
-4. **Real-world check**: at least 50 screenshots edited by teammates in real phone/photo editors (consented, names and numbers covered) and 100 genuine screenshots. Report these separately. They are the honest number.
+4. **Real-world check: not done, on purpose.** The team decided not to collect real payment screenshots: we do not use anyone's payment data without permission. Report every screenshot number as "synthetic, held-out styles; not evaluated on real phone screenshots".
 5. Baselines in the same table: a naive error-level-analysis heuristic, and (if time) the pretrained CommunityForensics image model.
 
 ## Known limits to state on stage

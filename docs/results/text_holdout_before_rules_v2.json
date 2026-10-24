@@ -1,0 +1,880 @@
+{
+ "schema": 1,
+ "dataset": "data/kit/holdout_community.jsonl",
+ "split": "80 messages",
+ "held_out": true,
+ "hardware": "CPU: Intel64 Family 6 Model 183 Stepping 1, GenuineIntel (Windows)",
+ "date": "2026-10-24 17:20 UTC",
+ "elapsed_s": 0.55,
+ "reproduce": "python -m satyapan.eval.report",
+ "rows": [
+  {
+   "name": "Rules only (baseline)",
+   "baseline": true,
+   "tpr": {
+    "k": 7,
+    "n": 40,
+    "rate": 0.175,
+    "lo": 0.08745302996883066,
+    "hi": 0.3195029205439244
+   },
+   "fpr": {
+    "k": 0,
+    "n": 40,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.08762453925039232
+   }
+  },
+  {
+   "name": "Whole system as deployed",
+   "baseline": false,
+   "tpr": {
+    "k": 12,
+    "n": 40,
+    "rate": 0.3,
+    "lo": 0.18074670915695296,
+    "hi": 0.454303106543204
+   },
+   "fpr": {
+    "k": 0,
+    "n": 40,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.08762453925039232
+   }
+  },
+  {
+   "name": "Whole system: HIGH RISK only",
+   "baseline": false,
+   "tpr": {
+    "k": 2,
+    "n": 40,
+    "rate": 0.05,
+    "lo": 0.013820377146101098,
+    "hi": 0.165041708179252
+   },
+   "fpr": {
+    "k": 0,
+    "n": 40,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.08762453925039232
+   }
+  }
+ ],
+ "conditions": [
+  {
+   "name": "family:ad_marketing",
+   "row": "Whole system as deployed",
+   "tpr": null,
+   "fpr": {
+    "k": 0,
+    "n": 2,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.6576280471103807
+   }
+  },
+  {
+   "name": "family:awareness",
+   "row": "Whole system as deployed",
+   "tpr": null,
+   "fpr": {
+    "k": 0,
+    "n": 3,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.5615060804490177
+   }
+  },
+  {
+   "name": "family:bank_alert",
+   "row": "Whole system as deployed",
+   "tpr": null,
+   "fpr": {
+    "k": 0,
+    "n": 3,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.5615060804490177
+   }
+  },
+  {
+   "name": "family:bank_kyc_genuine",
+   "row": "Whole system as deployed",
+   "tpr": null,
+   "fpr": {
+    "k": 0,
+    "n": 1,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.7934567085261071
+   }
+  },
+  {
+   "name": "family:broker_genuine",
+   "row": "Whole system as deployed",
+   "tpr": null,
+   "fpr": {
+    "k": 0,
+    "n": 2,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.6576280471103807
+   }
+  },
+  {
+   "name": "family:community",
+   "row": "Whole system as deployed",
+   "tpr": null,
+   "fpr": {
+    "k": 0,
+    "n": 1,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.7934567085261071
+   }
+  },
+  {
+   "name": "family:courier",
+   "row": "Whole system as deployed",
+   "tpr": {
+    "k": 0,
+    "n": 1,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.7934567085261071
+   },
+   "fpr": null
+  },
+  {
+   "name": "family:crypto_investment",
+   "row": "Whole system as deployed",
+   "tpr": {
+    "k": 0,
+    "n": 2,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.6576280471103807
+   },
+   "fpr": null
+  },
+  {
+   "name": "family:delivery",
+   "row": "Whole system as deployed",
+   "tpr": null,
+   "fpr": {
+    "k": 0,
+    "n": 3,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.5615060804490177
+   }
+  },
+  {
+   "name": "family:digital_arrest",
+   "row": "Whole system as deployed",
+   "tpr": {
+    "k": 0,
+    "n": 3,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.5615060804490177
+   },
+   "fpr": null
+  },
+  {
+   "name": "family:doctor",
+   "row": "Whole system as deployed",
+   "tpr": null,
+   "fpr": {
+    "k": 0,
+    "n": 2,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.6576280471103807
+   }
+  },
+  {
+   "name": "family:electricity_cut",
+   "row": "Whole system as deployed",
+   "tpr": {
+    "k": 0,
+    "n": 2,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.6576280471103807
+   },
+   "fpr": null
+  },
+  {
+   "name": "family:fake_app",
+   "row": "Whole system as deployed",
+   "tpr": {
+    "k": 0,
+    "n": 1,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.7934567085261071
+   },
+   "fpr": null
+  },
+  {
+   "name": "family:fake_loan_app",
+   "row": "Whole system as deployed",
+   "tpr": {
+    "k": 0,
+    "n": 2,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.6576280471103807
+   },
+   "fpr": null
+  },
+  {
+   "name": "family:fake_payment_screenshot",
+   "row": "Whole system as deployed",
+   "tpr": {
+    "k": 1,
+    "n": 2,
+    "rate": 0.5,
+    "lo": 0.09452865480086614,
+    "hi": 0.9054713451991339
+   },
+   "fpr": null
+  },
+  {
+   "name": "family:fake_support",
+   "row": "Whole system as deployed",
+   "tpr": {
+    "k": 2,
+    "n": 3,
+    "rate": 0.6666666666666666,
+    "lo": 0.2076549551264879,
+    "hi": 0.9385096847238394
+   },
+   "fpr": null
+  },
+  {
+   "name": "family:family",
+   "row": "Whole system as deployed",
+   "tpr": null,
+   "fpr": {
+    "k": 0,
+    "n": 3,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.5615060804490177
+   }
+  },
+  {
+   "name": "family:fastag_recharge",
+   "row": "Whole system as deployed",
+   "tpr": {
+    "k": 0,
+    "n": 1,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.7934567085261071
+   },
+   "fpr": null
+  },
+  {
+   "name": "family:fd_rate",
+   "row": "Whole system as deployed",
+   "tpr": null,
+   "fpr": {
+    "k": 0,
+    "n": 1,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.7934567085261071
+   }
+  },
+  {
+   "name": "family:friend",
+   "row": "Whole system as deployed",
+   "tpr": null,
+   "fpr": {
+    "k": 0,
+    "n": 1,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.7934567085261071
+   }
+  },
+  {
+   "name": "family:income_tax_genuine",
+   "row": "Whole system as deployed",
+   "tpr": null,
+   "fpr": {
+    "k": 0,
+    "n": 1,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.7934567085261071
+   }
+  },
+  {
+   "name": "family:insurance_bonus",
+   "row": "Whole system as deployed",
+   "tpr": {
+    "k": 0,
+    "n": 1,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.7934567085261071
+   },
+   "fpr": null
+  },
+  {
+   "name": "family:insurance_premium",
+   "row": "Whole system as deployed",
+   "tpr": null,
+   "fpr": {
+    "k": 0,
+    "n": 1,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.7934567085261071
+   }
+  },
+  {
+   "name": "family:investment",
+   "row": "Whole system as deployed",
+   "tpr": {
+    "k": 2,
+    "n": 2,
+    "rate": 1.0,
+    "lo": 0.34237195288961925,
+    "hi": 1.0
+   },
+   "fpr": null
+  },
+  {
+   "name": "family:invoice_change",
+   "row": "Whole system as deployed",
+   "tpr": {
+    "k": 1,
+    "n": 1,
+    "rate": 1.0,
+    "lo": 0.20654329147389294,
+    "hi": 1.0
+   },
+   "fpr": null
+  },
+  {
+   "name": "family:job_task",
+   "row": "Whole system as deployed",
+   "tpr": {
+    "k": 1,
+    "n": 3,
+    "rate": 0.3333333333333333,
+    "lo": 0.0614903152761605,
+    "hi": 0.7923450448735121
+   },
+   "fpr": null
+  },
+  {
+   "name": "family:kyc_link",
+   "row": "Whole system as deployed",
+   "tpr": {
+    "k": 2,
+    "n": 3,
+    "rate": 0.6666666666666666,
+    "lo": 0.2076549551264879,
+    "hi": 0.9385096847238394
+   },
+   "fpr": null
+  },
+  {
+   "name": "family:lottery",
+   "row": "Whole system as deployed",
+   "tpr": {
+    "k": 0,
+    "n": 2,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.6576280471103807
+   },
+   "fpr": null
+  },
+  {
+   "name": "family:matrimony",
+   "row": "Whole system as deployed",
+   "tpr": {
+    "k": 0,
+    "n": 1,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.7934567085261071
+   },
+   "fpr": null
+  },
+  {
+   "name": "family:office",
+   "row": "Whole system as deployed",
+   "tpr": null,
+   "fpr": {
+    "k": 0,
+    "n": 2,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.6576280471103807
+   }
+  },
+  {
+   "name": "family:olx_advance",
+   "row": "Whole system as deployed",
+   "tpr": {
+    "k": 1,
+    "n": 1,
+    "rate": 1.0,
+    "lo": 0.20654329147389294,
+    "hi": 1.0
+   },
+   "fpr": null
+  },
+  {
+   "name": "family:otp_notice",
+   "row": "Whole system as deployed",
+   "tpr": null,
+   "fpr": {
+    "k": 0,
+    "n": 3,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.5615060804490177
+   }
+  },
+  {
+   "name": "family:parcel_fee",
+   "row": "Whole system as deployed",
+   "tpr": {
+    "k": 1,
+    "n": 1,
+    "rate": 1.0,
+    "lo": 0.20654329147389294,
+    "hi": 1.0
+   },
+   "fpr": null
+  },
+  {
+   "name": "family:railway",
+   "row": "Whole system as deployed",
+   "tpr": null,
+   "fpr": {
+    "k": 0,
+    "n": 2,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.6576280471103807
+   }
+  },
+  {
+   "name": "family:refund_trap",
+   "row": "Whole system as deployed",
+   "tpr": {
+    "k": 0,
+    "n": 2,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.6576280471103807
+   },
+   "fpr": null
+  },
+  {
+   "name": "family:relative_emergency",
+   "row": "Whole system as deployed",
+   "tpr": {
+    "k": 0,
+    "n": 3,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.5615060804490177
+   },
+   "fpr": null
+  },
+  {
+   "name": "family:rental_deposit",
+   "row": "Whole system as deployed",
+   "tpr": {
+    "k": 0,
+    "n": 1,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.7934567085261071
+   },
+   "fpr": null
+  },
+  {
+   "name": "family:school_fees",
+   "row": "Whole system as deployed",
+   "tpr": null,
+   "fpr": {
+    "k": 0,
+    "n": 3,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.5615060804490177
+   }
+  },
+  {
+   "name": "family:sextortion_threat",
+   "row": "Whole system as deployed",
+   "tpr": {
+    "k": 1,
+    "n": 1,
+    "rate": 1.0,
+    "lo": 0.20654329147389294,
+    "hi": 1.0
+   },
+   "fpr": null
+  },
+  {
+   "name": "family:tax_refund",
+   "row": "Whole system as deployed",
+   "tpr": {
+    "k": 0,
+    "n": 1,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.7934567085261071
+   },
+   "fpr": null
+  },
+  {
+   "name": "family:telecom",
+   "row": "Whole system as deployed",
+   "tpr": null,
+   "fpr": {
+    "k": 0,
+    "n": 3,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.5615060804490177
+   }
+  },
+  {
+   "name": "family:utility_bill",
+   "row": "Whole system as deployed",
+   "tpr": null,
+   "fpr": {
+    "k": 0,
+    "n": 3,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.5615060804490177
+   }
+  },
+  {
+   "name": "lang:en",
+   "row": "Whole system as deployed",
+   "tpr": {
+    "k": 4,
+    "n": 16,
+    "rate": 0.25,
+    "lo": 0.10181901984237346,
+    "hi": 0.49498768929398645
+   },
+   "fpr": {
+    "k": 0,
+    "n": 16,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.19361341827271994
+   }
+  },
+  {
+   "name": "lang:hi",
+   "row": "Whole system as deployed",
+   "tpr": {
+    "k": 4,
+    "n": 12,
+    "rate": 0.3333333333333333,
+    "lo": 0.13811783989736134,
+    "hi": 0.609382412602386
+   },
+   "fpr": {
+    "k": 0,
+    "n": 12,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.2425007574992425
+   }
+  },
+  {
+   "name": "lang:hinglish",
+   "row": "Whole system as deployed",
+   "tpr": {
+    "k": 4,
+    "n": 12,
+    "rate": 0.3333333333333333,
+    "lo": 0.13811783989736134,
+    "hi": 0.609382412602386
+   },
+   "fpr": {
+    "k": 0,
+    "n": 12,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.2425007574992425
+   }
+  }
+ ],
+ "failures": [
+  {
+   "kind": "missed",
+   "text": "This is Inspector Verma, Mumbai Cyber Cell. A SIM card in your name was used for illegal activity. Do not disconnect this video call or inform anyone. Transfer ",
+   "tier": "NO_RED_FLAGS",
+   "codes": [
+    "NO_PAYEE_FOUND",
+    "NO_FLAGS_NOT_GUARANTEE"
+   ]
+  },
+  {
+   "kind": "missed",
+   "text": "Dear consumer, your electricity connection will be disconnected tonight at 9.30 PM as your previous month bill is not updated. Call the officer immediately on 8",
+   "tier": "NO_RED_FLAGS",
+   "codes": [
+    "NO_PAYEE_FOUND",
+    "NO_FLAGS_NOT_GUARANTEE"
+   ]
+  },
+  {
+   "kind": "missed",
+   "text": "Instant personal loan up to Rs 5 lakh without documents. Install LoanEase from the link, allow access to contacts and gallery, pay Rs 1,500 processing fee to ac",
+   "tier": "NO_RED_FLAGS",
+   "codes": [
+    "NO_PAYEE_FOUND",
+    "NO_FLAGS_NOT_GUARANTEE"
+   ]
+  },
+  {
+   "kind": "missed",
+   "text": "Join our USDT trading signals group. Members made 4x in 10 days. Deposit minimum 10,000 on our platform and withdraw anytime. Our manager Priya will guide you p",
+   "tier": "NO_RED_FLAGS",
+   "codes": [
+    "NO_PAYEE_FOUND",
+    "NO_FLAGS_NOT_GUARANTEE"
+   ]
+  },
+  {
+   "kind": "missed",
+   "text": "Your old LIC policy has matured with a bonus of Rs 3,85,000. To release the amount, pay GST and clearance charges of Rs 7,800 to the nodal account.",
+   "tier": "NO_RED_FLAGS",
+   "codes": [
+    "NO_PAYEE_FOUND",
+    "NO_FLAGS_NOT_GUARANTEE"
+   ]
+  },
+  {
+   "kind": "missed",
+   "text": "I am a doctor settled in London, I want to send you a gift parcel worth 20,000 pounds. Customs has stopped it. Please pay Rs 25,000 as clearance fee so I can ma",
+   "tier": "NO_RED_FLAGS",
+   "codes": [
+    "NO_PAYEE_FOUND",
+    "NO_FLAGS_NOT_GUARANTEE"
+   ]
+  },
+  {
+   "kind": "missed",
+   "text": "Flat available at Rs 9,000 in Sector 62, owner is out of station. Pay the token amount Rs 5,000 to book it, my cousin will hand over the keys on Sunday.",
+   "tier": "NO_RED_FLAGS",
+   "codes": [
+    "NO_PAYEE_FOUND",
+    "NO_FLAGS_NOT_GUARANTEE"
+   ]
+  },
+  {
+   "kind": "missed",
+   "text": "Sir please see I have paid Rs 4,500 for the order, screenshot attached. My bank server is slow so you may not get the SMS. Please dispatch the goods today itsel",
+   "tier": "NO_RED_FLAGS",
+   "codes": [
+    "NO_PAYEE_FOUND",
+    "NO_FLAGS_NOT_GUARANTEE"
+   ]
+  },
+  {
+   "kind": "missed",
+   "text": "Income Tax Dept: You are eligible for a refund of Rs 24,560. Confirm your bank account details and the OTP sent to you at the link below to receive it. incometa",
+   "tier": "NO_RED_FLAGS",
+   "codes": [
+    "NO_PAYEE_FOUND",
+    "NO_FLAGS_NOT_GUARANTEE"
+   ]
+  },
+  {
+   "kind": "missed",
+   "text": "Congratulations, you are selected for work from home. Rate hotels and earn Rs 800 per task. First 3 tasks are free, further tasks need a prepaid deposit that is",
+   "tier": "NO_RED_FLAGS",
+   "codes": [
+    "NO_PAYEE_FOUND",
+    "NO_FLAGS_NOT_GUARANTEE"
+   ]
+  },
+  {
+   "kind": "missed",
+   "text": "Your FASTag wallet balance is negative and your vehicle will be blacklisted at toll plazas. Recharge now through this link to avoid a fine: fastag-recharge.vip",
+   "tier": "NO_RED_FLAGS",
+   "codes": [
+    "NO_PAYEE_FOUND",
+    "NO_FLAGS_NOT_GUARANTEE"
+   ]
+  },
+  {
+   "kind": "missed",
+   "text": "Beta this is your uncle, my phone is dead and I am using a friend's number. I met with an accident and need Rs 40,000 for the hospital immediately. Send to this",
+   "tier": "NO_RED_FLAGS",
+   "codes": [
+    "NO_PAYEE_FOUND",
+    "NO_FLAGS_NOT_GUARANTEE"
+   ]
+  },
+  {
+   "kind": "missed",
+   "text": "मैं सीबीआई अधिकारी बोल रहा हूँ। आपके आधार से मनी लॉन्ड्रिंग का केस दर्ज है। आप डिजिटल अरेस्ट में हैं, वीडियो कॉल चालू रखें और किसी को न बताएँ। जाँच के लिए सुरक्",
+   "tier": "NO_RED_FLAGS",
+   "codes": [
+    "NO_PAYEE_FOUND",
+    "NO_FLAGS_NOT_GUARANTEE"
+   ]
+  },
+  {
+   "kind": "missed",
+   "text": "आपका ऑर्डर कैंसिल हो गया है और 2,299 रुपये रिफ़ंड होंगे। रिफ़ंड पाने के लिए अपने यूपीआई ऐप में आया अनुरोध स्वीकार करें और पिन डालें।",
+   "tier": "NO_RED_FLAGS",
+   "codes": [
+    "NO_PAYEE_FOUND",
+    "NO_FLAGS_NOT_GUARANTEE"
+   ]
+  },
+  {
+   "kind": "missed",
+   "text": "बधाई हो! केबीसी लकी ड्रॉ में आपका नंबर 25 लाख रुपये के लिए चुना गया है। इनाम लेने के लिए 12,500 रुपये टैक्स इस खाते में जमा करें।",
+   "tier": "NO_RED_FLAGS",
+   "codes": [
+    "NO_PAYEE_FOUND",
+    "NO_FLAGS_NOT_GUARANTEE"
+   ]
+  },
+  {
+   "kind": "missed",
+   "text": "घर बैठे वीडियो लाइक करके रोज़ 3,000 रुपये कमाएँ। टेलीग्राम पर जुड़ें। पंजीकरण शुल्क 500 रुपये। पहला भुगतान तुरंत।",
+   "tier": "NO_RED_FLAGS",
+   "codes": [
+    "NO_PAYEE_FOUND",
+    "NO_FLAGS_NOT_GUARANTEE"
+   ]
+  },
+  {
+   "kind": "missed",
+   "text": "आपके गैस कनेक्शन की सब्सिडी रुकी है। सहायता के लिए एनीडेस्क ऐप डालें और स्क्रीन पर दिख रहा कोड हमारे एजेंट को बताएँ।",
+   "tier": "NO_RED_FLAGS",
+   "codes": [
+    "NO_PAYEE_FOUND",
+    "NO_FLAGS_NOT_GUARANTEE"
+   ]
+  },
+  {
+   "kind": "missed",
+   "text": "हमारा ट्रेडिंग ऐप डाउनलोड करें और पहले दिन 2 लाख का मुनाफ़ा पाएँ। निकासी के लिए 20 प्रतिशत इनकम टैक्स पहले जमा करना होगा।",
+   "tier": "NO_RED_FLAGS",
+   "codes": [
+    "NO_PAYEE_FOUND",
+    "NO_FLAGS_NOT_GUARANTEE"
+   ]
+  },
+  {
+   "kind": "missed",
+   "text": "मम्मी, मेरा फ़ोन गिरकर टूट गया है, यह मेरे दोस्त का नंबर है। अभी 15,000 रुपये इसी नंबर पर फ़ोनपे कर दो, बहुत ज़रूरी है, पापा को मत बताना।",
+   "tier": "NO_RED_FLAGS",
+   "codes": [
+    "NO_PAYEE_FOUND",
+    "NO_FLAGS_NOT_GUARANTEE"
+   ]
+  },
+  {
+   "kind": "missed",
+   "text": "बिजली विभाग: आपका पिछला बिल बकाया है, आज रात 9:30 बजे कनेक्शन काट दिया जाएगा। तुरंत इस नंबर पर बात करें और ऐप से भुगतान करें।",
+   "tier": "NO_RED_FLAGS",
+   "codes": [
+    "NO_PAYEE_FOUND",
+    "NO_FLAGS_NOT_GUARANTEE"
+   ]
+  },
+  {
+   "kind": "missed",
+   "text": "Aapka bank account aaj band ho jayega kyunki KYC pending hai. Turant is link par click karke update karo: hdfc-kyc-verify.in/update",
+   "tier": "NO_RED_FLAGS",
+   "codes": [
+    "NO_PAYEE_FOUND",
+    "NO_FLAGS_NOT_GUARANTEE"
+   ]
+  },
+  {
+   "kind": "missed",
+   "text": "Sir aapka Amazon ka refund 3,499 aa gaya hai. UPI app me request aayegi usse approve karke PIN daal do, paise turant mil jayenge.",
+   "tier": "NO_RED_FLAGS",
+   "codes": [
+    "NO_PAYEE_FOUND",
+    "NO_FLAGS_NOT_GUARANTEE"
+   ]
+  },
+  {
+   "kind": "missed",
+   "text": "Congratulations! Aapne Jio lucky draw me 15 lakh jeete hain. Prize claim karne ke liye 9,800 rupaye processing fee is account me bhejo.",
+   "tier": "NO_RED_FLAGS",
+   "codes": [
+    "NO_PAYEE_FOUND",
+    "NO_FLAGS_NOT_GUARANTEE"
+   ]
+  },
+  {
+   "kind": "missed",
+   "text": "Main Delhi Police se bol raha hu. Aapke naam se ek parcel pakda gaya hai jisme drugs hain. Aap video call par bane rahiye aur kisi ko mat bataiye. Case band kar",
+   "tier": "NO_RED_FLAGS",
+   "codes": [
+    "NO_PAYEE_FOUND",
+    "NO_FLAGS_NOT_GUARANTEE"
+   ]
+  },
+  {
+   "kind": "missed",
+   "text": "Papa mera accident ho gaya hai, abhi hospital me hu. Phone toot gaya, ye naya number hai. 25,000 abhi isi number par bhej do, baad me samjhaunga.",
+   "tier": "NO_RED_FLAGS",
+   "codes": [
+    "NO_PAYEE_FOUND",
+    "NO_FLAGS_NOT_GUARANTEE"
+   ]
+  },
+  {
+   "kind": "missed",
+   "text": "Instant loan 50,000 tak bina CIBIL check ke. App download karo, contacts access allow karo, pehle 999 insurance fees pay karo to loan approve hoga.",
+   "tier": "NO_RED_FLAGS",
+   "codes": [
+    "NO_PAYEE_FOUND",
+    "NO_FLAGS_NOT_GUARANTEE"
+   ]
+  },
+  {
+   "kind": "missed",
+   "text": "Aapka courier undelivered hai. Address update karne ke liye 25 rupaye ki charge is link par pay karo: bluedart-redeliver.xyz",
+   "tier": "NO_RED_FLAGS",
+   "codes": [
+    "NO_PAYEE_FOUND",
+    "NO_FLAGS_NOT_GUARANTEE"
+   ]
+  },
+  {
+   "kind": "missed",
+   "text": "Bitcoin mining ke liye hamare platform me invest karo. Ek mahine me paisa double. Withdrawal ke liye pehle 15% tax account manager ko bhejna padega.",
+   "tier": "NO_RED_FLAGS",
+   "codes": [
+    "NO_PAYEE_FOUND",
+    "NO_FLAGS_NOT_GUARANTEE"
+   ]
+  }
+ ]
+}

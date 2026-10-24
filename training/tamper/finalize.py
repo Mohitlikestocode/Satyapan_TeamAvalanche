@@ -5,8 +5,8 @@ usage (from the repo root): python training/tamper/finalize.py [--runs var/model
 Choice rule (from the team brief): pick by the TEST split, never by validation. We take the highest test AUROC; the
 threshold inside each checkpoint was fixed on validation and is not changed. Writes docs/results/tamper_test.json (chosen)
 and docs/results/tamper_test_<run>.json (others), copies the chosen checkpoint to $SATYAPAN_HOME/models/tamper.pt.
-Note for the Results page: choosing between runs on test makes the chosen test number slightly optimistic; the real-screenshot
-set (evaluate_real.py) is the independent check.
+Note for the Results page: choosing between runs on test makes the chosen test number slightly optimistic. All of it is
+synthetic, held-out styles; not evaluated on real phone screenshots.
 """
 from __future__ import annotations
 

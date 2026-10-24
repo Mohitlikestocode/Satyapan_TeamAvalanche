@@ -1,0 +1,394 @@
+{
+ "schema": 1,
+ "dataset": "data/kit/messages.jsonl",
+ "split": "71 messages",
+ "held_out": false,
+ "hardware": "CPU: Intel64 Family 6 Model 183 Stepping 1, GenuineIntel (Windows)",
+ "date": "2026-10-24 17:20 UTC",
+ "elapsed_s": 8.22,
+ "reproduce": "python -m satyapan.eval.report",
+ "rows": [
+  {
+   "name": "Rules only (baseline)",
+   "baseline": true,
+   "tpr": {
+    "k": 37,
+    "n": 38,
+    "rate": 0.9736842105263158,
+    "lo": 0.8650482156319974,
+    "hi": 0.9953395324464698
+   },
+   "fpr": {
+    "k": 0,
+    "n": 33,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.10427343003561192
+   }
+  },
+  {
+   "name": "Whole system as deployed",
+   "baseline": false,
+   "tpr": {
+    "k": 38,
+    "n": 38,
+    "rate": 1.0,
+    "lo": 0.90818706741616,
+    "hi": 0.9999999999999999
+   },
+   "fpr": {
+    "k": 2,
+    "n": 33,
+    "rate": 0.06060606060606061,
+    "lo": 0.016780530429070947,
+    "hi": 0.19606581717798194
+   }
+  },
+  {
+   "name": "Whole system: HIGH RISK only",
+   "baseline": false,
+   "tpr": {
+    "k": 8,
+    "n": 38,
+    "rate": 0.21052631578947367,
+    "lo": 0.1107466035209593,
+    "hi": 0.36346088376442165
+   },
+   "fpr": {
+    "k": 0,
+    "n": 33,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.10427343003561192
+   }
+  }
+ ],
+ "conditions": [
+  {
+   "name": "family:ad_marketing",
+   "row": "Whole system as deployed",
+   "tpr": null,
+   "fpr": {
+    "k": 0,
+    "n": 3,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.5615060804490177
+   }
+  },
+  {
+   "name": "family:awareness",
+   "row": "Whole system as deployed",
+   "tpr": null,
+   "fpr": {
+    "k": 0,
+    "n": 2,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.6576280471103807
+   }
+  },
+  {
+   "name": "family:bank_alert",
+   "row": "Whole system as deployed",
+   "tpr": null,
+   "fpr": {
+    "k": 0,
+    "n": 4,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.48990002040399916
+   }
+  },
+  {
+   "name": "family:broker_genuine",
+   "row": "Whole system as deployed",
+   "tpr": null,
+   "fpr": {
+    "k": 0,
+    "n": 4,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.48990002040399916
+   }
+  },
+  {
+   "name": "family:community",
+   "row": "Whole system as deployed",
+   "tpr": null,
+   "fpr": {
+    "k": 1,
+    "n": 2,
+    "rate": 0.5,
+    "lo": 0.09452865480086614,
+    "hi": 0.9054713451991339
+   }
+  },
+  {
+   "name": "family:delivery",
+   "row": "Whole system as deployed",
+   "tpr": null,
+   "fpr": {
+    "k": 0,
+    "n": 3,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.5615060804490177
+   }
+  },
+  {
+   "name": "family:fake_app",
+   "row": "Whole system as deployed",
+   "tpr": {
+    "k": 3,
+    "n": 3,
+    "rate": 1.0,
+    "lo": 0.43849391955098227,
+    "hi": 1.0
+   },
+   "fpr": null
+  },
+  {
+   "name": "family:fake_support",
+   "row": "Whole system as deployed",
+   "tpr": {
+    "k": 2,
+    "n": 2,
+    "rate": 1.0,
+    "lo": 0.34237195288961925,
+    "hi": 1.0
+   },
+   "fpr": null
+  },
+  {
+   "name": "family:family",
+   "row": "Whole system as deployed",
+   "tpr": null,
+   "fpr": {
+    "k": 1,
+    "n": 5,
+    "rate": 0.2,
+    "lo": 0.03622316096978745,
+    "hi": 0.6244717358814613
+   }
+  },
+  {
+   "name": "family:fd_rate",
+   "row": "Whole system as deployed",
+   "tpr": null,
+   "fpr": {
+    "k": 0,
+    "n": 2,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.6576280471103807
+   }
+  },
+  {
+   "name": "family:fee_withdraw",
+   "row": "Whole system as deployed",
+   "tpr": {
+    "k": 4,
+    "n": 4,
+    "rate": 1.0,
+    "lo": 0.5100999795960008,
+    "hi": 1.0
+   },
+   "fpr": null
+  },
+  {
+   "name": "family:investment",
+   "row": "Whole system as deployed",
+   "tpr": {
+    "k": 11,
+    "n": 11,
+    "rate": 1.0,
+    "lo": 0.7411599827511859,
+    "hi": 1.0
+   },
+   "fpr": null
+  },
+  {
+   "name": "family:invoice_change",
+   "row": "Whole system as deployed",
+   "tpr": {
+    "k": 3,
+    "n": 3,
+    "rate": 1.0,
+    "lo": 0.43849391955098227,
+    "hi": 1.0
+   },
+   "fpr": null
+  },
+  {
+   "name": "family:job_task",
+   "row": "Whole system as deployed",
+   "tpr": {
+    "k": 3,
+    "n": 3,
+    "rate": 1.0,
+    "lo": 0.43849391955098227,
+    "hi": 1.0
+   },
+   "fpr": null
+  },
+  {
+   "name": "family:kyc_link",
+   "row": "Whole system as deployed",
+   "tpr": {
+    "k": 4,
+    "n": 4,
+    "rate": 1.0,
+    "lo": 0.5100999795960008,
+    "hi": 1.0
+   },
+   "fpr": null
+  },
+  {
+   "name": "family:lottery",
+   "row": "Whole system as deployed",
+   "tpr": {
+    "k": 2,
+    "n": 2,
+    "rate": 1.0,
+    "lo": 0.34237195288961925,
+    "hi": 1.0
+   },
+   "fpr": null
+  },
+  {
+   "name": "family:office",
+   "row": "Whole system as deployed",
+   "tpr": null,
+   "fpr": {
+    "k": 0,
+    "n": 2,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.6576280471103807
+   }
+  },
+  {
+   "name": "family:otp_notice",
+   "row": "Whole system as deployed",
+   "tpr": null,
+   "fpr": {
+    "k": 0,
+    "n": 2,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.6576280471103807
+   }
+  },
+  {
+   "name": "family:parcel_fee",
+   "row": "Whole system as deployed",
+   "tpr": {
+    "k": 2,
+    "n": 2,
+    "rate": 1.0,
+    "lo": 0.34237195288961925,
+    "hi": 1.0
+   },
+   "fpr": null
+  },
+  {
+   "name": "family:refund_trap",
+   "row": "Whole system as deployed",
+   "tpr": {
+    "k": 4,
+    "n": 4,
+    "rate": 1.0,
+    "lo": 0.5100999795960008,
+    "hi": 1.0
+   },
+   "fpr": null
+  },
+  {
+   "name": "family:utility_bill",
+   "row": "Whole system as deployed",
+   "tpr": null,
+   "fpr": {
+    "k": 0,
+    "n": 4,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.48990002040399916
+   }
+  },
+  {
+   "name": "lang:en",
+   "row": "Whole system as deployed",
+   "tpr": {
+    "k": 27,
+    "n": 27,
+    "rate": 1.0,
+    "lo": 0.8754409628553641,
+    "hi": 1.0
+   },
+   "fpr": {
+    "k": 2,
+    "n": 29,
+    "rate": 0.06896551724137931,
+    "lo": 0.019120864097994433,
+    "hi": 0.21964947595851925
+   }
+  },
+  {
+   "name": "lang:hi",
+   "row": "Whole system as deployed",
+   "tpr": {
+    "k": 7,
+    "n": 7,
+    "rate": 1.0,
+    "lo": 0.6456611570247934,
+    "hi": 1.0
+   },
+   "fpr": {
+    "k": 0,
+    "n": 2,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.6576280471103807
+   }
+  },
+  {
+   "name": "lang:hinglish",
+   "row": "Whole system as deployed",
+   "tpr": {
+    "k": 4,
+    "n": 4,
+    "rate": 1.0,
+    "lo": 0.5100999795960008,
+    "hi": 1.0
+   },
+   "fpr": {
+    "k": 0,
+    "n": 2,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.6576280471103807
+   }
+  }
+ ],
+ "failures": [
+  {
+   "kind": "false_alarm",
+   "text": "Sending you Rs 500 for dinner, my UPI is ravi.k@okaxis. Pay me back whenever.",
+   "tier": "SUSPICIOUS",
+   "codes": [
+    "ML_TEXT_SCAM_LIKE",
+    "PAYEE_UNVERIFIED"
+   ]
+  },
+  {
+   "kind": "false_alarm",
+   "text": "Telegram channel for daily current affairs. Free, no payment needed. Join using the link in the school group.",
+   "tier": "SUSPICIOUS",
+   "codes": [
+    "ML_TEXT_SCAM_LIKE",
+    "OFFER_OFFPLATFORM"
+   ]
+  }
+ ]
+}

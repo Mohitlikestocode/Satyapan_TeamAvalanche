@@ -1,4 +1,7 @@
-"""Score the tamper model on REAL screenshots: a folder of ones teammates edited and a folder of genuine ones.
+"""Score the tamper model on REAL screenshots: a folder of edited ones and a folder of genuine ones.
+
+NOT USED at the finale: the team decided not to collect real payment screenshots: we do not use anyone's payment data without permission.
+Kept for a pilot where a partner provides consented screenshots.
 
 usage (from the repo root):
   python training/tamper/evaluate_real.py --ckpt var/models/tamper.pt --edited data/real/edited --genuine data/real/genuine --json docs/results/tamper_real.json

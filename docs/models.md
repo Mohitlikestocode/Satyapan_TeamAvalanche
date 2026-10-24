@@ -13,7 +13,7 @@ Order is by points at risk, with the GPU kept busy while code is written alongsi
 | 2 | **A1 train**: small encoder and ResNet-18 (ImageNet), run unattended on the GPU | Training takes hours; start it early | `var/models/tamper.pt` (not in git), `docs/results/tamper_test.json` |
 | 3 | **A4 `/results`** while training runs: reads `docs/results/*.json`, live "Run the text kit" button | The 30-point accuracy row is this page | `api/ext/models_results.py`, templates under `web/templates/ext/models/` |
 | 4 | **A2 voice notes**: ffmpeg in a locked-down subprocess, faster-whisper, cloned-voice detector, calibration | P0, the only check kind still on a sample page | `plugins/models_voice.py`, `docs/results/voice_*.json` |
-| 5 | **A1 install and `/models/screenshot`**: the "edited amount is circled" page; real-screenshot evaluation | Needs the checkpoint and the real set | `api/ext/models_screenshot.py`, `docs/results/tamper_real.json` |
+| 5 | **A1 install and `/models/screenshot`**: the "edited amount is circled" page | Needs the checkpoint | `api/ext/models_screenshot.py` |
 | 6 | **A4 `/attack`**: real perturbations of text, image and audio, tier drift per perturbation | The 20-point adversarial row | `api/ext/models_attack.py` |
 | 7 | **A3 scam-message classifier** (P1): multilingual-e5-small, scam families held out | Ships only if it beats the rules on held-out messages without more false alarms | `plugins/models_text.py` or a written "kept off, because" |
 | 8 | **A5 model cards** in this file | Every member must be able to explain each model | below |
@@ -38,13 +38,13 @@ model can learn "what genuine looks like for these six screens" instead of "what
 - Report TPR (scams or edits caught) and FPR (genuine wrongly flagged) at that threshold, AUROC, EER for voice,
   95% intervals (Wilson for rates, bootstrap where stated), per condition (clean, JPEG q40, shrunk to 60%; Opus 24k, AAC 64k, 8 kHz telephone).
 - Every table has a baseline row: error-level analysis for screenshots, rules only for text, the second detector for voice.
-- Honest numbers: the real-screenshot set (50 edited, 100 genuine, team-made, consented, kept out of git) and the held-out messages
+- Screenshots are reported as **synthetic, held-out styles; not evaluated on real phone screenshots** (the team decided not to collect real payment screenshots: we do not use anyone's payment data without permission). Messages: the held-out messages
   `data/kit/holdout_*.jsonl` written by B and C. Nothing in `data/kit/` is ever trained on.
 - Failure cases are listed by name on `/results`.
 
 ### What we need from people
 
-- **Ghana**: approve each download over 100 MB; install ffmpeg; collect the real screenshot set; record consented voice notes.
+- **Ghana**: approve each download over 100 MB; install ffmpeg; record consented voice notes (optional).
 - **Tanish and Mohit**: `data/kit/holdout_community.jsonl` and `holdout_traction.jsonl` (40 scam and 40 genuine each, written without reading the rules).
 - **Mohit (integrator)**: receives `tamper.pt` and the voice model files by chat or drive, never git.
 
@@ -84,19 +84,21 @@ Laptop GPU (8 GB) for training and batch evaluation; the site runs the models on
 
 | Check | Data it never trained on | Caught | Wrongly flagged | Other | File |
 |---|---|---|---|---|---|
-| Tamper model, chosen (small U-Net) | 4,966 generated screens, layouts L6+L7 never seen | 975/2,511 edits (39%) | 124/2,455 genuine (5.1%) | AUROC 0.735; box IoU 0.32 | `tamper_test.json` |
-| **Whole screenshot check as deployed** (OCR + rules + tamper model + fusion) | 300 screens from test layouts (150 edited, 150 genuine) | 62/150 edited flagged (41%) | **23/150 genuine (15%)**: 14 by the core payee rules, 9 by the edit sign | edit sign alone: 55/150 vs 9/150; CAN'T TELL 1/300 | `screenshot_system.json` |
+| Tamper model, chosen (small U-Net): **synthetic, held-out styles; not evaluated on real phone screenshots** | 4,966 generated screens, layouts L6+L7 never seen | 975/2,511 edits (39%) | 124/2,455 genuine (5.1%) | AUROC 0.735; box IoU 0.32 | `tamper_test.json` |
+| **Whole screenshot check as deployed** (OCR + rules + tamper model + fusion): **synthetic, held-out styles; not evaluated on real phone screenshots** | 300 screens from test layouts (150 edited, 150 genuine) | 62/150 edited flagged (41%) | **23/150 genuine (15%)**: 14 by the core payee rules, 9 by the edit sign | edit sign alone: 55/150 vs 9/150; CAN'T TELL 1/300 | `screenshot_system.json` |
 | Tamper model, ResNet-18 (not chosen) | same | 954/2,511 (38%) | 130/2,455 (5.3%) | AUROC 0.697 | `tamper_test_resnet18.json` |
 | Baseline: error-level analysis | same | | | AUROC 0.512 | inside both files |
 | Voice detector as deployed (Spectra-AASIST3 alone) | 969 clips from test speakers x 4 conditions | 1,980/1,980 fakes | 78/1,884 real (4.1%) | EER 3.1% (CI 2.4-3.9%) | `voice_test.json` |
 | Second voice detector (excluded) | same | 1/1,980 | 68/1,884 | EER 65.6%: worse than chance on our data | `voice_test.json` |
-| **Messages, held out: rules only** | `holdout_community.jsonl` (Tanish; 40 scam, 40 genuine) | **7/40 scams (17%, CI 9-32%)** | **0/40 genuine (CI 0-9%)** | HIGH RISK 2/40 | `text_holdout.json` (`rules_only` row) |
-| **Messages, held out: as deployed (rules + hidden-word check + scam-message model)** | same | **12/40 scams (30%, CI 18-45%)** | **0/40 genuine (CI 0-9%)** | 28 scams still missed, listed in the file | `text_holdout.json` |
-| Message rules (dev kit, optimistic) | `data/kit/messages.jsonl` | 37/38 scams | 0/33 genuine | HIGH RISK on 8/38 scams | `text_kit.json` |
+| **Messages, held out (Tanish), as deployed: rules + hidden-word check + scam-message model** | `holdout_community.jsonl` (40 scam, 40 genuine) | **25/40 scams (62%)** | **0/40 genuine** | measured after the main merge (India rules); the rule author had seen a few lines of this file | `text_holdout.json` |
+| Messages, held out (Tanish), rules only | same | 18/40 (45%) | 0/40 | | `text_holdout.json` (`rules_only` row) |
+| Messages, held out (Tanish), before the India rules: rules only -> as deployed | same | 7/40 -> 12/40 | 0/40 -> 0/40 | the first, cleanest measurement | `text_holdout_before_rules_v2.json` |
+| Messages, Mohit's set (**tuned-on, indicative only**) | `holdout_traction.jsonl` | rules 32/40, as deployed 36/40 | 0/40 | the India rules were written after this file existed; never pooled with the held-out number | `text_holdout_tuned.json` |
+| Message rules (dev kit, optimistic) | `data/kit/messages.jsonl` | 38/38 scams | 0/33 genuine | HIGH RISK on 13/38 scams | `text_kit.json` |
 | Messages, dev kit, as deployed | same | 38/38 | **2/33 genuine** (the model's cost on this kit) | | `text_kit.json` |
 | Scam-message model, full fine-tune | 79 team scams, each family held out | 23/79 (29%) | 2/62 genuine out of fold | head-only: 2/79 | `text_model_cv.json` |
-| Scam-message model ship test (rule fixed before the run) | held-out set | 7 -> 12 of 40 | 0 -> 0 of 40 | **shipped** (on the dev kit: 0 -> 2 of 33 genuine) | `text_model_decision.json` |
-| Attack sweep, rules alone -> as deployed | scams the checks flag in dev kit + held-out set | look-alike letters 37/44 -> 0/50 slip through; spacing 11/44 -> 0/50; split UPI 4/44 -> 0/50; Hinglish 7/44 -> 2/50 | genuine with the same tricks flagged, as deployed: 2 -> 14 of 73 | the hidden-word check was written after seeing these gaps: optimistic | `attack_text.json` |
+| Scam-message model ship test (rule fixed before the run) | Tanish's held-out set | 7 -> 12 of 40 before the India rules; 18 -> 25 after | 0 -> 0 of 40 both times | **shipped** (on the dev kit: 0 -> 2 of 33 genuine) | `text_model_decision.json`, `text_model_decision_before_rules_v2.json` |
+| Attack sweep, rules alone -> as deployed | scams the checks flag in the dev kit and both held-out sets | look-alike letters 75/88 -> 0/99 slip through; spacing 29/88 -> 1/99; split UPI 3/88 -> 0/99; Hinglish 21/88 -> 8/99 | genuine with the same tricks applied, flagged as deployed: 2 -> 22 of 113 | the hidden-word check was written after seeing these gaps: optimistic | `attack_text.json` |
 
 ### Voice by condition (Spectra-AASIST3, test speakers)
 
@@ -110,8 +112,7 @@ Laptop GPU (8 GB) for training and batch evaluation; the site runs the models on
 
 ### Not evaluated (yet)
 
-- **Real, team-edited payment screenshots** (`tamper_real.json`): waiting for the 50 edited + 100 genuine set.
-- **Mohit's held-out messages** (`holdout_traction.jsonl`): not received yet. Tanish's set is measured above.
+- **Real phone screenshots: not evaluated, on purpose** (the team decided not to collect real payment screenshots: we do not use anyone's payment data without permission). Every screenshot number here is synthetic, held-out styles; not evaluated on real phone screenshots.
 - **Fresh voice clones** (a current TTS on a consenting teammate's voice): not evaluated. All fakes above come from public datasets.
 - PDF edit traces, QR decoding and OCR accuracy on their own; the judges' kit.
 
@@ -123,11 +124,11 @@ Laptop GPU (8 GB) for training and batch evaluation; the site runs the models on
 3. **The voice detector's perfect catch rate is suspicious**: the fakes come from public generators the detector may have been trained
    on. We do not know how it does on a voice clone made today.
 4. **A cloned voice saying harmless words is not flagged** unless the voice sign is strong: one weak forensic sign never raises a flag.
-5. **Most scams outside our own kit are still missed**: on Tanish's held-out set the site catches 12 of 40. Misses span every
-   family and language: digital arrest, electricity cut, sextortion, loan apps, crypto, job tasks, lottery, relative emergency,
-   refund traps, fake payment screenshots (full list in `docs/results/text_holdout.json`). The rules know the stock-tips and KYC
-   patterns of our Round 1 kit; the model only adds a weak sign and needs a second one (for example a payment request) to flag.
-6. **Hinglish respellings** of key words ("garunteed", "prophit") let 7 of 44 flagged scams through the rules (2 of 50 as deployed).
+5. **Scams outside our own kit are still often missed**: on Tanish's held-out set the site catches 25 of 40 (it was 12 before the
+   India rules). The 15 misses are listed in `docs/results/text_holdout.json`; Mohit's note says the rules still miss scams that use
+   no fixed wording (sextortion, fake loan apps, fake support, crypto pitches). The model only adds a weak sign and needs a second
+   one (for example a payment request) to flag. Only 3 of 40 reach HIGH RISK.
+6. **Hinglish respellings** of key words ("garunteed", "prophit") let 21 of 88 flagged scams through the rules (8 of 99 as deployed).
 7. **Genuine payment screenshots to a personal UPI ID get flagged by the payee rules** (14 of 150 generated genuine screens:
    `PAYEE_PERSONAL_ACCOUNT` + `PAYEE_UNVERIFIED`). These rules were written for payment *requests*; on a *receipt* they mislead a
    shopkeeper. Reported to the integrator (`docs/requests/models.md`, item 4).
@@ -153,10 +154,10 @@ Laptop GPU (8 GB) for training and batch evaluation; the site runs the models on
   validation and test images. Split and hash: `docs/results/tamper_splits.json`.
 - **Threshold:** chosen on the validation layouts so that 5% of genuine screens are flagged; never re-tuned on test or real data.
 - **Choosing between encoders:** highest AUROC on the test layouts (the brief's rule). This makes the chosen test number slightly
-  optimistic; the real-screenshot set is the independent check.
+  optimistic. There is no real-screenshot check (the team decided not to collect real payment screenshots: we do not use anyone's payment data without permission).
 - **Reproduce:** `python tools/make_payment_screens.py data/f1 --n 20000 --seed 7 --holdout-styles 3`, then
   `powershell -File training/tamper/run_both.ps1`, then `python training/tamper/finalize.py`, then
-  `python training/tamper/evaluate_real.py --ckpt var/models/tamper.pt --edited data/real/edited --genuine data/real/genuine --data data/f1 --json docs/results/tamper_real.json`.
+  `python training/tamper/evaluate_system.py` (the whole screenshot check as deployed).
 - **Licence:** our code and our generated data. ResNet-18 ImageNet weights from torchvision (BSD-3-Clause).
 
 ### 2. Voice notes: transcription and cloned-voice detection (pretrained, calibrated by us)
