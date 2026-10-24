@@ -37,8 +37,12 @@ def test_hindi_rows_are_in_devanagari_and_english_rows_are_not():
         assert has == (x["lang"] == "hi"), x["text"][:40]
 
 
-def test_missed_file_holds_only_scams_from_the_holdout_and_matches_what_the_engine_misses():
-    from satyapan.service import analyse_text
+def test_missed_file_holds_only_scams_from_the_holdout_and_matches_what_the_rules_alone_miss():
+    from satyapan.service import analyse_text as run
+
+    def analyse_text(text):                    # rules only: a model plugin installed on another machine must not change this file's meaning
+        return run(text, use_plugins=False)
+
     missed = rows(PATH.with_name("holdout_community_missed.jsonl"))
     originals = {x["text"]: x for x in rows(PATH)}
     assert len(missed) == 33 and all(m["label"] == "scam" and originals[m["text"]] == m for m in missed)
