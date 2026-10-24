@@ -88,3 +88,26 @@ def test_email_address_is_not_treated_as_a_upi_id():
 @pytest.mark.parametrize("text", ["upi://pay?pa=bad", "upi://pay?pn=x&am=abc", "pa=@@", "http://", "%%%"])
 def test_garbage_does_not_crash(text):
     analyse_text(text)
+
+
+def test_remote_access_app_request_is_flagged():
+    assert "OFFER_REMOTE_ACCESS" in codes("Amazon support: install AnyDesk app and share the code so we can fix it")[1]
+
+
+def test_genuine_messages_about_groups_or_offers_are_not_flagged():
+    for t in ["Join our WhatsApp group for class 10 maths notes.", "Limited time offer today on the Amazon app.",
+              "Bank FD interest is guaranteed by the bank up to Rs 5 lakh under DICGC.",
+              "Install the official HDFC Bank app from the Google Play Store."]:
+        assert codes(t)[0] == Tier.NO_RED_FLAGS, t
+
+
+def test_ifsc_mismatch_on_an_invoice_is_suspicious_and_matching_ifsc_is_clean():
+    bad = "Bank: ICICI Bank IFSC: HDFC0001234. Our bank account has changed, pay to the new account."
+    good = "Bank: HDFC Bank IFSC: HDFC0001234 as always."
+    assert codes(bad)[0] == Tier.SUSPICIOUS and "INVOICE_IFSC_MISMATCH" in codes(bad)[1]
+    assert codes(good)[0] == Tier.NO_RED_FLAGS
+
+
+def test_bad_utr_on_a_payment_screen_is_flagged_and_a_12_digit_one_is_not():
+    assert "PAYMENT_UTR_FORMAT" in codes("Payment Successful Rs 9,090. UPI Ref: 4521 8890 11 to upi://pay?pa=shop.k@ybl")[1]
+    assert "PAYMENT_UTR_FORMAT" not in codes("Payment Successful. UPI Ref: 4521 8890 1123")[1]

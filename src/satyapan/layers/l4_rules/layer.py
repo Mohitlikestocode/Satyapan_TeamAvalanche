@@ -12,7 +12,7 @@ I = re.IGNORECASE
 # code -> (strength, trigger id for payee templates or None, patterns)
 RULES: list[tuple[str, Strength, str | None, list[re.Pattern[str]]]] = [
     ("OFFER_GUARANTEED_RETURNS", Strength.STRONG_SUSPICIOUS, "guaranteed_returns", [
-        re.compile(r"\b(guarantee[ds]?|assured|sure[- ]?shot|risk[- ]?free|100\s*%\s*(safe|sure|profit))\b", I),
+        re.compile(r"\b(guarantee[ds]?(?!\s+by\b)|assured|sure[- ]?shot|risk[- ]?free|100\s*%\s*(safe|sure|profit))\b", I),
         re.compile(r"\b(pakka|pakka\s+munafa|fixed\s+munafa)\b", I),
         re.compile(r"(गारंटी|गारंटीड|पक्का\s*मुनाफ़?ा|निश्चित\s*मुनाफ़?ा|जोखिम\s*मुक्त)"),
     ]),
@@ -23,9 +23,20 @@ RULES: list[tuple[str, Strength, str | None, list[re.Pattern[str]]]] = [
         re.compile(r"\d{1,3}\s*%\s*(हर|प्रति)\s*(दिन|सप्ताह|महीने|माह)"),
     ]),
     ("OFFER_FEE_TO_WITHDRAW", Strength.STRONG_SUSPICIOUS, "fee_to_withdraw", [
-        re.compile(r"\b(pay|deposit|send)\b[^.\n]{0,40}\b(tax|fee|charges?|commission|gst)\b[^.\n]{0,50}\b(withdraw|release|unlock|receive)", I),
+        re.compile(r"\b(pay|deposit|send)\b[^.\n]{0,40}\b(tax|fee|charges?|commission|gst)\b[^.\n]{0,50}\b(withdraw|release|unlock|receive|claim)", I),
+        re.compile(r"\b(withdraw|nikal(ne|na)|paise\s+nikalne)\b[^.\n]{0,30}\b(pehle|ke\s+liye)\b[^.\n]{0,30}\b(charges?|tax|fee|commission)\b", I),
         re.compile(r"\b(tax|fee|charges?|gst)\b[^.\n]{0,40}\b(before|to)\b[^.\n]{0,20}\b(withdraw|withdrawal|release)", I),
         re.compile(r"(निकालने|विड्रॉ|withdraw)[^.\n]{0,40}(टैक्स|शुल्क|फीस|चार्ज)"),
+    ]),
+    ("OFFER_REMOTE_ACCESS", Strength.STRONG_SUSPICIOUS, None, [
+        re.compile(r"\b(anydesk|teamviewer|quick\s*support|rustdesk|ultraviewer|screen\s*shar\w*)\b", I),
+        re.compile(r"\b(share|tell|read\s+out|give)\b[^.\n]{0,20}\b(the\s+)?(code|screen)\b[^.\n]{0,30}\b(fix|help|verify|support)", I),
+    ]),
+    ("OFFER_BANK_DETAILS_CHANGED", Strength.WEAK_SUSPICIOUS, None, [
+        re.compile(r"\b(our|the|my)\s+(bank\s+)?(account|bank\s+details?)\s+(has|have)\s+(been\s+)?(changed|updated|moved)\b", I),
+        re.compile(r"\b(new|changed|updated)\s+(bank\s+)?(account|bank\s+details?)\b[^.\n]{0,40}\b(pay|transfer|send|use)\b", I),
+        re.compile(r"\bpay\s+(to|into)\s+the\s+new\s+(bank\s+)?account\b", I),
+        re.compile(r"(खाता|बैंक\s*डिटेल)[^.\n]{0,15}(बदल|नया)"),
     ]),
     ("OFFER_URGENCY", Strength.WEAK_SUSPICIOUS, None, [
         re.compile(r"\b(today\s+only|last\s+chance|limited\s+(seats|slots|time)|hurry|immediately|right\s+now|within\s+\d+\s*(min|hour)s?|abhi\s+(pay|bhejo|join)|jaldi)\b", I),
@@ -46,11 +57,13 @@ RULES: list[tuple[str, Strength, str | None, list[re.Pattern[str]]]] = [
         re.compile(r"(सेबी|आरबीआई)\s*(पंजीकृत|मान्यता|अनुमोदित)"),
     ]),
 ]
-APK_RE = re.compile(r"\.apk\b|install\s+(the\s+)?(app|apk)|ऐप\s*इंस्टॉल|apk\s*(download|install)", I)
+APK_RE = re.compile(r"\.apk\b|install\s+(the\s+)?(app|apk)|ऐप\s*इंस्टॉल|apk\s*(download|install)|apk[^.\n]{0,12}(इंस्टॉल|डाउनलोड)", I)
+STORE_RE = re.compile(r"play\s*store|app\s*store|official\s+app|प्ले\s*स्टोर|ऐप\s*स्टोर", I)
 COLLECT_TRAP_RE = re.compile(
     r"(enter|put|type|share|give)\s+(your\s+)?(upi\s+)?(pin|otp)\b[^.\n]{0,50}\b(receive|get|credit|refund|claim|collect)|"
     r"\b(receive|get|credit|refund|claim|collect)\b[^.\n]{0,40}\b(enter|put|type|share|give)\s+(your\s+)?(upi\s+)?(pin|otp)|"
-    r"(पैसे\s*(पाने|लेने)\s*के\s*लिए)[^.\n]{0,30}(पिन|ओटीपी)|(पिन|ओटीपी)\s*(डालें|डालिए|बताएँ)[^.\n]{0,40}(पैसे|रिफंड)",
+    r"(पैसे\s*(पाने|लेने)\s*के\s*लिए)[^.\n]{0,30}(पिन|ओटीपी)|(पिन|ओटीपी)\s*(डालें|डालिए|बताएँ)[^.\n]{0,40}(पैसे|रिफंड)|"
+    r"\b(refund|paise)\s+(lene|pane)\s+ke\s+liye\b[^.\n]{0,30}\b(pin|otp)\b",
     I,
 )
 INVEST_CONTEXT_RE = re.compile(
@@ -70,7 +83,8 @@ def run(text: str) -> LayerResult:
 
 
 def has_apk(text: str) -> bool:
-    return bool(APK_RE.search(text))
+    """An app install outside the stores. Naming a store or the official app clears it."""
+    return bool(APK_RE.search(text)) and not STORE_RE.search(text)
 
 
 def has_collect_trap(text: str) -> bool:

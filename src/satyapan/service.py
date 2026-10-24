@@ -50,7 +50,8 @@ def analyse_text(text: str, kind: str = "message", topic: str = "", case_id: str
     payee_confirmed = None
     if found.upi:
         payee_confirmed = any(s.code == "PAYEE_VALID_REGISTERED" for s in l3res.signals)
-    out = fuse(FusionInput(results=[l3res, l4res], quality=quality, media_present=False, payees_confirmed_registered=payee_confirmed))
+    out = fuse(FusionInput(results=[l3res, l4res], quality=quality, media_present=False, payees_confirmed_registered=payee_confirmed,
+                         money_ask_present=bool(found.upi or found.ifsc or found.urls)))
     verdicts = {lang.value: build_verdict(case_id, out, lang) for lang in Lang}
     return CaseResult(
         case_id=case_id, kind=kind, tier=out.tier, verdicts=verdicts,

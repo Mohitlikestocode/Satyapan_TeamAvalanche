@@ -205,6 +205,7 @@ class FusionInput(BaseModel):
     quality: QualityReport = Field(default_factory=QualityReport)
     media_present: bool = True
     payees_confirmed_registered: bool | None = None  # None = no payee present
+    money_ask_present: bool = False  # a payee, bank code or link is in the item: one weak sign is then enough to flag
 
 
 class FusionOutput(BaseModel):

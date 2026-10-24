@@ -6,6 +6,7 @@ import re
 from rapidfuzz import fuzz
 
 from ...contracts.models import Layer, LayerResult, Signal, Strength
+from ...extract.banks import bank_codes_named
 from ...extract.entities import Found, UpiRequest
 from ..l4_rules import layer as l4_rules
 from .domains import hostname, lookalike
@@ -67,7 +68,18 @@ def run(text: str, found: Found, l4_signals: list[Signal], snapshot: dict | None
         if url.lower().split("?")[0].endswith(".apk"):
             signals.append(Signal(layer=Layer.L3, code="LINK_APK", strength=Strength.STRONG_SUSPICIOUS))
     if l4_rules.has_apk(text) and not any(s.code == "LINK_APK" for s in signals):
-        signals.append(Signal(layer=Layer.L3, code="LINK_APK", strength=Strength.WEAK_SUSPICIOUS))
+        signals.append(Signal(layer=Layer.L3, code="LINK_APK", strength=Strength.STRONG_SUSPICIOUS))
+
+    named = bank_codes_named(text)
+    for ifsc in found.ifsc:
+        if named and ifsc[:4] not in named:
+            signals.append(Signal(layer=Layer.L3, code="INVOICE_IFSC_MISMATCH", strength=Strength.STRONG_SUSPICIOUS,
+                                  params={"ifsc": ifsc, "bank": ", ".join(sorted(named.values()))[:40]}))
+    for bad in found.ifsc_invalid:
+        signals.append(Signal(layer=Layer.L3, code="INVOICE_IFSC_INVALID", strength=Strength.WEAK_SUSPICIOUS, params={"ifsc": bad}))
+    for ref in found.utr_invalid:
+        signals.append(Signal(layer=Layer.L3, code="PAYMENT_UTR_FORMAT", strength=Strength.WEAK_SUSPICIOUS))
+        break
 
     seen: set[tuple[str, str]] = set()
     unique = []

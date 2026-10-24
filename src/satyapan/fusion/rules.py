@@ -45,12 +45,12 @@ def fuse(inp: FusionInput) -> FusionOutput:
 
     if len(strong_layers) >= 2 and claim_strong:
         tier = Tier.HIGH_RISK
-    elif suspicious:
+    elif strong_layers or len({s.code for s in suspicious}) >= 2 or (suspicious and inp.money_ask_present):
         tier = Tier.SUSPICIOUS
     else:
         tier = Tier.NO_RED_FLAGS
 
-    reasons = [ReasonRef(code=s.code, params=s.params) for s in suspicious]
+    reasons = [ReasonRef(code=s.code, params=s.params) for s in suspicious] if tier != Tier.NO_RED_FLAGS else []
     if tier == Tier.NO_RED_FLAGS:
         reasons += [ReasonRef(code=s.code, params=s.params) for s in signals if s.code in ("PAYEE_FORMAT_ONLY", "PAYEE_VALID_REGISTERED")]
         if not _has_payee(signals, inp):

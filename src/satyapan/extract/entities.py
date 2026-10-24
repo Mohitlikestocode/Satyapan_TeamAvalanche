@@ -5,11 +5,14 @@ import re
 from dataclasses import dataclass, field
 from urllib.parse import parse_qs, unquote, urlparse
 
+from .banks import IFSC_LABELLED, IFSC_RE
+
 VPA_RE = re.compile(r"^[A-Za-z0-9._\-]{2,64}@[A-Za-z]{2,32}$")
 _VPA_FIND = re.compile(r"(?<![\w.@/])([A-Za-z0-9][A-Za-z0-9._\-]{1,63}@[A-Za-z]{2,32})(?![\w@]|\.[A-Za-z])")
 _UPI_URI = re.compile(r"upi://pay\?[^\s<>\"']+", re.IGNORECASE)
 _URL = re.compile(r"https?://[^\s<>\"']+", re.IGNORECASE)
 _PHONE = re.compile(r"(?<!\d)(?:\+91[\s-]?|0)?([6-9]\d{4}[\s-]?\d{5})(?!\d)")
+_UTR_LABELLED = re.compile(r"(?:UPI\s*Ref(?:erence)?(?:\s*(?:No|ID|Number))?|UTR(?:\s*(?:No|Number))?|Txn\s*ID|Transaction\s*ID)\.?\s*[:#\-]?\s*(\d[\d\s]{6,20}\d)", re.IGNORECASE)
 _NAME_OK = re.compile(r"^[A-Za-z0-9 .&'\-]{1,40}$")
 _CLAIMED = re.compile(
     r"\b([A-Z][\w&]*(?:[ \t]+[A-Z][\w&]*){0,3}[ \t]+(?:Securities|Capital|Wealth|Advisors?|Advisory|Broking|Investments?|"
@@ -40,6 +43,9 @@ class Found:
     urls: list[str] = field(default_factory=list)
     phones: list[str] = field(default_factory=list)
     claimed: str | None = None
+    ifsc: list[str] = field(default_factory=list)
+    ifsc_invalid: list[str] = field(default_factory=list)
+    utr_invalid: list[str] = field(default_factory=list)
 
 
 def parse_upi_uri(uri: str) -> UpiRequest | None:
@@ -83,6 +89,17 @@ def extract(text: str) -> Found:
         if not u.lower().startswith("upi://") and u not in found.urls:
             found.urls.append(u)
     found.phones = list(dict.fromkeys(re.sub(r"[\s-]", "", m.group(1)) for m in _PHONE.finditer(text)))
+    for m in IFSC_RE.finditer(text):
+        if m.group(1) not in found.ifsc:
+            found.ifsc.append(m.group(1))
+    for m in IFSC_LABELLED.finditer(text):
+        v = m.group(1).upper()
+        if not IFSC_RE.fullmatch(v) and v not in found.ifsc_invalid:
+            found.ifsc_invalid.append(v[:12])
+    for m in _UTR_LABELLED.finditer(text):
+        digits = re.sub(r"\s", "", m.group(1))
+        if len(digits) != 12 and digits not in found.utr_invalid:
+            found.utr_invalid.append(digits[:20])
     c = _CLAIMED.search(text)
     if c:
         found.claimed = c.group(1).strip()[:40]

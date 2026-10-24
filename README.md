@@ -32,3 +32,11 @@ make setup
 make run     # http://127.0.0.1:8000/
 make test
 ```
+
+## Measure it
+```
+python tools/make_qr_kit.py kit/qr          # real, scannable QR images with phone-style damage (synthetic payees)
+python -m satyapan.eval.run data/kit/messages.jsonl   # rates with 95% intervals and every failure
+```
+The message kit is a *dev* kit written by the same people who wrote the rules, so its numbers are optimistic. The held-out
+test must be written by someone who has not seen the rules. See `docs/PLAN.md`.

@@ -88,6 +88,38 @@ codes:
     en: "{payee} has the format of an @valid handle. We could not confirm it against the official SEBI list, so check it on SEBI Check."
     hi: "{payee} का रूप @valid हैंडल जैसा है। हम इसे SEBI की आधिकारिक सूची से मिला नहीं सके, इसलिए SEBI Check पर जाँचें।"
 
+  INVOICE_IFSC_MISMATCH:
+    layer: L3
+    priority: 12
+    en: "The bank code {ifsc} belongs to a different bank than the one named ({bank}). Someone may have changed the bank details."
+    hi: "बैंक कोड {ifsc} उस बैंक का नहीं है जिसका नाम लिखा है ({bank})। हो सकता है किसी ने बैंक की जानकारी बदल दी हो।"
+  INVOICE_IFSC_INVALID:
+    layer: L3
+    priority: 15
+    en: "The bank (IFSC) code {ifsc} is not written in the correct format."
+    hi: "बैंक (IFSC) कोड {ifsc} सही रूप में नहीं लिखा है।"
+  PAYMENT_UTR_FORMAT:
+    layer: L3
+    priority: 16
+    en: "The payment reference number does not look like a normal 12-digit UPI reference."
+    hi: "भुगतान का संदर्भ नंबर सामान्य 12 अंकों के UPI संदर्भ जैसा नहीं दिखता।"
+  OFFER_BANK_DETAILS_CHANGED:
+    layer: L4
+    priority: 24
+    en: "It says the bank account has changed. Confirm any new account on a phone number you already have."
+    hi: "इसमें लिखा है कि बैंक खाता बदल गया है। नया खाता अपने पास पहले से मौजूद फ़ोन नंबर पर पुष्टि करके ही मानें।"
+  PDF_EDIT_TRACES:
+    layer: L2
+    priority: 54
+    en: "The PDF file shows signs it was changed after it was first made. This is a sign to check, not proof."
+    hi: "इस PDF फ़ाइल में पहली बार बनने के बाद बदले जाने के संकेत हैं। यह जाँचने का संकेत है, प्रमाण नहीं।"
+
+  OFFER_REMOTE_ACCESS:
+    layer: L4
+    priority: 18
+    en: "It asks you to install a screen-sharing app or read out a code. Real banks and shops never ask for this."
+    hi: "यह आपसे स्क्रीन-शेयरिंग ऐप इंस्टॉल करने या कोई कोड बताने को कहता है। असली बैंक या दुकानें ऐसा कभी नहीं माँगते।"
+
   OFFER_GUARANTEED_RETURNS:
     layer: L4
     priority: 20
