@@ -82,25 +82,36 @@ def boot_eer(real: np.ndarray, fake: np.ndarray, n: int = 300, seed: int = 0) ->
     return [float(np.percentile(vals, 2.5)), float(np.percentile(vals, 97.5))]
 
 
+SCORE_SECONDS = 12  # both detectors only look at the first ~8 s (spectra_aasist3.MAX_WINDOWS, voice_second.MAX_WINDOWS)
+
+
+def _prepare(r: dict, todo: list[str]) -> list[tuple[str, np.ndarray | None]]:
+    """Decode a clip and make its chat-app copies (CPU, ffmpeg). Runs in worker threads."""
+    wav = audio.decode((DATA / r["file"]).read_bytes(), max_seconds=SCORE_SECONDS)
+    out = []
+    for c in todo:
+        w = wav
+        if wav is not None and c != "clean":
+            enc = audio.encode(wav, c)
+            w = audio.decode(enc, max_seconds=SCORE_SECONDS) if enc else None
+        out.append((c, w))
+    return out
+
+
 def score_all(rows: list[dict], cache_path: Path) -> dict[tuple[str, str], dict]:
+    from concurrent.futures import ThreadPoolExecutor
     cache: dict[tuple[str, str], dict] = {}
     if cache_path.exists():
         for line in cache_path.read_text(encoding="utf-8").splitlines():
             r = json.loads(line)
             cache[(r["file"], r["cond"])] = r
+    jobs = [(r, [c for c in CONDITIONS if (r["file"], c) not in cache]) for r in rows]
+    jobs = [j for j in jobs if j[1]]
     t0, done = time.time(), 0
-    with cache_path.open("a", encoding="utf-8") as out:
-        for r in rows:
-            todo = [c for c in CONDITIONS if (r["file"], c) not in cache]
-            if not todo:
-                continue
-            wav = audio.decode((DATA / r["file"]).read_bytes(), max_seconds=30)
-            for c in todo:
+    with cache_path.open("a", encoding="utf-8") as out, ThreadPoolExecutor(6) as ex:
+        for (r, _), prepared in zip(jobs, ex.map(lambda j: _prepare(*j), jobs)):
+            for c, w in prepared:   # detectors run here, one clip at a time on the GPU
                 rec = {"file": r["file"], "cond": c, "primary": None, "second": None}
-                w = wav
-                if wav is not None and c != "clean":
-                    enc = audio.encode(wav, c)
-                    w = audio.decode(enc, max_seconds=30) if enc else None
                 if w is not None:
                     vs = audio.score(w)
                     rec["primary"], rec["second"] = vs.primary, vs.second
@@ -109,7 +120,7 @@ def score_all(rows: list[dict], cache_path: Path) -> dict[tuple[str, str], dict]
             done += 1
             if done % 50 == 0:
                 out.flush()
-                print(f"  scored {done} clips ({time.time() - t0:.0f}s)", flush=True)
+                print(f"  scored {done}/{len(jobs)} clips ({time.time() - t0:.0f}s)", flush=True)
     return cache
 
 

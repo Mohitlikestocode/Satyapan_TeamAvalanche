@@ -1,8 +1,8 @@
 """Load and run Spectra-AASIST3 (lab260/Spectra-AASIST3, Apache-2.0) the way its model card describes.
 
 Input: float32 mono 16 kHz. Pre-emphasis 0.97, then windows of 64,600 samples (about 4 s; a short clip is tiled to fill one).
-The model card scores only the first window. A voice note is longer, so we score up to MAX_WINDOWS consecutive windows and
-average the bona-fide logits. Our threshold is calibrated on our own dev split with this same rule (training/voice/calibrate.py).
+The model card scores only the first window. A voice note is longer, so we score up to MAX_WINDOWS consecutive windows (the
+first ~8 s) and average the bona-fide logits. Our threshold is calibrated on our own dev split with this same rule (training/voice/calibrate.py).
 Output: the bona-fide logit, higher = more like a real voice.
 """
 from __future__ import annotations
@@ -12,7 +12,7 @@ from pathlib import Path
 import numpy as np
 
 WIN = 64600
-MAX_WINDOWS = 4
+MAX_WINDOWS = 2
 
 
 def windows(wav: np.ndarray, max_windows: int = MAX_WINDOWS) -> np.ndarray:

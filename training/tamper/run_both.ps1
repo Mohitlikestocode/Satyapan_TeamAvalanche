@@ -3,7 +3,7 @@
 # Each run writes its checkpoint and metrics under var\models\runs\<name>\ and its console log next to them.
 # Native resolution: train on 384x384 crops of the full-size screenshot, score whole screenshots at full size. The first
 # attempt (whole screenshot shrunk to 704x384) stayed at chance on validation: shrinking washes out the edit traces.
-$ErrorActionPreference = "Stop"
+$ErrorActionPreference = "Continue"  # progress bars on stderr must not stop the run
 $root = (Resolve-Path "$PSScriptRoot\..\..").Path
 $py = Join-Path $root ".venv\Scripts\python.exe"
 $env:PYTHONPATH = Join-Path $root "src"

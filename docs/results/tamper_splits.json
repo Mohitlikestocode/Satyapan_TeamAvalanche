@@ -1,5 +1,5 @@
 {
- "generator": "tools/make_payment_screens.py v2",
+ "generator": "tools/make_payment_screens.py v3",
  "seed": 7,
  "n": 20000,
  "layouts": {
@@ -52,5 +52,5 @@
    "constan.ttf"
   ]
  },
- "meta_sha256": "58c2d79dbf6cf53aa38f64e7b4d68c0018c371bd21ba5f3a6bd10c991d3ec1f9"
+ "meta_sha256": "4ab85654a8d752a7197577bad2842092ec99d58a005fa3b5bf8305e47c868ef0"
 }

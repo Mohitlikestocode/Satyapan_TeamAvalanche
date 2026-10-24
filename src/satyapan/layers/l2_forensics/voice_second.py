@@ -10,8 +10,8 @@ from pathlib import Path
 
 import numpy as np
 
-WIN = 16000 * 6
-MAX_WINDOWS = 3
+WIN = 16000 * 4
+MAX_WINDOWS = 2
 
 
 class Second:
