@@ -29,7 +29,7 @@ Then open the site and:
 4. Press **हिन्दी** (top right), or open any page with `?lang=hi`: the shell, check page, reasons and spoken verdict switch to Hindi.
 5. Press **Listen** (Sarvam voice), **Ask family** (WhatsApp share), **Wrong result?** (goes to a real review queue) or **Report** (signed evidence pack).
 
-The models (screenshot tamper detector, voice detectors, scam-message classifier) are optional downloads that go in `var/models/`: see [section 7](#7-install-and-run). Without them the site still runs and says which checks it could not do.
+`demo/` has ready-made inputs (scam messages, QR codes, payment screens, voice notes) with the results we measured, including the ones we miss; `docs/DEMO_RUNBOOK.md` is the demo-day script. The models (screenshot tamper detector, voice detectors, scam-message classifier) are optional downloads that go in `var/models/`: see [section 7](#7-install-and-run). Without them the site still runs and says which checks it could not do.
 
 ---
 

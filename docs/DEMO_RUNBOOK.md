@@ -10,13 +10,10 @@
 ## Morning of the demo
 
 ```bash
-# a fresh data folder, so /impact and Scam Watch start at zero
-set SATYAPAN_HOME=var_demo            # Windows cmd;  export SATYAPAN_HOME=var_demo  on bash
-mkdir var_demo\models                 # then copy or link the models into var_demo\models, or leave SATYAPAN_HOME unset to reuse var/
 python -m uvicorn satyapan.api.app:create_app --factory --host 0.0.0.0 --port 8000 --proxy-headers --forwarded-allow-ips="*"
 ```
 
-Simplest: leave `SATYAPAN_HOME` unset (uses `var/`) and delete `var/satyapan.db` before the event if you want counters at zero. Do not delete `var/models/`.
+To start the counters (`/impact`, Scam Watch, "My checks" history) at zero, stop the server and delete `var/satyapan.db` first. **Do not delete `var/models/`.**
 
 * Wait about 40 seconds: the models load in the background.
 * On **every team device** open `http://<address>/internal?key=<INTERNAL_KEY>` once, so rehearsals are not counted as users.
