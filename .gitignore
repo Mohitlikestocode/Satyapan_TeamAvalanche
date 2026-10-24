@@ -63,3 +63,13 @@ docs/_draft_*.md
 web/sim/replay_data.json
 reports/
 .hypothesis/
+
+# Generated or private training and test data (never commit): see docs/GPU_START.md
+data/f1/
+data/real/
+data/audio/
+data/cache/
+*.npz
+*.parquet
+*.zip
+.venv/
