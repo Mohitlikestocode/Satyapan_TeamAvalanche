@@ -99,6 +99,7 @@
       <h4 class="ml-run-h">{{ tr("Payment screenshots", "पेमेंट स्क्रीनशॉट") }}</h4>
       {% set ss = measured.screenshot_real or measured.screenshot_synthetic %}
       {% if ss %}
+      <p class="dnote">{{ tr("Synthetic, held-out styles; not evaluated on real phone screenshots.", "बनाई गई स्क्रीन, अलग रखे गए लेआउट; असली फ़ोन स्क्रीनशॉट पर नहीं परखा गया।") }}</p>
       <ul class="list">
         {% for c in ss.conditions if c.name in ("jpeg_q40", "scale_0.5", "edit_same_font", "font_unseen", "recompressed_twice") %}
         <li>{{ cond(c.name, lang) }}: {{ tr("edits caught", "बदलाव पकड़े") }} {{ fmt(c.tpr, lang) }}</li>

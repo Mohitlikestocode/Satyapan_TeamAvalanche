@@ -42,19 +42,16 @@ A CPU test run (700 images, 10 epochs, small size) learned the *validation* styl
 but did **not** carry over to the held-out *test* styles: AUROC 0.664, with 88% of genuine screenshots wrongly flagged at the validation threshold.
 That is the number that matters, because judges' screenshots will not look like our generator.
 
-So on the GPU run, judge success by the **test** split and by real screenshots, not by validation:
+So on the GPU run, judge success by the **test** split (held-out layout styles), not by validation:
 
 - If test AUROC is still far below validation: add more styles and fonts to `tools/make_payment_screens.py`, try `--encoder resnet18 --pretrained`, and add random colour, font and layout augmentation.
 - Report it either way. A model that fails on unseen styles is a finding for the Results page, not something to hide.
 - The threshold in the checkpoint comes from validation styles. Do not re-tune it on the test styles.
 
-## 5. Real screenshots (the honest number)
+## 5. Real screenshots: not collected (team decision)
 
-Put at least 50 screenshots that teammates edited in real editors in one folder and 100 genuine ones in another (consented, with names and numbers covered; keep them out of git):
-
-```powershell
-python evaluate_real.py --ckpt ..\..\var\models\tamper.pt --edited ..\..\data\real\edited --genuine ..\..\data\real\genuine --json ..\..\docs\results\tamper_real.json
-```
+We do not use anyone's payment data without permission, so there is no real-screenshot set. Report the tamper result as
+"synthetic, held-out styles; not evaluated on real phone screenshots". The whole check as deployed is measured with `python training/tamper/evaluate_system.py`.
 
 ## 6. Use it in the app
 

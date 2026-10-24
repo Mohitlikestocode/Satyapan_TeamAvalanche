@@ -21,7 +21,7 @@
         {% for s in sections %}
           <tr>
             <td><a href="#ml-{{ s.key }}">{{ s.title[1] if lang == "hi" else s.title[0] }}</a></td>
-            <td>{% if s.status == "measured" %}<span class="pill pill-g">{{ tr("Measured", "मापा गया") }}</span>{% else %}<span class="pill pill-a">{{ tr("Not evaluated", "मापा नहीं गया") }}</span>{% endif %}</td>
+            <td>{% if s.status == "measured" %}<span class="pill pill-g">{{ tr("Measured", "मापा गया") }}</span>{% elif s.deliberate %}<span class="pill pill-n">{{ tr("Not evaluated, on purpose", "जानबूझकर नहीं मापा") }}</span>{% else %}<span class="pill pill-a">{{ tr("Not evaluated", "मापा नहीं गया") }}</span>{% endif %}</td>
             <td>{% if s.held_out %}{{ tr("Yes", "हाँ") }}{% else %}{{ tr("No: optimistic", "नहीं: आशावादी") }}{% endif %}</td>
           </tr>
         {% endfor %}
@@ -33,12 +33,12 @@
   {% for s in sections %}
   <section class="board ml-sec" id="ml-{{ s.key }}" aria-labelledby="ml-{{ s.key }}-h">
     <h3 id="ml-{{ s.key }}-h">{{ s.title[1] if lang == "hi" else s.title[0] }}
-      {% if s.status != "measured" %}<span class="pill pill-a">{{ tr("Not evaluated", "मापा नहीं गया") }}</span>{% endif %}</h3>
+      {% if s.status != "measured" %}<span class="pill {{ 'pill-n' if s.deliberate else 'pill-a' }}">{{ tr("Not evaluated, on purpose", "जानबूझकर नहीं मापा") if s.deliberate else tr("Not evaluated", "मापा नहीं गया") }}</span>{% endif %}</h3>
     <div class="ml-pad">
       <p>{{ s.what[1] if lang == "hi" else s.what[0] }}</p>
-      {% if s.status != "measured" %}
+      {% if s.status != "measured" and not s.deliberate %}
         <p class="ml-none">{{ tr("Not evaluated yet. No number is shown until a measurement exists.", "अभी मापा नहीं गया। माप होने तक कोई नंबर नहीं दिखाया जाता।") }}</p>
-      {% else %}
+      {% elif s.status == "measured" %}
         <dl class="ml-kv">
           {% if s.dataset %}<dt>{{ tr("Data", "डेटा") }}</dt><dd>{{ s.dataset }}</dd>{% endif %}
           {% if s.split %}<dt>{{ tr("Split", "हिस्सा") }}</dt><dd>{{ s.split }}</dd>{% endif %}

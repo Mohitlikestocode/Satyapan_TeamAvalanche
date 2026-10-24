@@ -73,6 +73,7 @@ class Section:
     rows: list[Row] = field(default_factory=list)
     conditions: list[dict] = field(default_factory=list)
     failures: list[dict] = field(default_factory=list)
+    deliberate: bool = False       # not evaluated on purpose (the "what" text says why), not "not yet"
 
 
 def _num(x) -> float | None:
@@ -192,20 +193,24 @@ def _apply(sec: Section, path: Path, data: dict, first: bool) -> None:
 def sections(results_dir: Path | None = None) -> list[Section]:
     d = results_dir or RESULTS_DIR
     out = [
-        Section("screenshot_real", ("Payment screenshots: real, team-edited", "पेमेंट स्क्रीनशॉट: असली, टीम द्वारा बदले गए"),
-                ("Screenshots edited by teammates in real phone and photo editors, and genuine screenshots. The honest number for screenshots.",
-                 "टीम के लोगों ने असली फ़ोन और फ़ोटो एडिटर में बदले स्क्रीनशॉट, और असली स्क्रीनशॉट। स्क्रीनशॉट के लिए सबसे ईमानदार नतीजा।"),
-                ("edited screenshots", "बदले गए स्क्रीनशॉट"), ("genuine screenshots", "असली स्क्रीनशॉट"),
-                dataset="team-made, consented, names and numbers covered, kept out of git"),
-        Section("screenshot_system", ("Payment screenshots: the whole check as deployed", "पेमेंट स्क्रीनशॉट: पूरी जाँच, जैसी साइट पर चलती है"),
-                ("The full screenshot check (text reading, payee and word rules, edit model, verdict rules) on generated screens in layouts never seen in training.",
+        Section("screenshot_system", ("Payment screenshots, whole check as deployed: synthetic, held-out styles; not evaluated on real phone screenshots",
+                                      "पेमेंट स्क्रीनशॉट, पूरी जाँच जैसी साइट पर चलती है: बनाई गई स्क्रीन, अलग रखे गए लेआउट; असली फ़ोन स्क्रीनशॉट पर नहीं परखा गया"),
+                ("The full screenshot check (text reading, payee and word rules, edit model, verdict rules) on generated screens in layout styles never seen in training.",
                  "पूरी स्क्रीनशॉट जाँच (टेक्स्ट पढ़ना, पाने वाले और शब्दों के नियम, बदलाव मॉडल, नतीजे के नियम), ट्रेनिंग में कभी न देखे गए लेआउट की बनाई गई स्क्रीन पर।"),
-                ("edited screenshots", "बदले गए स्क्रीनशॉट"), ("genuine screenshots", "असली स्क्रीनशॉट")),
-        Section("screenshot_synthetic", ("Payment screenshots: generated, unseen layouts", "पेमेंट स्क्रीनशॉट: बनाए गए, न देखे गए लेआउट"),
-                ("Generated payment screens in layouts and fonts the model never saw in training.",
+                ("edited screenshots", "बदले गए स्क्रीनशॉट"), ("genuine screenshots", "असली स्क्रीनशॉट"),
+                dataset="synthetic, held-out styles; not evaluated on real phone screenshots"),
+        Section("screenshot_synthetic", ("Payment-screenshot edit model: synthetic, held-out styles; not evaluated on real phone screenshots",
+                                         "पेमेंट-स्क्रीनशॉट बदलाव मॉडल: बनाई गई स्क्रीन, अलग रखे गए लेआउट; असली फ़ोन स्क्रीनशॉट पर नहीं परखा गया"),
+                ("Generated payment screens in layout styles and fonts the model never saw in training.",
                  "बनाई गई पेमेंट स्क्रीन, ऐसे लेआउट और फ़ॉन्ट में जो मॉडल ने ट्रेनिंग में कभी नहीं देखे।"),
                 ("edited screenshots", "बदले गए स्क्रीनशॉट"), ("genuine screenshots", "असली स्क्रीनशॉट"),
-                dataset="tools/make_payment_screens.py (synthetic), split by layout family"),
+                dataset="synthetic, held-out styles (tools/make_payment_screens.py, split by layout family); not evaluated on real phone screenshots"),
+        Section("screenshot_real", ("Real phone screenshots", "असली फ़ोन स्क्रीनशॉट"),
+                ("Not evaluated, on purpose: we do not use anyone's payment data without permission, so we have no real payment screenshots to test on. "
+                 "The screenshot numbers above come from synthetic screens only, and real apps look different, so expect lower numbers on real screenshots.",
+                 "जानबूझकर नहीं परखा गया: हम किसी का पेमेंट डेटा बिना अनुमति इस्तेमाल नहीं करते, इसलिए परखने के लिए हमारे पास असली पेमेंट स्क्रीनशॉट नहीं हैं। "
+                 "ऊपर के स्क्रीनशॉट नतीजे सिर्फ़ बनाई गई स्क्रीन से हैं, और असली ऐप अलग दिखते हैं, इसलिए असली स्क्रीनशॉट पर कम नतीजे की उम्मीद रखें।"),
+                ("edited screenshots", "बदले गए स्क्रीनशॉट"), ("genuine screenshots", "असली स्क्रीनशॉट"), deliberate=True),
         Section("text_holdout", ("Messages: held out, written by teammates", "संदेश: अलग रखे गए, टीम के लोगों ने लिखे"),
                 ("Scam and genuine messages written by teammates who did not read the rules. Never used to build or train anything.",
                  "स्कैम और असली संदेश, जो उन टीम सदस्यों ने लिखे जिन्होंने नियम नहीं पढ़े। किसी चीज़ को बनाने या ट्रेन करने में इस्तेमाल नहीं हुए।"),
