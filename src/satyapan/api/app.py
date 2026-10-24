@@ -5,15 +5,38 @@ page. No detection runs yet. Files are never written to disk.
 """
 from __future__ import annotations
 
+import json
 import uuid
 from pathlib import Path
 
-from fastapi import FastAPI, File, Form, HTTPException, UploadFile
+from fastapi import FastAPI, File, Form, HTTPException, Request, UploadFile
+from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
 
 from .schemas import MAX_UPLOAD_BYTES, SAMPLE_RESULTS, CheckKind, CheckReceipt, WrongResultReport
 
 WEB = Path(__file__).resolve().parents[3] / "web"
+templates = Jinja2Templates(directory=WEB / "templates")
+
+NAV = [
+    ("home", "/", "Home", "मुख्य पृष्ठ"),
+    ("check", "/check", "Check now", "जाँच करें"),
+    ("dashboard", "/dashboard", "My checks", "मेरी जाँचें"),
+    ("tools", "/tools", "Is this real?", "असली है?"),
+    ("learn", "/learn", "Learn", "सीखें"),
+    ("help", "/already-paid", "If you paid", "पैसे भेज दिए?"),
+    ("how", "/how-it-works", "How it works", "कैसे काम करता है"),
+]
+RELATED = {
+    "home": [],
+    "dashboard": [],
+    "check": [("See a sample result", "/result"), ("Is this really Amazon?", "/tools"), ("My checks", "/dashboard"), ("Scam Drill", "/learn/drill")],
+    "help": [("Evidence report", "/report"), ("Complaint draft", "/report/complaint"), ("Warn others", "/warn"), ("Wrong result?", "/wrong")],
+    "tools": [("Check something", "/check"), ("Shopkeeper check", "/shopkeeper"), ("Helper mode", "/helper"), ("Safety guide", "/learn/safety")],
+    "learn": [("Scam Drill", "/learn/drill"), ("Safety guide", "/learn/safety"), ("Family safe-word card", "/learn/safe-word"), ("Check something", "/check")],
+    "how": [("How it works", "/how-it-works"), ("System states", "/states"), ("Check something", "/check")],
+}
 
 app = FastAPI(title="Satyapan", version="0.1.0")
 
@@ -85,4 +108,17 @@ def wrong_result(report: WrongResultReport) -> dict[str, str]:
 
 
 app.mount("/static", StaticFiles(directory=WEB / "static"), name="static")
-app.mount("/", StaticFiles(directory=WEB / "site", html=True), name="site")
+
+
+def _page_route(meta: dict):
+    def view(request: Request) -> HTMLResponse:
+        ctx = {"page": meta, "nav": NAV, "related": RELATED.get(meta["section"], [])}
+        return templates.TemplateResponse(request, meta["template"], ctx)
+
+    return view
+
+
+PAGES = json.loads((WEB / "pages.json").read_text(encoding="utf-8"))
+for _meta in PAGES:
+    app.add_api_route("/" + _meta["route"], _page_route(_meta), methods=["GET"], response_class=HTMLResponse,
+                      include_in_schema=False, name="page:" + (_meta["route"] or "home"))

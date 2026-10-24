@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block css %}<style>
+body{margin:0}
+*{box-sizing:border-box}
+a{color:#1F4E8C}a:hover{color:#163A6A}
+.sp{font-family:'Noto Sans',system-ui,sans-serif;color:#0B1F3A;background:#E6E9EE;-webkit-font-smoothing:antialiased}
+.i{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.lbl{font-size:14px;font-weight:700;color:#344054;margin:0}
+.lbl span{font-weight:400;color:#475467}
+.win{width:1280px;background:#F6F7F9;border:1px solid #C9CFD8;border-radius:10px;overflow:hidden;display:flex;flex-direction:column}
+.top{background:#0B1F3A;color:#fff;height:56px;padding:0 20px;display:flex;align-items:center;gap:14px}
+.top b{font-size:16px}
+.pilot{font-size:12px;font-weight:700;letter-spacing:.05em;border:1px solid #5A6B85;border-radius:4px;padding:3px 8px;color:#D0D8E4}
+.side{width:220px;background:#fff;border-right:1px solid #E4E7EC;padding:16px 10px;display:flex;flex-direction:column;gap:2px}
+.side a{min-height:44px;display:flex;align-items:center;gap:10px;padding:0 12px;border-radius:6px;font-size:14.5px;font-weight:600;color:#344054;text-decoration:none}
+.side a.on{background:#EEF3FA;color:#1F4E8C}
+.side .ct{margin-left:auto;font-size:12px;background:#F2F4F7;border-radius:10px;padding:1px 8px;color:#344054}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{text-align:left;font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:#475467;background:#F9FAFB;padding:10px 14px;border-bottom:1px solid #E4E7EC}
+td{padding:12px 14px;border-bottom:1px solid #EAECF0;vertical-align:middle}
+tr.sel td{background:#F5F8FC}
+.mono{font-family:ui-monospace,'SFMono-Regular',Menlo,Consolas,monospace;font-size:13px}
+.vt{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:700;padding:3px 8px;border-radius:4px;letter-spacing:.02em;white-space:nowrap}
+.r{background:#FEF3F2;color:#B42318}.a{background:#FFFAEB;color:#B54708}.g{background:#F2F4F7;color:#475467}.o{background:#ECFDF3;color:#067647}
+.code{display:inline-block;font-family:ui-monospace,Menlo,monospace;font-size:12px;background:#F2F4F7;border:1px solid #E4E7EC;border-radius:3px;padding:1px 5px;margin:1px 2px 1px 0;color:#344054}
+.st{font-size:13px;font-weight:600}
+.btn{min-height:44px;border-radius:6px;font-family:inherit;font-size:15px;font-weight:600;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:0 16px;text-decoration:none;cursor:pointer}
+.bp{background:#1F4E8C;color:#fff;border:1px solid #1F4E8C}
+.bq{background:#fff;color:#0B1F3A;border:1px solid #D0D5DD}
+.inp{font-family:inherit;font-size:15px;min-height:44px;border:1px solid #98A2B3;border-radius:6px;padding:0 12px;color:#0B1F3A;background:#fff;width:100%}
+.otp{width:48px;height:56px;border:1px solid #98A2B3;border-radius:6px;font-family:inherit;font-size:22px;font-weight:700;text-align:center;color:#0B1F3A;background:#fff}
+.flt{min-height:40px;border:1px solid #D0D5DD;border-radius:6px;background:#fff;font-family:inherit;font-size:14px;padding:0 12px;display:inline-flex;align-items:center;gap:6px;color:#0B1F3A}
+.flt.on{border-color:#1F4E8C;background:#EEF3FA;color:#1F4E8C;font-weight:600}
+</style>{% endblock %}
+{% block content %}
+<div class="sp console"><div style="display: flex; flex-direction: column; gap: 14px">
+<div class="win" style="height: 620px">
+<div class="top"><svg aria-hidden="true" height="26" viewBox="0 0 24 24" width="26"><path d="M12 2 4 5v6c0 5.2 3.4 9.4 8 11 4.6-1.6 8-5.8 8-11V5z" fill="#fff"></path><path d="m8.4 12.2 2.5 2.5 4.8-5" fill="none" stroke="#0B1F3A" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg><b>Satyapan Review</b><span class="pilot">FOR PARTNER INSTITUTIONS · PILOT</span></div>
+<div style="flex: 1; display: flex; align-items: center; justify-content: center; gap: 64px; padding: 40px">
+<section style="width: 420px; background: #fff; border: 1px solid #E4E7EC; border-radius: 8px; padding: 32px; display: flex; flex-direction: column; gap: 16px">
+<p style="margin: 0; font-size: 12px; font-weight: 700; letter-spacing: .05em; color: #475467">STEP 2 OF 2</p>
+<h1 style="margin: 0; font-size: 24px; font-weight: 700">Enter your verification code</h1>
+<p style="margin: 0; font-size: 15px; line-height: 1.55; color: #344054">Signed in as <b>reviewer.03@partner-pilot.example</b>. Open your authenticator app and enter the 6-digit code.</p>
+<div aria-label="Verification code" role="group" style="display: flex; gap: 8px">
+<input aria-label="Digit 1" class="otp" value="4"/><input aria-label="Digit 2" class="otp" value="8"/><input aria-label="Digit 3" class="otp" value="1"/><input aria-label="Digit 4" class="otp" value=""/><input aria-label="Digit 5" class="otp" value=""/><input aria-label="Digit 6" class="otp" value=""/>
+</div>
+<button class="btn bp" style="width: 100%; min-height: 48px">Verify and sign in</button>
+<a data-todo="1" href="#" style="font-size: 14px; font-weight: 600">Use a backup code</a>
+</section>
+<section style="width: 380px; display: flex; flex-direction: column; gap: 14px">
+<h2 style="margin: 0; font-size: 18px; font-weight: 700">Before you start</h2>
+<p style="margin: 0; font-size: 15px; line-height: 1.6; color: #344054">You see only cases that users chose to share. Cases are de-identified: no names, phone numbers or original files unless the user kept them for review.</p>
+<p style="margin: 0; font-size: 15px; line-height: 1.6; color: #344054">"Confirm as scam" needs a second reviewer. Every action is recorded in the audit log.</p>
+<p style="margin: 0; font-size: 13px; color: #475467">Sessions end after 15 minutes without activity.</p>
+</section>
+</div>
+</div>
+</div></div>
+{% endblock %}

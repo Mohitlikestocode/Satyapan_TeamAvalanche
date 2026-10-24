@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block css %}<style>
+body{margin:0}
+*{box-sizing:border-box}
+a{color:#1F4E8C}a:hover{color:#163A6A}
+.sp{font-family:'Noto Sans',system-ui,sans-serif;color:#0B1F3A;background:#E6E9EE;-webkit-font-smoothing:antialiased}
+.i{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.lbl{font-size:14px;font-weight:700;color:#344054;margin:0}
+.lbl span{font-weight:400;color:#475467}
+.win{width:1280px;background:#F6F7F9;border:1px solid #C9CFD8;border-radius:10px;overflow:hidden;display:flex;flex-direction:column}
+.top{background:#0B1F3A;color:#fff;height:56px;padding:0 20px;display:flex;align-items:center;gap:14px}
+.top b{font-size:16px}
+.pilot{font-size:12px;font-weight:700;letter-spacing:.05em;border:1px solid #5A6B85;border-radius:4px;padding:3px 8px;color:#D0D8E4}
+.side{width:220px;background:#fff;border-right:1px solid #E4E7EC;padding:16px 10px;display:flex;flex-direction:column;gap:2px}
+.side a{min-height:44px;display:flex;align-items:center;gap:10px;padding:0 12px;border-radius:6px;font-size:14.5px;font-weight:600;color:#344054;text-decoration:none}
+.side a.on{background:#EEF3FA;color:#1F4E8C}
+.card{background:#fff;border:1px solid #E4E7EC;border-radius:8px;padding:18px;display:flex;flex-direction:column;gap:10px}
+.h3{margin:0;font-size:16px;font-weight:700}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{text-align:left;font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:#475467;background:#F9FAFB;padding:10px 14px;border-bottom:1px solid #E4E7EC}
+td{padding:11px 14px;border-bottom:1px solid #EAECF0;vertical-align:top}
+.mono{font-family:ui-monospace,'SFMono-Regular',Menlo,Consolas,monospace;font-size:13px}
+.vt{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:700;padding:3px 8px;border-radius:4px;letter-spacing:.02em;white-space:nowrap}
+.r{background:#FEF3F2;color:#B42318}
+.code{display:inline-block;font-family:ui-monospace,Menlo,monospace;font-size:12px;background:#F2F4F7;border:1px solid #E4E7EC;border-radius:3px;padding:1px 5px;margin:1px 2px 1px 0;color:#344054}
+.kv{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-top:1px solid #EAECF0;font-size:14px}
+.kv .k{color:#475467}
+.kv .v{font-weight:600;text-align:right}
+.btn{min-height:44px;border-radius:6px;font-family:inherit;font-size:15px;font-weight:600;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:0 16px;text-decoration:none;cursor:pointer}
+.bdg{background:#B42318;color:#fff;border:1px solid #B42318}
+.bq{background:#fff;color:#0B1F3A;border:1px solid #D0D5DD}
+.bp{background:#1F4E8C;color:#fff;border:1px solid #1F4E8C}
+.node{background:#fff;border:1px solid #98A2B3;border-radius:6px;padding:10px 12px;font-size:13px;min-width:200px}
+.node b{display:block;font-size:12px;color:#475467;font-weight:700;letter-spacing:.04em}
+.ln{height:2px;background:#98A2B3;flex:1;min-width:40px}
+</style>{% endblock %}
+{% block content %}
+<div class="sp console"><div id="campaign" style="display: flex; flex-direction: column; gap: 14px">
+<div class="win" style="height: 700px">
+<div class="top"><b>Satyapan Review</b><span class="pilot">PILOT</span></div>
+<div style="flex: 1; display: flex; min-height: 0">
+<nav aria-label="Console" class="side"><a href="/console/queue">Queue</a><a class="on" href="/console/campaign">Campaigns</a><a href="/console/audit">Audit log</a><a data-todo="1" href="#">Settings</a></nav>
+<main style="flex: 1; min-width: 0; padding: 24px; display: flex; flex-direction: column; gap: 16px">
+<div><h1 style="margin: 0; font-size: 24px; font-weight: 700">"VIP Profits" investment group</h1><p style="margin: 4px 0 0; font-size: 15px; color: #344054"><b>This UPI ID appears in 7 reports this week.</b> First seen 19 Oct 2026 · last seen 24 Oct 2026, 10:42 IST</p></div>
+<section class="card" style="padding: 24px">
+<h2 class="h3">Linked items</h2>
+<div style="display: flex; align-items: center; gap: 0">
+<div style="display: flex; flex-direction: column; gap: 12px">
+<div class="node"><b>PHONE</b><span class="mono">+91 79XXXXXX10</span> · 5 reports</div>
+<div class="node"><b>PHONE</b><span class="mono">+91 88XXXXXX47</span> · 2 reports</div>
+</div>
+<div aria-hidden="true" class="ln"></div>
+<div class="node" style="border: 2px solid #B42318; background: #FEF3F2; min-width: 240px"><b style="color: #B42318">UPI ID · CENTRE</b><span class="mono" style="font-size: 15px; font-weight: 700">alpha.gain88@ybl</span><br/>7 reports · ₹25,000 typical ask</div>
+<div aria-hidden="true" class="ln"></div>
+<div style="display: flex; flex-direction: column; gap: 12px">
+<div class="node"><b>LINK</b><span class="mono">vipprofits-club.example</span> · 3 reports</div>
+<div class="node"><b>UPI ID (same name "Ramesh K")</b><span class="mono">gainclub.rk@ybl</span> · 1 report</div>
+</div>
+</div>
+<p style="margin: 0; font-size: 13px; color: #475467">Links are drawn only from shared, de-identified reports. A link means "appeared in the same report", not "same person".</p>
+</section>
+</main>
+</div>
+</div>
+</div></div>
+{% endblock %}

@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% block css %}<style>
+body{margin:0}
+*{box-sizing:border-box}
+a{color:#1F4E8C}a:hover{color:#163A6A}
+.sp{font-family:'Noto Sans','Noto Sans Devanagari',system-ui,sans-serif;color:#0B1F3A;background:#E6E9EE;-webkit-font-smoothing:antialiased}
+.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.col{display:flex;flex-direction:column;gap:14px;width:390px}
+.lbl{font-size:14px;font-weight:700;color:#344054;margin:0}
+.lbl span{font-weight:400;color:#475467}
+.ph{width:390px;background:#F6F7F9;border:1px solid #C9CFD8;border-radius:24px;overflow:hidden;display:flex;flex-direction:column}
+.hd{background:#fff;border-top:4px solid #0B1F3A;border-bottom:1px solid #E4E7EC;padding:8px 12px;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.wm{display:flex;align-items:center;gap:8px;text-decoration:none;color:#0B1F3A}
+.wm b{display:block;font-size:18px;line-height:1.05}
+.wm small{display:block;font-size:12px;color:#475467;line-height:1.25}
+.tools{display:flex;gap:6px;align-items:center}
+.lang{display:flex;border:1px solid #D0D5DD;border-radius:6px;overflow:hidden}
+.lang button{border:0;background:#fff;color:#0B1F3A;font-family:inherit;font-size:13px;font-weight:600;min-height:44px;min-width:36px;padding:0 8px}
+.lang .on{background:#0B1F3A;color:#fff}
+.bd{padding:16px 16px 28px;display:flex;flex-direction:column;gap:14px}
+.card{background:#fff;border:1px solid #E4E7EC;border-radius:8px;padding:16px;display:flex;flex-direction:column;gap:10px}
+.t3{font-size:17px;line-height:1.4;font-weight:700;margin:0}
+.tx{font-size:16px;line-height:1.6;margin:0}
+.sm{font-size:14px;line-height:1.5;color:#475467;margin:0}
+.xs{font-size:13px;line-height:1.45;color:#475467;margin:0}
+.btn{min-height:52px;border-radius:8px;font-family:inherit;font-size:17px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:10px;padding:0 16px;width:100%;text-decoration:none;cursor:pointer}
+.bp{background:#1F4E8C;color:#fff;border:1px solid #1F4E8C}
+.bn{background:#0B1F3A;color:#fff;border:1px solid #0B1F3A}
+.bq{background:#fff;color:#0B1F3A;border:1px solid #D0D5DD}
+.vb{border-radius:8px;padding:16px;display:flex;gap:14px;align-items:flex-start;border:1px solid}
+.vi{width:48px;height:48px;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;flex:none}
+.vi .i{width:28px;height:28px}
+.vw{font-size:20px;font-weight:800;letter-spacing:.03em;margin:0;line-height:1.25}
+.vs{font-size:17px;font-weight:600;margin:4px 0 0;line-height:1.4;color:#0B1F3A}
+.vg{background:#F2F4F7;border-color:#D0D5DD}.vg .vw{color:#475467}.vg .vi{background:#475467}
+.vo{background:#ECFDF3;border-color:#8FD9B0}.vo .vw{color:#067647}.vo .vi{background:#067647}
+.kv{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:10px 0;border-top:1px solid #EAECF0;font-size:15px}
+.kv .k{color:#475467;flex:none}
+.kv .v{font-weight:600;text-align:right;word-break:break-word}
+.mono{font-family:ui-monospace,'SFMono-Regular',Menlo,Consolas,monospace;font-size:13.5px}
+.step{display:flex;gap:12px;align-items:flex-start}
+.num{width:28px;height:28px;border-radius:50%;background:#0B1F3A;color:#fff;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;flex:none}
+.ok{display:flex;gap:10px;align-items:flex-start;font-size:15px;line-height:1.5;padding:10px 0;border-top:1px solid #EAECF0}
+.ok .i{color:#067647;width:20px;height:20px;margin-top:1px}
+.ok small{display:block;color:#475467;font-size:13px}
+.ng .i{color:#475467}
+.lim{font-size:13px;line-height:1.45;color:#475467;border-top:1px dashed #D0D5DD;padding-top:8px;margin:0}
+.ftn{padding:16px;font-size:12.5px;line-height:1.5;color:#475467;border-top:1px solid #E4E7EC;background:#fff}
+</style>{% endblock %}
+{% block content %}
+<div class="sp"><div class="bd">
+<span class="xs" style="text-align: right">Report SP-2410-H7TA · 24 Oct 2026 · 16:02 IST</span>
+<section class="vb vo" role="status">
+<span class="vi"><svg aria-hidden="true" class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg></span>
+<div><p class="vw">NO RED FLAGS FOUND</p><p lang="hi" style="margin: 0; font-size: 15px; font-weight: 700; color: #067647">कोई खतरे का संकेत नहीं मिला</p><p class="vs">Still verify the payee. This is not a guarantee.</p></div>
+</section>
+<section class="card" style="gap: 12px">
+<p class="tx" style="font-size: 17px">This electricity bill receipt looks consistent. The amount, consumer number and payee name match, and we found no signs of editing. Before paying, still check the payee name in your own UPI app.</p>
+<a class="btn bn" href="/listen" style="min-height: 60px; font-size: 18px"><svg aria-hidden="true" class="i" viewBox="0 0 24 24" style="width: 24px; height: 24px"><path d="M11 5 6 9H2v6h4l5 4V5z"></path><path d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14"></path></svg>Listen <span lang="hi" style="font-weight: 500">/ सुनें</span></a>
+</section>
+<section class="card" style="gap: 0">
+<h3 class="t3" style="margin-bottom: 4px">What we checked</h3>
+<div class="ok"><svg aria-hidden="true" class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg><span>Amounts add up<small>₹1,180 bill + ₹60 late fee = ₹1,240</small></span></div>
+<div class="ok"><svg aria-hidden="true" class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg><span>No signs of editing<small>Text and compression are even across the image.</small></span></div>
+<div class="ok"><svg aria-hidden="true" class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg><span>AI-generated image<small>No signs found · CommunityForensics</small></span></div>
+<div class="ok"><svg aria-hidden="true" class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg><span>Payee name matches the bill<small>City Power Distribution Ltd (sample)</small></span></div>
+</section>
+<section class="card" style="gap: 0">
+<h3 class="t3" style="margin-bottom: 6px">What we found in the file</h3>
+<div class="kv"><span class="k">Amount</span><span class="v">₹1,240</span></div>
+<div class="kv"><span class="k">Paid to</span><span class="v">City Power Distribution Ltd</span></div>
+<div class="kv"><span class="k">Consumer no.</span><span class="v mono">4410 2287 06</span></div>
+<div class="kv"><span class="k">Date and time</span><span class="v">24 Oct 2026, 15:48</span></div>
+</section>
+<section class="card" style="background: #F9FAFB">
+<h3 class="t3">Please keep in mind</h3>
+<p class="tx" style="font-size: 15px">"No red flags found" is not a guarantee. New tricks may not be caught, and we cannot confirm with the company or your bank.</p>
+</section>
+<section class="card" style="gap: 12px">
+<h3 class="t3">Still do this</h3>
+<div class="step"><span class="num">1</span><p class="tx">Check the payee name in your own app before you tap Pay.</p></div>
+<div class="step"><span class="num">2</span><p class="tx">If anything feels rushed, wait and ask family.</p></div>
+</section>
+<a class="btn bq" href="/report">Download report</a>
+</div></div>
+{% endblock %}

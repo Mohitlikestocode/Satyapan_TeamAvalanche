@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero" aria-labelledby="hero-h">
+  <div class="wrap hero-in">
+    <div>
+      <span class="eyebrow">Verify before you pay</span>
+      <h1 id="hero-h">Not sure if it's real? Check before you pay.</h1>
+      <p class="hi" lang="hi">असली है या नकली? पैसे भेजने से पहले जाँचें।</p>
+      <p class="lead">Upload a suspicious payment screenshot, invoice, QR code, link, message or voice note. In about a minute you get a plain answer in Hindi or English: what looks edited or AI-made, who is really asking for the money, and what to do next.</p>
+      <div class="hero-cta">
+        <a class="hbtn hbtn-p" href="/check">Check now <span lang="hi">&nbsp;/ जाँच करें</span></a>
+        <a class="hbtn hbtn-s" href="/result">See a sample result</a>
+      </div>
+      <ul class="trust" aria-label="Why people use Satyapan">
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg>Free, no login</li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg>File deleted after checking</li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg>Read aloud in Hindi</li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg>Never asks for OTP or PIN</li>
+      </ul>
+    </div>
+
+    <div class="panel">
+      <h2>What do you want to check?</h2>
+      <p>Pick one to start. <span lang="hi">क्या जाँचना है?</span></p>
+      <div class="quick">
+        <a href="/check?type=screenshot"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.09-3.09a2 2 0 0 0-2.82 0L6 21"/></svg>Screenshot or photo<small>Payment, chat, ad</small></a>
+        <a href="/check?type=pdf"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4M10 9H8M16 13H8M16 17H8"/></svg>PDF or invoice<small>Bill, notice, letter</small></a>
+        <a href="/check?type=qr"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3M21 14v.01M14 21h7v-4"/></svg>QR code<small>Upload or scan</small></a>
+        <a href="/check?type=link"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>Link<small>Website or pay link</small></a>
+        <a href="/check?type=message"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Message or number<small>SMS, WhatsApp, caller</small></a>
+        <a href="/check?type=voice"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v3"/></svg>Voice note<small>Shown as text first</small></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap pagebottom">
+
+<section class="section" aria-labelledby="svc-h">
+  <div class="sec-h"><h2 id="svc-h">Our services</h2><a href="/dashboard">My checks ›</a></div>
+  <div class="svc">
+    <a href="/check"><span class="sic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg></span><span><b>Check something</b><span class="sd">Screenshots, PDFs, QR codes, links, messages and voice notes.</span></span></a>
+    <a href="/tools"><span class="sic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span><span><b>Is this really Amazon?</b><span class="sd">Calls and messages claiming to be your bank, a courier or a shop.</span></span></a>
+    <a href="/shopkeeper"><span class="sic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9h18l-1.5-5h-15zM5 9v11h14V9M9 20v-6h6v6"/></svg></span><span><b>Shopkeeper check</b><span class="sd">Is that "payment successful" screen real? Check before handing over goods.</span></span></a>
+    <a href="/guardian"><span class="sic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></span><span><b>Guardian Review</b><span class="sd">Send the short result to a family member and decide together.</span></span></a>
+    <a href="/report"><span class="sic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4M10 9H8M16 13H8M16 17H8"/></svg></span><span><b>Evidence report and complaint</b><span class="sd">A ready-to-file draft for 1930 and cybercrime.gov.in. You submit it yourself.</span></span></a>
+    <a href="/learn"><span class="sic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></span><span><b>Learn and practise</b><span class="sd">Scam Drill, a safety guide and a family safe-word card.</span></span></a>
+  </div>
+</section>
+
+<section class="section two" aria-labelledby="alerts-h">
+  <div class="board">
+    <h3 id="alerts-h">Scam patterns to watch for <span class="pill pill-n" style="margin-left:8px">Samples</span></h3>
+    <div class="alert-row"><time>Investment</time><div><b>"Guaranteed 30% a month" stock-tips group</b><p>A cloned "expert" in an ad, a VIP group, then a QR that pays a personal UPI ID. Registered brokers collect only on <b>@valid</b> handles.</p><a href="/result/qr">See the sample result</a></div></div>
+    <div class="alert-row"><time>Business</time><div><b>"Our bank account has changed"</b><p>An invoice shows new bank details while the IFSC code points to a different bank. Confirm on a phone number you already have.</p><a href="/result/invoice">See the sample result</a></div></div>
+    <div class="alert-row"><time>Shops</time><div><b>A "payment successful" screenshot</b><p>The amount or reference number has been edited. A screenshot is not proof of payment: check your own UPI app or soundbox.</p><a href="/result/screenshot">See the sample result</a></div></div>
+    <div class="alert-row"><time>Calls</time><div><b>"Amazon refund pending, install support app"</b><p>Official companies do not ask you to install apps or share a screen. Use their own app or website instead.</p><a href="/tools">Check a number or link</a></div></div>
+  </div>
+
+  <div class="board" style="border-top-color:#B42318">
+    <h3 style="color:#B42318">Already paid? The first hour</h3>
+    <ol class="flow">
+      <li><b>Call 1930 now</b>The national cyber-crime helpline. Reporting quickly gives the best chance of stopping the money.</li>
+      <li><b>Call your bank's official number</b>Ask them to flag the transaction. Use the number on your card or app.</li>
+      <li><b>Save the evidence</b>Keep the chat, screenshot and payment receipt. We can prepare a report for you.</li>
+      <li><b>File at cybercrime.gov.in</b>We prepare the draft. You submit it yourself.</li>
+    </ol>
+    <div style="padding:0 18px 18px"><a class="sbtn sbtn-red" href="tel:1930">Call 1930</a><a class="slink" href="/already-paid">Full first-hour guide</a></div>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="how-h">
+  <div class="sec-h"><h2 id="how-h">How it works</h2><a href="/how-it-works">Methodology ›</a></div>
+  <div class="steps3">
+    <div class="hstep"><div class="hn">1</div><h3>Upload</h3><p>A screenshot, PDF, QR code, link, message or voice note. No login and no account.</p></div>
+    <div class="hstep"><div class="hn">2</div><h3>We check</h3><p>Signs of editing or AI generation, who really gets the money, and whether the claims add up.</p></div>
+    <div class="hstep"><div class="hn">3</div><h3>You decide</h3><p>Plain reasons in your language, ways to check yourself, and clear next steps. Nothing is blocked or paid for you.</p></div>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="faq-h">
+  <div class="sec-h"><h2 id="faq-h">Common questions</h2></div>
+  <div class="faq">
+    <details><summary>Will Satyapan tell me something is "safe"?</summary><p>No. The best answer is "no red flags found", and it always says what was and was not checked. Nobody can promise a payment is safe.</p></details>
+    <details><summary>What happens to my file?</summary><p>It is deleted after checking. We keep only the result, a report ID and a file fingerprint. Voice goes to a speech service only if you agree.</p></details>
+    <details><summary>Does Satyapan block or report anything for me?</summary><p>No. It is advice only. If you want to report, we prepare a draft and you file it yourself on cybercrime.gov.in or by calling 1930.</p></details>
+    <details><summary>What if the result is wrong?</summary><p>Use "Wrong result?" on any result. The case goes to a human reviewer, and you can see its status.</p></details>
+    <details><summary>Which languages does it support?</summary><p>English and Hindi, with a spoken version of the short verdict. More Indian languages are planned.</p></details>
+  </div>
+</section>
+
+</div>
+{% endblock %}

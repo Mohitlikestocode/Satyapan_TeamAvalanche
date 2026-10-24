@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block css %}<style>
+body{margin:0}
+*{box-sizing:border-box}
+a{color:#1F4E8C}a:hover{color:#163A6A}
+.sp{font-family:'Noto Sans','Noto Sans Devanagari',system-ui,sans-serif;color:#0B1F3A;background:#E6E9EE;-webkit-font-smoothing:antialiased}
+.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.col{display:flex;flex-direction:column;gap:14px;width:390px}
+.lbl{font-size:14px;font-weight:700;color:#344054;margin:0}
+.lbl span{font-weight:400;color:#475467}
+.ph{width:390px;background:#F6F7F9;border:1px solid #C9CFD8;border-radius:24px;overflow:hidden;display:flex;flex-direction:column}
+.hd{background:#fff;border-top:4px solid #0B1F3A;border-bottom:1px solid #E4E7EC;padding:8px 12px;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.wm{display:flex;align-items:center;gap:8px;text-decoration:none;color:#0B1F3A}
+.wm b{display:block;font-size:18px;line-height:1.05}
+.wm small{display:block;font-size:12px;color:#475467;line-height:1.25}
+.tools{display:flex;gap:6px;align-items:center}
+.lang{display:flex;border:1px solid #D0D5DD;border-radius:6px;overflow:hidden}
+.lang button{border:0;background:#fff;color:#0B1F3A;font-family:inherit;font-size:13px;font-weight:600;min-height:44px;min-width:36px;padding:0 8px}
+.lang .on{background:#0B1F3A;color:#fff}
+.bd{padding:20px 16px 28px;display:flex;flex-direction:column;gap:16px}
+.card{background:#fff;border:1px solid #E4E7EC;border-radius:8px;padding:16px;display:flex;flex-direction:column;gap:10px}
+.t2{font-size:22px;line-height:1.35;font-weight:700;margin:0}
+.t3{font-size:17px;line-height:1.4;font-weight:600;margin:0}
+.tx{font-size:16px;line-height:1.6;margin:0}
+.sm{font-size:14px;line-height:1.5;color:#475467;margin:0}
+.xs{font-size:13px;line-height:1.45;color:#475467;margin:0}
+.sec{font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#475467;margin:4px 0 0}
+.btn{min-height:52px;border-radius:8px;font-family:inherit;font-size:17px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:10px;padding:0 18px;width:100%;text-decoration:none;cursor:pointer}
+.bp{background:#1F4E8C;color:#fff;border:1px solid #1F4E8C}
+.bs{background:#fff;color:#1F4E8C;border:1px solid #1F4E8C}
+.bq{background:#fff;color:#0B1F3A;border:1px solid #D0D5DD}
+.opt{background:#fff;border:1px solid #D0D5DD;border-radius:8px;min-height:64px;padding:10px 12px;display:flex;align-items:center;gap:12px;text-decoration:none;color:#0B1F3A;font-family:inherit;width:100%;text-align:left}
+.opt.on{border:2px solid #1F4E8C;background:#F5F8FC}
+.opt .ic{width:40px;height:40px;border-radius:6px;background:#EEF3FA;color:#1F4E8C;display:flex;align-items:center;justify-content:center;flex:none}
+.opt b{display:block;font-size:16px;line-height:1.3}
+.opt small{display:block;font-size:13px;color:#475467;line-height:1.35}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{min-height:44px;border:1px solid #D0D5DD;border-radius:6px;background:#fff;color:#0B1F3A;font-family:inherit;font-size:15px;padding:0 12px;display:inline-flex;align-items:center;gap:6px}
+.chip.on{border-color:#1F4E8C;background:#EEF3FA;color:#1F4E8C;font-weight:600}
+.cb{display:flex;gap:12px;align-items:flex-start;font-size:15px;line-height:1.5;min-height:44px}
+.cb input{width:22px;height:22px;margin:2px 0 0;accent-color:#1F4E8C;flex:none}
+.li{display:flex;gap:10px;align-items:flex-start;font-size:15px;line-height:1.5}
+.li .i{color:#1F4E8C;margin-top:2px;width:18px;height:18px}
+.chk{display:flex;gap:14px;align-items:flex-start;padding:14px 0;border-top:1px solid #EAECF0}
+.dot{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex:none}
+.d-done{background:#067647;color:#fff}
+.d-now{background:#fff;color:#1F4E8C;border:2px solid #1F4E8C}
+.d-wait{background:#fff;border:2px solid #D0D5DD;color:#98A2B3}
+.d-skip{background:#F2F4F7;color:#667085;border:1px dashed #98A2B3}
+.chk b{display:block;font-size:16px;line-height:1.35}
+.chk p{margin:2px 0 0;font-size:14px;line-height:1.5;color:#475467}
+.st{display:inline-block;font-size:12.5px;font-weight:700;margin-top:4px;letter-spacing:.02em}
+.mono{font-family:ui-monospace,'SFMono-Regular',Menlo,Consolas,monospace;font-size:14px}
+.file{background:#fff;border:1px solid #D0D5DD;border-radius:8px;padding:10px 12px;display:flex;align-items:center;gap:12px}
+</style>{% endblock %}
+{% block content %}
+<div class="sp"><div class="bd">
+<h1 class="t2">Here's what we heard</h1>
+<div class="file">
+<button aria-label="Play voice note" class="chip" style="min-width: 44px; justify-content: center; padding: 0; background: #0B1F3A; color: #fff; border-color: #0B1F3A"><svg aria-hidden="true" class="i" viewBox="0 0 24 24" style="width: 18px; height: 18px"><path d="m6 3 14 9-14 9V3z"></path></svg></button>
+<span style="flex: 1"><span style="display: block; font-size: 15px; font-weight: 600">voice_note_0412.ogg</span><span class="xs">0:38 · Hindi</span></span>
+</div>
+<p class="xs" style="display: flex; gap: 6px"><svg aria-hidden="true" class="i" viewBox="0 0 24 24" style="width: 16px; height: 16px"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4M12 8h.01"></path></svg>Turned into text by Sarvam speech service, with your permission. The audio is deleted after checking.</p>
+<label for="tr" style="font-size: 15px; font-weight: 600">Text from the voice note <span class="xs" style="font-weight: 400">(you can fix any wrong words)</span></label>
+<textarea id="tr" lang="hi" style="font-family: inherit; font-size: 17px; line-height: 1.7; color: #0B1F3A; border: 1px solid #98A2B3; border-radius: 8px; padding: 12px; min-height: 180px; resize: vertical; background: #fff">नमस्ते मैडम, मैं Amazon से बोल रहा हूँ। आपका ₹2,499 का रिफ़ंड रुका हुआ है। मैं एक लिंक भेज रहा हूँ, उससे 'क्विक सपोर्ट' ऐप डाउनलोड कीजिए, मैं अभी रिफ़ंड करवा देता हूँ।</textarea>
+<div class="card" style="background: #F9FAFB">
+<span class="xs" style="font-weight: 700; letter-spacing: .04em; text-transform: uppercase">In English</span>
+<p class="sm" style="color: #344054">"Hello madam, I'm calling from Amazon. Your refund of ₹2,499 is stuck. I'm sending a link. Download the 'Quick Support' app from it and I'll process your refund right away."</p>
+</div>
+<a class="btn bp" href="/tools">Check this text</a>
+<button class="btn bq">Choose a different file</button>
+</div></div>
+{% endblock %}

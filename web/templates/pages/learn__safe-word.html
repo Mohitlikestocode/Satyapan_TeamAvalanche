@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block css %}<style>
+body{margin:0}
+*{box-sizing:border-box}
+a{color:#1F4E8C}a:hover{color:#163A6A}
+.sp{font-family:'Noto Sans','Noto Sans Devanagari',system-ui,sans-serif;color:#0B1F3A;background:#E6E9EE;-webkit-font-smoothing:antialiased}
+.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.col{display:flex;flex-direction:column;gap:14px;width:390px}
+.lbl{font-size:14px;font-weight:700;color:#344054;margin:0}
+.lbl span{font-weight:400;color:#475467}
+.ph{width:390px;background:#F6F7F9;border:1px solid #C9CFD8;border-radius:24px;overflow:hidden;display:flex;flex-direction:column}
+.hd{background:#fff;border-top:4px solid #0B1F3A;border-bottom:1px solid #E4E7EC;padding:8px 12px;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.wm{display:flex;align-items:center;gap:8px;text-decoration:none;color:#0B1F3A}
+.wm b{display:block;font-size:18px;line-height:1.05}
+.wm small{display:block;font-size:12px;color:#475467;line-height:1.25}
+.lang{display:flex;border:1px solid #D0D5DD;border-radius:6px;overflow:hidden}
+.lang button{border:0;background:#fff;color:#0B1F3A;font-family:inherit;font-size:13px;font-weight:600;min-height:44px;min-width:36px;padding:0 8px}
+.lang .on{background:#0B1F3A;color:#fff}
+.bd{padding:20px 16px 28px;display:flex;flex-direction:column;gap:14px}
+.card{background:#fff;border:1px solid #E4E7EC;border-radius:8px;padding:16px;display:flex;flex-direction:column;gap:10px}
+.t2{font-size:22px;line-height:1.4;font-weight:700;margin:0}
+.t3{font-size:17px;line-height:1.45;font-weight:700;margin:0}
+.tx{font-size:16px;line-height:1.65;margin:0}
+.sm{font-size:14px;line-height:1.55;color:#475467;margin:0}
+.xs{font-size:13px;line-height:1.45;color:#475467;margin:0}
+.btn{min-height:52px;border-radius:8px;font-family:inherit;font-size:17px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:10px;padding:0 16px;width:100%;text-decoration:none;cursor:pointer}
+.bp{background:#1F4E8C;color:#fff;border:1px solid #1F4E8C}
+.bs{background:#fff;color:#1F4E8C;border:1px solid #1F4E8C}
+.bq{background:#fff;color:#0B1F3A;border:1px solid #D0D5DD}
+.row{display:flex;gap:12px;align-items:center;min-height:64px;padding:10px 0;border-top:1px solid #EAECF0;text-decoration:none;color:#0B1F3A}
+.row .ic{width:40px;height:40px;border-radius:6px;background:#EEF3FA;color:#1F4E8C;display:flex;align-items:center;justify-content:center;flex:none}
+.row b{display:block;font-size:16px}
+.bub{background:#fff;border:1px solid #D0D5DD;border-radius:4px 14px 14px 14px;padding:14px;font-size:17px;line-height:2.05}
+.flag{font-family:inherit;font-size:17px;line-height:1.5;border:0;background:transparent;color:#0B1F3A;padding:2px 3px;border-radius:4px;border-bottom:2px dotted #98A2B3;cursor:pointer;min-height:32px}
+.flag.hit{background:#FEE4E2;border-bottom:2px solid #B42318;color:#912018;font-weight:600}
+.rule{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-top:1px solid #EAECF0}
+.rule .n{width:28px;height:28px;border-radius:50%;background:#0B1F3A;color:#fff;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;flex:none}
+.res{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-top:1px solid #EAECF0;font-size:15px;line-height:1.55}
+.res .i{width:20px;height:20px;margin-top:2px}
+.inp{font-family:inherit;font-size:18px;min-height:52px;border:1px solid #98A2B3;border-radius:8px;padding:0 12px;color:#0B1F3A;background:#fff;width:100%}
+</style>{% endblock %}
+{% block content %}
+<div class="sp"><div class="bd">
+<h1 class="t2">Pick a secret family word</h1>
+<p class="tx" style="color: #344054">If someone calls as your son, daughter or a relative and asks for money, ask for the word. A scammer won't know it.</p>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="sw" style="font-size: 15px; font-weight: 600">Our family word</label>
+<input class="inp" id="sw" type="text" value="Imli ka ped"/>
+<p class="xs">Pick something easy to remember and never posted online. This stays on your phone.</p>
+</div>
+<article aria-label="Printable safe-word card" style="background: #fff; border: 2px dashed #0B1F3A; border-radius: 8px; padding: 18px; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; gap: 8px; align-items: center"><svg aria-hidden="true" height="24" viewBox="0 0 24 24" width="24"><path d="M12 2 4 5v6c0 5.2 3.4 9.4 8 11 4.6-1.6 8-5.8 8-11V5z" fill="#0B1F3A"></path><path d="m8.4 12.2 2.5 2.5 4.8-5" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg><b style="font-size: 14px; letter-spacing: .05em">FAMILY SAFE-WORD CARD</b></div>
+<p style="margin: 0; font-size: 19px; font-weight: 700; line-height: 1.45">Ask for our word before sending money to anyone who calls as family.</p>
+<p lang="hi" style="margin: 0; font-size: 17px; line-height: 1.6">परिवार के नाम से कोई पैसे माँगे, तो पहले हमारा गुप्त शब्द पूछें।</p>
+<div style="border-top: 1px solid #D0D5DD; padding-top: 10px; display: flex; justify-content: space-between; align-items: baseline"><span class="xs">Our word</span><span style="font-size: 17px; font-weight: 700; letter-spacing: .04em">• • • • • • • •</span></div>
+<p class="xs">The word is hidden on the card. Tell family in person.</p>
+</article>
+<button class="btn bp"><svg aria-hidden="true" class="i" viewBox="0 0 24 24"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect height="8" width="12" x="6" y="14"></rect></svg>Print card</button>
+</div></div>
+{% endblock %}

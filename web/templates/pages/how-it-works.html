@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+{% block css %}<style>
+body{margin:0;background:#F6F7F9}
+*{box-sizing:border-box}
+a{color:#1F4E8C}a:hover{color:#163A6A}
+.sp{font-family:'Noto Sans','Noto Sans Devanagari',system-ui,sans-serif;color:#0B1F3A;background:#F6F7F9;-webkit-font-smoothing:antialiased}
+.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+.hdr{background:#fff;border-top:5px solid #0B1F3A;border-bottom:1px solid #E4E7EC}
+.hrow{display:flex;flex-wrap:wrap;align-items:center;gap:12px 28px;min-height:72px;padding-top:8px;padding-bottom:8px}
+.wm{display:flex;align-items:center;gap:10px;text-decoration:none;color:#0B1F3A}
+.wm b{display:block;font-size:21px;line-height:1.05}
+.wm small{display:block;font-size:13px;color:#475467;line-height:1.25}
+.mnav{display:flex;gap:4px;flex:1 1 auto;overflow-x:auto}
+.mnav a{min-height:44px;display:flex;align-items:center;padding:0 12px;border-radius:6px;font-size:16px;font-weight:600;color:#0B1F3A;text-decoration:none;white-space:nowrap}
+.mnav a.on{background:#EEF3FA;color:#1F4E8C}
+.lang{display:flex;border:1px solid #D0D5DD;border-radius:6px;overflow:hidden;margin-left:auto}
+.lang button{border:0;background:#fff;color:#0B1F3A;font-family:inherit;font-size:14px;font-weight:600;min-height:44px;min-width:40px;padding:0 10px}
+.lang .on{background:#0B1F3A;color:#fff}
+.h1{font-size:clamp(30px,4vw,42px);line-height:1.2;font-weight:700;margin:0}
+.h2{font-size:clamp(22px,2.4vw,28px);line-height:1.3;font-weight:700;margin:0}
+.t3{font-size:18px;line-height:1.4;font-weight:700;margin:0}
+.tx{font-size:17px;line-height:1.6;margin:0}
+.sm{font-size:15px;line-height:1.55;color:#475467;margin:0}
+.xs{font-size:13px;line-height:1.45;color:#475467;margin:0}
+.card{background:#fff;border:1px solid #E4E7EC;border-radius:8px;padding:22px;display:flex;flex-direction:column;gap:12px}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+.num{width:32px;height:32px;border-radius:50%;background:#0B1F3A;color:#fff;font-size:15px;font-weight:700;display:flex;align-items:center;justify-content:center;flex:none}
+.dg{background:#F6F7F9;border:1px solid #EAECF0;border-radius:6px;padding:14px;display:flex;flex-direction:column;gap:8px;min-height:150px;justify-content:center}
+.bx{background:#fff;border:1px solid #98A2B3;border-radius:4px;padding:6px 10px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:8px}
+.bx .i{width:16px;height:16px;color:#1F4E8C}
+.tbox{overflow-x:auto;background:#fff;border:1px solid #E4E7EC;border-radius:8px}
+table{width:100%;border-collapse:collapse;font-size:15px;min-width:720px}
+th{text-align:left;font-size:12.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:#475467;background:#F9FAFB;padding:12px 16px;border-bottom:1px solid #E4E7EC}
+td{padding:12px 16px;border-bottom:1px solid #EAECF0;vertical-align:top;line-height:1.5}
+.pend{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:#475467;background:#F2F4F7;border:1px dashed #98A2B3;border-radius:4px;padding:2px 8px}
+.chip{display:inline-block;font-size:14px;font-weight:600;background:#EEF3FA;color:#1F4E8C;border-radius:4px;padding:4px 10px;margin:0 6px 6px 0}
+.mono{font-family:ui-monospace,'SFMono-Regular',Menlo,Consolas,monospace;font-size:14px}
+.ft{background:#0B1F3A;color:#D0D8E4;font-size:14px;line-height:1.6}
+</style>{% endblock %}
+{% block content %}
+<div class="sp resp"><main class="wrap" style="display: flex; flex-direction: column; gap: 56px; padding-top: 48px; padding-bottom: 64px">
+<section style="display: flex; flex-direction: column; gap: 14px; max-width: 760px">
+<h1 class="h1">How Satyapan works</h1>
+<p class="tx">Satyapan does not say "fake" or "real". It shows you what it found, where the information came from, and what it could not check, so you can decide.</p>
+</section>
+<section class="grid3">
+<article class="card">
+<div style="display: flex; gap: 12px; align-items: center"><span class="num">1</span><h2 class="t3">Upload</h2></div>
+<div aria-hidden="true" class="dg">
+<div class="bx"><svg class="i" viewBox="0 0 24 24"><rect height="18" rx="2" width="18" x="3" y="3"></rect><circle cx="9" cy="9" r="2"></circle><path d="m21 15-3.09-3.09a2 2 0 0 0-2.82 0L6 21"></path></svg>Screenshot or photo</div>
+<div class="bx"><svg class="i" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path></svg>PDF invoice</div>
+<div class="bx"><svg class="i" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>Message, link, QR, voice</div>
+</div>
+<p class="sm">No login. You agree to what will be checked first.</p>
+</article>
+<article class="card">
+<div style="display: flex; gap: 12px; align-items: center"><span class="num">2</span><h2 class="t3">We check</h2></div>
+<div aria-hidden="true" class="dg">
+<div class="bx">Editing and AI-generation signs</div>
+<div class="bx">Who really gets the money</div>
+<div class="bx">Whether the claims add up</div>
+</div>
+<p class="sm">Each check is ticked only when it really runs. Your file is deleted after.</p>
+</article>
+<article class="card">
+<div style="display: flex; gap: 12px; align-items: center"><span class="num">3</span><h2 class="t3">You decide</h2></div>
+<div aria-hidden="true" class="dg">
+<div class="bx" style="border-color: #B42318; color: #B42318">Verdict in words, with reasons</div>
+<div class="bx">Ask family · Listen · Report</div>
+<div class="bx">Next steps you take yourself</div>
+</div>
+<p class="sm">Satyapan never pays, blocks, accuses or files anything for you.</p>
+</article>
+</section>
+<section style="display: flex; flex-direction: column; gap: 16px">
+<h2 class="h2">What each check can and cannot do</h2>
+<div class="tbox"><table>
+<thead><tr><th style="width: 20%">Check</th><th style="width: 26%">Uses</th><th style="width: 27%">Can tell you</th><th>Cannot tell you</th></tr></thead>
+<tbody>
+<tr><td><b>Reading text</b></td><td>Tesseract OCR</td><td>Amounts, names, UPI IDs, numbers in the image</td><td>Handwriting or very blurry text reliably</td></tr>
+<tr><td><b>QR decoding</b></td><td>Open-source QR decoder</td><td>Exactly where a QR sends money</td><td>Who owns that account</td></tr>
+<tr><td><b>Editing signs</b></td><td>Compression and edge analysis, file metadata</td><td>Areas that look different from the rest</td><td>Proof of editing. Chat apps also change images.</td></tr>
+<tr><td><b>AI-generated image</b></td><td>CommunityForensics image detector</td><td>Signs an image may be AI-made</td><td>Certainty, especially for screenshots</td></tr>
+<tr><td><b>PDF check</b></td><td>PDF history, font and text-layer analysis</td><td>Edits after creation, mixed fonts</td><td>Whether the edit was honest</td></tr>
+<tr><td><b>Bank code</b></td><td>Razorpay open IFSC data</td><td>Which bank and branch an IFSC belongs to</td><td>Who owns the account</td></tr>
+<tr><td><b>Adviser register</b></td><td>SEBI public lists (dated snapshot)</td><td>Whether a name appears as registered</td><td>Spelling variants with certainty</td></tr>
+<tr><td><b>Voice and language</b></td><td>Sarvam speech and translation (with consent)</td><td>Text from voice notes, Hindi read-aloud</td><td>Whether a voice is cloned</td></tr>
+</tbody>
+</table></div>
+</section>
+<section style="display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 12px"><h2 class="h2">Test results</h2><span class="pend"><svg aria-hidden="true" class="i" viewBox="0 0 24 24" style="width: 15px; height: 15px"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg>Evaluation pending</span></div>
+<p class="sm" style="max-width: 760px">We will publish measured numbers here with the test set and code. Until a row is measured, it shows "–". We do not show estimates.</p>
+<div class="tbox"><table>
+<thead><tr><th style="width: 30%">Measure</th><th>Payment screenshots</th><th>Invoices (PDF)</th><th>QR codes</th><th>Messages and links</th></tr></thead>
+<tbody>
+<tr><td><b>Detection rate</b><br/><span class="xs">Scam items correctly flagged</span></td><td>– <span class="pend">pending</span></td><td>– <span class="pend">pending</span></td><td>– <span class="pend">pending</span></td><td>– <span class="pend">pending</span></td></tr>
+<tr><td><b>False alarms on genuine items</b><br/><span class="xs">Genuine items wrongly flagged</span></td><td>– <span class="pend">pending</span></td><td>– <span class="pend">pending</span></td><td>– <span class="pend">pending</span></td><td>– <span class="pend">pending</span></td></tr>
+<tr><td><b>"Can't tell" rate</b></td><td>– <span class="pend">pending</span></td><td>– <span class="pend">pending</span></td><td>– <span class="pend">pending</span></td><td>– <span class="pend">pending</span></td></tr>
+<tr><td><b>Test set size</b></td><td>–</td><td>–</td><td>–</td><td>–</td></tr>
+</tbody>
+</table></div>
+</section>
+<section class="grid3">
+<article class="card">
+<h2 class="t3">Known failure cases</h2>
+<p class="sm" style="color: #0B1F3A">Very small or re-forwarded images. Screenshots from new payment apps we haven't seen. Real businesses that genuinely changed banks. Scam text in languages other than Hindi and English.</p>
+</article>
+<article class="card">
+<h2 class="t3">Models and data</h2>
+<div><span class="chip">CommunityForensics</span><span class="chip">Tesseract OCR</span><span class="chip">QR decoder</span><span class="chip">PDF and metadata analysis</span><span class="chip">Razorpay open IFSC data</span><span class="chip">SEBI public lists</span><span class="chip">Sarvam speech and translation</span></div>
+</article>
+<article class="card">
+<h2 class="t3">How to reproduce</h2>
+<p class="sm" style="color: #0B1F3A">Test set and evaluation script: <span class="mono">[REPOSITORY LINK]</span>. Synthetic samples only. No real people's data.</p>
+<p class="xs">Last updated: [DATE]</p>
+</article>
+</section>
+</main></div>
+{% endblock %}

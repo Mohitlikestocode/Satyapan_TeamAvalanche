@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% block css %}<style>
+body{margin:0}
+*{box-sizing:border-box}
+a{color:#1F4E8C}a:hover{color:#163A6A}
+.sp{font-family:'Noto Sans',system-ui,sans-serif;color:#0B1F3A;background:#E6E9EE;-webkit-font-smoothing:antialiased}
+.i{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.lbl{font-size:14px;font-weight:700;color:#344054;margin:0}
+.lbl span{font-weight:400;color:#475467}
+.win{width:1280px;background:#F6F7F9;border:1px solid #C9CFD8;border-radius:10px;overflow:hidden;display:flex;flex-direction:column}
+.top{background:#0B1F3A;color:#fff;height:56px;padding:0 20px;display:flex;align-items:center;gap:14px}
+.top b{font-size:16px}
+.pilot{font-size:12px;font-weight:700;letter-spacing:.05em;border:1px solid #5A6B85;border-radius:4px;padding:3px 8px;color:#D0D8E4}
+.side{width:220px;background:#fff;border-right:1px solid #E4E7EC;padding:16px 10px;display:flex;flex-direction:column;gap:2px}
+.side a{min-height:44px;display:flex;align-items:center;gap:10px;padding:0 12px;border-radius:6px;font-size:14.5px;font-weight:600;color:#344054;text-decoration:none}
+.side a.on{background:#EEF3FA;color:#1F4E8C}
+.card{background:#fff;border:1px solid #E4E7EC;border-radius:8px;padding:18px;display:flex;flex-direction:column;gap:10px}
+.h3{margin:0;font-size:16px;font-weight:700}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{text-align:left;font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:#475467;background:#F9FAFB;padding:10px 14px;border-bottom:1px solid #E4E7EC}
+td{padding:11px 14px;border-bottom:1px solid #EAECF0;vertical-align:top}
+.mono{font-family:ui-monospace,'SFMono-Regular',Menlo,Consolas,monospace;font-size:13px}
+.vt{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:700;padding:3px 8px;border-radius:4px;letter-spacing:.02em;white-space:nowrap}
+.r{background:#FEF3F2;color:#B42318}
+.code{display:inline-block;font-family:ui-monospace,Menlo,monospace;font-size:12px;background:#F2F4F7;border:1px solid #E4E7EC;border-radius:3px;padding:1px 5px;margin:1px 2px 1px 0;color:#344054}
+.kv{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-top:1px solid #EAECF0;font-size:14px}
+.kv .k{color:#475467}
+.kv .v{font-weight:600;text-align:right}
+.btn{min-height:44px;border-radius:6px;font-family:inherit;font-size:15px;font-weight:600;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:0 16px;text-decoration:none;cursor:pointer}
+.bdg{background:#B42318;color:#fff;border:1px solid #B42318}
+.bq{background:#fff;color:#0B1F3A;border:1px solid #D0D5DD}
+.bp{background:#1F4E8C;color:#fff;border:1px solid #1F4E8C}
+.node{background:#fff;border:1px solid #98A2B3;border-radius:6px;padding:10px 12px;font-size:13px;min-width:200px}
+.node b{display:block;font-size:12px;color:#475467;font-weight:700;letter-spacing:.04em}
+.ln{height:2px;background:#98A2B3;flex:1;min-width:40px}
+</style>{% endblock %}
+{% block content %}
+<div class="sp console"><div style="display: flex; flex-direction: column; gap: 14px">
+<div class="win" style="height: 980px">
+<div class="top"><svg aria-hidden="true" height="26" viewBox="0 0 24 24" width="26"><path d="M12 2 4 5v6c0 5.2 3.4 9.4 8 11 4.6-1.6 8-5.8 8-11V5z" fill="#fff"></path><path d="m8.4 12.2 2.5 2.5 4.8-5" fill="none" stroke="#0B1F3A" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg><b>Satyapan Review</b><span class="pilot">PILOT</span><span style="margin-left: auto; font-size: 14px; color: #D0D8E4">reviewer.03 · Fraud desk</span></div>
+<div style="flex: 1; display: flex; min-height: 0">
+<nav aria-label="Console" class="side"><a class="on" href="/console/queue">Queue</a><a href="/console/campaign">Campaigns</a><a href="/console/audit">Audit log</a><a data-todo="1" href="#">Settings</a></nav>
+<main style="flex: 1; min-width: 0; padding: 24px; display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 16px">
+<div><a href="/console/queue" style="font-size: 14px; font-weight: 600">Queue</a><span style="color: #475467"> / </span><span class="mono" style="font-weight: 700">SP-2410-7K3Q</span>
+<h1 style="margin: 6px 0 0; font-size: 24px; font-weight: 700">Stock-tips QR to personal UPI ID</h1>
+<p style="margin: 4px 0 0; font-size: 14px; color: #475467">Shared by user 24 Oct 2026, 10:51 IST · Image with QR · file kept for review until 31 Oct 2026</p></div>
+<span class="vt r" style="font-size: 13px; padding: 5px 10px">SATYAPAN: HIGH RISK</span>
+</div>
+<div style="display: grid; grid-template-columns: 1.1fr 1fr 1fr; gap: 16px; align-items: start">
+<section class="card">
+<h2 class="h3">Evidence</h2>
+<div style="background: #F2F4F7; border-radius: 6px; padding: 16px; display: flex; justify-content: center">
+<div aria-label="Shared image: promotional poster with QR code" role="img" style="width: 220px; background: #fff; border: 1px solid #D0D5DD; border-radius: 6px; padding: 14px; display: flex; flex-direction: column; gap: 8px; align-items: center; font-size: 12px; text-align: center">
+<b style="font-size: 14px">VIP Profits Club</b><span>Guaranteed 30% monthly</span><span>Pay ₹25,000 to join</span>
+<div aria-hidden="true" style="width: 110px; height: 110px; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 3px; padding: 6px; border: 2px solid #B54708; background: #FFF8E6"><span style="background: #0B1F3A"></span><span></span><span style="background: #0B1F3A"></span><span style="background: #0B1F3A"></span><span></span><span></span><span style="background: #0B1F3A"></span><span></span><span style="background: #0B1F3A"></span><span style="background: #0B1F3A"></span><span style="background: #0B1F3A"></span><span></span><span style="background: #0B1F3A"></span><span></span><span style="background: #0B1F3A"></span><span></span><span style="background: #0B1F3A"></span><span style="background: #0B1F3A"></span><span></span><span style="background: #0B1F3A"></span><span style="background: #0B1F3A"></span><span></span><span style="background: #0B1F3A"></span><span></span><span style="background: #0B1F3A"></span></div>
+<span>Alpha Securities · SEBI registered</span>
+</div>
+</div>
+<p style="margin: 0; font-size: 13px; color: #475467">QR region outlined. Editing check: none found. AI-image check: no signs (CommunityForensics).</p>
+<div class="mono" style="background: #F9FAFB; border: 1px solid #EAECF0; border-radius: 6px; padding: 8px 10px; word-break: break-all">upi://pay?pa=alpha.gain88@ybl&amp;pn=Ramesh K&amp;am=25000</div>
+</section>
+<section class="card" style="gap: 0">
+<h2 class="h3" style="margin-bottom: 6px">Payee details</h2>
+<div class="kv"><span class="k">UPI ID</span><span class="v mono">alpha.gain88@ybl</span></div>
+<div class="kv"><span class="k">Name in QR</span><span class="v">Ramesh K</span></div>
+<div class="kv"><span class="k">Name claimed</span><span class="v">Alpha Securities</span></div>
+<div class="kv"><span class="k">UPI ID type</span><span class="v">Personal, not @valid</span></div>
+<div class="kv"><span class="k">SEBI IA / RA lists</span><span class="v" style="color: #B42318">Not found</span></div>
+<div class="kv"><span class="k">Seen in other reports</span><span class="v"><a href="/console/campaign">7 this week</a></span></div>
+<h2 class="h3" style="margin: 16px 0 6px">Reason codes</h2>
+<div><span class="code">UPI_PERSONAL</span><span class="code">NAME_MISMATCH</span><span class="code">SEBI_NOT_FOUND</span><span class="code">RETURN_IMPOSSIBLE</span></div>
+</section>
+<section class="card">
+<h2 class="h3">Your decision</h2>
+<button class="btn bdg" style="width: 100%">Confirm as scam</button>
+<p style="margin: 0; font-size: 13px; color: #475467">Needs a second reviewer before it takes effect.</p>
+<button class="btn bq" style="width: 100%">Not a scam</button>
+<button class="btn bq" style="width: 100%">Unsure</button>
+<button class="btn bq" style="width: 100%">Escalate to senior reviewer</button>
+<label for="rn" style="font-size: 14px; font-weight: 600; margin-top: 6px">Reviewer note</label>
+<textarea id="rn" style="font-family: inherit; font-size: 14px; line-height: 1.5; border: 1px solid #98A2B3; border-radius: 6px; padding: 10px; min-height: 96px; resize: vertical">Same UPI ID as SP-2410-R2WC. Matches the "VIP Profits" campaign pattern.</textarea>
+<button class="btn bp" style="width: 100%">Save decision</button>
+</section>
+</div>
+</main>
+</div>
+</div>
+</div></div>
+{% endblock %}

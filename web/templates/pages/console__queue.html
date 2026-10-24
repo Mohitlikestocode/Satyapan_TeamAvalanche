@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block css %}<style>
+body{margin:0}
+*{box-sizing:border-box}
+a{color:#1F4E8C}a:hover{color:#163A6A}
+.sp{font-family:'Noto Sans',system-ui,sans-serif;color:#0B1F3A;background:#E6E9EE;-webkit-font-smoothing:antialiased}
+.i{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.lbl{font-size:14px;font-weight:700;color:#344054;margin:0}
+.lbl span{font-weight:400;color:#475467}
+.win{width:1280px;background:#F6F7F9;border:1px solid #C9CFD8;border-radius:10px;overflow:hidden;display:flex;flex-direction:column}
+.top{background:#0B1F3A;color:#fff;height:56px;padding:0 20px;display:flex;align-items:center;gap:14px}
+.top b{font-size:16px}
+.pilot{font-size:12px;font-weight:700;letter-spacing:.05em;border:1px solid #5A6B85;border-radius:4px;padding:3px 8px;color:#D0D8E4}
+.side{width:220px;background:#fff;border-right:1px solid #E4E7EC;padding:16px 10px;display:flex;flex-direction:column;gap:2px}
+.side a{min-height:44px;display:flex;align-items:center;gap:10px;padding:0 12px;border-radius:6px;font-size:14.5px;font-weight:600;color:#344054;text-decoration:none}
+.side a.on{background:#EEF3FA;color:#1F4E8C}
+.side .ct{margin-left:auto;font-size:12px;background:#F2F4F7;border-radius:10px;padding:1px 8px;color:#344054}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{text-align:left;font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:#475467;background:#F9FAFB;padding:10px 14px;border-bottom:1px solid #E4E7EC}
+td{padding:12px 14px;border-bottom:1px solid #EAECF0;vertical-align:middle}
+tr.sel td{background:#F5F8FC}
+.mono{font-family:ui-monospace,'SFMono-Regular',Menlo,Consolas,monospace;font-size:13px}
+.vt{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:700;padding:3px 8px;border-radius:4px;letter-spacing:.02em;white-space:nowrap}
+.r{background:#FEF3F2;color:#B42318}.a{background:#FFFAEB;color:#B54708}.g{background:#F2F4F7;color:#475467}.o{background:#ECFDF3;color:#067647}
+.code{display:inline-block;font-family:ui-monospace,Menlo,monospace;font-size:12px;background:#F2F4F7;border:1px solid #E4E7EC;border-radius:3px;padding:1px 5px;margin:1px 2px 1px 0;color:#344054}
+.st{font-size:13px;font-weight:600}
+.btn{min-height:44px;border-radius:6px;font-family:inherit;font-size:15px;font-weight:600;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:0 16px;text-decoration:none;cursor:pointer}
+.bp{background:#1F4E8C;color:#fff;border:1px solid #1F4E8C}
+.bq{background:#fff;color:#0B1F3A;border:1px solid #D0D5DD}
+.inp{font-family:inherit;font-size:15px;min-height:44px;border:1px solid #98A2B3;border-radius:6px;padding:0 12px;color:#0B1F3A;background:#fff;width:100%}
+.otp{width:48px;height:56px;border:1px solid #98A2B3;border-radius:6px;font-family:inherit;font-size:22px;font-weight:700;text-align:center;color:#0B1F3A;background:#fff}
+.flt{min-height:40px;border:1px solid #D0D5DD;border-radius:6px;background:#fff;font-family:inherit;font-size:14px;padding:0 12px;display:inline-flex;align-items:center;gap:6px;color:#0B1F3A}
+.flt.on{border-color:#1F4E8C;background:#EEF3FA;color:#1F4E8C;font-weight:600}
+</style>{% endblock %}
+{% block content %}
+<div class="sp console"><div style="display: flex; flex-direction: column; gap: 14px">
+<div class="win" style="height: 880px">
+<div class="top"><svg aria-hidden="true" height="26" viewBox="0 0 24 24" width="26"><path d="M12 2 4 5v6c0 5.2 3.4 9.4 8 11 4.6-1.6 8-5.8 8-11V5z" fill="#fff"></path><path d="m8.4 12.2 2.5 2.5 4.8-5" fill="none" stroke="#0B1F3A" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg><b>Satyapan Review</b><span class="pilot">PILOT</span><span style="margin-left: auto; font-size: 14px; color: #D0D8E4">reviewer.03 · Fraud desk</span></div>
+<div style="flex: 1; display: flex; min-height: 0">
+<nav aria-label="Console" class="side">
+<a class="on" href="/console/queue"><svg aria-hidden="true" class="i" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"></path></svg>Queue<span class="ct">23</span></a>
+<a href="/console/case"><svg aria-hidden="true" class="i" viewBox="0 0 24 24"><circle cx="6" cy="6" r="3"></circle><circle cx="18" cy="18" r="3"></circle><circle cx="18" cy="6" r="3"></circle><path d="M9 6h6M18 9v6M8.2 8.2l7.6 7.6"></path></svg>Campaigns<span class="ct">4</span></a>
+<a href="/console/case"><svg aria-hidden="true" class="i" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4M10 13h6M10 17h6"></path></svg>Audit log</a>
+<a data-todo="1" href="#"><svg aria-hidden="true" class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68 1.65 1.65 0 0 0 10 3.17V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>Settings</a>
+</nav>
+<main style="flex: 1; min-width: 0; padding: 24px; display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 16px">
+<div><h1 style="margin: 0; font-size: 24px; font-weight: 700">Shared cases</h1><p style="margin: 4px 0 0; font-size: 14px; color: #475467">Cases users chose to share with partner institutions · last 7 days</p></div>
+<div style="display: flex; gap: 8px"><label for="q" style="position: absolute; left: -9999px">Search</label><input class="inp" id="q" placeholder="Search report ID, UPI ID, number" style="width: 280px"/><button class="btn bq">Export CSV</button></div>
+</div>
+<div style="display: flex; gap: 8px; flex-wrap: wrap">
+<button class="flt on">Needs review · 9</button><button class="flt">Awaiting 2nd reviewer · 3</button><button class="flt">Escalated · 1</button><button class="flt">Closed · 10</button><span style="width: 1px; background: #D0D5DD; margin: 0 4px"></span><button class="flt">Verdict: all</button><button class="flt">Type: all</button>
+</div>
+<div style="background: #fff; border: 1px solid #E4E7EC; border-radius: 8px; overflow: hidden">
+<table>
+<thead><tr><th>Report ID</th><th>Shared</th><th>Verdict</th><th>Type</th><th>Payee</th><th>Reason codes</th><th>Status</th></tr></thead>
+<tbody>
+<tr class="sel"><td><a class="mono" href="/console/case" style="font-weight: 700">SP-2410-7K3Q</a></td><td>24 Oct 2026, 10:51</td><td><span class="vt r">HIGH RISK</span></td><td>QR · investment</td><td class="mono">alpha.gain88@ybl</td><td><span class="code">UPI_PERSONAL</span><span class="code">NAME_MISMATCH</span><span class="code">SEBI_NOT_FOUND</span></td><td class="st" style="color: #1F4E8C">Needs review</td></tr>
+<tr><td><a class="mono" href="/console/case">SP-2410-R2WC</a></td><td>24 Oct 2026, 09:12</td><td><span class="vt r">HIGH RISK</span></td><td>Message · investment</td><td class="mono">alpha.gain88@ybl</td><td><span class="code">UPI_PERSONAL</span><span class="code">RETURN_IMPOSSIBLE</span></td><td class="st" style="color: #1F4E8C">Needs review</td></tr>
+<tr><td><a class="mono" href="/console/case">SP-2410-M8D2</a></td><td>24 Oct 2026, 11:20</td><td><span class="vt a">VERIFY FIRST</span></td><td>PDF · invoice</td><td>A/c 50100XXXX7781</td><td><span class="code">IFSC_BANK_MISMATCH</span><span class="code">PDF_EDITED</span></td><td class="st" style="color: #B54708">User says wrong</td></tr>
+<tr><td><a class="mono" href="/console/case">SP-2310-9FQA</a></td><td>23 Oct 2026, 18:40</td><td><span class="vt r">HIGH RISK</span></td><td>Number · fake helpline</td><td class="mono">98XXXXXX21</td><td><span class="code">NOT_OFFICIAL_CHANNEL</span><span class="code">REMOTE_APP_ASK</span></td><td class="st" style="color: #475467">Awaiting 2nd reviewer</td></tr>
+<tr><td><a class="mono" href="/console/case">SP-2310-4LZD</a></td><td>23 Oct 2026, 16:05</td><td><span class="vt r">HIGH RISK</span></td><td>Screenshot · payment</td><td class="mono">sharma.kirana@ybl</td><td><span class="code">IMAGE_REGION_EDIT</span><span class="code">PAYEE_MISMATCH</span></td><td class="st" style="color: #1F4E8C">Needs review</td></tr>
+<tr><td><a class="mono" href="/console/case">SP-2310-T7HN</a></td><td>23 Oct 2026, 12:31</td><td><span class="vt g">CAN'T TELL</span></td><td>Screenshot · payment</td><td style="color: #475467">Not readable</td><td><span class="code">LOW_QUALITY</span></td><td class="st" style="color: #1F4E8C">Needs review</td></tr>
+<tr><td><a class="mono" href="/console/case">SP-2210-K5PB</a></td><td>22 Oct 2026, 20:14</td><td><span class="vt r">HIGH RISK</span></td><td>Link · bank KYC</td><td class="mono">sbi-kyc-update.example</td><td><span class="code">DOMAIN_NOT_BANK_IN</span><span class="code">LOOKALIKE</span></td><td class="st" style="color: #475467">Escalated</td></tr>
+<tr><td><a class="mono" href="/console/case">SP-2210-C3VE</a></td><td>22 Oct 2026, 15:47</td><td><span class="vt o">NO RED FLAGS</span></td><td>Screenshot · bill</td><td>City Power Distribution</td><td>–</td><td class="st" style="color: #067647">Closed · not a scam</td></tr>
+</tbody>
+</table>
+</div>
+<p style="margin: 0; font-size: 13px; color: #475467">Showing 8 of 23. Users' names, numbers and original files are never shown here.</p>
+</main>
+</div>
+</div>
+</div></div>
+{% endblock %}

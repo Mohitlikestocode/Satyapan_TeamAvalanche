@@ -1,0 +1,29 @@
+<section class="sidebox sidebox-alert">
+  <h2>Already paid?</h2>
+  <p>Act in the first hour. Call the cyber-crime helpline and your bank's official number.</p>
+  <a class="sbtn sbtn-red" href="tel:1930">Call 1930</a>
+  <a class="slink" href="/already-paid">What to do in the first hour</a>
+</section>
+
+<section class="sidebox">
+  <h2>Our promise</h2>
+  <ul class="ticks">
+    <li>Your file is deleted after checking.</li>
+    <li>We never ask for your OTP, PIN or password.</li>
+    <li>We never pay, block or file anything for you.</li>
+    <li>We say "no red flags found", never "safe".</li>
+  </ul>
+</section>
+
+<section class="sidebox">
+  <h2>Related</h2>
+  <ul class="rel">
+    {% for label, href in related %}<li><a href="{{ href }}">{{ label }}</a></li>{% endfor %}
+  </ul>
+</section>
+
+<section class="sidebox sidebox-plain">
+  <h2>Need a hand?</h2>
+  <p>Ask someone you trust before you pay. <a href="/guardian">Ask family</a></p>
+  <p>Helping a customer? <a href="/helper">Helper mode</a></p>
+</section>

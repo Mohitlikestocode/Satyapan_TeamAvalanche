@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block css %}<style>
+body{margin:0}
+*{box-sizing:border-box}
+a{color:#1F4E8C}a:hover{color:#163A6A}
+.sp{font-family:'Noto Sans','Noto Sans Devanagari',system-ui,sans-serif;color:#0B1F3A;background:#E6E9EE;-webkit-font-smoothing:antialiased}
+.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.col{display:flex;flex-direction:column;gap:14px;width:390px}
+.lbl{font-size:14px;font-weight:700;color:#344054;margin:0}
+.lbl span{font-weight:400;color:#475467}
+.ph{width:390px;background:#F6F7F9;border:1px solid #C9CFD8;border-radius:24px;overflow:hidden;display:flex;flex-direction:column;position:relative}
+.hd{background:#fff;border-top:4px solid #0B1F3A;border-bottom:1px solid #E4E7EC;padding:8px 12px;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.wm{display:flex;align-items:center;gap:8px;text-decoration:none;color:#0B1F3A}
+.wm b{display:block;font-size:18px;line-height:1.05}
+.wm small{display:block;font-size:12px;color:#475467;line-height:1.25}
+.tools{display:flex;gap:6px;align-items:center}
+.lang{display:flex;border:1px solid #D0D5DD;border-radius:6px;overflow:hidden}
+.lang button{border:0;background:#fff;color:#0B1F3A;font-family:inherit;font-size:13px;font-weight:600;min-height:44px;min-width:36px;padding:0 8px}
+.lang .on{background:#0B1F3A;color:#fff}
+.bd{padding:20px 16px 28px;display:flex;flex-direction:column;gap:14px}
+.card{background:#fff;border:1px solid #E4E7EC;border-radius:8px;padding:16px;display:flex;flex-direction:column;gap:10px}
+.t2{font-size:22px;line-height:1.35;font-weight:700;margin:0}
+.t3{font-size:17px;line-height:1.4;font-weight:700;margin:0}
+.tx{font-size:16px;line-height:1.6;margin:0}
+.sm{font-size:14px;line-height:1.5;color:#475467;margin:0}
+.xs{font-size:13px;line-height:1.45;color:#475467;margin:0}
+.btn{min-height:56px;border-radius:8px;font-family:inherit;font-size:17px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:10px;padding:0 16px;width:100%;text-decoration:none;cursor:pointer}
+.bp{background:#1F4E8C;color:#fff;border:1px solid #1F4E8C}
+.bs{background:#fff;color:#1F4E8C;border:1px solid #1F4E8C}
+.bn{background:#0B1F3A;color:#fff;border:1px solid #0B1F3A}
+.bq{background:#fff;color:#0B1F3A;border:1px solid #D0D5DD}
+.gc{background:#fff;border:1px solid #98A2B3;border-radius:8px;overflow:hidden}
+.gc .gt{background:#0B1F3A;color:#fff;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:13px;font-weight:700;letter-spacing:.03em}
+.gc .gb{padding:14px;display:flex;flex-direction:column;gap:10px}
+.vrow{background:#FEF3F2;border:1px solid #F4B4AE;border-radius:6px;padding:10px 12px;display:flex;gap:10px;align-items:center}
+.vrow b{color:#B42318;font-size:17px;font-weight:800;letter-spacing:.03em}
+.li{display:flex;gap:8px;align-items:flex-start;font-size:15px;line-height:1.5}
+.li .i{width:16px;height:16px;margin-top:3px;color:#B42318}
+.li.ck .i{color:#1F4E8C}
+.callme{background:#FFFAEB;border:1px dashed #B54708;border-radius:6px;padding:10px 12px;font-size:16px;font-weight:700;color:#7A2E0E}
+.sw{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:48px;font-size:15px;font-weight:600}
+.tg{width:48px;height:28px;border-radius:14px;background:#D0D5DD;position:relative;border:0;flex:none}
+.tg span{position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff}
+.three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.ac{min-height:76px;border:1px solid #D0D5DD;background:#fff;border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;font-family:inherit;font-size:13px;font-weight:600;color:#0B1F3A;text-decoration:none;text-align:center;padding:6px}
+.ac .i{color:#1F4E8C;width:22px;height:22px}
+.app{display:flex;flex-direction:column;align-items:center;gap:6px;font-size:13px;color:#0B1F3A;min-height:76px;justify-content:center;border:0;background:transparent;font-family:inherit}
+.app span{width:52px;height:52px;border-radius:12px;background:#F2F4F7;border:1px solid #E4E7EC;display:flex;align-items:center;justify-content:center;color:#344054}
+</style>{% endblock %}
+{% block content %}
+<div class="sp"><div class="bd">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<p class="xs">Sent 24 Oct 2026, 10:45 IST</p>
+<h1 class="t2">Rekha asked you to check this before she pays ₹25,000</h1>
+</div>
+<div class="vrow" style="padding: 14px"><svg aria-hidden="true" class="i" viewBox="0 0 24 24" style="color: #B42318; width: 28px; height: 28px"><path d="M7.86 2h8.28L22 7.86v8.28L16.14 22H7.86L2 16.14V7.86L7.86 2z"></path><path d="m15 9-6 6M9 9l6 6"></path></svg><div><b style="font-size: 19px">HIGH RISK</b><p style="margin: 0; font-size: 15px; font-weight: 600">Satyapan suggests: do not pay.</p></div></div>
+<p class="tx">A QR code from "VIP Profits Club" sends money to a personal UPI ID, not to a SEBI-registered broker. It promises 30% a month, which no genuine investment offers.</p>
+<section class="card" style="gap: 8px">
+<h2 class="t3">Why</h2>
+<div class="li"><svg aria-hidden="true" class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"></circle></svg>Personal UPI ID, not a registered broker's</div>
+<div class="li"><svg aria-hidden="true" class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"></circle></svg>Message says Alpha Securities, QR pays Ramesh K</div>
+<div class="li"><svg aria-hidden="true" class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"></circle></svg>Not found in SEBI's registered adviser list</div>
+</section>
+<div class="callme">Rekha wrote: "Please call me before I pay."</div>
+<a class="btn bn" href="tel:"><svg aria-hidden="true" class="i" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"></path></svg>I've called them</a>
+<button class="btn bs">Looks fine, still verify</button>
+<p class="xs">Your answer is shown to Rekha on her phone. This is a summary. The original file was not shared.</p>
+<p class="xs" style="border-top: 1px solid #E4E7EC; padding-top: 12px">Independent student project. Not affiliated with any government body, bank or company.</p>
+</div></div>
+{% endblock %}

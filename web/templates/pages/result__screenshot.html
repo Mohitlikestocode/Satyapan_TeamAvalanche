@@ -1,0 +1,248 @@
+{% extends "base.html" %}
+{% block css %}<style>
+body{margin:0}
+*{box-sizing:border-box}
+a{color:#1F4E8C}a:hover{color:#163A6A}
+.sp{font-family:'Noto Sans','Noto Sans Devanagari',system-ui,sans-serif;color:#0B1F3A;background:#E6E9EE;-webkit-font-smoothing:antialiased}
+.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.col{display:flex;flex-direction:column;gap:14px;width:390px}
+.lbl{font-size:14px;font-weight:700;color:#344054;margin:0}
+.lbl span{font-weight:400;color:#475467}
+.ph{width:390px;background:#F6F7F9;border:1px solid #C9CFD8;border-radius:24px;overflow:hidden;display:flex;flex-direction:column}
+.hd{background:#fff;border-top:4px solid #0B1F3A;border-bottom:1px solid #E4E7EC;padding:8px 12px;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.wm{display:flex;align-items:center;gap:8px;text-decoration:none;color:#0B1F3A}
+.wm b{display:block;font-size:18px;line-height:1.05}
+.wm small{display:block;font-size:12px;color:#475467;line-height:1.25}
+.tools{display:flex;gap:6px;align-items:center}
+.lang{display:flex;border:1px solid #D0D5DD;border-radius:6px;overflow:hidden}
+.lang button{border:0;background:#fff;color:#0B1F3A;font-family:inherit;font-size:13px;font-weight:600;min-height:44px;min-width:36px;padding:0 8px}
+.lang .on{background:#0B1F3A;color:#fff}
+.bd{padding:16px 16px 28px;display:flex;flex-direction:column;gap:14px}
+.card{background:#fff;border:1px solid #E4E7EC;border-radius:8px;padding:16px;display:flex;flex-direction:column;gap:10px}
+.t3{font-size:17px;line-height:1.4;font-weight:700;margin:0}
+.tx{font-size:16px;line-height:1.6;margin:0}
+.sm{font-size:14px;line-height:1.5;color:#475467;margin:0}
+.xs{font-size:13px;line-height:1.45;color:#475467;margin:0}
+.sec{font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#475467;margin:10px 0 0}
+.btn{min-height:52px;border-radius:8px;font-family:inherit;font-size:17px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:10px;padding:0 16px;width:100%;text-decoration:none;cursor:pointer}
+.bn{background:#0B1F3A;color:#fff;border:1px solid #0B1F3A}
+.bq{background:#fff;color:#0B1F3A;border:1px solid #D0D5DD}
+.vb{border-radius:8px;padding:16px;display:flex;gap:14px;align-items:flex-start;border:1px solid}
+.vi{width:48px;height:48px;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;flex:none}
+.vi .i{width:28px;height:28px}
+.vw{font-size:20px;font-weight:800;letter-spacing:.03em;margin:0;line-height:1.25}
+.vs{font-size:17px;font-weight:600;margin:4px 0 0;line-height:1.4;color:#0B1F3A}
+.vr{background:#FEF3F2;border-color:#F4B4AE}.vr .vw{color:#B42318}.vr .vi{background:#B42318}
+.rc{background:#fff;border:1px solid #E4E7EC;border-radius:8px;overflow:hidden}
+.rh{display:flex;gap:10px;align-items:flex-start;padding:14px 16px 0}
+.rn{width:26px;height:26px;border-radius:6px;background:#FEF3F2;color:#B42318;font-size:14px;font-weight:800;display:flex;align-items:center;justify-content:center;flex:none}
+.rb{padding:8px 16px 14px;display:flex;flex-direction:column;gap:10px}
+.evd{background:#F9FAFB;border:1px solid #EAECF0;border-radius:6px;padding:10px 12px;display:flex;flex-direction:column;gap:6px}
+.evl{font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:#475467}
+.src{font-size:13px;line-height:1.45;color:#344054;display:flex;gap:6px;align-items:flex-start;margin:0}
+.lim{font-size:13px;line-height:1.45;color:#475467;border-top:1px dashed #D0D5DD;padding-top:8px;margin:0}
+.mono{font-family:ui-monospace,'SFMono-Regular',Menlo,Consolas,monospace;font-size:13.5px;word-break:break-all}
+.kv{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:10px 0;border-top:1px solid #EAECF0;font-size:15px}
+.kv .k{color:#475467;flex:none}
+.kv .v{font-weight:600;text-align:right;word-break:break-word}
+.bad{color:#B42318}
+.li{display:flex;gap:10px;align-items:flex-start;font-size:15px;line-height:1.5}
+.li .i{width:18px;height:18px;margin-top:2px;color:#475467}
+.step{display:flex;gap:12px;align-items:flex-start}
+.num{width:28px;height:28px;border-radius:50%;background:#0B1F3A;color:#fff;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;flex:none}
+.acts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.ac{min-height:76px;border:1px solid #D0D5DD;background:#fff;border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;font-family:inherit;font-size:13px;font-weight:600;color:#0B1F3A;text-decoration:none;text-align:center;padding:6px;line-height:1.25}
+.ac .i{color:#1F4E8C;width:22px;height:22px}
+.seg{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border:1px solid #D0D5DD;border-radius:6px;overflow:hidden}
+.seg button{min-height:44px;border:0;background:#fff;font-family:inherit;font-size:14px;font-weight:600;color:#0B1F3A}
+.seg .on{background:#0B1F3A;color:#fff}
+.shot{position:relative;width:236px;margin:0 auto;background:#fff;border:1px solid #D0D5DD;border-radius:12px;padding:18px 14px 14px;display:flex;flex-direction:column;align-items:center;gap:6px;font-family:Roboto,Arial,sans-serif;color:#1D2939}
+.shot .ok{width:52px;height:52px;border-radius:50%;background:#12805C;color:#fff;display:flex;align-items:center;justify-content:center}
+.box{position:absolute;border:2px solid #B54708;background:rgba(245,166,35,.22);border-radius:4px}
+.pin{position:absolute;top:-11px;left:-11px;width:22px;height:22px;border-radius:50%;background:#B54708;color:#fff;font-family:'Noto Sans',sans-serif;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center}
+.rcpt{background:#fff;border:1px solid #D0D5DD;border-radius:8px;overflow:hidden}
+.rcpt .top{background:#0B1F3A;color:#fff;padding:10px 16px;font-size:13px;font-weight:700;letter-spacing:.05em;display:flex;justify-content:space-between}
+.ftn{padding:16px;font-size:12.5px;line-height:1.5;color:#475467;border-top:1px solid #E4E7EC;background:#fff}
+</style>{% endblock %}
+{% block content %}
+<div class="sp" data-variant="en"><div class="bd">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 8px">
+<a href="/check" style="font-size: 15px; font-weight: 600; min-height: 44px; display: flex; align-items: center; gap: 4px"><svg aria-hidden="true" class="i" viewBox="0 0 24 24" style="width: 18px; height: 18px"><path d="m15 18-6-6 6-6"></path></svg>New check</a>
+<span class="xs" style="text-align: right">Report SP-2410-Q4N9<br/>24 Oct 2026 · 13:09 IST</span>
+</div>
+<section class="vb vr" role="status">
+<span class="vi"><svg aria-hidden="true" class="i" viewBox="0 0 24 24"><path d="M7.86 2h8.28L22 7.86v8.28L16.14 22H7.86L2 16.14V7.86L7.86 2z"></path><path d="m15 9-6 6M9 9l6 6"></path></svg></span>
+<div><p class="vw">HIGH RISK</p><p lang="hi" style="margin: 0; font-size: 15px; font-weight: 700; color: #B42318">ज़्यादा जोखिम</p><p class="vs">Don't hand over goods on this screenshot.</p></div>
+</section>
+<section class="card" style="gap: 12px">
+<p class="tx" style="font-size: 17px">The amount on this screenshot looks different from the rest of the image, and the money went to <b>sharma.kirana@ybl</b>, not your UPI ID. A screenshot is not proof of payment. Check your own app or soundbox.</p>
+<a class="btn bn" href="/listen" style="min-height: 60px; font-size: 18px"><svg aria-hidden="true" class="i" viewBox="0 0 24 24" style="width: 24px; height: 24px"><path d="M11 5 6 9H2v6h4l5 4V5z"></path><path d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14"></path></svg>Listen <span lang="hi" style="font-weight: 500">/ सुनें</span></a>
+</section>
+<section class="card" style="gap: 12px; border-color: #C7D5EA">
+<div style="display: flex; justify-content: space-between; align-items: center"><h3 class="t3">Image check</h3><span class="tag" style="font-size: 12.5px; font-weight: 700; padding: 3px 8px; border-radius: 4px; background: #FFFAEB; color: #B54708">2 areas to inspect</span></div>
+<div aria-label="Image view" class="seg" role="group"><button aria-pressed="false">Original</button><button aria-pressed="true" class="on">Areas to inspect</button></div>
+<div style="background: #F2F4F7; border-radius: 6px; padding: 16px 0">
+<div aria-label="Uploaded payment screenshot. The amount and the reference number are outlined as areas to inspect." class="shot" role="img">
+<span class="ok"><svg aria-hidden="true" class="i" viewBox="0 0 24 24" style="width: 30px; height: 30px; stroke-width: 2.6"><path d="M20 6 9 17l-5-5"></path></svg></span>
+<span style="font-size: 15px; font-weight: 600">Payment Successful</span>
+<span style="font-size: 30px; font-weight: 700; letter-spacing: -.01em">₹9,090</span>
+<span style="font-size: 12px; color: #475467">To: Sharma Kirana</span>
+<span style="font-size: 12px; color: #475467">sharma.kirana@ybl</span>
+<span style="width: 100%; height: 1px; background: #EAECF0; margin: 6px 0"></span>
+<span style="font-size: 11px; color: #475467">24 Oct 2026, 01:04 pm</span>
+<span style="font-size: 11px; color: #475467">UPI Ref: 4521 8890 1123</span>
+<span style="margin-top: 8px; width: 100%; height: 32px; border-radius: 16px; background: #E4E7EC; font-size: 12px; display: flex; align-items: center; justify-content: center">Done</span>
+<span class="box" style="left: 58px; top: 104px; width: 120px; height: 44px"><span class="pin">A</span></span>
+<span class="box" style="left: 40px; top: 208px; width: 156px; height: 22px"><span class="pin">B</span></span>
+</div>
+</div>
+<p class="sm" style="color: #344054"><b>A</b> Amount and <b>B</b> reference number: these areas look different from the rest of the image (sharper edges, different compression). This is a sign to check, not proof of editing.</p>
+<div style="display: flex; flex-direction: column">
+<div class="kv"><span class="k">Signs of editing</span><span class="v bad">Found in 2 areas</span></div>
+<div class="kv"><span class="k">AI-generated image</span><span class="v">No signs found</span></div>
+<div class="kv"><span class="k">Edited with</span><span class="v">Photo editor app</span></div>
+<div class="kv"><span class="k">Screenshot taken</span><span class="v">24 Oct 2026, 13:05</span></div>
+<div class="kv"><span class="k">File last saved</span><span class="v bad">24 Oct 2026, 13:09</span></div>
+</div>
+<p class="lim"><b>Limits:</b> AI-image model: CommunityForensics. It is trained mostly on photos, so screenshots are harder to judge. Sending an image over chat apps can also change how it looks.</p>
+</section>
+<h2 class="sec">Why we think this</h2>
+<article class="rc">
+<div class="rh"><span class="rn">1</span><h3 class="t3">The amount looks pasted in</h3></div>
+<div class="rb">
+<p class="tx" style="font-size: 15px">The "₹9,090" and the reference number have sharper edges and different compression from the text around them. The file was also saved in a photo editor 4 minutes after the screenshot was taken.</p>
+<p class="src"><svg aria-hidden="true" class="i" viewBox="0 0 24 24" style="width: 16px; height: 16px; margin-top: 1px"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2zM22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>Source: compression and edge check on your image · file details</p>
+<p class="lim"><b>Limits:</b> Cropping or resizing can cause similar marks.</p>
+</div>
+</article>
+<article class="rc">
+<div class="rh"><span class="rn">2</span><h3 class="t3">Paid to a different UPI ID</h3></div>
+<div class="rb">
+<div class="evd" style="gap: 0; padding: 0 12px">
+<div class="kv" style="border-top: 0"><span class="k">Screenshot shows</span><span class="v mono bad">sharma.kirana@ybl</span></div>
+<div class="kv"><span class="k">Your saved UPI ID</span><span class="v mono">sharmastore@okaxis</span></div>
+</div>
+<p class="src"><svg aria-hidden="true" class="i" viewBox="0 0 24 24" style="width: 16px; height: 16px; margin-top: 1px"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2zM22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>Source: text read from the image · UPI ID you saved on this phone</p>
+<p class="lim"><b>Limits:</b> If you have more than one UPI ID, add it in Shop settings.</p>
+</div>
+</article>
+<article class="rc">
+<div class="rh"><span class="rn">3</span><h3 class="t3">A screenshot is not proof of payment</h3></div>
+<div class="rb">
+<p class="tx" style="font-size: 15px">Anyone can make or edit this screen in seconds. Only your own UPI app, soundbox or bank statement shows that money arrived.</p>
+<p class="lim"><b>Limits:</b> We cannot see your bank account.</p>
+</div>
+</article>
+<section class="card" style="gap: 0">
+<h3 class="t3" style="margin-bottom: 6px">What we found in the file</h3>
+<div class="kv"><span class="k">Amount</span><span class="v">₹9,090</span></div>
+<div class="kv"><span class="k">Paid to</span><span class="v">Sharma Kirana</span></div>
+<div class="kv"><span class="k">UPI ID</span><span class="v mono">sharma.kirana@ybl</span></div>
+<div class="kv"><span class="k">Date and time</span><span class="v">24 Oct 2026, 13:04</span></div>
+<div class="kv"><span class="k">Reference number</span><span class="v mono">4521 8890 1123</span></div>
+</section>
+<section class="card">
+<h3 class="t3">What we could not check</h3>
+<div class="li"><svg aria-hidden="true" class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M8 12h8"></path></svg>We cannot confirm with your bank that money arrived.</div>
+<div class="li"><svg aria-hidden="true" class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M8 12h8"></path></svg>Whether reference 4521 8890 1123 is real.</div>
+</section>
+<section class="card" style="gap: 12px">
+<h3 class="t3">What to do now</h3>
+<div class="step"><span class="num">1</span><p class="tx">Open your own UPI app or listen to your soundbox.</p></div>
+<div class="step"><span class="num">2</span><p class="tx">Hand over goods only when you see ₹9,090 there.</p></div>
+<div class="step"><span class="num">3</span><p class="tx">Politely ask the customer to pay again by scanning your QR.</p></div>
+</section>
+<div class="acts">
+<a class="ac" href="/guardian"><svg aria-hidden="true" class="i" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"></path></svg>Ask family</a>
+<a class="ac" href="/report"><svg aria-hidden="true" class="i" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"></path></svg>Download report</a>
+<a class="ac" href="/listen"><svg aria-hidden="true" class="i" viewBox="0 0 24 24"><path d="M11 5 6 9H2v6h4l5 4V5z"></path><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>Listen</a>
+<a class="ac" href="/warn"><svg aria-hidden="true" class="i" viewBox="0 0 24 24"><path d="m3 11 18-5v12L3 14v-3z"></path><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"></path></svg>Warn others</a>
+<a class="ac" href="/warn"><svg aria-hidden="true" class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3M12 17h.01"></path></svg>Wrong result?</a>
+<a class="ac" href="/warn"><svg aria-hidden="true" class="i" viewBox="0 0 24 24"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>Delete now</a>
+</div>
+<section style="background: #EEF3FA; border: 1px solid #C7D5EA; border-radius: 8px; padding: 14px 16px; display: flex; gap: 12px; align-items: flex-start">
+<svg aria-hidden="true" class="i" viewBox="0 0 24 24" style="color: #1F4E8C; margin-top: 2px"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2zM22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+<div><p class="xs" style="font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: #1F4E8C">One rule to remember</p><p class="tx" style="font-weight: 600">Trust your own app, never the customer's screen.</p></div>
+</section>
+</div></div><div class="sp" data-variant="hi"><div class="bd">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 8px">
+<a href="/check" style="font-size: 15px; font-weight: 600; min-height: 44px; display: flex; align-items: center; gap: 4px"><svg aria-hidden="true" class="i" viewBox="0 0 24 24" style="width: 18px; height: 18px"><path d="m15 18-6-6 6-6"></path></svg>नई जाँच</a>
+<span class="xs" style="text-align: right">रिपोर्ट SP-2410-Q4N9<br/>24 अक्टू 2026 · 13:09 IST</span>
+</div>
+<section class="vb vr" role="status">
+<span class="vi"><svg aria-hidden="true" class="i" viewBox="0 0 24 24"><path d="M7.86 2h8.28L22 7.86v8.28L16.14 22H7.86L2 16.14V7.86L7.86 2z"></path><path d="m15 9-6 6M9 9l6 6"></path></svg></span>
+<div><p class="vw" style="letter-spacing: 0">ज़्यादा जोखिम</p><p lang="en" style="margin: 0; font-size: 13px; font-weight: 700; color: #B42318; letter-spacing: .04em">HIGH RISK</p><p class="vs">इस स्क्रीनशॉट के भरोसे सामान न दें।</p></div>
+</section>
+<section class="card" style="gap: 12px">
+<p class="tx" style="font-size: 18px; line-height: 1.75">इस स्क्रीनशॉट में रकम वाला हिस्सा बाकी फ़ोटो से अलग दिखता है, और पैसे <b>sharma.kirana@ybl</b> पर गए हैं, आपकी UPI ID पर नहीं। स्क्रीनशॉट पेमेंट का सबूत नहीं है। अपना ऐप या साउंडबॉक्स देखें।</p>
+<a class="btn bn" href="/listen" style="min-height: 60px; font-size: 19px"><svg aria-hidden="true" class="i" viewBox="0 0 24 24" style="width: 24px; height: 24px"><path d="M11 5 6 9H2v6h4l5 4V5z"></path><path d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14"></path></svg>सुनें <span lang="en" style="font-weight: 500">/ Listen</span></a>
+</section>
+<section class="card" style="gap: 12px; border-color: #C7D5EA">
+<div style="display: flex; justify-content: space-between; align-items: center"><h3 class="t3">फ़ोटो की जाँच</h3><span style="font-size: 12.5px; font-weight: 700; padding: 3px 8px; border-radius: 4px; background: #FFFAEB; color: #B54708">2 जगहें देखें</span></div>
+<div aria-label="फ़ोटो" class="seg" role="group"><button aria-pressed="false">असली</button><button aria-pressed="true" class="on">ध्यान देने वाली जगहें</button></div>
+<div style="background: #F2F4F7; border-radius: 6px; padding: 16px 0">
+<div aria-label="पेमेंट स्क्रीनशॉट, रकम और रेफ़रेंस नंबर चिह्नित" class="shot" lang="en" role="img">
+<span class="ok"><svg aria-hidden="true" class="i" viewBox="0 0 24 24" style="width: 30px; height: 30px; stroke-width: 2.6"><path d="M20 6 9 17l-5-5"></path></svg></span>
+<span style="font-size: 15px; font-weight: 600">Payment Successful</span>
+<span style="font-size: 30px; font-weight: 700; letter-spacing: -.01em">₹9,090</span>
+<span style="font-size: 12px; color: #475467">To: Sharma Kirana</span>
+<span style="font-size: 12px; color: #475467">sharma.kirana@ybl</span>
+<span style="width: 100%; height: 1px; background: #EAECF0; margin: 6px 0"></span>
+<span style="font-size: 11px; color: #475467">24 Oct 2026, 01:04 pm</span>
+<span style="font-size: 11px; color: #475467">UPI Ref: 4521 8890 1123</span>
+<span style="margin-top: 8px; width: 100%; height: 32px; border-radius: 16px; background: #E4E7EC; font-size: 12px; display: flex; align-items: center; justify-content: center">Done</span>
+<span class="box" style="left: 58px; top: 104px; width: 120px; height: 44px"><span class="pin">A</span></span>
+<span class="box" style="left: 40px; top: 208px; width: 156px; height: 22px"><span class="pin">B</span></span>
+</div>
+</div>
+<p class="sm" style="color: #344054; line-height: 1.65"><b>A</b> रकम और <b>B</b> रेफ़रेंस नंबर: ये हिस्से बाकी फ़ोटो से अलग दिखते हैं। यह जाँचने का संकेत है, बदलाव का पक्का सबूत नहीं।</p>
+<div class="kv"><span class="k">बदलाव के निशान</span><span class="v bad">2 जगह मिले</span></div>
+<div class="kv"><span class="k">AI से बनी फ़ोटो</span><span class="v">कोई संकेत नहीं</span></div>
+<div class="kv"><span class="k">स्क्रीनशॉट लिया</span><span class="v">13:05</span></div>
+<div class="kv"><span class="k">फ़ोटो एडिटर में सेव</span><span class="v bad">13:09</span></div>
+<p class="lim" style="line-height: 1.6"><b>सीमा:</b> AI मॉडल CommunityForensics ज़्यादातर फ़ोटो पर सीखा है, स्क्रीनशॉट पर कम पक्का है।</p>
+</section>
+<h2 class="sec" style="letter-spacing: 0; font-size: 14px">हमें ऐसा क्यों लगता है</h2>
+<article class="rc">
+<div class="rh"><span class="rn">1</span><h3 class="t3">रकम बाद में चिपकाई हुई लगती है</h3></div>
+<div class="rb">
+<p class="tx" style="font-size: 16px; line-height: 1.7">"₹9,090" और रेफ़रेंस नंबर के किनारे आसपास के अक्षरों से ज़्यादा तीखे हैं। स्क्रीनशॉट के 4 मिनट बाद फ़ाइल फ़ोटो एडिटर में सेव हुई।</p>
+<p class="lim"><b>सीमा:</b> फ़ोटो काटने या छोटा करने से भी ऐसे निशान आ सकते हैं।</p>
+</div>
+</article>
+<article class="rc">
+<div class="rh"><span class="rn">2</span><h3 class="t3">पैसे दूसरी UPI ID पर गए</h3></div>
+<div class="rb">
+<div class="evd" style="gap: 0; padding: 0 12px">
+<div class="kv" style="border-top: 0"><span class="k">स्क्रीनशॉट में</span><span class="v mono bad">sharma.kirana@ybl</span></div>
+<div class="kv"><span class="k">आपकी UPI ID</span><span class="v mono">sharmastore@okaxis</span></div>
+</div>
+<p class="lim"><b>सीमा:</b> आपकी एक से ज़्यादा UPI ID हैं तो दुकान की सेटिंग में जोड़ें।</p>
+</div>
+</article>
+<article class="rc">
+<div class="rh"><span class="rn">3</span><h3 class="t3">स्क्रीनशॉट पेमेंट का सबूत नहीं</h3></div>
+<div class="rb">
+<p class="tx" style="font-size: 16px; line-height: 1.7">यह स्क्रीन कोई भी कुछ सेकंड में बना या बदल सकता है। पैसे आए या नहीं, यह सिर्फ़ आपका UPI ऐप, साउंडबॉक्स या बैंक स्टेटमेंट बताता है।</p>
+</div>
+</article>
+<section class="card" style="gap: 12px">
+<h3 class="t3">अब क्या करें</h3>
+<div class="step"><span class="num">1</span><p class="tx">अपना UPI ऐप खोलें या साउंडबॉक्स सुनें।</p></div>
+<div class="step"><span class="num">2</span><p class="tx">वहाँ ₹9,090 दिखे, तभी सामान दें।</p></div>
+<div class="step"><span class="num">3</span><p class="tx">ग्राहक से विनम्रता से अपना QR स्कैन करके दोबारा पेमेंट करने को कहें।</p></div>
+</section>
+<div class="acts">
+<a class="ac" href="/guardian"><svg aria-hidden="true" class="i" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"></path></svg>परिवार से पूछें</a>
+<a class="ac" href="/report"><svg aria-hidden="true" class="i" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"></path></svg>रिपोर्ट लें</a>
+<a class="ac" href="/listen"><svg aria-hidden="true" class="i" viewBox="0 0 24 24"><path d="M11 5 6 9H2v6h4l5 4V5z"></path><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>सुनें</a>
+<a class="ac" href="/warn"><svg aria-hidden="true" class="i" viewBox="0 0 24 24"><path d="m3 11 18-5v12L3 14v-3z"></path><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"></path></svg>दूसरों को सावधान करें</a>
+<a class="ac" href="/warn"><svg aria-hidden="true" class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3M12 17h.01"></path></svg>नतीजा गलत है?</a>
+<a class="ac" href="/warn"><svg aria-hidden="true" class="i" viewBox="0 0 24 24"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>अभी मिटाएँ</a>
+</div>
+<section style="background: #EEF3FA; border: 1px solid #C7D5EA; border-radius: 8px; padding: 14px 16px; display: flex; gap: 12px; align-items: flex-start">
+<svg aria-hidden="true" class="i" viewBox="0 0 24 24" style="color: #1F4E8C; margin-top: 2px"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2zM22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+<div><p class="xs" style="font-weight: 700; color: #1F4E8C">याद रखने का एक नियम</p><p class="tx" style="font-weight: 600; line-height: 1.7">भरोसा अपने ऐप पर करें, ग्राहक की स्क्रीन पर नहीं।</p></div>
+</section>
+</div></div>
+{% endblock %}

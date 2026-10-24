@@ -7,8 +7,10 @@ from fastapi.testclient import TestClient
 from satyapan.api.app import app
 
 client = TestClient(app)
-SITE = Path(__file__).resolve().parents[1] / "web" / "site"
-ROUTES = sorted("/" + p.parent.relative_to(SITE).as_posix().strip(".") for p in SITE.rglob("index.html"))
+import json
+
+WEB = Path(__file__).resolve().parents[1] / "web"
+ROUTES = ["/" + m["route"] for m in json.loads((WEB / "pages.json").read_text(encoding="utf-8"))]
 
 
 def test_health():
@@ -17,15 +19,17 @@ def test_health():
 
 @pytest.mark.parametrize("route", ROUTES)
 def test_page_serves(route):
-    r = client.get(route.rstrip("/") + "/" if route != "/" else "/")
+    r = client.get(route)
     assert r.status_code == 200
+    assert "Skip to main content" in r.text or route.startswith("/console")
     assert "sc-raw" not in r.text and "sc-camel" not in r.text  # design-tool leftovers
 
 
 def test_internal_links_resolve():
     targets = set()
-    for p in SITE.rglob("index.html"):
-        targets |= set(re.findall(r'(?:href|src)="(/[^"/][^"]*)"', p.read_text(encoding="utf-8")))
+    for route in ROUTES:
+        html = client.get(route).text
+        targets |= set(re.findall(r'(?:href|src)="(/[^"/][^"]*)"', html))
     for t in targets:
         assert client.get(t).status_code == 200, t
 

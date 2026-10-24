@@ -1,16 +1,17 @@
-/* Satyapan front end: language/text-size toggles, check flow, small helpers. No tracking, no third-party calls. */
+/* Satyapan front end: shell controls (language, text size, contrast, menu), check flow, My checks. No tracking, no third-party calls. */
 (function () {
   var D = document, H = D.documentElement;
   function get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
   function set(k, v) { try { localStorage.setItem(k, v); } catch (e) { /* storage may be blocked */ } }
-
   function toast(msg) {
     var t = D.createElement("div");
     t.className = "toast"; t.setAttribute("role", "status"); t.textContent = msg;
     D.body.appendChild(t); setTimeout(function () { t.remove(); }, 2600);
   }
+  window.satyapanToast = toast;
+  var path = location.pathname.replace(/\/$/, "") || "/";
 
-  // ---- language + text size -------------------------------------------------
+  // ---- shell controls --------------------------------------------------------
   function setOn(group, idx) {
     group.querySelectorAll("button").forEach(function (x, i) {
       var on = i === idx; x.classList.toggle("on", on); x.setAttribute("aria-pressed", on ? "true" : "false");
@@ -19,43 +20,46 @@
   var variants = !!D.querySelector("[data-variant]");
   function applyLang(l) {
     H.setAttribute("data-lang", l);
-    if (!variants) return;  // single-language screens keep the language they were designed in
-    H.lang = l === "hi" ? "hi" : "en";
+    H.lang = l === "hi" && variants ? "hi" : "en";
     D.querySelectorAll('[data-tool="lang"]').forEach(function (g) { setOn(g, l === "hi" ? 1 : 0); });
   }
-  function applySize(big) {
-    H.classList.toggle("big", big);
-    D.querySelectorAll('[data-tool="size"]').forEach(function (g) { setOn(g, big ? 1 : 0); });
+  function applySize(n) {
+    H.setAttribute("data-size", String(n));
+    D.querySelectorAll('[data-tool="size"]').forEach(function (g) { setOn(g, n); });
+  }
+  function applyContrast(on) {
+    H.classList.toggle("hc", on);
+    D.querySelectorAll("[data-contrast]").forEach(function (b) { b.setAttribute("aria-pressed", on ? "true" : "false"); });
   }
   applyLang(get("sp-lang") === "hi" ? "hi" : "en");
-  applySize(get("sp-big") === "1");
+  applySize(get("sp-size") === "0" ? 0 : get("sp-size") === "2" ? 2 : 1);
+  applyContrast(get("sp-hc") === "1");
+
   D.addEventListener("click", function (e) {
-    var b = e.target.closest("[data-tool] button"); if (!b) return;
-    var g = b.parentElement, second = b === g.querySelectorAll("button")[1], tool = g.getAttribute("data-tool");
-    if (tool === "lang") {
-      set("sp-lang", second ? "hi" : "en"); applyLang(second ? "hi" : "en");
-      if (!variants) toast("Language saved. This screen is shown in one language for now.");
+    var b = e.target.closest("[data-tool] button");
+    if (b) {
+      var g = b.parentElement, idx = Array.prototype.indexOf.call(g.querySelectorAll("button"), b), tool = g.getAttribute("data-tool");
+      if (tool === "lang") {
+        set("sp-lang", idx ? "hi" : "en"); applyLang(idx ? "hi" : "en");
+        if (!variants && idx) toast("Language saved. Result pages are shown in Hindi; other screens are English for now.");
+      }
+      if (tool === "size") { set("sp-size", String(idx)); applySize(idx); }
+      return;
     }
-    if (tool === "size") { set("sp-big", second ? "1" : "0"); applySize(second); }
+    var c = e.target.closest("[data-contrast]");
+    if (c) { var on = c.getAttribute("aria-pressed") !== "true"; set("sp-hc", on ? "1" : "0"); applyContrast(on); return; }
+    var m = e.target.closest(".menu-btn");
+    if (m) {
+      var nav = m.closest(".mainnav"), open = !nav.classList.contains("open");
+      nav.classList.toggle("open", open); m.setAttribute("aria-expanded", open ? "true" : "false");
+    }
   });
 
-  // ---- nav highlight --------------------------------------------------------
-  var path = location.pathname.replace(/\/$/, "") || "/";
-  D.querySelectorAll(".mnav a, .snav a").forEach(function (a) {
-    var h = a.getAttribute("href"); a.classList.remove("on"); a.removeAttribute("aria-current");
-    var on = h === "/" ? path === "/" : (path === h || path.indexOf(h + "/") === 0);
-    if (on) { a.classList.add("on"); a.setAttribute("aria-current", "page"); }
-  });
-  if (path.indexOf("/result") === 0 || path.indexOf("/check") === 0) {
-    D.querySelectorAll(".snav a").forEach(function (a) { if (a.getAttribute("href") === "/check") a.classList.add("on"); });
-  }
-
-  // ---- links the design left as "#" ----------------------------------------
+  // ---- links the design left as "#" -----------------------------------------
   D.addEventListener("click", function (e) {
     var a = e.target.closest("a[data-todo]"); if (!a) return;
     e.preventDefault(); toast("Not available in this demo yet");
   });
-  // copy-to-clipboard on the complaint draft
   D.addEventListener("click", function (e) {
     var a = e.target.closest("a");
     if (!a || path !== "/report/complaint" || a.textContent.trim().indexOf("Copy text") !== 0) return;
@@ -64,16 +68,28 @@
     var p = navigator.clipboard ? navigator.clipboard.writeText(txt) : Promise.reject();
     p.then(function () { toast("Copied"); }, function () { toast("Copy not available here"); });
   });
-  // Warn others: use the phone's own share sheet when there is one
   D.addEventListener("click", function (e) {
     var a = e.target.closest("a");
     if (!a || path !== "/warn" || !navigator.share || a.getAttribute("href") !== "/guardian/share") return;
     e.preventDefault(); navigator.share({ title: "Satyapan", text: D.title, url: location.origin + "/" }).catch(function () {});
   });
+  D.addEventListener("click", function (e) { if (e.target.closest("[data-print]")) window.print(); });
 
-  // ---- check flow -----------------------------------------------------------
+  // ---- history kept on this device only ---------------------------------------
+  var TIERS = {
+    "/result/qr": ["HIGH RISK", "r"], "/result/screenshot": ["HIGH RISK", "r"], "/result/invoice": ["VERIFY FIRST", "a"],
+    "/result/cant-tell": ["CAN'T TELL", "n"], "/result/no-flags": ["NO RED FLAGS FOUND", "g"],
+    "/tools/result": ["OFFICIAL CHANNEL CHECK", "n"], "/check/voice": ["TEXT TO REVIEW", "n"]
+  };
+  var KIND_LABEL = { screenshot: "Screenshot or photo", pdf: "PDF or invoice", qr: "QR code", link: "Link", message: "Message or number", voice: "Voice note" };
+  function history() { try { return JSON.parse(get("sp-history") || "[]"); } catch (e) { return []; } }
+  function saveHistory(list) { set("sp-history", JSON.stringify(list.slice(0, 50))); }
+  function remember(entry) { var l = history(); l.unshift(entry); saveHistory(l); }
+
   if (path === "/check") initCheck();
   if (path === "/check/progress") initProgress();
+  if (path === "/dashboard") initDashboard();
+  if (path === "/learn/drill/score") set("sp-drill", String(Date.now()));
 
   function initCheck() {
     var KINDS = ["screenshot", "pdf", "qr", "link", "message", "voice"];
@@ -81,7 +97,7 @@
     var opts = D.querySelectorAll(".opt"), fileCard = D.querySelector(".file");
     var state = { kind: "screenshot", file: null };
     var input = D.createElement("input"); input.type = "file"; input.hidden = true; D.body.appendChild(input);
-    var box = D.createElement("div"); box.style.display = "none";
+    var box = D.createElement("div"); box.style.display = "none"; box.style.gridColumn = "1 / -1";
     var ta = D.createElement("textarea"); ta.className = "ta-in"; ta.setAttribute("aria-label", "Text to check"); ta.maxLength = 4000;
     box.appendChild(ta);
     var err = D.createElement("p"); err.className = "fileerr"; err.setAttribute("role", "alert");
@@ -89,16 +105,18 @@
     fileCard.style.display = "none";
     var spans = fileCard.querySelectorAll("span span");
 
-    function pick(i) {
+    function pick(i, open) {
       state.kind = KINDS[i]; state.file = null; input.value = ""; fileCard.style.display = "none"; err.textContent = "";
       opts.forEach(function (o, j) { o.classList.toggle("on", i === j); o.setAttribute("aria-pressed", i === j ? "true" : "false"); });
       var textual = state.kind === "link" || state.kind === "message";
       box.style.display = textual ? "block" : "none";
       opts[i].insertAdjacentElement("afterend", box);
       ta.placeholder = state.kind === "link" ? "Paste the link here" : "Paste the message or phone number here";
-      if (textual) { ta.focus(); } else { input.accept = ACCEPT[state.kind]; input.click(); }
+      if (textual) { if (open) ta.focus(); } else if (open) { input.accept = ACCEPT[state.kind]; input.click(); }
     }
-    opts.forEach(function (o, i) { o.addEventListener("click", function () { pick(i); }); });
+    opts.forEach(function (o, i) { o.addEventListener("click", function () { pick(i, true); }); });
+    var wanted = KINDS.indexOf(new URLSearchParams(location.search).get("type") || "");
+    if (wanted >= 0) pick(wanted, false);
     input.addEventListener("change", function () {
       var f = input.files[0]; if (!f) return;
       if (f.size > 20 * 1024 * 1024) { err.textContent = "That file is too large (limit 20 MB)."; input.value = ""; return; }
@@ -107,12 +125,6 @@
       fileCard.style.display = "flex"; opts[KINDS.indexOf(state.kind)].insertAdjacentElement("afterend", fileCard);
     });
     fileCard.querySelector("button").addEventListener("click", function () { state.file = null; input.value = ""; fileCard.style.display = "none"; });
-    var chips = D.querySelectorAll(".chips .chip");
-    chips.forEach(function (c) {
-      c.addEventListener("click", function () {
-        chips.forEach(function (x) { x.classList.toggle("on", x === c); x.setAttribute("aria-pressed", x === c ? "true" : "false"); });
-      });
-    });
     var cbs = D.querySelectorAll(".cb input");
     go.addEventListener("click", function (e) {
       e.preventDefault(); err.textContent = "";
@@ -127,7 +139,12 @@
       go.setAttribute("aria-busy", "true");
       fetch("/api/v1/check", { method: "POST", body: fd })
         .then(function (r) { return r.json().then(function (j) { if (!r.ok) throw new Error(j.detail || "failed"); return j; }); })
-        .then(function (j) { location.href = "/check/progress?id=" + encodeURIComponent(j.id) + "&to=" + encodeURIComponent(j.result_url); })
+        .then(function (j) {
+          var label = state.file ? state.file.name : text.slice(0, 60);
+          var t = TIERS[j.result_url] || ["SAMPLE RESULT", "n"];
+          remember({ id: j.id, kind: state.kind, label: label, at: Date.now(), url: j.result_url, tier: t[0], cls: t[1] });
+          location.href = "/check/progress?id=" + encodeURIComponent(j.id) + "&to=" + encodeURIComponent(j.result_url);
+        })
         .catch(function (x) { go.removeAttribute("aria-busy"); err.textContent = "Could not start the check: " + x.message; });
     });
   }
@@ -137,10 +154,52 @@
     var safe = to && to.charAt(0) === "/" && to.charAt(1) !== "/";
     var stop = D.querySelector("button.btn.bq");
     if (stop) stop.addEventListener("click", function () {
+      saveHistory(history().filter(function (h) { return h.id !== id; }));
       var done = function () { location.href = "/deletion"; };
       if (id) { fetch("/api/v1/check/" + encodeURIComponent(id), { method: "DELETE" }).then(done, done); } else { done(); }
     });
     if (safe) setTimeout(function () { location.href = to; }, 5000);
   }
+
+  function initDashboard() {
+    var rows = D.getElementById("rows"), empty = D.getElementById("empty"), wrap = D.getElementById("tblwrap"), note = D.getElementById("sample-note");
+    function fmt(ms) { return new Date(ms).toLocaleString("en-IN", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" }); }
+    function render() {
+      var l = history(), n = { total: l.length, high: 0, verify: 0, clear: 0 };
+      rows.textContent = "";
+      l.forEach(function (h) {
+        if (h.cls === "r") n.high++; else if (h.cls === "a") n.verify++; else if (h.cls === "g") n.clear++;
+        var tr = D.createElement("tr");
+        var td = function (t) { var c = D.createElement("td"); c.textContent = t; tr.appendChild(c); return c; };
+        td(fmt(h.at)); td(KIND_LABEL[h.kind] || h.kind); td(h.label || "");
+        var r = td(""), p = D.createElement("span"); p.className = "pill pill-" + h.cls; p.textContent = h.tier; r.appendChild(p);
+        var a = td(""), link = D.createElement("a"); link.className = "btn-sm"; link.href = h.url; link.textContent = "View"; a.appendChild(link);
+        rows.appendChild(tr);
+      });
+      D.querySelectorAll("[data-k]").forEach(function (b) { b.textContent = String(n[b.getAttribute("data-k")]); });
+      empty.hidden = l.length > 0; wrap.hidden = l.length === 0;
+      note.hidden = !l.some(function (h) { return h.sample; });
+      var dr = get("sp-drill"), bar = D.getElementById("drill-bar"), txt = D.getElementById("drill-txt");
+      bar.style.width = dr ? "100%" : "0";
+      txt.textContent = dr ? "Completed on " + new Date(Number(dr)).toLocaleDateString("en-IN", { day: "numeric", month: "short" }) : "Not started";
+    }
+    D.getElementById("load-sample").addEventListener("click", function () {
+      var now = Date.now(), HR = 3600e3;
+      var s = [
+        ["qr", "vip_profits_qr.jpg", "/result/qr", 0.4], ["pdf", "INV-2026-1042.pdf", "/result/invoice", 5],
+        ["screenshot", "payment_9090.png", "/result/screenshot", 26], ["message", "Amazon refund pending...", "/tools/result", 50],
+        ["screenshot", "receipt_blurry.jpg", "/result/cant-tell", 75], ["pdf", "electricity_bill.pdf", "/result/no-flags", 120]
+      ].map(function (x, i) {
+        var t = TIERS[x[2]];
+        return { id: "sample" + i, kind: x[0], label: x[1], at: now - x[3] * HR, url: x[2], tier: t[0], cls: t[1], sample: true };
+      });
+      saveHistory(s.concat(history().filter(function (h) { return !h.sample; })));
+      render();
+    });
+    D.getElementById("clear-all").addEventListener("click", function () {
+      if (!history().length) { toast("Nothing to delete"); return; }
+      if (confirm("Delete all checks saved on this device?")) { saveHistory([]); render(); toast("Deleted"); }
+    });
+    render();
+  }
 })();
-document.addEventListener("click", function (e) { if (e.target.closest("[data-print]")) window.print(); });

@@ -1,0 +1,642 @@
+[
+ {
+  "route": "check",
+  "template": "pages/check.html",
+  "title": "Check something",
+  "kind": "screen",
+  "section": "check",
+  "crumbs": [
+   [
+    "Check",
+    null
+   ]
+  ]
+ },
+ {
+  "route": "check/progress",
+  "template": "pages/check__progress.html",
+  "title": "Checking your file",
+  "kind": "screen",
+  "section": "check",
+  "crumbs": [
+   [
+    "Check",
+    "/check"
+   ],
+   [
+    "Checking",
+    null
+   ]
+  ]
+ },
+ {
+  "route": "check/voice",
+  "template": "pages/check__voice.html",
+  "title": "Voice note",
+  "kind": "screen",
+  "section": "check",
+  "crumbs": [
+   [
+    "Check",
+    "/check"
+   ],
+   [
+    "Voice note",
+    null
+   ]
+  ]
+ },
+ {
+  "route": "result",
+  "template": "pages/result.html",
+  "title": "Result: HIGH RISK",
+  "kind": "wide",
+  "section": "check",
+  "crumbs": [
+   [
+    "Check",
+    "/check"
+   ],
+   [
+    "Result",
+    null
+   ]
+  ]
+ },
+ {
+  "route": "result/qr",
+  "template": "pages/result__qr.html",
+  "title": "Result: HIGH RISK, stock-tips QR",
+  "kind": "screen",
+  "section": "check",
+  "crumbs": [
+   [
+    "Check",
+    "/check"
+   ],
+   [
+    "Result: stock-tips QR",
+    null
+   ]
+  ]
+ },
+ {
+  "route": "result/invoice",
+  "template": "pages/result__invoice.html",
+  "title": "Result: VERIFY FIRST, invoice",
+  "kind": "screen",
+  "section": "check",
+  "crumbs": [
+   [
+    "Check",
+    "/check"
+   ],
+   [
+    "Result: invoice",
+    null
+   ]
+  ]
+ },
+ {
+  "route": "result/screenshot",
+  "template": "pages/result__screenshot.html",
+  "title": "Result: HIGH RISK, payment screenshot",
+  "kind": "screen",
+  "section": "check",
+  "crumbs": [
+   [
+    "Check",
+    "/check"
+   ],
+   [
+    "Result: payment screenshot",
+    null
+   ]
+  ]
+ },
+ {
+  "route": "result/cant-tell",
+  "template": "pages/result__cant-tell.html",
+  "title": "Result: CAN'T TELL",
+  "kind": "screen",
+  "section": "check",
+  "crumbs": [
+   [
+    "Check",
+    "/check"
+   ],
+   [
+    "Result: can't tell",
+    null
+   ]
+  ]
+ },
+ {
+  "route": "result/no-flags",
+  "template": "pages/result__no-flags.html",
+  "title": "Result: NO RED FLAGS FOUND",
+  "kind": "screen",
+  "section": "check",
+  "crumbs": [
+   [
+    "Check",
+    "/check"
+   ],
+   [
+    "Result: no red flags found",
+    null
+   ]
+  ]
+ },
+ {
+  "route": "listen",
+  "template": "pages/listen.html",
+  "title": "Listen",
+  "kind": "screen",
+  "section": "check",
+  "crumbs": [
+   [
+    "Check",
+    "/check"
+   ],
+   [
+    "Result",
+    "/result"
+   ],
+   [
+    "Listen",
+    null
+   ]
+  ]
+ },
+ {
+  "route": "explain",
+  "template": "pages/explain.html",
+  "title": "Explain simply",
+  "kind": "screen",
+  "section": "check",
+  "crumbs": [
+   [
+    "Check",
+    "/check"
+   ],
+   [
+    "Result",
+    "/result"
+   ],
+   [
+    "Explain simply",
+    null
+   ]
+  ]
+ },
+ {
+  "route": "next-steps",
+  "template": "pages/next-steps.html",
+  "title": "Next steps: not paid",
+  "kind": "screen",
+  "section": "help",
+  "crumbs": [
+   [
+    "If you paid",
+    "/already-paid"
+   ],
+   [
+    "Next steps",
+    null
+   ]
+  ]
+ },
+ {
+  "route": "already-paid",
+  "template": "pages/already-paid.html",
+  "title": "Already paid: first hour",
+  "kind": "screen",
+  "section": "help",
+  "crumbs": [
+   [
+    "If you paid",
+    null
+   ]
+  ]
+ },
+ {
+  "route": "guardian",
+  "template": "pages/guardian.html",
+  "title": "Guardian Review",
+  "kind": "screen",
+  "section": "help",
+  "crumbs": [
+   [
+    "If you paid",
+    "/already-paid"
+   ],
+   [
+    "Guardian Review",
+    null
+   ]
+  ]
+ },
+ {
+  "route": "guardian/share",
+  "template": "pages/guardian__share.html",
+  "title": "Share with family",
+  "kind": "screen",
+  "section": "help",
+  "crumbs": [
+   [
+    "Guardian Review",
+    "/guardian"
+   ],
+   [
+    "Share",
+    null
+   ]
+  ]
+ },
+ {
+  "route": "guardian/view",
+  "template": "pages/guardian__view.html",
+  "title": "Guardian's view",
+  "kind": "screen",
+  "section": "help",
+  "crumbs": [
+   [
+    "Guardian Review",
+    "/guardian"
+   ],
+   [
+    "Guardian's view",
+    null
+   ]
+  ]
+ },
+ {
+  "route": "report",
+  "template": "pages/report.html",
+  "title": "Evidence report",
+  "kind": "screen",
+  "section": "help",
+  "crumbs": [
+   [
+    "If you paid",
+    "/already-paid"
+   ],
+   [
+    "Evidence report",
+    null
+   ]
+  ]
+ },
+ {
+  "route": "report/print",
+  "template": "pages/report__print.html",
+  "title": "Evidence report: print",
+  "kind": "screen",
+  "section": "help",
+  "crumbs": [
+   [
+    "Evidence report",
+    "/report"
+   ],
+   [
+    "Print",
+    null
+   ]
+  ]
+ },
+ {
+  "route": "report/complaint",
+  "template": "pages/report__complaint.html",
+  "title": "Complaint draft",
+  "kind": "screen",
+  "section": "help",
+  "crumbs": [
+   [
+    "Evidence report",
+    "/report"
+   ],
+   [
+    "Complaint draft",
+    null
+   ]
+  ]
+ },
+ {
+  "route": "warn",
+  "template": "pages/warn.html",
+  "title": "Warn others",
+  "kind": "screen",
+  "section": "help",
+  "crumbs": [
+   [
+    "If you paid",
+    "/already-paid"
+   ],
+   [
+    "Warn others",
+    null
+   ]
+  ]
+ },
+ {
+  "route": "wrong",
+  "template": "pages/wrong.html",
+  "title": "Wrong result?",
+  "kind": "screen",
+  "section": "help",
+  "crumbs": [
+   [
+    "Wrong result?",
+    null
+   ]
+  ]
+ },
+ {
+  "route": "wrong/status",
+  "template": "pages/wrong__status.html",
+  "title": "Wrong result: status",
+  "kind": "screen",
+  "section": "help",
+  "crumbs": [
+   [
+    "Wrong result?",
+    "/wrong"
+   ],
+   [
+    "Status",
+    null
+   ]
+  ]
+ },
+ {
+  "route": "deletion",
+  "template": "pages/deletion.html",
+  "title": "Deletion receipt",
+  "kind": "screen",
+  "section": "help",
+  "crumbs": [
+   [
+    "Deletion receipt",
+    null
+   ]
+  ]
+ },
+ {
+  "route": "tools",
+  "template": "pages/tools.html",
+  "title": "Is this really Amazon?",
+  "kind": "screen",
+  "section": "tools",
+  "crumbs": [
+   [
+    "Is this real?",
+    null
+   ]
+  ]
+ },
+ {
+  "route": "tools/result",
+  "template": "pages/tools__result.html",
+  "title": "Is this really Amazon? Result",
+  "kind": "screen",
+  "section": "tools",
+  "crumbs": [
+   [
+    "Is this real?",
+    "/tools"
+   ],
+   [
+    "Result",
+    null
+   ]
+  ]
+ },
+ {
+  "route": "shopkeeper",
+  "template": "pages/shopkeeper.html",
+  "title": "Shopkeeper check",
+  "kind": "screen",
+  "section": "tools",
+  "crumbs": [
+   [
+    "Is this real?",
+    "/tools"
+   ],
+   [
+    "Shopkeeper check",
+    null
+   ]
+  ]
+ },
+ {
+  "route": "helper",
+  "template": "pages/helper.html",
+  "title": "Helper mode",
+  "kind": "screen",
+  "section": "tools",
+  "crumbs": [
+   [
+    "Is this real?",
+    "/tools"
+   ],
+   [
+    "Helper mode",
+    null
+   ]
+  ]
+ },
+ {
+  "route": "helper/verdict",
+  "template": "pages/helper__verdict.html",
+  "title": "Helper mode: verdict",
+  "kind": "screen",
+  "section": "tools",
+  "crumbs": [
+   [
+    "Helper mode",
+    "/helper"
+   ],
+   [
+    "Verdict",
+    null
+   ]
+  ]
+ },
+ {
+  "route": "learn",
+  "template": "pages/learn.html",
+  "title": "Learn",
+  "kind": "screen",
+  "section": "learn",
+  "crumbs": [
+   [
+    "Learn",
+    null
+   ]
+  ]
+ },
+ {
+  "route": "learn/drill",
+  "template": "pages/learn__drill.html",
+  "title": "Scam Drill",
+  "kind": "screen",
+  "section": "learn",
+  "crumbs": [
+   [
+    "Learn",
+    "/learn"
+   ],
+   [
+    "Scam Drill",
+    null
+   ]
+  ]
+ },
+ {
+  "route": "learn/drill/score",
+  "template": "pages/learn__drill__score.html",
+  "title": "Scam Drill: score",
+  "kind": "screen",
+  "section": "learn",
+  "crumbs": [
+   [
+    "Learn",
+    "/learn"
+   ],
+   [
+    "Scam Drill",
+    "/learn/drill"
+   ],
+   [
+    "Score",
+    null
+   ]
+  ]
+ },
+ {
+  "route": "learn/safety",
+  "template": "pages/learn__safety.html",
+  "title": "Safety guide",
+  "kind": "screen",
+  "section": "learn",
+  "crumbs": [
+   [
+    "Learn",
+    "/learn"
+   ],
+   [
+    "Safety guide",
+    null
+   ]
+  ]
+ },
+ {
+  "route": "learn/safe-word",
+  "template": "pages/learn__safe-word.html",
+  "title": "Family safe-word card",
+  "kind": "screen",
+  "section": "learn",
+  "crumbs": [
+   [
+    "Learn",
+    "/learn"
+   ],
+   [
+    "Safe-word card",
+    null
+   ]
+  ]
+ },
+ {
+  "route": "states",
+  "template": "pages/states.html",
+  "title": "System states",
+  "kind": "wide",
+  "section": "how",
+  "crumbs": [
+   [
+    "How it works",
+    "/how-it-works"
+   ],
+   [
+    "System states",
+    null
+   ]
+  ]
+ },
+ {
+  "route": "console",
+  "template": "pages/console.html",
+  "title": "Reviewer console: login",
+  "kind": "console",
+  "section": "how",
+  "crumbs": []
+ },
+ {
+  "route": "console/queue",
+  "template": "pages/console__queue.html",
+  "title": "Reviewer console: queue",
+  "kind": "console",
+  "section": "how",
+  "crumbs": []
+ },
+ {
+  "route": "console/case",
+  "template": "pages/console__case.html",
+  "title": "Reviewer console: case",
+  "kind": "console",
+  "section": "how",
+  "crumbs": []
+ },
+ {
+  "route": "console/campaign",
+  "template": "pages/console__campaign.html",
+  "title": "Reviewer console: campaign",
+  "kind": "console",
+  "section": "how",
+  "crumbs": []
+ },
+ {
+  "route": "console/audit",
+  "template": "pages/console__audit.html",
+  "title": "Reviewer console: audit log",
+  "kind": "console",
+  "section": "how",
+  "crumbs": []
+ },
+ {
+  "route": "how-it-works",
+  "template": "pages/how-it-works.html",
+  "title": "How it works",
+  "kind": "wide",
+  "section": "how",
+  "crumbs": [
+   [
+    "How it works",
+    null
+   ]
+  ]
+ },
+ {
+  "route": "",
+  "template": "home.html",
+  "title": "Satyapan",
+  "kind": "wide",
+  "section": "home",
+  "crumbs": []
+ },
+ {
+  "route": "dashboard",
+  "template": "dashboard.html",
+  "title": "My checks",
+  "kind": "wide",
+  "section": "dashboard",
+  "crumbs": [
+   [
+    "My checks",
+    null
+   ]
+  ]
+ }
+]

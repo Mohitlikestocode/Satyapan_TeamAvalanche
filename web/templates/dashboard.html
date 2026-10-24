@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="dhead">
+  <div class="wrap dhead-in">
+    <div>
+      <h1>My checks</h1>
+      <p>Your recent checks on this device. Nothing here is sent to anyone. <span lang="hi">आपकी जाँचें इसी डिवाइस पर हैं।</span></p>
+    </div>
+    <a class="hbtn hbtn-p" href="/check" style="min-height:48px">New check <span lang="hi">&nbsp;/ नई जाँच</span></a>
+  </div>
+</section>
+
+<div class="wrap dgrid">
+  <div>
+    <section class="kpis" aria-label="Summary of your checks" id="kpis">
+      <div class="kpi"><small>Checks done</small><b data-k="total">0</b><span>on this device</span></div>
+      <div class="kpi kpi-r"><small>High risk</small><b data-k="high">0</b><span>told not to pay</span></div>
+      <div class="kpi kpi-a"><small>Verify first</small><b data-k="verify">0</b><span>needs a second look</span></div>
+      <div class="kpi kpi-g"><small>No red flags</small><b data-k="clear">0</b><span>not a guarantee</span></div>
+    </section>
+
+    <section class="board" aria-labelledby="recent-h">
+      <h3 id="recent-h" style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+        <span>Recent checks</span>
+        <span style="display:flex;gap:8px;flex-wrap:wrap">
+          <button type="button" class="btn-sm" id="load-sample">Load sample data</button>
+          <button type="button" class="btn-sm danger" id="clear-all">Delete all</button>
+        </span>
+      </h3>
+      <div id="empty" class="empty" hidden>
+        <h4>Nothing checked yet</h4>
+        <p>When you check something, it shows up here so you can find the result again.</p>
+        <a class="hbtn hbtn-p" href="/check" style="min-height:46px">Check something</a>
+      </div>
+      <div class="tbl-wrap" id="tblwrap" hidden>
+        <table class="tbl">
+          <caption class="sr" style="position:absolute;left:-999px">Recent checks</caption>
+          <thead><tr><th scope="col">Date</th><th scope="col">Type</th><th scope="col">What you checked</th><th scope="col">Result</th><th scope="col"><span style="position:absolute;left:-999px">Action</span></th></tr></thead>
+          <tbody id="rows"></tbody>
+        </table>
+      </div>
+    </section>
+    <p class="dnote" id="sample-note" hidden>Showing sample data so you can see how this page works. Delete all to remove it.</p>
+    <p class="dnote">Demo build: detection is not connected yet, so every result opens a labelled sample result.</p>
+
+    <section class="board" style="margin-top:20px" aria-labelledby="sd-h">
+      <h3 id="sd-h">Scam Drill <span class="pill pill-n" style="margin-left:8px">Practice</span></h3>
+      <div style="padding:16px 18px">
+        <p style="margin:0 0 6px">Spot the warning signs in made-up messages. Five minutes.</p>
+        <div class="prog" aria-hidden="true"><i style="width:0" id="drill-bar"></i></div>
+        <p class="dnote" style="margin:4px 0 12px" id="drill-txt">Not started</p>
+        <a class="btn-sm" href="/learn/drill">Start Scam Drill</a>
+      </div>
+    </section>
+  </div>
+
+  <aside aria-label="Shortcuts and help" style="display:flex;flex-direction:column;gap:16px">
+    <section class="board">
+      <h3>Quick actions</h3>
+      <div class="qa">
+        <a href="/check?type=screenshot"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.09-3.09a2 2 0 0 0-2.82 0L6 21"/></svg>Check a screenshot</a>
+        <a href="/check?type=qr"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3M21 14v.01M14 21h7v-4"/></svg>Scan a QR code</a>
+        <a href="/check?type=pdf"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/></svg>Check an invoice</a>
+        <a href="/tools"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Is this a real caller?</a>
+        <a href="/guardian"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Ask family</a>
+        <a href="/report"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M10 9H8M16 13H8M16 17H8"/></svg>Evidence report</a>
+      </div>
+    </section>
+
+    <section class="sidebox sidebox-alert">
+      <h2>Already paid?</h2>
+      <p>Act in the first hour.</p>
+      <a class="sbtn sbtn-red" href="tel:1930">Call 1930</a>
+      <a class="slink" href="/already-paid">What to do in the first hour</a>
+    </section>
+
+    <section class="board">
+      <h3>Safety checklist</h3>
+      <ul class="list">
+        <li>Never share your OTP, PIN or password.</li>
+        <li>No genuine investment promises a fixed monthly return.</li>
+        <li>Registered brokers collect on <b>@valid</b> UPI handles.</li>
+        <li>Confirm bank changes on a number you already have.</li>
+        <li>Ask someone you trust before you pay.</li>
+      </ul>
+    </section>
+  </aside>
+</div>
+{% endblock %}
