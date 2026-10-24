@@ -1,0 +1,12 @@
+{
+ "file": "messages.jsonl",
+ "scams_flagged": 38,
+ "scams": 38,
+ "false_alarms": 2,
+ "genuine": 33,
+ "missed_families": [],
+ "false_alarm_examples": [
+  "Sending you Rs 500 for dinner, my UPI is ravi.k@okaxis. Pay ",
+  "Telegram channel for daily current affairs. Free, no payment"
+ ]
+}

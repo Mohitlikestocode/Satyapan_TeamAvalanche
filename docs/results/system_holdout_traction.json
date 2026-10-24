@@ -1,0 +1,14 @@
+{
+ "file": "holdout_traction.jsonl",
+ "scams_flagged": 36,
+ "scams": 40,
+ "false_alarms": 0,
+ "genuine": 40,
+ "missed_families": [
+  "electricity",
+  "trai",
+  "qr_collect",
+  "rent_advance"
+ ],
+ "false_alarm_examples": []
+}

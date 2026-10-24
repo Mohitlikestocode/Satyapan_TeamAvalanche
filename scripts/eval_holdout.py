@@ -9,8 +9,12 @@ from pathlib import Path
 PATH = Path(sys.argv[1])
 rows = [json.loads(line) for line in PATH.read_text(encoding="utf-8").splitlines() if line.strip()]
 import os
-os.environ["SATYAPAN_HOME"] = tempfile.mkdtemp()
+os.environ.setdefault("SATYAPAN_HOME", tempfile.mkdtemp())
+from satyapan.plugins import load_plugins  # noqa: E402
 from satyapan.service import analyse_text  # noqa: E402
+
+if "--rules-only" not in sys.argv:
+    load_plugins()  # the installed models, as the live site runs them
 
 hit = fa = 0
 misses, falses = [], []

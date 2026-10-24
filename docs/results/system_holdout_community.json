@@ -1,0 +1,25 @@
+{
+ "file": "holdout_community.jsonl",
+ "scams_flagged": 25,
+ "scams": 40,
+ "false_alarms": 0,
+ "genuine": 40,
+ "missed_families": [
+  "crypto_investment",
+  "fake_payment_screenshot",
+  "fastag_recharge",
+  "relative_emergency",
+  "refund_trap",
+  "job_task",
+  "fake_support",
+  "fake_app",
+  "relative_emergency",
+  "electricity_cut",
+  "digital_arrest",
+  "relative_emergency",
+  "fake_loan_app",
+  "courier",
+  "crypto_investment"
+ ],
+ "false_alarm_examples": []
+}
