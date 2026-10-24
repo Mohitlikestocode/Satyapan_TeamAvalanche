@@ -7,6 +7,7 @@ from __future__ import annotations
 import re
 
 from ...contracts.models import Layer, LayerResult, Signal, Strength
+from .india import RULES_INDIA
 
 I = re.IGNORECASE
 # code -> (strength, trigger id for payee templates or None, patterns)
@@ -57,6 +58,7 @@ RULES: list[tuple[str, Strength, str | None, list[re.Pattern[str]]]] = [
         re.compile(r"(सेबी|आरबीआई)\s*(पंजीकृत|मान्यता|अनुमोदित)"),
     ]),
 ]
+RULES = RULES + RULES_INDIA
 APK_RE = re.compile(r"\.apk\b|install\s+(the\s+)?(app|apk)|ऐप\s*इंस्टॉल|apk\s*(download|install)|apk[^.\n]{0,12}(इंस्टॉल|डाउनलोड)", I)
 STORE_RE = re.compile(r"play\s*store|app\s*store|official\s+app|प्ले\s*स्टोर|ऐप\s*स्टोर", I)
 COLLECT_TRAP_RE = re.compile(
