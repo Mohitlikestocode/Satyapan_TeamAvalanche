@@ -4,7 +4,7 @@ Every number is from a file in `docs/results/`. "Optimistic" means we looked at 
 
 ## What do you miss right now?
 * **Scams with no fixed wording.** On Tanish's 80 unseen messages the whole system flags **25 of 40 scams (62%)** with **0 of 40 genuine messages** flagged. About 3 in 8 unseen scams still get through: sextortion, fake loan apps, crypto pitches, and scam text with no money ask.
-* **Edited payment screenshots.** On synthetic screens from layouts the model never saw, the tamper model catches about **39%** of edits (975 / 2,511) and wrongly flags about **5%** of genuine ones. The whole screenshot check flags 62 / 150 edited and 23 / 150 genuine, 14 of those false alarms coming from the payee rules.
+* **Edited payment screenshots.** On synthetic screens from layouts the model never saw, the tamper model catches about **39%** of edits (975 / 2,511) and wrongly flags about **5%** of genuine ones. The whole screenshot check flags 61 / 150 edited and 11 / 150 genuine (the 150 + 150 are synthetic screens from unseen layouts).
 * **Cloned voices over a phone line.** The detector flags every synthetic fake in the test split (1,980 / 1,980) but wrongly flags 78 / 1,884 real voices (4.1%), and it degrades on 8 kHz telephone audio.
 * **Real phone screenshots.** Not evaluated. We did not collect anyone's real payment screens without permission, so `/results` says "not evaluated".
 

@@ -74,8 +74,8 @@ The jury scores each row 1 to 5, weighted. For every row: what it asks, what we 
 | ![Check page](docs/img/check.png) **Check anything**: six input kinds, English or Hindi | ![Message result](docs/img/result-message.png) **A message result**: tier, plain reason, Listen, Ask family, Already-paid help |
 | ![Voice result](docs/img/result-voice.png) **A voice note**: transcribed locally (faster-whisper), then the same checks as a message plus a cloned-voice signal | ![QR result](docs/img/result-qr.png) **A QR code**: decoded, the payee or link inside is checked, not just the picture |
 | ![Results](docs/img/results.png) **/results**: every accuracy number is read from a file, and "not evaluated" is shown where we did not measure | ![Attack](docs/img/attack.png) **/attack**: how an attacker would evade us, measured |
-| ![Community](docs/img/community.png) **Scam Watch**: community reports with the reason it was flagged | ![Learn](docs/img/learn.png) **Learn and Scam Drill**: lessons, streaks and badges |
-| ![Impact](docs/img/impact.png) **/impact**: real traction, team traffic excluded | ![Poster](docs/img/poster.png) **Shop poster** with a QR that opens Satyapan, and referral counting |
+| ![Community](docs/img/community.png) **Scam Watch** on a fresh start: empty until real people report; every report is checked by the rules and cleaned of phone numbers and names before anyone sees it | ![Learn](docs/img/learn.png) **Learn and Scam Drill**: lessons, streaks and badges |
+| ![Impact](docs/img/impact.png) **/impact** on a fresh start: it starts at zero and counts only real visitors; team traffic is excluded | ![Poster](docs/img/poster.png) **Shop poster** with a QR that opens Satyapan, and referral counting |
 | ![Hindi check page](docs/img/check-hindi.png) **Hindi**: the shell, the check page, reasons and the spoken verdict switch language; any page opens in Hindi with `?lang=hi` | ![Screenshot model](docs/img/screenshot-model.png) **Screenshot check**: the suspected edit is circled, with the honest caveat |
 
 ---
@@ -101,7 +101,7 @@ Reproduce: `python -m satyapan.eval.report` (needs `var/models/scam_text/`).
 | What | Result |
 |---|---|
 | Tamper model, **unseen layouts** (synthetic screens; small U-Net chosen on the test split, ResNet-18 also reported) | AUROC **0.735**; catches **975 / 2,511** edits, wrongly flags **124 / 2,455** genuine (about 5%); ELA baseline AUROC 0.512 |
-| Whole screenshot check as deployed (OCR + payee rules + tamper model) | flags **62 / 150** edited (95% CI 34–49%), but also **23 / 150** genuine (CI 10–22%); 14 of those false alarms come from the payee rules, not the image model |
+| Whole screenshot check as deployed (OCR + payee rules + tamper model) | flags **61 / 150** edited (95% CI 33–49%) and **11 / 150** genuine (7%, CI 4–13%). A payment receipt is treated as a receipt, not a request to pay, so its recipient alone does not flag it; the edit sign itself catches 54 / 150 with 6 / 150 false alarms |
 
 **Where we fail:** the tamper model is weak on perfect edits and clean copies; the screenshot results are on **synthetic** screens from layouts never seen in training. **We did not collect real people's payment screenshots**, because we do not use personal financial data without permission, so real-screenshot performance is shown as **"not evaluated"** on `/results`. The image check supports the verdict and, by design, can never decide it alone (forensics caps at SUSPICIOUS).
 

@@ -50,6 +50,8 @@ def fuse(inp: FusionInput) -> FusionOutput:
     reasons = [ReasonRef(code=s.code, params=s.params) for s in suspicious] if tier != Tier.NO_RED_FLAGS else []
     if tier == Tier.NO_RED_FLAGS:
         reasons += [ReasonRef(code=s.code, params=s.params) for s in signals if s.code in ("PAYEE_FORMAT_ONLY", "PAYEE_VALID_REGISTERED")]
+        # a lone weak picture or voice sign does not raise the tier, but it is still shown so the user can weigh it
+        reasons += [ReasonRef(code=s.code, params=s.params) for s in signals if s.strength == Strength.WEAK_SUSPICIOUS and s.layer == Layer.L2]
         if not _has_payee(signals, inp):
             reasons.append(ReasonRef(code="NO_PAYEE_FOUND"))
         reasons.append(ReasonRef(code="NO_FLAGS_NOT_GUARANTEE"))

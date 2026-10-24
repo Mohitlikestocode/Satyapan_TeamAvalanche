@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import json
 import logging
+import re
 import uuid
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -55,7 +56,7 @@ def _run_hooks(hooks, *args) -> list[LayerResult]:
 
 def analyse_text(text: str, kind: str = "message", topic: str = "", case_id: str | None = None, use_registry: bool = True,
                  extra_layers: list[LayerResult] | None = None, readable: bool = True, extra_names: list[str] | None = None,
-                 use_plugins: bool = True) -> CaseResult:
+                 use_plugins: bool = True, receipt: bool = False) -> CaseResult:
     """Text is untrusted data. It is only matched against fixed patterns and never chooses a template or a tier."""
     case_id = case_id or uuid.uuid4().hex[:12]
     text = (text or "")[:MAX_TEXT]
@@ -66,6 +67,9 @@ def analyse_text(text: str, kind: str = "message", topic: str = "", case_id: str
 
     l4res = l4.run(text)
     l3res = l3.run(text, found, l4res.signals, snapshot=snapshot, topic_investment=topic.strip().lower().startswith("investment"))
+    if receipt:
+        # a payment receipt shows who WAS paid; it is not a request to pay, so the recipient alone must not flag it
+        l3res = l3res.model_copy(update={"signals": [x for x in l3res.signals if x.code != "PAYEE_PERSONAL_ACCOUNT"]})
     payee_confirmed = None
     if found.upi:
         payee_confirmed = any(s.code == "PAYEE_VALID_REGISTERED" for s in l3res.signals)
@@ -74,7 +78,9 @@ def analyse_text(text: str, kind: str = "message", topic: str = "", case_id: str
         from .layers.l3_payee.domains import hostname
         from .store import db
         matches = db.registry_matches([u.vpa for u in found.upi], [h for h in (hostname(u) for u in found.urls) if h])
-    hooked = _run_hooks(REGISTRY.text_hooks, text, found) if (use_plugins and usable) else []
+    # a hook can opt out of some kinds with `skip_kinds` (the scam-message model was trained on messages, not on payment screens or QR payloads)
+    hooks = [h for h in REGISTRY.text_hooks if kind not in getattr(h, "skip_kinds", ())]
+    hooked = _run_hooks(hooks, text, found) if (use_plugins and usable) else []
     out = fuse(FusionInput(results=[l3res, l4res, *(extra_layers or []), *hooked], registry_matches=matches, quality=quality, media_present=False,
                            payees_confirmed_registered=payee_confirmed, money_ask_present=bool(found.upi or found.ifsc or found.urls)))
     verdicts = {lang.value: build_verdict(case_id, out, lang) for lang in Lang}
@@ -92,6 +98,17 @@ def analyse_pdf(data: bytes, topic: str = "", case_id: str | None = None) -> Cas
     info = read_pdf(data)
     return analyse_text(info.text, kind="pdf", topic=topic or "invoice", case_id=case_id, extra_layers=[info.result], readable=info.readable,
                         extra_names=["pdf"])
+
+
+RECEIPT_RE = re.compile(
+    r"(payment|paid|transfer|transaction|txn)\s*(is\s+)?(successful|success|completed?|done)|paid\s+to|debited\s+from|utr|upi\s*(ref|transaction)|transaction\s*id|txn\s*id|भुगतान\s*सफल",
+    re.IGNORECASE)
+REQUEST_RE = re.compile(r"(pay\s+now|scan\s+(to|the)\s+pay|collect\s+request|approve\s+the\s+request|enter\s+(your\s+)?(upi\s+)?pin)", re.IGNORECASE)
+
+
+def looks_like_receipt(text: str) -> bool:
+    """Payment-success wording and no request to pay."""
+    return bool(RECEIPT_RE.search(text)) and not REQUEST_RE.search(text)
 
 
 def analyse_image(data: bytes, kind: str = "screenshot", topic: str = "", case_id: str | None = None) -> CaseResult:
@@ -113,5 +130,7 @@ def analyse_image(data: bytes, kind: str = "screenshot", topic: str = "", case_i
             layers.append(r)
             if r.internal.get("label_key"):
                 names.append(r.internal["label_key"])
-    return analyse_text("\n".join(parts), kind=kind, topic=topic, case_id=case_id, readable=bool(parts),
-                        extra_layers=layers or None, extra_names=names or None)
+    joined = "\n".join(parts)
+    return analyse_text(joined, kind=kind, topic=topic, case_id=case_id, readable=bool(parts),
+                        extra_layers=layers or None, extra_names=names or None,
+                        receipt=(kind == "screenshot" and looks_like_receipt(joined)))

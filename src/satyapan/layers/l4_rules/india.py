@@ -37,7 +37,9 @@ RULES_INDIA: list[tuple[str, Strength, str | None, list[re.Pattern[str]]]] = [
     ("OFFER_CREDENTIAL_REQUEST", Strength.STRONG_SUSPICIOUS, None, [
         re.compile(NOT + r"\b(share|tell|give|send|enter|provide|bata\w*|read\s+out)\b[^.\n]{0,25}\b(your\s+|the\s+|apna\s+)?(otp|cvv|upi\s*pin|atm\s*pin|card\s+(number|details)|net\s*banking\s+(password|id)|password|aadhaar\s+otp)\b", I),
         re.compile(r"\b(otp|cvv|pin|password)\b(?:(?!\bna\b|\bmat\b|\bnahi\b)[^.\n]){0,20}\b(daal\w*|bata\w*|bhej\w*)\b", I),
-        re.compile(r"(कार्ड\s*नंबर|सीवीवी|एक्सपायरी)[^.\n]{0,40}(ओटीपी|OTP|बताएँ|बताइए|डालें)|(ओटीपी|OTP)\s*(डालें|बताएँ|बताइए|शेयर\s*करें)"),
+        re.compile(r"(कार्ड\s*नंबर|सीवीवी|एक्सपायरी)[^.\n]{0,40}(ओटीपी|OTP|बताएँ|बताइए|डालें)"),
+        # "OTP अभी बताइए" (as a speech-to-text transcript often spells it); a "न / मत / नहीं" between the two words cancels it
+        re.compile(r"(ओटीपी|OTP|पिन|PIN)(?:(?!\s(?:न|मत|नहीं)\s)[^.\n।]){0,25}(?:बता\S*|डाल\S*|भेज\S*|शेयर\s*कर\S*)"),
     ]),
     ("OFFER_APPROVE_TO_RECEIVE", Strength.STRONG_SUSPICIOUS, None, [
         re.compile(r"\b(scan|approve|accept)\b[^.\n]{0,40}\b(qr|collect\s+request|request)\b[^.\n]{0,60}\b(receive|get|credit|recharge|cashback|refund|pin)\b", I),

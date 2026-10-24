@@ -8,10 +8,10 @@ Branch `feat/traction`. Goal: real users on a public site, counted honestly, kep
 |---|---|---|---|
 | C3 | Metrics, internal-traffic switch, public `/impact`, staff `/ops` | no | **done**, tested |
 | C4 | Pilot sign-up `/pilot`, feedback on result pages and `/feedback` | no | **done**, tested |
-| C1 | Hardening middleware, `/healthz`, Docker + Caddy, backup, deploy check, load test | a server and a domain or `sslip.io` name | files written and tested locally; **Docker image not built yet** (Docker Desktop was not running); not deployed |
+| C1 | Hardening middleware, `/healthz`, Docker + Caddy, backup, deploy check, load test | a server and a domain or `sslip.io` name | runs from plain `uvicorn` (the team decided not to use Docker; the Docker and Caddy files were never built or tested); not yet on a public address |
 | C2 | Telegram bot | bot token from @BotFather | **done and tested with fake updates**; not yet run with a real token |
 | C5 | Shop poster `/poster` with referral codes, installable PWA, offline helpline page | no | **done**, tested |
-| C6 | Sarvam voice for the verdict (`POST /api/v1/speak`) | Sarvam API key | **done and tested against a fake Sarvam server**; not yet tried with a real key |
+| C6 | Sarvam voice for the verdict (`POST /api/v1/speak`) | Sarvam API key | **done and tested**; also tried once with a real key (Hindi and English, fixed template sentences only) |
 | C7 | C2PA "Verified original" demo | only if time | not started (cut first) |
 
 ## What counts as a real number
@@ -88,3 +88,13 @@ RATE_LIMIT=1 python -m uvicorn satyapan.api.app:app --host 0.0.0.0 --port 8000 -
 ```
 
 Install Tesseract (with the Hindi language pack) for screenshot text reading. For a public link on a laptop, a tunnel such as `cloudflared tunnel --url http://localhost:8000` works for the demo. `python scripts/deploy_check.py http://localhost:8000` checks the running server.
+
+## Before the demo: one command
+
+```bash
+python scripts/preflight.py http://127.0.0.1:8000
+```
+
+It checks the models, OCR, ffmpeg, keys and a live scam check, and prints READY or what is missing. Models load in the background when the server starts (set `WARM_UP=0` to skip), so the first voice note takes about 6 seconds instead of about 30.
+
+Use a **fresh** `SATYAPAN_HOME` for the demo so `/impact` and Scam Watch start at zero, and open `/internal?key=<INTERNAL_KEY>` once on every team device so rehearsals are not counted as users.

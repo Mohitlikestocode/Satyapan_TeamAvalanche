@@ -26,6 +26,10 @@ def scam_like(text: str, found) -> LayerResult | None:
                        model_versions={"scam_text": f"e5-small-{cfg.get('mode')}-{cfg.get('made')}"}, internal={"label_key": "ml_text", "p": p})
 
 
+# trained on chat-style scam messages: on OCR text of payment screens, QR payloads, links and invoices it fires on ordinary payment wording
+scam_like.skip_kinds = ("screenshot", "pdf", "qr", "link")
+
+
 def setup(registry) -> None:
     registry.add_text_hook(scam_like, "ml_text", "Scam-message model (wording compared with known scams)",
                            "स्कैम-संदेश मॉडल (शब्दों की तुलना जाने-पहचाने स्कैम से)")

@@ -12,7 +12,7 @@ Judges score "delivery against the Round 1 plan": built what we promised, or cut
 | Reviewer console, known-fake registry, evidence pack | Built and running: human review, four-eyes rule for the registry, hash-chained audit log, Ed25519-signed evidence pack | Alert and response flow row | delivered |
 | (not in Round 1) Community, learning and gamification | Added: Scam Watch, lessons, Scam Drill, leaderboard | Mentor feedback: awareness and education | added |
 | (not in Round 1) Live traction | Added: public deployment, Telegram bot, honest metrics page, pilot sign-ups | Mentor feedback: real users | added |
-| Trained models | Fine-tuned at the finale only: screenshot tamper model, scam-message classifier. Everything else is pretrained and calibrated. No model was trained before the event | Rules of the event and our form | in progress |
+| Trained models | Fine-tuned at the finale only: screenshot tamper model, scam-message classifier. Everything else is pretrained and calibrated. No model was trained before the event | Rules of the event and our form | delivered: both models trained and measured (see `docs/results/`); the scam-message model is shipped only because it flagged more held-out scams with no extra false alarms, and it is switched off for screenshots, PDFs, QR and links because it was never trained on that text |
 
 ## Known gaps we will say out loud
 
@@ -20,3 +20,7 @@ Judges score "delivery against the Round 1 plan": built what we promised, or cut
 - No official public list of `@valid` UPI handles exists, so we never confirm a payee as registered; we say "format looks right, check SEBI Check".
 - Hindi text is machine-drafted until a fluent reviewer signs it off.
 - WhatsApp needs paid business approval, so the live chat channel is Telegram.
+- Real payment screenshots were not collected (no permission to use people's payment data). Screenshot numbers are on synthetic screens from unseen layouts and `/results` says "not evaluated" for real ones.
+- Docker and Caddy files are in the repo but were never built or tested; the team runs plain `uvicorn`.
+- Telegram bot is tested against fake Telegram updates; it has not been run with a real token.
+- No public address yet: a server or tunnel is needed.
