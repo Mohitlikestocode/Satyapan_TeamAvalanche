@@ -34,6 +34,8 @@ CONDITION_LABELS: dict[str, tuple[str, str]] = {
     "recompressed_twice": ("Compressed twice (forwarded)", "दो बार कम्प्रेस (फ़ॉरवर्ड किया गया)"),
     "edit_fill": ("Edit: painted over", "बदलाव: ऊपर से रंग भरा"), "edit_clone": ("Edit: background copied over", "बदलाव: पृष्ठभूमि कॉपी की"),
     "edit_same_font": ("Edit in the same font", "उसी फ़ॉन्ट में बदलाव"), "edit_other_font": ("Edit in a different font", "दूसरे फ़ॉन्ट में बदलाव"),
+    "edit_perfect": ("Perfect edit (exact colour, size and place)", "बिल्कुल सटीक बदलाव (वही रंग, आकार और जगह)"),
+    "edit_with_traces": ("Edit with small traces", "हल्के निशान वाला बदलाव"),
     "field_amount": ("Amount edited", "रकम बदली"), "field_payee": ("Payee name edited", "पाने वाले का नाम बदला"),
     "field_ref": ("Reference edited", "रेफ़रेंस बदला"), "field_time": ("Time edited", "समय बदला"), "field_vpa": ("UPI ID edited", "UPI ID बदली"),
     "lang:en": ("English messages", "अंग्रेज़ी संदेश"), "lang:hi": ("Hindi messages", "हिंदी संदेश"), "lang:hinglish": ("Hinglish messages", "हिंग्लिश संदेश"),
@@ -156,12 +158,27 @@ def _from_generic(sec: Section, data: dict) -> None:
         sec.held_out = bool(data["held_out"])
 
 
+def _from_text_cv(sec: Section, data: dict) -> None:
+    for mode, m in data.get("modes", {}).items():
+        name = {"head": "Frozen encoder + trained head", "full": "Whole encoder fine-tuned"}.get(mode, mode)
+        sec.rows.append(Row(name=name + (" (chosen)" if data.get("chosen") == mode else ""), baseline=False,
+                            tpr=_rate(m.get("recall_unseen_family")), fpr=_rate(m.get("genuine_flagged_oof"))))
+    chosen = data.get("modes", {}).get(data.get("chosen", ""), {})
+    for fam, r in (chosen.get("per_family") or {}).items():
+        sec.conditions.append({"name": f"family:{fam}", "tpr": _rate(r), "fpr": None})
+    sec.hardware = data.get("hardware", "")
+    sec.reproduce = data.get("reproduce", "")
+    sec.split = "leave one scam family out (the model never saw the family it is scored on); threshold from out-of-fold genuine messages"
+
+
 def _apply(sec: Section, path: Path, data: dict, first: bool) -> None:
     sec.status = "measured"
     sec.files.append(path.name)
     if first:
         sec.date = data.get("date") or _mtime(path)
-    if data.get("schema") == 1:
+    if "modes" in data and "protocol" in data:
+        _from_text_cv(sec, data)
+    elif data.get("schema") == 1:
         _from_generic(sec, data)
     elif "baseline_ela" in data and "by_condition" in data:
         label = "Tamper model (chosen)" if path.name == "tamper_test.json" else "Tamper model (alternative)"
@@ -193,6 +210,11 @@ def sections(results_dir: Path | None = None) -> list[Section]:
                 ("The messages we looked at while writing the rules. Numbers here are optimistic; the held-out row above is the honest one.",
                  "वे संदेश जिन्हें देखकर नियम लिखे गए। ये नतीजे आशावादी हैं; ऊपर वाला अलग रखा गया नतीजा ईमानदार है।"),
                 ("scam messages", "स्कैम संदेश"), ("genuine messages", "असली संदेश"), held_out=False, dataset="data/kit/messages.jsonl"),
+        Section("text_model_cv", ("Scam-message model: scam families it never saw", "स्कैम-संदेश मॉडल: स्कैम के वे प्रकार जो उसने कभी नहीं देखे"),
+                ("Our fine-tuned message model, scored on each scam family after training without that family. Team-written data, so optimistic.",
+                 "हमारा फ़ाइन-ट्यून किया संदेश मॉडल, हर स्कैम प्रकार पर उसे उस प्रकार के बिना ट्रेन करने के बाद परखा गया। टीम का लिखा डेटा, इसलिए आशावादी।"),
+                ("scam messages", "स्कैम संदेश"), ("genuine messages", "असली संदेश"), held_out=False,
+                dataset="data/corpus/team_*.jsonl (team-written) + UCI SMS Spam Collection; data/kit never used"),
         Section("voice", ("Voice notes: cloned-voice detector", "वॉइस नोट: नकली (क्लोन) आवाज़ पहचान"),
                 ("Real and machine-made speech from speakers kept out of calibration, also after chat-app re-encoding.",
                  "असली और मशीन से बनी आवाज़, ऐसे वक्ताओं की जो कैलिब्रेशन में नहीं थे, चैट-ऐप री-एन्कोडिंग के बाद भी।"),
@@ -203,6 +225,7 @@ def sections(results_dir: Path | None = None) -> list[Section]:
         "screenshot_synthetic": ["tamper_test.json"] + sorted(p.name for p in d.glob("tamper_test_*.json")),
         "text_holdout": ["text_holdout.json"],
         "text_kit": ["text_kit.json"],
+        "text_model_cv": ["text_model_cv.json"],
         "voice": ["voice_test.json"],
     }
     for sec in out:

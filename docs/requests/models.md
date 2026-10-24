@@ -8,6 +8,12 @@ Line 16 of `.gitignore` is `models/`. It matches every folder named `models`, in
 Request: change line 16 from `models/` to `/models/` (root only), or delete it.
 Workaround meanwhile: those files were added with `git add -f`; once tracked, git keeps tracking them.
 
+## 1b. `.gitignore`: add `data/corpus/uci_sms/`
+
+The scam-message classifier downloads the public UCI SMS Spam Collection into `data/corpus/uci_sms/`. It must never be committed.
+Request: add `data/corpus/uci_sms/` to `.gitignore`. Meanwhile it is excluded locally on the GPU machine (`.git/info/exclude`).
+The team-written corpus `data/corpus/team_*.jsonl` is ours and is committed on purpose (reproducibility).
+
 ## 2. `tests/test_api.py::test_voice_still_points_to_a_labelled_sample` (informational)
 
 The voice handler (`plugins/models_voice.py`) now gives a real result when the server has ffmpeg and the Whisper model in

@@ -36,7 +36,7 @@ def describe(r: dict) -> str:
     """One line saying what a synthetic image was, for the failure list (no picture needed)."""
     parts = [f"image {r['id']}", f"layout {r['style']}"]
     if r["edited"]:
-        parts.append(f"{r['field']} edited" + (" in the same font" if r.get("same_font") else (" in " + r["edit_font"] if r.get("edit_font") else "")))
+        parts.append(("perfect " if r.get("perfect") else "") + f"{r['field']} edited" + (" in the same font" if r.get("same_font") else (" in " + r["edit_font"] if r.get("edit_font") else "")))
         if r.get("method"):
             parts.append("background copied over" if r["method"] == "clone" else "painted over")
     else:
@@ -87,6 +87,8 @@ def evaluate(ckpt: Path, data: Path, split: str, device: str) -> dict:
             if r.get("method"):
                 groups[f"edit_{r['method']}"].append(i)
                 groups["edit_same_font" if r["same_font"] else "edit_other_font"].append(i)
+                if r.get("perfect") is not None:
+                    groups["edit_perfect" if r["perfect"] else "edit_with_traces"].append(i)
     out["by_condition"] = {k: summarise([scores[i] for i in ix], [edited[i] for i in ix], thr) for k, ix in sorted(groups.items()) if len(ix) >= 10}
     out["failures"] = failures(ds.rows, scores, thr)
     # baseline: error-level analysis, threshold chosen on the validation split at the same false-alarm rate

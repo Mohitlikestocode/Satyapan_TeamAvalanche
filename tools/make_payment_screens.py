@@ -341,6 +341,8 @@ def tamper(s: Screen, v: dict, p: dict, edit_fonts: list[str], rnd: random.Rando
     f = s.fields[field]
     x0, y0, x1, y1 = f["box"]
     d = ImageDraw.Draw(img)
+    # Real edits leave small traces; about 15% are "perfect" (exact colour, size and place), the hard case we report separately.
+    perfect = rnd.random() < 0.15
     method = "fill"
     if rnd.random() < 0.35:  # clone a nearby strip of background instead of a flat fill
         w = x1 - x0
@@ -349,14 +351,21 @@ def tamper(s: Screen, v: dict, p: dict, edit_fonts: list[str], rnd: random.Rando
             img.paste(img.crop((src_x, y0, src_x + w, y1)), (x0, y0))
             method = "clone"
     if method == "fill":
-        d.rectangle((x0, y0, x1, y1), fill=outside_colour(img, (x0, y0, x1, y1)))
+        col = outside_colour(img, (x0, y0, x1, y1))
+        if not perfect:  # an eyedropper on a compressed screenshot picks a slightly different colour
+            col = tuple(max(0, min(255, c + rnd.choice([-1, 1]) * rnd.randrange(2, 9))) for c in col)
+        d.rectangle((x0, y0, x1, y1), fill=col)
     text = new_value(field, v, rnd, s.font_name, f["text"])
-    same_font = rnd.random() < 0.5  # harder case: same font and size, only a small drift
+    same_font = rnd.random() < 0.5  # harder case: same font, only a small drift in size and place
     fname = s.font_name if same_font else rnd.choice(edit_fonts)
-    size = f["size"] if same_font else max(12, int(f["size"] * rnd.uniform(0.85, 1.12)))
-    jit = 2 if same_font else 6
+    if perfect:
+        size, jit, ink_j = f["size"], 0, 0
+    elif same_font:
+        size, jit, ink_j = f["size"] + rnd.choice([-2, -1, 1, 2]), 3, 8
+    else:
+        size, jit, ink_j = max(12, int(f["size"] * rnd.uniform(0.85, 1.12))), 6, 16
     xy = (f["xy"][0] + rnd.randrange(-jit, jit + 1), f["xy"][1] + rnd.randrange(-jit, jit + 1))
-    ink = tuple(max(0, min(255, c + rnd.randrange(-(4 if same_font else 16), (4 if same_font else 16) + 1))) for c in f["fill"])
+    ink = tuple(max(0, min(255, c + rnd.randrange(-ink_j, ink_j + 1))) for c in f["fill"])
     if rnd.random() < 0.15:
         d.fontmode = "1"  # some editors draw text without anti-aliasing
     font = ImageFont.truetype(fname, size)
@@ -369,7 +378,7 @@ def tamper(s: Screen, v: dict, p: dict, edit_fonts: list[str], rnd: random.Rando
     if soft:  # soften the edit edges
         bx = (max(0, box[0] - 6), max(0, box[1] - 6), min(img.width, box[2] + 6), min(img.height, box[3] + 6))
         img.paste(img.crop(bx).filter(ImageFilter.GaussianBlur(rnd.uniform(0.4, 0.9))), bx[:2])
-    return mask, {"field": field, "method": method, "same_font": same_font, "edit_font": fname, "soft": soft}
+    return mask, {"field": field, "method": method, "same_font": same_font, "edit_font": fname, "soft": soft, "perfect": perfect}
 
 
 def jpeg(img: Image.Image, q: int) -> Image.Image:
@@ -426,13 +435,13 @@ def main() -> None:
             p = make_palette(rnd)
             v = make_values(rnd, font)
             s = render(layout, p, v, font, rnd)
-            pre_jpeg = rnd.random() < 0.4  # the screenshot was already a chat copy before anyone touched it
+            pre_jpeg = rnd.random() < 0.6  # the screenshot was already a chat copy before anyone touched it (common)
             if pre_jpeg:
                 s.img = jpeg(s.img, rnd.choice([95, 85, 75]))
                 s.d = ImageDraw.Draw(s.img)
             edited = rnd.random() < 0.5
             mask = Image.new("L", s.img.size, 0)
-            info: dict = {"field": None, "method": None, "same_font": None, "edit_font": None, "soft": None}
+            info: dict = {"field": None, "method": None, "same_font": None, "edit_font": None, "soft": None, "perfect": None}
             if edited:
                 mask, info = tamper(s, v, p, pool, rnd)
             elif rnd.random() < 0.2:  # genuine look-alike: one field slightly softened, not edited
@@ -449,7 +458,7 @@ def main() -> None:
                                    "jpeg_q": q, "scale": scale, "double_jpeg": double}) + "\n")
     held = sorted(f"L{k}" for k, sp in split_of.items() if sp != "train")
 
-    splits = {"generator": "tools/make_payment_screens.py v2", "seed": a.seed, "n": a.n,
+    splits = {"generator": "tools/make_payment_screens.py v3", "seed": a.seed, "n": a.n,
               "layouts": {sp: sorted(f"L{k}" for k, s2 in split_of.items() if s2 == sp) for sp in ("train", "val", "test")},
               "fonts": {"train": train_fonts, "val_test_only": held_fonts, "edit_only": odd_fonts},
               "meta_sha256": hashlib.sha256((a.out / "meta.jsonl").read_bytes()).hexdigest()}

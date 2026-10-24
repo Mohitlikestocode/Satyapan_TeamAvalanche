@@ -1,5 +1,17 @@
 # Models and measurement (branch feat/models-eval). Install with: pip install -r requirements/models.txt
-# Add the exact versions you actually use. For CUDA, install torch from pytorch.org first.
-torch>=2.3
-torchvision>=0.18
-numpy>=1.26
+# Exact versions used on the GPU machine (Python 3.13, Windows 11, RTX 4060 Laptop). For CUDA, install torch first:
+#   pip install torch==2.11.0 torchvision==0.26.0 --index-url https://download.pytorch.org/whl/cu128
+# Without a GPU the same versions from PyPI work on CPU (slower).
+torch==2.11.0
+torchvision==0.26.0
+numpy==2.5.2
+# voice notes: local speech to text, detectors, decoding (imageio-ffmpeg ships a static ffmpeg if none is installed)
+faster-whisper==1.2.1
+ctranslate2==4.8.3
+transformers==5.20.2
+safetensors==0.8.0
+huggingface_hub==2.3.0
+imageio-ffmpeg==0.6.0
+rapidfuzz>=3.9
+# voice calibration data (IndicSynth parquet)
+pyarrow==26.0.0

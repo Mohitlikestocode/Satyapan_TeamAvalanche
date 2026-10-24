@@ -38,6 +38,11 @@ def ffmpeg_path() -> str | None:
     p = os.environ.get("SATYAPAN_FFMPEG") or shutil.which("ffmpeg")
     if p:
         return p
+    try:  # pip install imageio-ffmpeg ships a static ffmpeg build (requirements/models.txt)
+        import imageio_ffmpeg
+        return imageio_ffmpeg.get_ffmpeg_exe()
+    except Exception:
+        pass
     if sys.platform == "win32":  # winget installs ffmpeg here without always updating PATH for running processes
         base = Path(os.environ.get("LOCALAPPDATA", "")) / "Microsoft" / "WinGet" / "Packages"
         for exe in base.glob("Gyan.FFmpeg*/**/bin/ffmpeg.exe"):

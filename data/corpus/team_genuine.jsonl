@@ -1,0 +1,62 @@
+{"text": "Rs 2,500.00 debited from A/c XX4521 on 21-10-26 to VPA meenastores@okhdfcbank. Not you? Call the number on the back of your card.", "label": "benign", "lang": "en", "family": "bank_alert"}
+{"text": "Your A/c XX8890 is credited with Rs 35,000.00 on 01-Oct by NEFT from ACME PVT LTD. Available balance Rs 41,230.15.", "label": "benign", "lang": "en", "family": "bank_alert"}
+{"text": "आपके खाते XX2231 से 1,200 रुपये ATM से निकाले गए। अगर यह आपने नहीं किया तो तुरंत बैंक को बताएँ।", "label": "benign", "lang": "hi", "family": "bank_alert"}
+{"text": "Your credit card statement for October is ready. Total due Rs 8,412, minimum due Rs 420, pay by 5 Nov through your bank app.", "label": "benign", "lang": "en", "family": "bank_alert"}
+{"text": "Your FD of Rs 1,00,000 matures on 12 Nov 2026. Visit your branch or net banking to renew or close it.", "label": "benign", "lang": "en", "family": "bank_alert"}
+{"text": "123456 is your OTP to log in. It is valid for 5 minutes. Never share your OTP with anyone, including bank staff.", "label": "benign", "lang": "en", "family": "otp_notice"}
+{"text": "आपका OTP 847201 है। यह 10 मिनट तक मान्य है। किसी के साथ साझा न करें।", "label": "benign", "lang": "hi", "family": "otp_notice"}
+{"text": "Use 552190 to verify your phone number on the app. Do not share this code.", "label": "benign", "lang": "en", "family": "otp_notice"}
+{"text": "Your order #40-55122 has been shipped and will arrive by Thursday. Track it in the app under My Orders.", "label": "benign", "lang": "en", "family": "delivery"}
+{"text": "Your parcel is out for delivery today. The delivery agent will call you before arriving. No payment is due, it is prepaid.", "label": "benign", "lang": "en", "family": "delivery"}
+{"text": "आपका ऑर्डर आज शाम तक पहुँच जाएगा। डिलीवरी के समय OTP बताना होगा।", "label": "benign", "lang": "hi", "family": "delivery"}
+{"text": "Your Swiggy order is on the way. Your delivery partner Ramesh will reach in 12 minutes.", "label": "benign", "lang": "en", "family": "delivery"}
+{"text": "Beta khana kha liya? Papa kal aa rahe hain, station pe le lena 6 baje.", "label": "benign", "lang": "hinglish", "family": "family"}
+{"text": "Didi I sent you the photos from the wedding on WhatsApp, check when you get time.", "label": "benign", "lang": "en", "family": "family"}
+{"text": "माँ, मैं ठीक से पहुँच गया। रात को फ़ोन करूँगा।", "label": "benign", "lang": "hi", "family": "family"}
+{"text": "Can you pick up milk and bread on your way home? Also the gas cylinder is coming tomorrow morning.", "label": "benign", "lang": "en", "family": "family"}
+{"text": "Bhaiya rent bhej diya hai 12,000, check kar lena. Is mahine light ka bill bhi saath mein hai.", "label": "benign", "lang": "hinglish", "family": "family"}
+{"text": "Happy birthday chachi! Bahut saara pyaar, shaam ko ghar aa rahe hain cake lekar.", "label": "benign", "lang": "hinglish", "family": "family"}
+{"text": "Your mutual fund SIP of Rs 5,000 in the Flexi Cap Fund was processed on 10 Oct. Units allotted: 42.118.", "label": "benign", "lang": "en", "family": "broker_genuine"}
+{"text": "Contract note for your trades on 23-Oct-2026 has been sent to your registered email. Funds payout will be T+1.", "label": "benign", "lang": "en", "family": "broker_genuine"}
+{"text": "Market investments are subject to market risks. Read all scheme related documents carefully before investing.", "label": "benign", "lang": "en", "family": "broker_genuine"}
+{"text": "आपके डीमैट खाते में 10 शेयर जमा किए गए हैं। विवरण के लिए अपना ऐप देखें।", "label": "benign", "lang": "hi", "family": "broker_genuine"}
+{"text": "Your electricity bill for Sep is Rs 1,342, due on 15 Oct. Pay on the official portal or at any bill counter.", "label": "benign", "lang": "en", "family": "utility_bill"}
+{"text": "बिजली बिल 860 रुपये, अंतिम तिथि 20 अक्टूबर। ऑनलाइन भुगतान आधिकारिक ऐप से करें।", "label": "benign", "lang": "hi", "family": "utility_bill"}
+{"text": "Your postpaid bill of Rs 599 is generated. Pay by 28 Oct to avoid a late fee. Ignore if already paid.", "label": "benign", "lang": "en", "family": "utility_bill"}
+{"text": "Water supply will be interrupted on Sunday 10 am to 4 pm in Ward 12 due to pipeline repair. Please store water.", "label": "benign", "lang": "en", "family": "utility_bill"}
+{"text": "Diwali sale! Flat 40% off on kurtas this weekend at our Karol Bagh store. Visit us, no online payment needed.", "label": "benign", "lang": "en", "family": "ad_marketing"}
+{"text": "New menu at Sharma Dhaba: paneer tikka combo Rs 199. Order on our listed number or visit the restaurant.", "label": "benign", "lang": "en", "family": "ad_marketing"}
+{"text": "दिवाली ऑफ़र: सभी मिठाइयों पर 20% छूट, सिर्फ़ हमारी दुकान पर। आपका स्वागत है।", "label": "benign", "lang": "hi", "family": "ad_marketing"}
+{"text": "Your gym membership renews on 1 Nov. Renew at the front desk to get 10% off on the annual plan.", "label": "benign", "lang": "en", "family": "ad_marketing"}
+{"text": "Society meeting on Saturday at 6 pm in the community hall. Agenda: parking and maintenance charges.", "label": "benign", "lang": "en", "family": "community"}
+{"text": "Mandir mein kal shaam ko bhajan sandhya hai, sab parivar ke saath aayein. Prasad ki vyavastha hai.", "label": "benign", "lang": "hinglish", "family": "community"}
+{"text": "Team, the review meeting is moved to 3 pm tomorrow. Please update the sheet before that.", "label": "benign", "lang": "en", "family": "office"}
+{"text": "Salary for October has been credited. Payslips are available on the HR portal.", "label": "benign", "lang": "en", "family": "office"}
+{"text": "Kal office 10 baje aana, client visit hai. Laptop charge karke lana.", "label": "benign", "lang": "hinglish", "family": "office"}
+{"text": "Beware of fraud calls asking for OTP or PIN. Banks never ask for these. Report fraud at 1930 or cybercrime.gov.in.", "label": "benign", "lang": "en", "family": "awareness"}
+{"text": "साइबर ठगी से बचें। कोई भी बैंक फ़ोन पर पिन या OTP नहीं माँगता। धोखा हो तो 1930 पर कॉल करें।", "label": "benign", "lang": "hi", "family": "awareness"}
+{"text": "Your appointment with Dr. Mehta is confirmed for 26 Oct at 11:30 am. Please carry your previous reports.", "label": "benign", "lang": "en", "family": "appointment"}
+{"text": "Train 12301 is running 40 minutes late. Expected arrival at New Delhi 10:25.", "label": "benign", "lang": "en", "family": "travel"}
+{"text": "आपकी बस का टिकट कन्फ़र्म है। सीट 14, प्रस्थान रात 9:30 बजे।", "label": "benign", "lang": "hi", "family": "travel"}
+{"text": "Your cab driver Suresh is arriving in a white Swift DL 3C XX 4412. Share the OTP 4471 only when you sit in the car.", "label": "benign", "lang": "en", "family": "travel"}
+{"text": "School will remain closed on Monday due to elections. Classes resume Tuesday as usual.", "label": "benign", "lang": "en", "family": "school"}
+{"text": "PTM on Saturday 10 am. Please collect the report card from the class teacher.", "label": "benign", "lang": "en", "family": "school"}
+{"text": "Paid Rs 450 to Gupta Medicals via UPI. Thanks for shopping with us, get well soon.", "label": "benign", "lang": "en", "family": "shop"}
+{"text": "Bhaiya 2 kilo aloo aur 1 kilo pyaaz bhej dena, paisa UPI kar diya hai.", "label": "benign", "lang": "hinglish", "family": "shop"}
+{"text": "Your LPG cylinder booking is confirmed. Delivery within 2 days. Pay the amount on the invoice to the delivery person.", "label": "benign", "lang": "en", "family": "utility_bill"}
+{"text": "आपके राशन कार्ड पर इस महीने का अनाज वितरण 25 तारीख से शुरू होगा।", "label": "benign", "lang": "hi", "family": "community"}
+{"text": "Thank you for your donation of Rs 1,001 to the temple trust. Your receipt number is 2026/1042.", "label": "benign", "lang": "en", "family": "community"}
+{"text": "Your Aadhaar update request is completed. Download the updated Aadhaar from the official portal.", "label": "benign", "lang": "en", "family": "govt"}
+{"text": "Your income tax refund of Rs 3,420 has been processed and credited to your bank account ending 4410.", "label": "benign", "lang": "en", "family": "govt"}
+{"text": "Insurance premium of Rs 12,450 for policy ending 8812 is due on 30 Oct. Pay through the insurer's app or branch.", "label": "benign", "lang": "en", "family": "bank_alert"}
+{"text": "Yaar movie 7 baje ki hai, tickets maine book kar li hain. Tu bas time pe aa jaana.", "label": "benign", "lang": "hinglish", "family": "family"}
+{"text": "Uncle ji aapka parcel maine le liya tha, shaam ko de jaunga.", "label": "benign", "lang": "hinglish", "family": "family"}
+{"text": "Your library book is due tomorrow. Renew online or return it at the counter.", "label": "benign", "lang": "en", "family": "school"}
+{"text": "Your vehicle service is due. Book a slot with your authorised service centre at your convenience.", "label": "benign", "lang": "en", "family": "ad_marketing"}
+{"text": "Reminder: your loan EMI of Rs 7,850 will be auto-debited on 5 Nov. Keep sufficient balance in your account.", "label": "benign", "lang": "en", "family": "bank_alert"}
+{"text": "EMI ke liye account mein balance rakhna, 5 tarikh ko auto debit hoga. Bank ka message aaya tha.", "label": "benign", "lang": "hinglish", "family": "family"}
+{"text": "Your complaint 88412 about the street light has been resolved. Rate our service on the municipal app.", "label": "benign", "lang": "en", "family": "govt"}
+{"text": "आपकी पेंशन 15,800 रुपये आपके खाते में जमा कर दी गई है।", "label": "benign", "lang": "hi", "family": "bank_alert"}
+{"text": "Hi, this is Neha from the clinic. Your test results are ready, you can collect them after 4 pm.", "label": "benign", "lang": "en", "family": "appointment"}
+{"text": "Sir maal dispatch ho gaya hai, bill aur LR copy mail kar di hai. Payment purane account mein hi kariyega.", "label": "benign", "lang": "hinglish", "family": "office"}
+{"text": "Your recharge of Rs 299 is successful. Validity 28 days, 1.5 GB per day.", "label": "benign", "lang": "en", "family": "utility_bill"}
