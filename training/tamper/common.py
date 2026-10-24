@@ -23,9 +23,29 @@ def read_meta(data: Path, split: str) -> list[dict]:
     return [r for r in rows if r["split"] == split]
 
 
+def augment(img: Image.Image, m: Image.Image, rng: np.random.Generator) -> tuple[Image.Image, Image.Image]:
+    """Training-only changes that keep the edit where it is: colour channel swap, brightness, crop, one more JPEG pass."""
+    img = img.convert("RGB")
+    if rng.random() < 0.5:
+        img = Image.merge("RGB", [img.split()[k] for k in rng.permutation(3)])
+    if rng.random() < 0.3:
+        a = np.asarray(img, dtype="float32") * rng.uniform(0.85, 1.15) + rng.uniform(-20, 20)
+        img = Image.fromarray(np.clip(a, 0, 255).astype("uint8"))
+    if rng.random() < 0.3:
+        w, h = img.size
+        cw, ch = int(w * rng.uniform(0.8, 1.0)), int(h * rng.uniform(0.8, 1.0))
+        x0, y0 = int(rng.integers(0, w - cw + 1)), int(rng.integers(0, h - ch + 1))
+        img, m = img.crop((x0, y0, x0 + cw, y0 + ch)), m.crop((x0, y0, x0 + cw, y0 + ch))
+    if rng.random() < 0.3:
+        b = io.BytesIO()
+        img.save(b, "JPEG", quality=int(rng.integers(40, 96)))
+        img = Image.open(io.BytesIO(b.getvalue())).convert("RGB")
+    return img, m
+
+
 class ScreenDataset(Dataset):
-    def __init__(self, data: Path, split: str, size: tuple[int, int]):
-        self.data, self.size, self.rows = Path(data), size, read_meta(Path(data), split)
+    def __init__(self, data: Path, split: str, size: tuple[int, int], augment: bool = False):
+        self.data, self.size, self.rows, self.augment = Path(data), size, read_meta(Path(data), split), augment
 
     def __len__(self) -> int:
         return len(self.rows)
@@ -33,7 +53,11 @@ class ScreenDataset(Dataset):
     def __getitem__(self, i: int):
         r = self.rows[i]
         img = Image.open(self.data / "images" / f"{r['id']}.jpg")
-        m = Image.open(self.data / "masks" / f"{r['id']}.png").resize((self.size[1], self.size[0]), Image.NEAREST)
+        m = Image.open(self.data / "masks" / f"{r['id']}.png")
+        if self.augment:
+            # torch seeds each loader worker from the run seed, so this stays reproducible
+            img, m = augment(img, m, np.random.default_rng(int(torch.randint(0, 2**31 - 1, (1,)))))
+        m = m.resize((self.size[1], self.size[0]), Image.NEAREST)
         mask = torch.from_numpy((np.asarray(m, dtype="float32") > 127).astype("float32")).unsqueeze(0)
         return to_tensor(img, self.size), mask, i
 
@@ -57,11 +81,24 @@ def threshold_at_fpr(neg: list[float], target_fpr: float) -> float:
     return float(s[min(max(k, 0), len(s) - 1)]) + 1e-9
 
 
-def summarise(scores: list[float], edited: list[bool], thr: float) -> dict:
+def auroc_ci(pos: list[float], neg: list[float], n_boot: int = 500, seed: int = 0) -> tuple[float, float]:
+    """Bootstrap 95% interval for AUROC, resampling edited and genuine images separately."""
+    if len(pos) < 2 or len(neg) < 2:
+        return float("nan"), float("nan")
+    rng = np.random.default_rng(seed)
+    p, n = np.asarray(pos), np.asarray(neg)
+    vals = [auroc(list(rng.choice(p, len(p))), list(rng.choice(n, len(n)))) for _ in range(n_boot)]
+    return float(np.percentile(vals, 2.5)), float(np.percentile(vals, 97.5))
+
+
+def summarise(scores: list[float], edited: list[bool], thr: float, ci: bool = False) -> dict:
     pos = [s for s, e in zip(scores, edited) if e]
     neg = [s for s, e in zip(scores, edited) if not e]
-    return {"tpr": rate(sum(s > thr for s in pos), len(pos)), "fpr": rate(sum(s > thr for s in neg), len(neg)),
-            "auroc": auroc(pos, neg), "threshold": thr}
+    out = {"tpr": rate(sum(s > thr for s in pos), len(pos)), "fpr": rate(sum(s > thr for s in neg), len(neg)),
+           "auroc": auroc(pos, neg), "threshold": thr}
+    if ci:
+        out["auroc_ci"] = auroc_ci(pos, neg)
+    return out
 
 
 def ela_score(path: Path) -> float:

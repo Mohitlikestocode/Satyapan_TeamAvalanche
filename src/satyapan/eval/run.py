@@ -20,11 +20,12 @@ FLAGGED = {Tier.SUSPICIOUS, Tier.HIGH_RISK, Tier.REGISTRY_HIT}
 RED = {Tier.HIGH_RISK, Tier.REGISTRY_HIT}
 
 
-def evaluate(rows: list[dict]) -> dict:
+def evaluate(rows: list[dict], use_plugins: bool = True) -> dict:
+    """use_plugins=False measures the rules alone (the baseline); True measures the whole system as the site runs it."""
     stats: dict[str, dict[str, int]] = defaultdict(lambda: defaultdict(int))
     fails: list[dict] = []
     for r in rows:
-        res = analyse_text(r["text"], topic=r.get("topic", ""), use_registry=False)
+        res = analyse_text(r["text"], topic=r.get("topic", ""), use_registry=False, use_plugins=use_plugins)
         scam = r["label"] == "scam"
         for key in ("all", f"lang:{r.get('lang', '?')}", f"family:{r.get('family', '?')}"):
             s = stats[key]

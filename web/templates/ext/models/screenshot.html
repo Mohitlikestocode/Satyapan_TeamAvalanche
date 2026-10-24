@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="case ml-pad">
+  <h1 class="case-h1">{{ tr("Check a payment screenshot", "पेमेंट स्क्रीनशॉट जाँचें") }}</h1>
+  <p>{{ tr("Someone showed you a \"payment successful\" screenshot? Upload it. We check the UPI details and the words, and look for signs that a number or name was edited. If we find signs of editing, we circle the area on the picture.",
+           "किसी ने आपको \"पेमेंट सफल\" का स्क्रीनशॉट दिखाया? उसे अपलोड करें। हम UPI जानकारी और शब्द जाँचते हैं, और देखते हैं कि कोई रकम या नाम बदला तो नहीं गया। बदलाव के निशान मिलें तो हम तस्वीर पर वह हिस्सा घेर देते हैं।") }}</p>
+  <p><b>{{ tr("A screenshot never proves a payment. Always check your own bank or UPI app before you hand over goods.",
+              "स्क्रीनशॉट कभी पेमेंट का सबूत नहीं होता। सामान देने से पहले हमेशा अपना बैंक या UPI ऐप देखें।") }}</b></p>
+  {% if not model_ready %}
+  <div class="vbanner vb-n" role="status"><div><b>{{ tr("The edit check is not installed on this server, so only the UPI details and words will be checked.",
+       "इस सर्वर पर बदलाव की जाँच इंस्टॉल नहीं है, इसलिए सिर्फ़ UPI जानकारी और शब्द जाँचे जाएँगे।") }}</b></div></div>
+  {% endif %}
+
+  {% if error %}
+  <div class="vbanner vb-a" role="alert"><div><b>
+    {% if error == "too_big" %}{{ tr("That file is too large. Please send a screenshot under 10 MB.", "फ़ाइल बहुत बड़ी है। 10 MB से छोटा स्क्रीनशॉट भेजें।") }}
+    {% else %}{{ tr("We could not read that file as a picture. Please send a JPG, PNG or WebP screenshot.", "हम इस फ़ाइल को तस्वीर की तरह नहीं पढ़ सके। JPG, PNG या WebP स्क्रीनशॉट भेजें।") }}{% endif %}
+  </b></div></div>
+  {% endif %}
+
+  {% if res %}
+  {% set tcls = {"HIGH_RISK": "r", "REGISTRY_HIT": "r", "SUSPICIOUS": "a", "CANT_TELL": "n", "NO_RED_FLAGS": "g"}[res.tier.value] %}
+  <section class="vbanner vb-{{ tcls }}" aria-labelledby="ml-vh">
+    <div class="vb-icon" aria-hidden="true">{% if tcls == "g" %}✓{% elif tcls == "n" %}?{% elif tcls == "a" %}!{% else %}✕{% endif %}</div>
+    <div>
+      <h2 id="ml-vh" class="vb-h">{{ verdict.headline }}</h2>
+      <p class="vb-act">{{ verdict.action_text }}</p>
+    </div>
+  </section>
+  <div class="ml-shot-wrap">
+    <figure>
+      <img class="ml-shot" src="{{ picture }}" alt="{{ tr('Your screenshot', 'आपका स्क्रीनशॉट') }}{% if has_box %}{{ tr(', with the area that shows signs of editing circled in red', ', बदलाव के निशान वाला हिस्सा लाल घेरे में') }}{% endif %}">
+      <figcaption class="dnote">
+        {% if has_box %}{{ tr("Red circle: the area that shows signs of editing. This is a sign, not proof.", "लाल घेरा: वह हिस्सा जिसमें बदलाव के निशान दिखते हैं। यह संकेत है, सबूत नहीं।") }}
+        {% elif fired %}{{ tr("The picture shows signs of editing, but we could not mark one area.", "तस्वीर में बदलाव के निशान दिखते हैं, पर हम एक हिस्सा नहीं चिह्नित कर सके।") }}
+        {% elif model_ran %}{{ tr("No area showed signs of editing. That does not mean the payment happened.", "किसी हिस्से में बदलाव के निशान नहीं दिखे। इसका मतलब यह नहीं कि पेमेंट हुआ।") }}
+        {% else %}{{ tr("The edit check did not run on this picture.", "इस तस्वीर पर बदलाव की जाँच नहीं चली।") }}{% endif %}
+        {{ tr("This picture is shown only on this page and is not saved.", "यह तस्वीर सिर्फ़ इसी पेज पर दिखाई गई है और सेव नहीं की गई।") }}
+      </figcaption>
+    </figure>
+    <div>
+      <h2 class="ml-run-h">{{ tr("Why we think this", "हम ऐसा क्यों मानते हैं") }}</h2>
+      <ul class="rlist">{% for r in verdict.reasons_text %}<li>{{ r }}</li>{% endfor %}</ul>
+      <p><a class="hbtn hbtn-p" href="/case/{{ res.case_id }}">{{ tr("Open the full result", "पूरा नतीजा खोलें") }}</a></p>
+      <p class="dnote">{{ tr("The full result has the next steps, Ask family, the evidence report and \"Wrong result?\".", "पूरे नतीजे में अगले कदम, परिवार से पूछें, सबूत रिपोर्ट और \"नतीजा ग़लत है?\" हैं।") }}</p>
+    </div>
+  </div>
+  <h2 class="ml-run-h">{{ tr("Check another screenshot", "दूसरा स्क्रीनशॉट जाँचें") }}</h2>
+  {% endif %}
+
+  <form class="ml-form" method="post" action="/models/screenshot" enctype="multipart/form-data">
+    <label for="ml-file">{{ tr("Payment screenshot (JPG, PNG or WebP, up to 10 MB)", "पेमेंट स्क्रीनशॉट (JPG, PNG या WebP, 10 MB तक)") }}</label>
+    <input id="ml-file" name="file" type="file" accept="image/jpeg,image/png,image/webp" required>
+    <button type="submit" class="hbtn hbtn-p">{{ tr("Check this screenshot", "यह स्क्रीनशॉट जाँचें") }}</button>
+    <p class="dnote">{{ tr("Your picture is checked in memory and then thrown away. Only the result is kept, for a short time.", "आपकी तस्वीर मेमोरी में जाँची जाती है और फिर हटा दी जाती है। सिर्फ़ नतीजा कुछ समय के लिए रखा जाता है।") }}</p>
+  </form>
+</div>
+{% endblock %}

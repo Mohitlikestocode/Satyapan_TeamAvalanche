@@ -1,0 +1,40 @@
+/* Workstream A pages: /results, /attack, /models/screenshot. Every class starts with ml-. */
+.ml-head{background:#fff;border-bottom:1px solid var(--line);padding:28px 0 18px}
+.ml-head h1{margin:0 0 10px;font-size:30px;color:var(--navy)}
+.ml-lead{margin:0 0 8px;max-width:820px;font-size:17px}
+.ml-body{display:flex;flex-direction:column;gap:20px;padding-top:24px;padding-bottom:40px}
+.ml-pad{padding:14px 18px}
+.ml-sec h3{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.ml-none{margin:0;font-weight:600;color:var(--amber)}
+.ml-kv{display:grid;grid-template-columns:max-content 1fr;gap:4px 14px;margin:0 0 14px;font-size:15px}
+.ml-kv dt{font-weight:700;color:var(--navy)}
+.ml-kv dd{margin:0;overflow-wrap:anywhere}
+.ml-kv code,.ml-sec code{font-size:14px;overflow-wrap:anywhere}
+.ml-tbl{width:100%;font-size:15px}
+.ml-tbl th[scope=row]{font-weight:600;text-align:left}
+.ml-cap{caption-side:top;text-align:left;font-size:14px;color:var(--muted);padding:0 0 6px}
+.ml-base{background:#F8FAFC}
+.ml-det{margin-top:12px;border:1px solid var(--line2)}
+.ml-det summary{cursor:pointer;padding:12px 14px;font-weight:700;color:var(--navy);min-height:48px;display:flex;align-items:center}
+.ml-det .tbl-wrap{padding:0 14px 14px}
+.ml-fails li{display:flex;flex-wrap:wrap;gap:8px;align-items:baseline}
+.ml-ftext{overflow-wrap:anywhere}
+.ml-muted{color:var(--muted)}
+.ml-status{min-height:24px;margin:10px 0 0;font-weight:600}
+.ml-status.ml-err{color:var(--red)}
+.ml-run-h{margin:16px 0 6px;font-size:17px;color:var(--navy)}
+.ml-form{display:flex;flex-direction:column;gap:12px;max-width:720px}
+.ml-form label{font-weight:700}
+.ml-form textarea{min-height:120px;font:inherit;font-size:16px;padding:10px;border:1px solid var(--line);border-radius:var(--r)}
+.ml-form input[type=file]{font-size:16px;min-height:48px}
+.ml-shot{max-width:100%;height:auto;border:1px solid var(--line)}
+.ml-shot-wrap{display:flex;flex-wrap:wrap;gap:20px;align-items:flex-start}
+.ml-shot-wrap > *{flex:1 1 300px;min-width:0}
+.ml-changed{color:var(--red);font-weight:700}
+.ml-same{color:var(--green);font-weight:700}
+.ml-transcript{white-space:pre-wrap;background:#F8FAFC;border:1px solid var(--line2);padding:12px;font-size:16px}
+@media (max-width:600px){
+  .ml-head h1{font-size:25px}
+  .ml-kv{grid-template-columns:1fr}
+  .ml-tbl{font-size:14px}
+}

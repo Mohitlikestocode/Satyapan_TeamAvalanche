@@ -56,12 +56,13 @@ def main() -> None:
     ap.add_argument("--seed", type=int, default=7)
     ap.add_argument("--device", default="auto")
     ap.add_argument("--max-train", type=int, default=0, help="use only the first N training images (smoke tests)")
+    ap.add_argument("--no-augment", action="store_true", help="turn off training-time colour, crop and JPEG augmentation")
     a = ap.parse_args()
 
     random.seed(a.seed); np.random.seed(a.seed); torch.manual_seed(a.seed)
     device = "cuda" if a.device == "auto" and torch.cuda.is_available() else ("cpu" if a.device == "auto" else a.device)
     size = tuple(a.size)
-    train = ScreenDataset(a.data, "train", size)
+    train = ScreenDataset(a.data, "train", size, augment=not a.no_augment)
     if a.max_train:
         train.rows = train.rows[: a.max_train]
     val = ScreenDataset(a.data, "val", size)
