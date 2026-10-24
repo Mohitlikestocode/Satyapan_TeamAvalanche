@@ -5,7 +5,6 @@ Sign-in is a demo: pick one of two reviewer identities. No password is asked for
 """
 from __future__ import annotations
 
-import time
 from datetime import datetime
 
 from fastapi import APIRouter, Form, HTTPException, Request

@@ -1,5 +1,4 @@
 """The response flow, end to end: check, dispute, human review, registry, evidence, sharing, deletion."""
-import sqlite3
 
 import pytest
 from fastapi.testclient import TestClient

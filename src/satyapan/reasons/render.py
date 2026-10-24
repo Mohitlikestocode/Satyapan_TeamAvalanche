@@ -7,7 +7,7 @@ from pathlib import Path
 
 import yaml
 
-from ..contracts.models import FusionOutput, Lang, ReasonRef, Tier, Verdict
+from ..contracts.models import FusionOutput, Lang, ReasonRef, Verdict
 
 _PATH = Path(__file__).with_name("catalogue.yaml")
 _PLACEHOLDER = re.compile(r"\{(\w+)\}")

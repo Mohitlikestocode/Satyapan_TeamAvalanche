@@ -6,7 +6,7 @@ import uuid
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from .contracts.models import (FusionInput, Lang, Layer, LayerResult, QualityReport, Strength, Tier, Verdict)
+from .contracts.models import (FusionInput, Lang, LayerResult, QualityReport, Tier, Verdict)
 from .extract.entities import Found, extract
 from .fusion.rules import fuse
 from .layers.l3_payee import layer as l3
@@ -38,7 +38,7 @@ class CaseResult:
 
 
 def analyse_text(text: str, kind: str = "message", topic: str = "", case_id: str | None = None, use_registry: bool = True,
-                 extra_layers: list[LayerResult] | None = None, readable: bool = True) -> CaseResult:
+                 extra_layers: list[LayerResult] | None = None, readable: bool = True, extra_names: list[str] | None = None) -> CaseResult:
     """Text is untrusted data. It is only matched against fixed patterns and never chooses a template or a tier."""
     case_id = case_id or uuid.uuid4().hex[:12]
     text = (text or "")[:MAX_TEXT]
@@ -63,7 +63,7 @@ def analyse_text(text: str, kind: str = "message", topic: str = "", case_id: str
     return CaseResult(
         case_id=case_id, kind=kind, tier=out.tier, verdicts=verdicts,
         payees=[{"upi": u.vpa, "name": u.name or "", "amount": u.amount or ""} for u in found.upi],
-        links=found.urls[:5], phones=found.phones[:5], layers_run=["payee", "rules"] + (["pdf"] if extra_layers else []),
+        links=found.urls[:5], phones=found.phones[:5], layers_run=["payee", "rules"] + list(extra_names or []),
     )
 
 
@@ -71,7 +71,7 @@ def analyse_pdf(data: bytes, topic: str = "", case_id: str | None = None) -> Cas
     """Read the PDF's text and look for signs of editing, then run the same payee and word checks as for a message."""
     from .layers.l2_forensics.pdf import analyse_pdf as read_pdf
     info = read_pdf(data)
-    res = analyse_text(info.text, kind="pdf", topic=topic or "invoice", case_id=case_id, extra_layers=[info.result], readable=info.readable)
+    res = analyse_text(info.text, kind="pdf", topic=topic or "invoice", case_id=case_id, extra_layers=[info.result], readable=info.readable, extra_names=["pdf"])
     return res
 
 
@@ -82,4 +82,7 @@ def analyse_image(data: bytes, kind: str = "screenshot", topic: str = "", case_i
     qr = decode_qr(data)
     ocr = read_text(data)
     parts = list(qr) + ([ocr] if ocr else [])
-    return analyse_text("\n".join(parts), kind=kind, topic=topic, case_id=case_id, readable=bool(parts))
+    from .layers.l2_forensics import screenshot
+    forensic = screenshot.run(data) if kind != "qr" else None
+    return analyse_text("\n".join(parts), kind=kind, topic=topic, case_id=case_id, readable=bool(parts),
+                        extra_layers=[forensic] if forensic else None, extra_names=["image"] if forensic else None)
