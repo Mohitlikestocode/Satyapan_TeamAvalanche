@@ -24,7 +24,7 @@ def evaluate(rows: list[dict]) -> dict:
     stats: dict[str, dict[str, int]] = defaultdict(lambda: defaultdict(int))
     fails: list[dict] = []
     for r in rows:
-        res = analyse_text(r["text"], topic=r.get("topic", ""))
+        res = analyse_text(r["text"], topic=r.get("topic", ""), use_registry=False)
         scam = r["label"] == "scam"
         for key in ("all", f"lang:{r.get('lang', '?')}", f"family:{r.get('family', '?')}"):
             s = stats[key]

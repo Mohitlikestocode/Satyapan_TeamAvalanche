@@ -37,7 +37,7 @@ class CaseResult:
     layers_run: list[str] = field(default_factory=list)
 
 
-def analyse_text(text: str, kind: str = "message", topic: str = "", case_id: str | None = None) -> CaseResult:
+def analyse_text(text: str, kind: str = "message", topic: str = "", case_id: str | None = None, use_registry: bool = True) -> CaseResult:
     """Text is untrusted data. It is only matched against fixed patterns and never chooses a template or a tier."""
     case_id = case_id or uuid.uuid4().hex[:12]
     text = (text or "")[:MAX_TEXT]
@@ -50,7 +50,12 @@ def analyse_text(text: str, kind: str = "message", topic: str = "", case_id: str
     payee_confirmed = None
     if found.upi:
         payee_confirmed = any(s.code == "PAYEE_VALID_REGISTERED" for s in l3res.signals)
-    out = fuse(FusionInput(results=[l3res, l4res], quality=quality, media_present=False, payees_confirmed_registered=payee_confirmed,
+    matches = []
+    if use_registry:
+        from .layers.l3_payee.domains import hostname
+        from .store import db
+        matches = db.registry_matches([u.vpa for u in found.upi], [h for h in (hostname(u) for u in found.urls) if h])
+    out = fuse(FusionInput(results=[l3res, l4res], registry_matches=matches, quality=quality, media_present=False, payees_confirmed_registered=payee_confirmed,
                          money_ask_present=bool(found.upi or found.ifsc or found.urls)))
     verdicts = {lang.value: build_verdict(case_id, out, lang) for lang in Lang}
     return CaseResult(

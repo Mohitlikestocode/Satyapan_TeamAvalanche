@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block css %}<link rel="stylesheet" href="/static/console.css">{% endblock %}
+{% block content %}
+<div class="sp console"><div class="win">
+  <div class="top">
+    <svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 4 5v6c0 5.2 3.4 9.4 8 11 4.6-1.6 8-5.8 8-11V5z" fill="#fff"/><path d="m8.4 12.2 2.5 2.5 4.8-5" fill="none" stroke="#0B1F3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <b>Satyapan Review</b><span class="pilot">PILOT · DEMO</span>
+    <span style="margin-left:auto;font-size:14px;color:#D0D8E4">{{ reviewer }} · Fraud desk · <a href="/console/logout" style="color:#fff">Sign out</a></span>
+  </div>
+  <div style="flex:1;display:flex;min-height:0">
+    <nav aria-label="Console" class="side">
+      <a href="/console/queue" {% if page.route == "console/queue" or page.route == "console/case" %}class="on"{% endif %}>Queue<span class="ct">{{ counts.needs_review + counts.awaiting_second + counts.escalated }}</span></a>
+      <a href="/console/campaign" {% if page.route == "console/campaign" %}class="on"{% endif %}>Campaigns</a>
+      <a href="/console/audit" {% if page.route == "console/audit" %}class="on"{% endif %}>Audit log</a>
+    </nav>
+    <main style="flex:1;min-width:0;padding:24px;display:flex;flex-direction:column;gap:16px">
+      {% block cmain %}{% endblock %}
+    </main>
+  </div>
+</div></div>
+{% endblock %}

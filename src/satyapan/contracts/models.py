@@ -191,6 +191,7 @@ class AnalysisContext(BaseModel):
 class RegistryMatch(_Frozen):
     kind: Literal["payee", "url", "sha256", "phash", "afp"]
     entry_id: int
+    value: str = ""
     status: Literal["confirmed"] = "confirmed"
 
 

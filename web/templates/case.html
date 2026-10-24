@@ -16,6 +16,9 @@
     <span>{{ ui.ref }} SP-{{ res.case_id[:4]|upper }}-{{ res.case_id[4:8]|upper }}</span>
   </div>
 
+  {% if res.outcome == "cleared_by_reviewer" %}<div class="vbanner vb-g" role="status"><div><b>{{ "A person checked this and found it genuine. The result above was wrong." if lang == "en" else "एक व्यक्ति ने इसे जाँचा और असली पाया। ऊपर का नतीजा ग़लत था।" }}</b></div></div>
+  {% elif res.outcome == "confirmed_scam" %}<div class="vbanner vb-r" role="status"><div><b>{{ "Two reviewers confirmed this is a scam." if lang == "en" else "दो समीक्षकों ने पुष्टि की कि यह धोखाधड़ी है।" }}</b></div></div>
+  {% elif review %}<div class="vbanner vb-n" role="status"><div><b>{{ ("Sent for human review (" ~ review.ref ~ "): " ~ status_label.get(review.status, review.status)) if lang == "en" else ("समीक्षा के लिए भेजा गया (" ~ review.ref ~ ")") }}</b> · <a href="/wrong/status?ref={{ review.ref }}">{{ "See status" if lang == "en" else "स्थिति देखें" }}</a></div></div>{% endif %}
   <section class="vbanner vb-{{ tcls }}" aria-labelledby="vh-{{ lang }}">
     <div class="vb-icon" aria-hidden="true">{% if tcls == "g" %}✓{% elif tcls == "n" %}?{% elif tcls == "a" %}!{% else %}✕{% endif %}</div>
     <div>
@@ -26,7 +29,7 @@
 
   <div class="case-acts">
     <button type="button" class="btn bn" data-speak="{{ lang }}" style="width:auto;padding:0 22px"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>{{ ui.listen }}</button>
-    <a class="btn bs" href="/guardian" style="width:auto;padding:0 22px">{{ ui.family }}</a>
+    <a class="btn bs" href="/guardian?case={{ res.case_id }}" style="width:auto;padding:0 22px">{{ ui.family }}</a>
   </div>
   <div class="speak-src" hidden>{{ v.headline }}. {% for t in v.reasons_text[:3] %}{{ t }} {% endfor %}{{ v.action_text }}</div>
 
@@ -63,9 +66,9 @@
     <a class="btn bq" href="/next-steps" style="width:auto;padding:0 28px">{{ ui.no }}</a>
   </div>
   <div class="case-acts" style="margin-top:8px">
-    <a class="btn bq" href="/report" style="width:auto;padding:0 18px">{{ ui.report }}</a>
-    <a class="btn bq" href="/wrong" style="width:auto;padding:0 18px">{{ ui.wrong }}</a>
-    <a class="btn bq" href="/deletion" style="width:auto;padding:0 18px">{{ ui.delete }}</a>
+    <a class="btn bq" href="/report?case={{ res.case_id }}" style="width:auto;padding:0 18px">{{ ui.report }}</a>
+    <a class="btn bq" href="/wrong?case={{ res.case_id }}" style="width:auto;padding:0 18px">{{ ui.wrong }}</a>
+    <a class="btn bq" href="/deletion" data-delete-case="{{ res.case_id }}" style="width:auto;padding:0 18px">{{ ui.delete }}</a>
   </div>
   <p class="xs" style="color:var(--muted);margin-top:16px">{{ v.footer_text }}</p>
 </div>

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+{% if not c %}
+<div class="case" style="padding-top:20px"><h1 class="case-h1">This link no longer works</h1>
+  <p>The person who sent it deleted the check, or it expired. Ask them to send a new one, and call them before any money moves.</p></div>
+{% else %}
+{% for lang, ui in [("en", {"h": "Someone you know asked you to look at this", "p": "They have not paid yet. Please call them on a number you already have, and talk before any money is sent.", "why": "What Satyapan found", "call": "I have called them", "ok": "Looks fine, still verify", "note": "You see only this summary. Their file, name and account numbers are not shared."}), ("hi", {"h": "आपके किसी जानने वाले ने आपसे यह देखने को कहा है", "p": "उन्होंने अभी पैसे नहीं भेजे हैं। कृपया अपने पास पहले से मौजूद नंबर पर उन्हें फ़ोन करें और पैसे भेजने से पहले बात करें।", "why": "सत्यापन को क्या मिला", "call": "मैंने उन्हें फ़ोन कर लिया", "ok": "ठीक लगता है, फिर भी जाँच लें", "note": "आपको सिर्फ़ यह सार दिखता है। उनकी फ़ाइल, नाम और खाता नंबर साझा नहीं होते।"})] %}
+{% set v = c.verdicts[lang] %}
+<div class="case" data-variant="{{ lang }}" lang="{{ lang }}">
+  <h1 class="case-h1">{{ ui.h }}</h1>
+  <p style="margin:0">{{ ui.p }}</p>
+  <section class="vbanner vb-{{ {'HIGH_RISK': 'r', 'REGISTRY_HIT': 'r', 'SUSPICIOUS': 'a', 'NO_RED_FLAGS': 'g', 'CANT_TELL': 'n'}[c.tier.value] }}">
+    <div><h2 class="vb-h" style="font-size:24px">{{ v.headline }}</h2><p class="vb-act">{{ v.action_text }}</p></div>
+  </section>
+  <h2 class="sec">{{ ui.why }}</h2>
+  <ol class="rlist">{% for t in v.reasons_text[:3] %}<li><span class="rn">{{ loop.index }}</span><p>{{ t }}</p></li>{% endfor %}</ol>
+  <div class="case-acts"><button class="btn bn" type="button" data-thanks style="width:auto;padding:0 22px">{{ ui.call }}</button><a class="btn bq" href="/learn/safety" style="width:auto;padding:0 22px">{{ ui.ok }}</a></div>
+  <p class="xs" style="color:var(--muted)">{{ ui.note }}</p>
+</div>
+{% endfor %}
+{% endif %}
+{% endblock %}

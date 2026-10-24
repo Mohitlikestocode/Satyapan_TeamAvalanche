@@ -1,0 +1,27 @@
+{% extends "console/_base.html" %}
+{% block cmain %}
+<div><h1 style="margin:0;font-size:24px;font-weight:700">Campaigns</h1>
+  <p style="margin:4px 0 0;font-size:14px;color:#475467">Checks grouped by the UPI ID they ask you to pay, with the links and phone numbers that travel with it. Counts come from checks run on this server.</p></div>
+<div style="background:#fff;border:1px solid #E4E7EC;border-radius:8px;overflow:auto">
+  <table style="width:100%;border-collapse:collapse">
+    <thead><tr><th>Payee</th><th>Checks</th><th>First seen</th><th>Last seen</th><th>Links</th><th>Phones</th><th>Registry</th></tr></thead>
+    <tbody>
+    {% for g in groups_ %}
+      <tr><td class="mono" style="font-weight:700">{{ g.payee }}</td><td>{{ g.count }}</td><td>{{ fmt_ts(g.first) }}</td><td>{{ fmt_ts(g.last) }}</td>
+        <td class="mono">{% for l in g.links %}{{ l }}<br>{% else %}-{% endfor %}</td>
+        <td class="mono">{% for p in g.phones %}{{ p[:2] }}XXXXXX{{ p[-2:] }}<br>{% else %}-{% endfor %}</td>
+        <td>{% if g.in_registry %}<span class="vt r">KNOWN FAKE</span>{% else %}<span class="st" style="color:#475467">Not in registry</span>{% endif %}</td></tr>
+    {% else %}
+      <tr><td colspan="7" style="padding:28px;text-align:center;color:#475467">No payees seen yet.</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+<h2 style="margin:8px 0 0;font-size:18px">Known-fake registry</h2>
+<p style="margin:0;font-size:14px;color:#475467">Only entries two different reviewers confirmed. A check that matches one is shown as REGISTRY HIT.</p>
+<div style="background:#fff;border:1px solid #E4E7EC;border-radius:8px;overflow:auto">
+  <table style="width:100%;border-collapse:collapse"><thead><tr><th>Type</th><th>Value</th><th>Added</th></tr></thead><tbody>
+    {% for e in registry %}<tr><td>{{ e.kind }}</td><td class="mono">{{ e.value }}</td><td>{{ fmt_ts(e.created) }}</td></tr>{% else %}<tr><td colspan="3" style="padding:20px;color:#475467">Empty.</td></tr>{% endfor %}
+  </tbody></table>
+</div>
+{% endblock %}

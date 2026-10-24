@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block content %}
+{% set v = c.verdicts["en"] %}
+<div class="case">
+  <div class="case-top"><span>Evidence report</span><span class="mono">{{ rid }} · {{ pack.pack.created_ist }}</span></div>
+  <h1 class="case-h1">Evidence report</h1>
+  <p class="sm" style="margin:0">A summary of what Satyapan found, ready to attach to a complaint. It shows signs, not proof. Your file and message are not included.</p>
+
+  <section class="vbanner vb-{{ {'HIGH_RISK': 'r', 'REGISTRY_HIT': 'r', 'SUSPICIOUS': 'a', 'NO_RED_FLAGS': 'g', 'CANT_TELL': 'n'}[c.tier.value] }}">
+    <div><h2 class="vb-h" style="font-size:22px">{{ v.headline }}</h2><p class="vb-act">{{ v.action_text }}</p></div>
+  </section>
+
+  <h2 class="sec">Details found</h2>
+  <dl class="kv2">
+    {% for p in c.payees %}
+      <div><dt>UPI ID</dt><dd class="mono">{{ p.upi }}</dd></div>
+      {% if p.name %}<div><dt>Name in request</dt><dd>{{ p.name }}</dd></div>{% endif %}
+      {% if p.amount %}<div><dt>Amount</dt><dd>₹{{ "{:,}".format(p.amount|int) if "." not in p.amount else p.amount }}</dd></div>{% endif %}
+    {% endfor %}
+    {% for u in c.links %}<div><dt>Link</dt><dd class="mono">{{ u }}</dd></div>{% endfor %}
+    {% for ph in c.phones %}<div><dt>Phone</dt><dd class="mono">{{ ph[:2] }}XXXXXX{{ ph[-2:] }}</dd></div>{% endfor %}
+    {% if not c.payees and not c.links and not c.phones %}<div><dt>-</dt><dd>No payee, link or number was found.</dd></div>{% endif %}
+  </dl>
+
+  <h2 class="sec">Findings</h2>
+  <ol class="rlist">{% for t in v.reasons_text %}<li><span class="rn">{{ loop.index }}</span><p>{{ t }}</p></li>{% endfor %}</ol>
+
+  <h2 class="sec">What was not checked</h2>
+  <p class="sm" style="margin:0">{{ pack.pack.not_checked }}</p>
+
+  <h2 class="sec">Integrity</h2>
+  <dl class="kv2">
+    <div><dt>Fingerprint (SHA-256)</dt><dd class="mono">{{ pack.sha256 }}</dd></div>
+    <div><dt>Signed with</dt><dd>Ed25519, key {{ key_id }}</dd></div>
+    <div><dt>Time source</dt><dd>{{ pack.pack.clock }}</dd></div>
+  </dl>
+  <p class="xs" style="color:var(--muted);margin:0">Anyone holding the signed file can check that it was not changed after it was made: <a href="/api/v1/evidence/{{ c.case_id }}" download="{{ rid }}.json">download the signed file (JSON)</a>.</p>
+
+  <div class="case-acts">
+    <a class="btn bn" href="/report/complaint?case={{ c.case_id }}" style="width:auto;padding:0 22px">Prepare complaint</a>
+    <button class="btn bs" data-print type="button" style="width:auto;padding:0 22px">Print or save as PDF</button>
+    <a class="btn bq" href="/case/{{ c.case_id }}" style="width:auto;padding:0 22px">Back to result</a>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,70 @@
+{% extends "console/_base.html" %}
+{% from "console/_macros.html" import vt %}
+{% block cmain %}
+{% if not r %}
+  <h1 style="margin:0">Review not found</h1><p><a href="/console/queue">Back to the queue</a></p>
+{% else %}
+<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap">
+  <div><a href="/console/queue" style="font-size:14px;font-weight:600">Queue</a><span style="color:#475467"> / </span><span class="mono" style="font-weight:700">{{ r.ref }}</span>
+    <h1 style="margin:6px 0 0;font-size:24px;font-weight:700">{% if case %}{{ case.verdicts["en"].headline }}: {{ case.kind }} check{% else %}Report without a shared case{% endif %}</h1>
+    <p style="margin:4px 0 0;font-size:14px;color:#475467">Received {{ fmt_ts(r.created) }} IST · {{ "the user says the result is wrong" if r.origin == "user_dispute" else r.origin }} · status: <b>{{ status_label.get(r.status, r.status) }}</b></p></div>
+  {% if case %}<div>{{ vt(case.tier.value) }} <span style="font-size:12px;color:#475467">Satyapan's result</span></div>{% endif %}
+</div>
+<div style="display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:16px;align-items:start">
+  <section class="card">
+    <h2 class="h3">What the user told us</h2>
+    <div class="kv"><span class="k">Reason</span><span class="v">{{ r.reason or "-" }}</span></div>
+    <div style="background:#F9FAFB;border:1px solid #EAECF0;border-radius:6px;padding:10px;font-size:14px;white-space:pre-wrap">{{ r.note or "No note." }}</div>
+    <p style="margin:0;font-size:13px;color:#475467">{% if r.shared %}The user agreed to share this case for review.{% else %}The user did <b>not</b> agree to share details, so reviewers see the note only.{% endif %}</p>
+    <p style="margin:0;font-size:13px;color:#475467">The original file and message are never kept. Only the result below is stored.</p>
+  </section>
+  <section class="card" style="gap:0">
+    <h2 class="h3" style="margin-bottom:6px">Result and payee</h2>
+    {% if case and (r.shared or r.origin != "user_dispute") %}
+      {% for p in case.payees %}
+        <div class="kv"><span class="k">UPI ID</span><span class="v mono">{{ p.upi }}</span></div>
+        {% if p.name %}<div class="kv"><span class="k">Name in request</span><span class="v">{{ p.name }}</span></div>{% endif %}
+        {% if p.amount %}<div class="kv"><span class="k">Amount</span><span class="v">₹{{ p.amount }}</span></div>{% endif %}
+      {% endfor %}
+      {% for u in case.links %}<div class="kv"><span class="k">Link</span><span class="v mono">{{ u }}</span></div>{% endfor %}
+      <div class="kv"><span class="k">Seen in other checks</span><span class="v"><a href="/console/campaign">{{ seen }}</a></span></div>
+      <h2 class="h3" style="margin:16px 0 6px">Reasons shown to the user</h2>
+      <ul style="margin:0;padding-left:18px;font-size:14px">{% for t in case.verdicts["en"].reasons_text %}<li>{{ t }}</li>{% endfor %}</ul>
+      <h2 class="h3" style="margin:16px 0 6px">Reason codes</h2>
+      <div>{% for c in case.verdicts["en"].reason_codes %}<span class="code">{{ c }}</span>{% endfor %}</div>
+    {% else %}
+      <p style="margin:0;color:#475467">No case details are shown: the user did not agree to share them, or the case was deleted.</p>
+    {% endif %}
+  </section>
+  <section class="card">
+    <h2 class="h3">Your decision</h2>
+    <p style="margin:0;font-size:13px;color:#475467">Signed in as <b>{{ reviewer }}</b>. {% if r.status == "awaiting_second" %}First confirmation by <b>{{ r.first_reviewer }}</b>. A different reviewer must confirm.{% endif %}</p>
+    {% if r.status in ("confirmed", "not_scam") %}
+      <p style="margin:0"><b>{{ status_label[r.status] }}.</b> {{ r.reviewer_note }}</p>
+    {% else %}
+      <button class="btn bdg" data-decide="confirm_scam" style="width:100%">Confirm as scam</button>
+      <p style="margin:0;font-size:13px;color:#475467">Needs a second, different reviewer before it enters the known-fake registry.</p>
+      <button class="btn bq" data-decide="not_scam" style="width:100%">Not a scam</button>
+      <button class="btn bq" data-decide="unsure" style="width:100%">Unsure</button>
+      <button class="btn bq" data-decide="escalate" style="width:100%">Escalate to senior reviewer</button>
+      <label for="rn" style="font-size:14px;font-weight:600;margin-top:6px">Reviewer note</label>
+      <textarea id="rn" style="font-family:inherit;font-size:14px;line-height:1.5;border:1px solid #98A2B3;border-radius:6px;padding:10px;min-height:96px;resize:vertical"></textarea>
+      <p id="dmsg" role="status" style="margin:0;font-size:14px;font-weight:600"></p>
+    {% endif %}
+  </section>
+</div>
+<script>
+document.querySelectorAll("[data-decide]").forEach(function (b) {
+  b.addEventListener("click", function () {
+    fetch("/api/v1/console/reviews/{{ r.ref }}/decision", {method: "POST", headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({decision: b.getAttribute("data-decide"), note: document.getElementById("rn").value})})
+      .then(function (x) { return x.json().then(function (j) { return [x.ok, j]; }); })
+      .then(function (a) { var m = document.getElementById("dmsg");
+        if (!a[0]) { m.style.color = "#B42318"; m.textContent = a[1].detail || "Not saved"; return; }
+        m.style.color = "#146C2E"; m.textContent = a[1].registry_updated ? "Confirmed by two reviewers. Added to the known-fake registry." : "Saved: " + a[1].status.replace("_", " ");
+        setTimeout(function () { location.reload(); }, 900); });
+  });
+});
+</script>
+{% endif %}
+{% endblock %}

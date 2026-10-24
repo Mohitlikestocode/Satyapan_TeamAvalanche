@@ -68,6 +68,16 @@
     });
   }
 
+  // ---- delete a saved result, then show the receipt ----------------------------
+  D.addEventListener("click", function (e) {
+    var a = e.target.closest("[data-delete-case]"); if (!a) return;
+    e.preventDefault();
+    var id = a.getAttribute("data-delete-case"), go = function () { location.href = "/deletion"; };
+    try { var h = JSON.parse(localStorage.getItem("sp-history") || "[]").filter(function (x) { return x.id !== id; }); localStorage.setItem("sp-history", JSON.stringify(h)); } catch (err) { /* ignore */ }
+    fetch("/api/v1/check/" + encodeURIComponent(id), { method: "DELETE" }).then(go, go);
+  });
+  D.addEventListener("click", function (e) { if (e.target.closest("[data-thanks]")) toast("Thank you. Talk to them before any money moves."); });
+
   // ---- deletion receipt -----------------------------------------------------
   if (path === "/deletion") {
     D.addEventListener("click", function (e) {
@@ -80,13 +90,13 @@
     D.addEventListener("click", function (e) {
       var a = e.target.closest("a"); if (!a || a.getAttribute("href") !== "/wrong/status") return;
       e.preventDefault();
-      var picked = D.querySelector("input[type=radio]:checked");
+      var picked = D.querySelector("input[type=radio]:checked"), caseId = new URLSearchParams(location.search).get("case");
       var reason = picked ? (picked.closest("label") || picked.parentElement).textContent.trim() : "";
       var note = (D.querySelector("textarea") || {}).value || "";
       var share = D.querySelector("input[type=checkbox]");
       fetch("/api/v1/wrong-result", {
         method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ reason: reason, note: note, share_for_review: !!(share && share.checked) })
+        body: JSON.stringify({ case_id: caseId, reason: reason, note: note, share_for_review: !!(share && share.checked) })
       }).then(function (r) { if (!r.ok) throw new Error(); return r.json(); })
         .then(function (j) { location.href = "/wrong/status?ref=" + encodeURIComponent(j.id); })
         .catch(function () { toast("Could not send. Please try again."); });

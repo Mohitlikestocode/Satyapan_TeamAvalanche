@@ -1,0 +1,34 @@
+{% extends "console/_base.html" %}
+{% from "console/_macros.html" import vt %}
+{% block cmain %}
+<div style="display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap">
+  <div><h1 style="margin:0;font-size:24px;font-weight:700">Cases for review</h1>
+    <p style="margin:4px 0 0;font-size:14px;color:#475467">Wrong-result reports and cases users agreed to share. Details appear only if the user shared them.</p></div>
+  <form method="get" action="/console/queue" style="display:flex;gap:8px"><input type="hidden" name="status" value="{{ status }}">
+    <label for="q" style="position:absolute;left:-9999px">Search</label>
+    <input class="inp" id="q" name="q" value="{{ q }}" placeholder="Search report ID or UPI ID" style="width:260px"><button class="btn bq" type="submit">Search</button></form>
+</div>
+<div style="display:flex;gap:8px;flex-wrap:wrap">
+  {% for key, label in groups %}<a class="flt {% if key == status %}on{% endif %}" href="/console/queue?status={{ key }}" style="display:inline-flex;align-items:center;padding:0 14px;text-decoration:none;color:inherit">{{ label }} · {{ counts[key] }}</a>{% endfor %}
+</div>
+<div style="background:#fff;border:1px solid #E4E7EC;border-radius:8px;overflow:auto">
+  <table style="width:100%;border-collapse:collapse">
+    <thead><tr><th>Review</th><th>Received</th><th>Verdict</th><th>Origin</th><th>Payee</th><th>Reason codes</th><th>Status</th></tr></thead>
+    <tbody>
+    {% for r in rows %}{% set c = r.case %}
+      <tr>
+        <td><a class="mono" href="/console/case?ref={{ r.ref }}" style="font-weight:700">{{ r.ref }}</a></td>
+        <td>{{ fmt_ts(r.created) }}</td>
+        <td>{% if c %}{{ vt(c.tier.value) }}{% else %}<span class="vt n">NO CASE</span>{% endif %}</td>
+        <td>{{ "User says wrong" if r.origin == "user_dispute" else r.origin }}{% if c %} · {{ c.kind }}{% endif %}</td>
+        <td class="mono">{% if c and c.payees %}{{ c.payees[0].upi }}{% else %}-{% endif %}</td>
+        <td>{% if c %}{% for code in short_codes(c.verdicts["en"].reason_codes) %}<span class="code">{{ code }}</span>{% endfor %}{% endif %}</td>
+        <td class="st">{{ status_label.get(r.status, r.status) }}</td>
+      </tr>
+    {% else %}
+      <tr><td colspan="7" style="padding:28px;text-align:center;color:#475467">Nothing here. A user can send a case with "Wrong result?" on any result page.</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

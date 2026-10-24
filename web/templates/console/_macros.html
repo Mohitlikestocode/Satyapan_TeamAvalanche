@@ -1,0 +1,1 @@
+{% macro vt(tier) %}<span class="vt {{ {"HIGH_RISK": "r", "REGISTRY_HIT": "r", "SUSPICIOUS": "a", "NO_RED_FLAGS": "g", "CANT_TELL": "n"}[tier] }}">{{ {"HIGH_RISK": "HIGH RISK", "REGISTRY_HIT": "REGISTRY HIT", "SUSPICIOUS": "SUSPICIOUS", "NO_RED_FLAGS": "NO RED FLAGS", "CANT_TELL": "CAN'T TELL"}[tier] }}</span>{% endmacro %}

@@ -85,4 +85,4 @@ def test_check_rejects_unknown_kind_and_empty_text():
 
 def test_wrong_result_is_queued():
     r = client.post("/api/v1/wrong-result", json={"reason": "It is genuine", "share_for_review": True})
-    assert r.status_code == 201 and r.json()["status"] == "waiting_for_review"
+    assert r.status_code == 201 and r.json()["status"] == "needs_review"

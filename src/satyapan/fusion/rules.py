@@ -25,7 +25,8 @@ def fuse(inp: FusionInput) -> FusionOutput:
     if inp.registry_matches:
         for m in inp.registry_matches:
             code = {"payee": "REG_PAYEE", "url": "REG_URL"}.get(m.kind, "REG_MEDIA")
-            reasons.append(ReasonRef(code=code))
+            params = {"payee": m.value} if m.kind == "payee" else {"domain": m.value} if m.kind == "url" else {}
+            reasons.append(ReasonRef(code=code, params=params))
         reasons += [ReasonRef(code=s.code, params=s.params) for s in signals if s.strength.suspicious]
         return FusionOutput(tier=Tier.REGISTRY_HIT, reasons=_order(reasons))
 

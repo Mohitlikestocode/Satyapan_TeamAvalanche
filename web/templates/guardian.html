@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+{% set v = c.verdicts["en"] %}{% set h = c.verdicts["hi"] %}
+{% set link = origin ~ "/g/" ~ c.share_token %}
+{% set msg_en = "Please check with me before I pay. Satyapan says: " ~ v.headline ~ ". " ~ (v.reasons_text[0] if v.reasons_text else "") ~ " More: " ~ link %}
+{% set msg_hi = "पैसे भेजने से पहले मुझसे बात कर लीजिए। सत्यापन कहता है: " ~ h.headline ~ "। " ~ (h.reasons_text[0] if h.reasons_text else "") ~ " और जानें: " ~ link %}
+<div class="case">
+  <h1 class="case-h1">Ask someone you trust</h1>
+  <p class="sm" style="margin:0">Send them the short result. They see only the summary below, not your file, your account numbers or your name.</p>
+  <section class="vbanner vb-{{ {'HIGH_RISK': 'r', 'REGISTRY_HIT': 'r', 'SUSPICIOUS': 'a', 'NO_RED_FLAGS': 'g', 'CANT_TELL': 'n'}[c.tier.value] }}">
+    <div><h2 class="vb-h" style="font-size:22px">{{ v.headline }}</h2>
+      <p class="vb-act">{{ v.reasons_text[0] if v.reasons_text else v.action_text }}</p></div>
+  </section>
+  <h2 class="sec">Message to send</h2>
+  <label for="lang-en" style="font-weight:600">Language</label>
+  <div class="case-acts"><button type="button" class="btn bn" id="lang-en" style="width:auto;padding:0 18px">English</button><button type="button" class="btn bq" id="lang-hi" style="width:auto;padding:0 18px" lang="hi">हिन्दी</button></div>
+  <textarea id="gmsg" class="ta-in" rows="5" aria-label="Message to send">{{ msg_en }}</textarea>
+  <div class="case-acts">
+    <a class="btn bn" id="wa" href="https://wa.me/?text={{ quote(msg_en) }}" target="_blank" rel="noopener" style="width:auto;padding:0 22px">Share on WhatsApp</a>
+    <button class="btn bs" type="button" id="gcopy" style="width:auto;padding:0 22px">Copy text</button>
+  </div>
+  <p class="xs" style="color:var(--muted)">The link opens a short summary for your family member. It stops working when you delete this check or after 24 hours.</p>
+</div>
+<script>
+(function () {
+  var en = {{ msg_en|tojson }}, hi = {{ msg_hi|tojson }}, box = document.getElementById("gmsg"), wa = document.getElementById("wa");
+  function set(t, b, other) { box.value = t; wa.href = "https://wa.me/?text=" + encodeURIComponent(t); b.classList.add("bn"); b.classList.remove("bq"); other.classList.add("bq"); other.classList.remove("bn"); }
+  var be = document.getElementById("lang-en"), bh = document.getElementById("lang-hi");
+  be.addEventListener("click", function () { set(en, be, bh); }); bh.addEventListener("click", function () { set(hi, bh, be); });
+  box.addEventListener("input", function () { wa.href = "https://wa.me/?text=" + encodeURIComponent(box.value); });
+  document.getElementById("gcopy").addEventListener("click", function () {
+    (navigator.clipboard ? navigator.clipboard.writeText(box.value) : Promise.reject()).then(function () { window.satyapanToast("Copied"); }, function () { box.select(); window.satyapanToast("Select and copy the text"); });
+  });
+})();
+</script>
+{% endblock %}

@@ -9,3 +9,4 @@
 - Read-aloud on `/listen` uses the browser's built-in speech voice as a local fallback; Sarvam is not wired yet.
 - Checks so far are deterministic rules we wrote (UPI field checks, link look-alikes, red-flag words). Libraries: zxing-cpp (Apache-2.0) for QR decoding, RapidFuzz (MIT) for name matching, Pillow (HPND), Jinja2 (BSD). No trained model is used yet and no media text is ever sent to an LLM.
 - The SEBI handle list is read from `data/sebi_snapshot.json` if present; none is shipped, so no handle is confirmed as registered.
+- Response flow (disputes, human review, known-fake registry, hash-chained audit log, signed evidence pack) is our own code. Signing uses the `cryptography` package (Ed25519, Apache-2.0/BSD). The console sign-in is a demo: no passwords are used or stored. The database and signing key live under `var/` and are git-ignored.

@@ -28,7 +28,8 @@ SAMPLE_RESULTS: dict[CheckKind, str] = {
 }
 
 
-class WrongResultReport(BaseModel):
+class DisputeIn(BaseModel):
+    case_id: str | None = Field(None, max_length=40)
     reason: str = Field("", max_length=200)
     note: str = Field("", max_length=2000)
     share_for_review: bool = False

@@ -1,0 +1,14 @@
+{% extends "console/_base.html" %}
+{% block cmain %}
+<div style="display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:flex-end">
+  <div><h1 style="margin:0;font-size:24px;font-weight:700">Audit log</h1>
+    <p style="margin:4px 0 0;font-size:14px;color:#475467">Every sign-in, dispute, decision and deletion. Each line carries a hash of the line before it, so a changed or removed line breaks the chain.</p></div>
+  <span class="vt {{ 'g' if chain_ok else 'r' }}" style="font-size:13px;padding:5px 10px">{{ "CHAIN INTACT" if chain_ok else "CHAIN BROKEN" }}</span>
+</div>
+<div style="background:#fff;border:1px solid #E4E7EC;border-radius:8px;overflow:auto">
+  <table style="width:100%;border-collapse:collapse"><thead><tr><th>#</th><th>Time (IST)</th><th>Actor</th><th>Action</th><th>Target</th><th>Detail</th><th>Hash</th></tr></thead><tbody>
+  {% for e in entries %}<tr><td>{{ e.id }}</td><td>{{ fmt_ts(e.ts) }}</td><td>{{ e.actor }}</td><td class="mono">{{ e.action }}</td><td class="mono">{{ e.target }}</td><td>{{ e.detail }}</td><td class="mono">{{ e.hash[:10] }}</td></tr>
+  {% else %}<tr><td colspan="7" style="padding:20px;color:#475467">Nothing logged yet.</td></tr>{% endfor %}
+  </tbody></table>
+</div>
+{% endblock %}

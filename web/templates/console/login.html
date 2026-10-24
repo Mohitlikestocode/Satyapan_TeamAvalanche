@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block css %}<link rel="stylesheet" href="/static/console.css">{% endblock %}
+{% block content %}
+<div class="sp console"><div class="win" style="align-items:center;justify-content:center;padding:48px 16px">
+  <form method="post" action="/console/login" class="card" style="width:min(460px,100%);gap:14px">
+    <h1 style="margin:0;font-size:24px">Reviewer console</h1>
+    <p style="margin:0;color:#475467">For partner institutions. This is a <b>demo sign-in</b>: no password is asked for or stored. Pick a reviewer to continue.</p>
+    <fieldset style="border:1px solid #D0D5DD;border-radius:6px;padding:12px 14px;display:flex;flex-direction:column;gap:10px">
+      <legend style="font-weight:600;padding:0 6px">Reviewer</legend>
+      {% for r in reviewers %}<label style="display:flex;gap:10px;align-items:center;min-height:44px"><input type="radio" name="reviewer" value="{{ r }}" {% if loop.first %}checked{% endif %} style="width:20px;height:20px"> {{ r }} · Fraud desk</label>{% endfor %}
+    </fieldset>
+    <p style="margin:0;font-size:13px;color:#475467">Two different reviewers must confirm a scam before it enters the known-fake registry. Sign in as each in turn to see it.</p>
+    <button class="btn bp" type="submit" style="width:100%">Continue</button>
+  </form>
+</div></div>
+{% endblock %}

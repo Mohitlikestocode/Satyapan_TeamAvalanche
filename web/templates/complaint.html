@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block content %}
+{% set v = c.verdicts["en"] %}
+<div class="case">
+  <h1 class="case-h1">Complaint draft</h1>
+  <p class="sm" style="margin:0"><b>You submit this yourself.</b> Satyapan never files anything. Fill the blanks in [square brackets], then paste it at <a href="https://cybercrime.gov.in" rel="noopener">cybercrime.gov.in</a> or read it out when you call <a href="tel:1930">1930</a>.</p>
+  <div class="vbanner vb-a" style="border-left-color:#B54708"><div><p class="vb-act" style="margin:0"><b>Already paid? Call 1930 first.</b> The first hour matters most. Then file this.</p></div></div>
+
+  <textarea id="draft" class="ta-in" rows="18" aria-label="Complaint text" style="font-family:ui-monospace,Menlo,Consolas,monospace;font-size:14.5px;min-height:360px">Subject: Online financial fraud (suspected {{ c.topic or "UPI" }} scam)
+
+I am reporting a suspected online financial fraud.
+
+What happened:
+[Describe how it reached you, for example a WhatsApp message, a call, an advertisement. Date and time: ____ ]
+
+Details of the person or account asking for money:
+{% for p in c.payees %}- UPI ID: {{ p.upi }}{% if p.name %}
+- Name shown on the payment request: {{ p.name }}{% endif %}{% if p.amount %}
+- Amount asked: Rs {{ p.amount }}{% endif %}
+{% endfor %}{% for u in c.links %}- Link: {{ u }}
+{% endfor %}{% for ph in c.phones %}- Phone number: {{ ph }}
+{% endfor %}{% if not c.payees and not c.links and not c.phones %}- [No payee, link or number could be read. Add what you have.]
+{% endif %}
+Money lost: [Rs ____ / I have not paid yet]
+Payment made on: [date, time, UPI reference number, from which bank account]
+
+What the check tool found (result: {{ v.headline }}):
+{% for t in v.reasons_text %}- {{ t }}
+{% endfor %}
+This summary was made with Satyapan (report {{ rid }}). It shows signs only and is not proof.
+Fingerprint of the signed report (SHA-256): {{ pack.sha256 }}
+
+I request that the account be examined and further losses prevented.
+
+Name: [____]    Phone: [____]    Date: [____]</textarea>
+  <div class="case-acts">
+    <button class="btn bn" type="button" id="copy-draft" style="width:auto;padding:0 22px">Copy text</button>
+    <a class="btn bq" href="/report?case={{ c.case_id }}" style="width:auto;padding:0 22px">Evidence report</a>
+    <a class="btn bs" href="https://cybercrime.gov.in" rel="noopener" style="width:auto;padding:0 22px">Open cybercrime.gov.in</a>
+  </div>
+</div>
+<script>
+document.getElementById("copy-draft").addEventListener("click", function () {
+  var t = document.getElementById("draft").value;
+  (navigator.clipboard ? navigator.clipboard.writeText(t) : Promise.reject()).then(function () { window.satyapanToast("Copied"); }, function () { document.getElementById("draft").select(); window.satyapanToast("Select and copy the text"); });
+});
+</script>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="case">
+  <h1 class="case-h1">We got your report</h1>
+  <p class="sm" style="margin:0">Reference <b class="mono">{{ r.ref }}</b>. A person looks at every report. We never block, pay or file anything for you while you wait.</p>
+
+  {% if r.status == "not_scam" %}
+  <section class="vbanner vb-g"><div class="vb-icon" aria-hidden="true">✓</div><div>
+    <h2 class="vb-h" style="font-size:22px">A reviewer cleared it</h2>
+    <p class="vb-act">The result was wrong. {% if r.reviewer_note %}Reviewer's note: {{ r.reviewer_note }}{% endif %}</p></div></section>
+  {% elif r.status == "confirmed" %}
+  <section class="vbanner vb-r"><div class="vb-icon" aria-hidden="true">✕</div><div>
+    <h2 class="vb-h" style="font-size:22px">Two reviewers confirmed it</h2>
+    <p class="vb-act">The warning stands. It was added to the known-fake registry, so the same payee will be flagged next time.</p></div></section>
+  {% else %}
+  <section class="vbanner vb-n"><div class="vb-icon" aria-hidden="true">…</div><div>
+    <h2 class="vb-h" style="font-size:22px">{{ status_label.get(r.status, r.status) }}</h2>
+    <p class="vb-act">{% if r.status == "awaiting_second" %}One reviewer has looked. A second, different reviewer must agree before anything changes.{% elif r.status == "escalated" %}A senior reviewer will look at it.{% else %}Waiting for a reviewer. Until then, do not pay on the strength of this result alone: check the payee yourself.{% endif %}</p></div></section>
+  {% endif %}
+
+  <h2 class="sec">What happens next</h2>
+  <ol class="rlist">
+    <li><span class="rn">1</span><p>A reviewer reads your note{% if r.shared %} and the result you shared{% endif %}.</p></li>
+    <li><span class="rn">2</span><p>If the result was wrong, it is corrected and you can see that here. Come back to this page with the reference above.</p></li>
+    <li><span class="rn">3</span><p>Nothing about you is kept beyond the result and your note. You can delete it any time.</p></li>
+  </ol>
+  <div class="case-acts"><a class="btn bn" href="/check" style="width:auto;padding:0 22px">Check something else</a><a class="btn bq" href="/dashboard" style="width:auto;padding:0 22px">My checks</a></div>
+  <p class="xs" style="color:var(--muted)">This page refreshes on its own every 20 seconds while a reviewer is looking.</p>
+</div>
+{% if r.status in ("needs_review", "awaiting_second", "escalated", "unsure") %}<script>setTimeout(function () { location.reload(); }, 20000);</script>{% endif %}
+{% endblock %}
