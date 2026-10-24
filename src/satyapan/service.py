@@ -37,11 +37,13 @@ class CaseResult:
     layers_run: list[str] = field(default_factory=list)
 
 
-def analyse_text(text: str, kind: str = "message", topic: str = "", case_id: str | None = None, use_registry: bool = True) -> CaseResult:
+def analyse_text(text: str, kind: str = "message", topic: str = "", case_id: str | None = None, use_registry: bool = True,
+                 extra_layers: list[LayerResult] | None = None, readable: bool = True) -> CaseResult:
     """Text is untrusted data. It is only matched against fixed patterns and never chooses a template or a tier."""
     case_id = case_id or uuid.uuid4().hex[:12]
     text = (text or "")[:MAX_TEXT]
-    quality = QualityReport(usable_for_any=bool(text.strip()), reasons=[] if text.strip() else ["QUALITY_UNREADABLE"])
+    usable = bool(text.strip()) and readable
+    quality = QualityReport(usable_for_any=usable, reasons=[] if usable else ["QUALITY_UNREADABLE"])
     found: Found = extract(text)
     snapshot = load_snapshot()
 
@@ -55,11 +57,29 @@ def analyse_text(text: str, kind: str = "message", topic: str = "", case_id: str
         from .layers.l3_payee.domains import hostname
         from .store import db
         matches = db.registry_matches([u.vpa for u in found.upi], [h for h in (hostname(u) for u in found.urls) if h])
-    out = fuse(FusionInput(results=[l3res, l4res], registry_matches=matches, quality=quality, media_present=False, payees_confirmed_registered=payee_confirmed,
+    out = fuse(FusionInput(results=[l3res, l4res, *(extra_layers or [])], registry_matches=matches, quality=quality, media_present=False, payees_confirmed_registered=payee_confirmed,
                          money_ask_present=bool(found.upi or found.ifsc or found.urls)))
     verdicts = {lang.value: build_verdict(case_id, out, lang) for lang in Lang}
     return CaseResult(
         case_id=case_id, kind=kind, tier=out.tier, verdicts=verdicts,
         payees=[{"upi": u.vpa, "name": u.name or "", "amount": u.amount or ""} for u in found.upi],
-        links=found.urls[:5], phones=found.phones[:5], layers_run=["payee", "rules"],
+        links=found.urls[:5], phones=found.phones[:5], layers_run=["payee", "rules"] + (["pdf"] if extra_layers else []),
     )
+
+
+def analyse_pdf(data: bytes, topic: str = "", case_id: str | None = None) -> CaseResult:
+    """Read the PDF's text and look for signs of editing, then run the same payee and word checks as for a message."""
+    from .layers.l2_forensics.pdf import analyse_pdf as read_pdf
+    info = read_pdf(data)
+    res = analyse_text(info.text, kind="pdf", topic=topic or "invoice", case_id=case_id, extra_layers=[info.result], readable=info.readable)
+    return res
+
+
+def analyse_image(data: bytes, kind: str = "screenshot", topic: str = "", case_id: str | None = None) -> CaseResult:
+    """Decode any QR code and read the text in an image, then check both. Detects nothing about pixels yet."""
+    from .extract.ocr import read_text
+    from .extract.qr import decode_qr
+    qr = decode_qr(data)
+    ocr = read_text(data)
+    parts = list(qr) + ([ocr] if ocr else [])
+    return analyse_text("\n".join(parts), kind=kind, topic=topic, case_id=case_id, readable=bool(parts))

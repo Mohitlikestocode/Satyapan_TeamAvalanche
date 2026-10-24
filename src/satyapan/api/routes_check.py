@@ -7,11 +7,18 @@ from fastapi import APIRouter, File, Form, HTTPException, UploadFile
 
 from ..evidence.pack import build_pack, sign_pack, verify_signed
 from ..extract.qr import decode_qr
-from ..service import analyse_text
+from ..service import analyse_image, analyse_pdf, analyse_text
 from ..store import db
 from .schemas import MAX_UPLOAD_BYTES, SAMPLE_RESULTS, CheckKind, CheckReceipt, DisputeIn
 
 router = APIRouter(prefix="/api/v1")
+
+
+def res_text(data: bytes, typed: str) -> str:
+    """Text from the image (QR payloads and OCR) joined with what the user typed."""
+    from ..extract.ocr import read_text
+    qr = decode_qr(data)
+    return "\n".join([*qr, read_text(data) or "", typed])
 
 
 @router.get("/health")
@@ -34,11 +41,11 @@ async def start_check(
 ) -> CheckReceipt:
     db.purge()
     case_id = uuid.uuid4().hex[:12]
-    payload: str | None
+    res = None
     if kind in (CheckKind.LINK, CheckKind.MESSAGE):
         if not text.strip():
             raise HTTPException(422, "text is required for this kind of check")
-        payload = text
+        res = analyse_text(text, kind=kind.value, topic=topic, case_id=case_id)
     else:
         if file is None:
             raise HTTPException(422, "a file is required for this kind of check")
@@ -48,12 +55,14 @@ async def start_check(
             if len(data) > MAX_UPLOAD_BYTES:
                 raise HTTPException(413, "file is too large")
         await file.close()  # the content is discarded after this request: nothing is written to disk
-        payload = None
-        if kind == CheckKind.QR:
-            payload = " ".join(decode_qr(bytes(data))) + (" " + text if text else "")
-    if payload is None:  # screenshot, PDF and voice checks are not built yet: point to a labelled sample
+        if kind == CheckKind.PDF:
+            res = analyse_pdf(bytes(data), topic=topic, case_id=case_id)
+        elif kind in (CheckKind.QR, CheckKind.SCREENSHOT):
+            res = analyse_image(bytes(data), kind=kind.value, topic=topic, case_id=case_id)
+            if text.strip():  # words the user typed alongside the picture are checked too
+                res = analyse_text(res_text(data, text), kind=kind.value, topic=topic, case_id=case_id)
+    if res is None:  # voice checks are not built yet: point to a labelled sample
         return CheckReceipt(id=case_id, kind=kind, speak_aloud=speak_aloud, result_url=SAMPLE_RESULTS[kind])
-    res = analyse_text(payload, kind=kind.value, topic=topic, case_id=case_id)
     db.save_case(res, topic)
     return CheckReceipt(id=case_id, kind=kind, speak_aloud=speak_aloud, result_url=f"/case/{case_id}", mode="engine",
                         tier=res.tier.value, notice="Checked with the payee and red-flag rules.")

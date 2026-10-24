@@ -67,15 +67,20 @@ def test_qr_upload_is_decoded_and_checked():
     assert bad.json()["tier"] == "CANT_TELL"
 
 
-def test_screenshot_still_points_to_a_labelled_sample():
+def test_voice_still_points_to_a_labelled_sample():
+    r = client.post("/api/v1/check", data={"kind": "voice"}, files={"file": ("a.ogg", b"x")})
+    assert r.json()["mode"] == "demo-sample" and r.json()["result_url"] == "/check/voice"
+
+
+def test_unreadable_screenshot_is_cant_tell_not_a_guess():
     r = client.post("/api/v1/check", data={"kind": "screenshot"}, files={"file": ("a.png", b"x")})
-    assert r.json()["mode"] == "demo-sample" and r.json()["result_url"] == "/result/screenshot"
+    assert r.json()["mode"] == "engine" and r.json()["tier"] == "CANT_TELL"
 
 
 def test_check_file_kinds_need_a_file():
     assert client.post("/api/v1/check", data={"kind": "pdf"}).status_code == 422
     r = client.post("/api/v1/check", data={"kind": "pdf"}, files={"file": ("a.pdf", b"%PDF-1.4")})
-    assert r.json()["result_url"] == "/result/invoice" and r.json()["mode"] == "demo-sample"
+    assert r.json()["mode"] == "engine" and r.json()["tier"] == "CANT_TELL"
 
 
 def test_check_rejects_unknown_kind_and_empty_text():
