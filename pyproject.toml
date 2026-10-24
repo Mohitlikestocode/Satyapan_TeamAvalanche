@@ -22,12 +22,13 @@ dependencies = [
   "imagehash>=4.3",
   "rapidfuzz>=3.9",
   "PyYAML>=6.0",
+  "zxing-cpp>=2.2",        # QR decode, extract/qr.py
   "reportlab>=4.2",
   "segno>=1.6",
 ]
 
 [project.optional-dependencies]
-dev = ["pytest>=8", "ruff>=0.5"]
+dev = ["pytest>=8", "ruff>=0.5", "segno>=1.6"]
 
 [tool.setuptools.packages.find]
 where = ["src"]

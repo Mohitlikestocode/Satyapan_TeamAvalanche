@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block content %}
+{% if not res %}
+<div class="case" style="padding-top:20px">
+  <h1 class="case-h1">This result is no longer here</h1>
+  <p>Results are kept only for a short time and are deleted when the server restarts or when you delete them. Nothing is kept about your file.</p>
+  <p><a class="hbtn hbtn-p" href="/check" style="min-height:46px">Check something again</a></p>
+</div>
+{% else %}
+{% set tcls = {"HIGH_RISK": "r", "REGISTRY_HIT": "r", "SUSPICIOUS": "a", "CANT_TELL": "n", "NO_RED_FLAGS": "g"}[res.tier.value] %}
+{% for lang, ui in [("en", {"new": "New check", "ref": "Report", "why": "Why we think this", "more": "More findings", "found": "Found in what you sent", "upi": "UPI ID", "name": "Name in the request", "amt": "Amount", "link": "Link", "phone": "Phone", "none": "Nothing found", "checked": "What we checked", "notchecked": "What we could not check", "nc": "Images, voice and video forensics were not used for this result. We do not know who owns a UPI ID (only the bank does) and we did not call any number.", "paid": "Have you already paid?", "yes": "Yes", "no": "No", "listen": "Listen", "family": "Ask family", "wrong": "Wrong result?", "delete": "Delete now", "report": "Evidence report"}), ("hi", {"new": "नई जाँच", "ref": "रिपोर्ट", "why": "हम ऐसा क्यों मानते हैं", "more": "और बातें", "found": "आपके भेजे में मिला", "upi": "UPI आईडी", "name": "अनुरोध में नाम", "amt": "रकम", "link": "लिंक", "phone": "फ़ोन", "none": "कुछ नहीं मिला", "checked": "हमने क्या जाँचा", "notchecked": "जो हम नहीं जाँच सके", "nc": "इस नतीजे में तस्वीर, आवाज़ और वीडियो की फ़ोरेंसिक जाँच इस्तेमाल नहीं हुई। UPI आईडी का मालिक कौन है, यह सिर्फ़ बैंक जानता है, और हमने किसी नंबर पर फ़ोन नहीं किया।", "paid": "क्या आप पैसे भेज चुके हैं?", "yes": "हाँ", "no": "नहीं", "listen": "सुनें", "family": "परिवार से पूछें", "wrong": "नतीजा ग़लत है?", "delete": "अभी मिटाएँ", "report": "सबूत रिपोर्ट"})] %}
+{% set v = res.verdicts[lang] %}
+<div class="case" data-variant="{{ lang }}" lang="{{ lang }}">
+  <div class="case-top">
+    <a href="/check">‹ {{ ui.new }}</a>
+    <span>{{ ui.ref }} SP-{{ res.case_id[:4]|upper }}-{{ res.case_id[4:8]|upper }}</span>
+  </div>
+
+  <section class="vbanner vb-{{ tcls }}" aria-labelledby="vh-{{ lang }}">
+    <div class="vb-icon" aria-hidden="true">{% if tcls == "g" %}✓{% elif tcls == "n" %}?{% elif tcls == "a" %}!{% else %}✕{% endif %}</div>
+    <div>
+      <h1 id="vh-{{ lang }}" class="vb-h">{{ v.headline }}</h1>
+      <p class="vb-act">{{ v.action_text }}</p>
+    </div>
+  </section>
+
+  <div class="case-acts">
+    <button type="button" class="btn bn" data-speak="{{ lang }}" style="width:auto;padding:0 22px"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>{{ ui.listen }}</button>
+    <a class="btn bs" href="/guardian" style="width:auto;padding:0 22px">{{ ui.family }}</a>
+  </div>
+  <div class="speak-src" hidden>{{ v.headline }}. {% for t in v.reasons_text[:3] %}{{ t }} {% endfor %}{{ v.action_text }}</div>
+
+  <h2 class="sec">{{ ui.why }}</h2>
+  <ol class="rlist">
+    {% for t in v.reasons_text[:3] %}<li><span class="rn">{{ loop.index }}</span><p>{{ t }}</p></li>{% endfor %}
+  </ol>
+  {% if v.reasons_text|length > 3 %}
+  <details class="more"><summary>{{ ui.more }} ({{ v.reasons_text|length - 3 }})</summary>
+    <ol class="rlist" start="4">{% for t in v.reasons_text[3:] %}<li><span class="rn">{{ loop.index + 3 }}</span><p>{{ t }}</p></li>{% endfor %}</ol>
+  </details>
+  {% endif %}
+
+  <h2 class="sec">{{ ui.found }}</h2>
+  <dl class="kv2">
+    {% for p in res.payees %}
+    <div><dt>{{ ui.upi }}</dt><dd class="mono">{{ p.upi }}</dd></div>
+    {% if p.name %}<div><dt>{{ ui.name }}</dt><dd>{{ p.name }}</dd></div>{% endif %}
+    {% if p.amount %}<div><dt>{{ ui.amt }}</dt><dd>₹{% if "." in p.amount %}{{ p.amount }}{% else %}{{ "{:,}".format(p.amount|int) }}{% endif %}</dd></div>{% endif %}
+    {% endfor %}
+    {% for u in res.links %}<div><dt>{{ ui.link }}</dt><dd class="mono">{{ u }}</dd></div>{% endfor %}
+    {% for ph in res.phones %}<div><dt>{{ ui.phone }}</dt><dd class="mono">{{ ph[:2] }}XXXXXX{{ ph[-2:] }}</dd></div>{% endfor %}
+    {% if not res.payees and not res.links and not res.phones %}<div><dt>—</dt><dd>{{ ui.none }}</dd></div>{% endif %}
+  </dl>
+
+  <h2 class="sec">{{ ui.checked }}</h2>
+  <ul class="list" style="border:1px solid var(--line)">{% for l in res.layers_run %}<li>{{ {"payee": ("Who is asking for the money: UPI IDs, links and names", "पैसे कौन माँग रहा है: UPI आईडी, लिंक और नाम"), "rules": ("Warning words in English, Hindi and Hinglish", "अंग्रेज़ी, हिन्दी और हिंग्लिश में चेतावनी वाले शब्द")}[l][0 if lang == "en" else 1] }}</li>{% endfor %}</ul>
+  <h2 class="sec">{{ ui.notchecked }}</h2>
+  <p class="sm" style="margin:0">{{ ui.nc }}</p>
+
+  <h2 class="sec">{{ ui.paid }}</h2>
+  <div class="case-acts">
+    <a class="btn bq" href="/already-paid" style="width:auto;padding:0 28px">{{ ui.yes }}</a>
+    <a class="btn bq" href="/next-steps" style="width:auto;padding:0 28px">{{ ui.no }}</a>
+  </div>
+  <div class="case-acts" style="margin-top:8px">
+    <a class="btn bq" href="/report" style="width:auto;padding:0 18px">{{ ui.report }}</a>
+    <a class="btn bq" href="/wrong" style="width:auto;padding:0 18px">{{ ui.wrong }}</a>
+    <a class="btn bq" href="/deletion" style="width:auto;padding:0 18px">{{ ui.delete }}</a>
+  </div>
+  <p class="xs" style="color:var(--muted);margin-top:16px">{{ v.footer_text }}</p>
+</div>
+{% endfor %}
+{% endif %}
+{% endblock %}

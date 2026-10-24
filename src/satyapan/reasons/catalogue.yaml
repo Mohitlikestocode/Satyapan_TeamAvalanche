@@ -67,6 +67,27 @@ codes:
     en: "It asks you to install an app from outside the app store."
     hi: "यह आपसे ऐप स्टोर के बाहर से ऐप इंस्टॉल करने को कहता है।"
 
+  PAYEE_NAME_MISMATCH:
+    layer: L3
+    priority: 13
+    en: "The message names {claimed}, but the payment goes to {payee_name}. The names do not match."
+    hi: "संदेश में {claimed} का नाम है, पर भुगतान {payee_name} को जा रहा है। दोनों नाम मेल नहीं खाते।"
+  PAYEE_COLLECT_TRAP:
+    layer: L3
+    priority: 7
+    en: "It asks you to enter your UPI PIN to receive money. You never need a PIN to receive money."
+    hi: "यह पैसे पाने के लिए आपसे UPI PIN डलवाने को कहता है। पैसे पाने के लिए PIN कभी नहीं डालना पड़ता।"
+  PAYEE_PREFILLED_URGENCY:
+    layer: L3
+    priority: 14
+    en: "The payment request already has an amount filled in and pushes you to pay right now."
+    hi: "भुगतान के अनुरोध में रकम पहले से भरी है और यह आप पर अभी पैसे भेजने का दबाव डालता है।"
+  PAYEE_FORMAT_ONLY:
+    layer: L3
+    priority: 41
+    en: "{payee} has the format of an @valid handle. We could not confirm it against the official SEBI list, so check it on SEBI Check."
+    hi: "{payee} का रूप @valid हैंडल जैसा है। हम इसे SEBI की आधिकारिक सूची से मिला नहीं सके, इसलिए SEBI Check पर जाँचें।"
+
   OFFER_GUARANTEED_RETURNS:
     layer: L4
     priority: 20

@@ -93,6 +93,16 @@
     });
   }
 
+  // ---- read the result aloud (/case/<id>) -------------------------------------
+  D.addEventListener("click", function (e) {
+    var b = e.target.closest("[data-speak]"); if (!b) return;
+    var lang = b.getAttribute("data-speak"), host = b.closest("[data-variant]") || D;
+    var src = host.querySelector(".speak-src"); if (!src || !window.speechSynthesis) { toast("This browser cannot read aloud"); return; }
+    window.speechSynthesis.cancel();
+    var u = new SpeechSynthesisUtterance(src.textContent.replace(/\s+/g, " ").trim());
+    u.lang = lang === "hi" ? "hi-IN" : "en-IN"; window.speechSynthesis.speak(u);
+  });
+
   // ---- read aloud: the browser's own speech voice as the local fallback -----
   if (path === "/listen") {
     var synth = window.speechSynthesis;

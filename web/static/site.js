@@ -81,6 +81,10 @@
     "/result/cant-tell": ["CAN'T TELL", "n"], "/result/no-flags": ["NO RED FLAGS FOUND", "g"],
     "/tools/result": ["OFFICIAL CHANNEL CHECK", "n"], "/check/voice": ["TEXT TO REVIEW", "n"]
   };
+  var ENGINE_TIERS = {
+    HIGH_RISK: ["HIGH RISK", "r"], REGISTRY_HIT: ["REGISTRY HIT", "r"], SUSPICIOUS: ["SUSPICIOUS", "a"],
+    CANT_TELL: ["CAN'T TELL", "n"], NO_RED_FLAGS: ["NO RED FLAGS FOUND", "g"]
+  };
   var KIND_LABEL = { screenshot: "Screenshot or photo", pdf: "PDF or invoice", qr: "QR code", link: "Link", message: "Message or number", voice: "Voice note" };
   function history() { try { return JSON.parse(get("sp-history") || "[]"); } catch (e) { return []; } }
   function saveHistory(list) { set("sp-history", JSON.stringify(list.slice(0, 50))); }
@@ -141,7 +145,7 @@
         .then(function (r) { return r.json().then(function (j) { if (!r.ok) throw new Error(j.detail || "failed"); return j; }); })
         .then(function (j) {
           var label = state.file ? state.file.name : text.slice(0, 60);
-          var t = TIERS[j.result_url] || ["SAMPLE RESULT", "n"];
+          var t = ENGINE_TIERS[j.tier] || TIERS[j.result_url] || ["SAMPLE RESULT", "n"];
           remember({ id: j.id, kind: state.kind, label: label, at: Date.now(), url: j.result_url, tier: t[0], cls: t[1] });
           location.href = "/check/progress?id=" + encodeURIComponent(j.id) + "&to=" + encodeURIComponent(j.result_url);
         })

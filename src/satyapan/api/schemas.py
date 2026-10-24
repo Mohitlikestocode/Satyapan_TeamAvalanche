@@ -39,5 +39,6 @@ class CheckReceipt(BaseModel):
     kind: CheckKind
     speak_aloud: bool = False
     result_url: str
-    mode: str = "demo-sample"
+    mode: str = "demo-sample"  # "engine" when the real checks ran
+    tier: str | None = None
     notice: str = "Demo: no detection has run. This points to a sample result."
