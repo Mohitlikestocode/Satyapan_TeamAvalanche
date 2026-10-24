@@ -10,9 +10,9 @@ Branch `feat/traction`. Goal: real users on a public site, counted honestly, kep
 | C4 | Pilot sign-up `/pilot`, feedback on result pages and `/feedback` | no | **done**, tested |
 | C1 | Hardening middleware, `/healthz`, Docker + Caddy, backup, deploy check, load test | a server and a domain or `sslip.io` name | files written and tested locally; **Docker image not built yet** (Docker Desktop was not running); not deployed |
 | C2 | Telegram bot | bot token from @BotFather | **done and tested with fake updates**; not yet run with a real token |
-| C5 | Shop poster `/poster` with referral codes, PWA | no | |
-| C6 | Sarvam voice for the verdict | Sarvam API key | |
-| C7 | C2PA "Verified original" demo | only if time | |
+| C5 | Shop poster `/poster` with referral codes, installable PWA, offline helpline page | no | **done**, tested |
+| C6 | Sarvam voice for the verdict (`POST /api/v1/speak`) | Sarvam API key | **done and tested against a fake Sarvam server**; not yet tried with a real key |
+| C7 | C2PA "Verified original" demo | only if time | not started (cut first) |
 
 ## What counts as a real number
 
