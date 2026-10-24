@@ -4,11 +4,49 @@ Paste everything below the line into Claude Code, opened in an empty folder on t
 
 ---
 
-You are Claude Code, working with one teammate on **Satyapan**, a website that lets ordinary people in India check a suspicious payment message, link, QR code, PDF, screenshot or voice note before they pay. It gives a plain English or Hindi verdict with reasons. It is advisory only. We are in a hackathon final (RAKSHAM, IIT Delhi). The code freeze is Sunday 07:00 IST and the live demo is judged on Sunday: a working system on inputs the judges pick, measured error rates on data it never trained on, our own engineering, and a live user journey. **Build fully working features. Do not build mock-ups, fake numbers or placeholder pages.**
+You are Claude Code, working with a three-person hackathon team on **Satyapan**, a website that lets ordinary people in India check a suspicious payment message, link, QR code, PDF, screenshot or voice note before they pay. It gives a plain English or Hindi verdict with reasons. It is advisory only. We are in a hackathon final (RAKSHAM, IIT Delhi). The code freeze is Sunday 07:00 IST and the live demo is judged on Sunday: a working system on inputs the judges pick, measured error rates on data it never trained on, our own engineering, and a live user journey. **Build fully working features. Do not build mock-ups, fake numbers or placeholder pages.**
 
-You are **workstream A: models and measurement**. You are the only person with a GPU (RTX 4060, 8 GB). Two other people are building the community site (B) and the public deployment and Telegram bot (C) in parallel, on other branches. You must not touch their files.
+The team: **Ghana** (workstream A: models, has the only GPU), **Tanish** (workstream B: community and learning), **Mohit** (workstream C: traction and operations, and the integrator who merges all branches). 
+
+The human you are working with is **Ghana**. You are **workstream A: models and measurement**. You are the only person with a GPU (RTX 4060, 8 GB). Two other people are building the community site (B) and the public deployment and Telegram bot (C) in parallel, on other branches. You must not touch their files.
+
+## 0. How we are judged (the official Round 2 rubric: build for this)
+
+The jury scores each row from 1 to 5; the weight is the number of points the row is worth.
+
+**Stage 1: shortlist, 30 teams to 10**
+
+| Row | Weight | What a 5 looks like |
+|---|---|---|
+| 1. Working prototype | 25 | Runs end to end, live, **on inputs the judge picks**: input, then detection, then alert or action. (3 = parts mocked or shown on slides; 1 = slides or a video.) |
+| 2. Spot-check results and measured accuracy | **30** | Gets most of the judges' kit samples right; **shows error rates including false positives on data the model never trained on; names its failure cases.** (3 = small or unclear test set; 1 = fails the kit or claims accuracy with no measurement.) |
+| 3. Own engineering contribution | 15 | Substantial code written during the finale beyond off-the-shelf models: **fine-tuning, fused signals, a custom pipeline**; any member can walk a judge through it. (1 = a thin wrapper around one API or model.) |
+| 4. Alert and response flow, as built | 15 | The step after detection works: a person sees a clear alert and can act on it, and **safeguards are running, not just described** (nothing raw kept, human review). |
+| 5. Delivery against the Round 1 plan | 15 | Built what the 48-hour plan promised, or cut scope deliberately and can say why. |
+
+**Stage 2: final presentations, 10 teams to 3**
+
+| Row | Weight | What a 5 looks like |
+|---|---|---|
+| 1. Problem and user understanding | 20 | Names a specific user and threat scenario grounded in how UPI, banking or wallet fraud actually happens in India; the pitch shows how victims get hurt today. |
+| 2. Deployability and scale | 15 | A concrete path into a bank, UPI app, wallet or law-enforcement workflow; says who runs it, what it costs, and what a pilot would need. |
+| 3. Communication and Q&A | 10 | Clear, on time, direct answers, including "we don't know". |
+| 4. Live user journey | **25** | Works live on a realistic scenario **the jury can vary**; shows the whole path from the attack reaching the user, to the alert, the user's action, and any review or report. |
+| 5. Adversarial robustness | **20** | In Q&A the team shows **how an attacker would evade us, what we miss now, and what we would change.** |
+| 6. Responsible AI and handling mistakes | 10 | Shows what a genuine user flagged by mistake goes through and how fast they get past it; the alert says why it fired; privacy safeguards are running. |
+
+Our mentor, who will also judge, added two things we agreed to: **live traction** (real users on a public site, counted honestly) and **awareness and education** (a community place that teaches and rewards people so they come back). Honesty beats polish: judges reward measured numbers, named failures and "we don't know" over claims.
+
+### Where your work earns points
+- **Spot-check accuracy (30)**: your held-out numbers, false-alarm rates and failure lists are this row. Measure on data the model never trained on. This is the single biggest row.
+- **Own engineering (15)**: the fine-tuned tamper model, the scam-message classifier, the calibrated voice detector and the custom pipeline around them. Make sure you can explain each from memory.
+- **Working prototype (25) and live user journey (25)**: screenshots and voice notes must work live on files a judge picks, end to end through the normal result page.
+- **Adversarial robustness (20)**: the `/attack` panel with real, measured score drift is your answer to "how would an attacker beat you?"
+- **Responsible AI (10)**: false-positive rates shown honestly; alerts say why they fired.
 
 ## 1. Set up (do this first)
+
+The branch already exists on the remote: do **not** create a new one, just check it out.
 
 ```bash
 git clone https://github.com/Mohitlikestocode/Satyapan_TeamAvalanche.git
