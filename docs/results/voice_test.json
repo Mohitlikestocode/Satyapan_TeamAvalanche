@@ -1,0 +1,379 @@
+{
+ "schema": 1,
+ "dataset": "In-The-Wild sample, FLEURS hi/en test, IndicSynth Hindi shard 0",
+ "split": "test split by speaker (969 clips x 4 conditions); thresholds fixed on the dev split",
+ "held_out": true,
+ "hardware": "NVIDIA GeForce RTX 4060 Laptop GPU",
+ "date": "2026-10-24 15:00 UTC",
+ "reproduce": "python training/voice/fetch_data.py && python training/voice/calibrate.py",
+ "rows": [
+  {
+   "name": "As deployed: primary detector alone (second opinion excluded: dev-split EER 67% (limit 30%): it would veto good detections, so the site uses the primary detector alone)",
+   "baseline": false,
+   "tpr": {
+    "k": 1980,
+    "n": 1980,
+    "rate": 1.0,
+    "lo": 0.9980635550741552,
+    "hi": 1.0
+   },
+   "fpr": {
+    "k": 78,
+    "n": 1884,
+    "rate": 0.041401273885350316,
+    "lo": 0.03329949446045137,
+    "hi": 0.05136947352923589
+   },
+   "disagree_rate": 0.0
+  },
+  {
+   "name": "Spectra-AASIST3 (primary, calibrated)",
+   "baseline": false,
+   "tpr": {
+    "k": 1980,
+    "n": 1980,
+    "rate": 1.0,
+    "lo": 0.9980635550741552,
+    "hi": 1.0
+   },
+   "fpr": {
+    "k": 78,
+    "n": 1884,
+    "rate": 0.041401273885350316,
+    "lo": 0.03329949446045137,
+    "hi": 0.05136947352923589
+   },
+   "auroc": 0.9785613566664522,
+   "eer": 0.0313147397542302,
+   "eer_ci": [
+    0.024329280061764137,
+    0.03933603551437946
+   ]
+  },
+  {
+   "name": "Deepfake-audio-detection-V2 (second opinion, calibrated)",
+   "baseline": true,
+   "tpr": {
+    "k": 1,
+    "n": 1980,
+    "rate": 0.000505050505050505,
+    "lo": 8.915708609945686e-05,
+    "hi": 0.0028554328448708384
+   },
+   "fpr": {
+    "k": 68,
+    "n": 1884,
+    "rate": 0.036093418259023353,
+    "lo": 0.028570594560275213,
+    "hi": 0.04550426426262603
+   },
+   "auroc": 0.276216249544275,
+   "eer": 0.6560557807373093,
+   "eer_ci": [
+    0.6394952711831693,
+    0.6719784227626584
+   ]
+  }
+ ],
+ "conditions": [
+  {
+   "name": "clean",
+   "row": "Spectra-AASIST3",
+   "tpr": {
+    "k": 495,
+    "n": 495,
+    "rate": 1.0,
+    "lo": 0.9922989582264191,
+    "hi": 1.0
+   },
+   "fpr": {
+    "k": 5,
+    "n": 471,
+    "rate": 0.010615711252653927,
+    "lo": 0.004542617055388226,
+    "hi": 0.024607314205899747
+   },
+   "eer": 0.006215016406099208
+  },
+  {
+   "name": "opus24k",
+   "row": "Spectra-AASIST3",
+   "tpr": {
+    "k": 495,
+    "n": 495,
+    "rate": 1.0,
+    "lo": 0.9922989582264191,
+    "hi": 1.0
+   },
+   "fpr": {
+    "k": 6,
+    "n": 471,
+    "rate": 0.012738853503184714,
+    "lo": 0.005850974934084433,
+    "hi": 0.02751088721110251
+   },
+   "eer": 0.004143344270732806
+  },
+  {
+   "name": "aac64k",
+   "row": "Spectra-AASIST3",
+   "tpr": {
+    "k": 495,
+    "n": 495,
+    "rate": 1.0,
+    "lo": 0.9922989582264191,
+    "hi": 1.0
+   },
+   "fpr": {
+    "k": 8,
+    "n": 471,
+    "rate": 0.016985138004246284,
+    "lo": 0.008631101421252606,
+    "hi": 0.033154622491732275
+   },
+   "eer": 0.016573377082931225
+  },
+  {
+   "name": "tel8k",
+   "row": "Spectra-AASIST3",
+   "tpr": {
+    "k": 495,
+    "n": 495,
+    "rate": 1.0,
+    "lo": 0.9922989582264191,
+    "hi": 1.0
+   },
+   "fpr": {
+    "k": 59,
+    "n": 471,
+    "rate": 0.12526539278131635,
+    "lo": 0.09836926911759027,
+    "hi": 0.15822492987424203
+   },
+   "eer": 0.08074374316412533
+  },
+  {
+   "name": "source:fleurs_en_us",
+   "row": "Spectra-AASIST3",
+   "tpr": null,
+   "fpr": {
+    "k": 67,
+    "n": 588,
+    "rate": 0.11394557823129252,
+    "lo": 0.09072953071886272,
+    "hi": 0.14217332707281669
+   }
+  },
+  {
+   "name": "source:fleurs_hi_in",
+   "row": "Spectra-AASIST3",
+   "tpr": null,
+   "fpr": {
+    "k": 5,
+    "n": 588,
+    "rate": 0.008503401360544218,
+    "lo": 0.0036374038851572626,
+    "hi": 0.01974993488927157
+   }
+  },
+  {
+   "name": "source:in_the_wild",
+   "row": "Spectra-AASIST3",
+   "tpr": {
+    "k": 936,
+    "n": 936,
+    "rate": 1.0,
+    "lo": 0.9959125027025829,
+    "hi": 0.9999999999999999
+   },
+   "fpr": {
+    "k": 6,
+    "n": 708,
+    "rate": 0.00847457627118644,
+    "lo": 0.0038895430716228757,
+    "hi": 0.018364846107093286
+   }
+  },
+  {
+   "name": "source:indicsynth_hi",
+   "row": "Spectra-AASIST3",
+   "tpr": {
+    "k": 1044,
+    "n": 1044,
+    "rate": 1.0,
+    "lo": 0.9963337970166481,
+    "hi": 0.9999999999999998
+   },
+   "fpr": null
+  },
+  {
+   "name": "clean",
+   "row": "Deepfake-audio-detection-V2",
+   "tpr": {
+    "k": 0,
+    "n": 495,
+    "rate": 0.0,
+    "lo": 4.336808689942018e-19,
+    "hi": 0.007701041773581031
+   },
+   "fpr": {
+    "k": 8,
+    "n": 471,
+    "rate": 0.016985138004246284,
+    "lo": 0.008631101421252606,
+    "hi": 0.033154622491732275
+   },
+   "eer": 0.6428681721675352
+  },
+  {
+   "name": "opus24k",
+   "row": "Deepfake-audio-detection-V2",
+   "tpr": {
+    "k": 0,
+    "n": 495,
+    "rate": 0.0,
+    "lo": 4.336808689942018e-19,
+    "hi": 0.007701041773581031
+   },
+   "fpr": {
+    "k": 39,
+    "n": 471,
+    "rate": 0.08280254777070063,
+    "lo": 0.06116142117211046,
+    "hi": 0.11119416014174241
+   },
+   "eer": 0.6387248278968024
+  },
+  {
+   "name": "aac64k",
+   "row": "Deepfake-audio-detection-V2",
+   "tpr": {
+    "k": 1,
+    "n": 495,
+    "rate": 0.00202020202020202,
+    "lo": 0.00035669514308938645,
+    "hi": 0.01135363535059839
+   },
+   "fpr": {
+    "k": 13,
+    "n": 471,
+    "rate": 0.027600849256900213,
+    "lo": 0.01619962300686279,
+    "hi": 0.04664575532561694
+   },
+   "eer": 0.6283664672199705
+  },
+  {
+   "name": "tel8k",
+   "row": "Deepfake-audio-detection-V2",
+   "tpr": {
+    "k": 0,
+    "n": 495,
+    "rate": 0.0,
+    "lo": 4.336808689942018e-19,
+    "hi": 0.007701041773581031
+   },
+   "fpr": {
+    "k": 8,
+    "n": 471,
+    "rate": 0.016985138004246284,
+    "lo": 0.008631101421252606,
+    "hi": 0.033154622491732275
+   },
+   "eer": 0.715325226790195
+  },
+  {
+   "name": "source:fleurs_en_us",
+   "row": "Deepfake-audio-detection-V2",
+   "tpr": null,
+   "fpr": {
+    "k": 38,
+    "n": 588,
+    "rate": 0.06462585034013606,
+    "lo": 0.04744287311176419,
+    "hi": 0.08746079030087865
+   }
+  },
+  {
+   "name": "source:fleurs_hi_in",
+   "row": "Deepfake-audio-detection-V2",
+   "tpr": null,
+   "fpr": {
+    "k": 0,
+    "n": 588,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.006490925950457014
+   }
+  },
+  {
+   "name": "source:in_the_wild",
+   "row": "Deepfake-audio-detection-V2",
+   "tpr": {
+    "k": 1,
+    "n": 936,
+    "rate": 0.0010683760683760685,
+    "lo": 0.00018861465925850297,
+    "hi": 0.0060269008063263355
+   },
+   "fpr": {
+    "k": 30,
+    "n": 708,
+    "rate": 0.0423728813559322,
+    "lo": 0.029839769674428397,
+    "hi": 0.059845351285065955
+   }
+  },
+  {
+   "name": "source:indicsynth_hi",
+   "row": "Deepfake-audio-detection-V2",
+   "tpr": {
+    "k": 0,
+    "n": 1044,
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.0036662029833516817
+   },
+   "fpr": null
+  }
+ ],
+ "failures": [
+  {
+   "kind": "false_alarm",
+   "text": "fleurs/hi_in/15310142328491379126.wav (fleurs_hi_in, clean audio)"
+  },
+  {
+   "kind": "false_alarm",
+   "text": "fleurs/en_us/9431561488681290113.wav (fleurs_en_us, clean audio)"
+  },
+  {
+   "kind": "false_alarm",
+   "text": "fleurs/en_us/77041922762474361.wav (fleurs_en_us, clean audio)"
+  },
+  {
+   "kind": "false_alarm",
+   "text": "itw/5263.wav (in_the_wild, clean audio)"
+  },
+  {
+   "kind": "false_alarm",
+   "text": "itw/7596.wav (in_the_wild, clean audio)"
+  }
+ ],
+ "calibration": {
+  "primary": {
+   "threshold": 0.6090087890625,
+   "strong_threshold": -1.9509521484375,
+   "n_dev_real": 2096,
+   "dev_eer": 0.03633964753557629
+  },
+  "second": {
+   "threshold": -10.961704969406128,
+   "strong_threshold": -10.974528169631958,
+   "n_dev_real": 2096,
+   "dev_eer": 0.6673728913391763
+  }
+ },
+ "excluded": {
+  "second": "dev-split EER 67% (limit 30%): it would veto good detections, so the site uses the primary detector alone"
+ }
+}

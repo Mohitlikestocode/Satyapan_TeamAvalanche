@@ -193,8 +193,11 @@ def detectors_available() -> dict[str, bool]:
     return {"primary": _primary() is not None, "second": _second() is not None, "calibrated": calibration() is not None}
 
 
-def score(wav: np.ndarray) -> VoiceScore:
-    p, s = _primary(), _second()
+def score(wav: np.ndarray, all_detectors: bool = False) -> VoiceScore:
+    """all_detectors=True (calibration) scores every installed detector; the site skips one the calibration excluded."""
+    cal = calibration()
+    p = _primary()
+    s = _second() if all_detectors or (cal is not None and "second" in cal) else None
     out = VoiceScore(primary=None)
     if p is not None:
         with _LOCK:
