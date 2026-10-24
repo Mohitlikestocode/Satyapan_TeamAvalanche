@@ -150,16 +150,20 @@
       var chip = D.querySelector(".chips .chip.on"); if (chip) fd.append("topic", chip.textContent.trim());
       if (textual) fd.append("text", text);
       if (state.file) fd.append("file", state.file);
+      if (go.getAttribute("aria-busy") === "true") return;
       go.setAttribute("aria-busy", "true");
+      var hi = D.documentElement.getAttribute("data-lang") === "hi";
+      err.textContent = hi ? "जाँच चल रही है… वॉइस नोट में कुछ सेकंड लग सकते हैं।" : "Checking now… a voice note can take a few seconds.";
+      err.style.color = "#1F4E8C";
       fetch("/api/v1/check", { method: "POST", body: fd })
         .then(function (r) { return r.json().then(function (j) { if (!r.ok) throw new Error(j.detail || "failed"); return j; }); })
         .then(function (j) {
           var label = state.file ? state.file.name : text.slice(0, 60);
           var t = ENGINE_TIERS[j.tier] || TIERS[j.result_url] || ["SAMPLE RESULT", "n"];
           remember({ id: j.id, kind: state.kind, label: label, at: Date.now(), url: j.result_url, tier: t[0], cls: t[1] });
-          location.href = "/check/progress?id=" + encodeURIComponent(j.id) + "&to=" + encodeURIComponent(j.result_url);
+          location.href = j.result_url;
         })
-        .catch(function (x) { go.removeAttribute("aria-busy"); err.textContent = "Could not start the check: " + x.message; });
+        .catch(function (x) { go.removeAttribute("aria-busy"); err.style.color = ""; err.textContent = "Could not start the check: " + x.message; });
     });
   }
 

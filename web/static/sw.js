@@ -1,6 +1,6 @@
 /* Satyapan service worker: keeps the shell fast and shows a helpline page when the network is gone.
    It never caches API calls, uploads, results or anything personal. Bump VERSION when this file changes. */
-const VERSION = "sp-v1";
+const VERSION = "sp-v1-b";
 const SHELL = ["/offline", "/static/gov.css", "/static/fonts.css", "/static/site.js", "/static/pages.js", "/static/favicon.svg"];
 
 self.addEventListener("install", (e) => {

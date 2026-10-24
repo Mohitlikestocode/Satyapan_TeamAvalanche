@@ -1,29 +1,29 @@
 <section class="sidebox sidebox-alert">
-  <h2>Already paid?</h2>
-  <p>Act in the first hour. Call the cyber-crime helpline and your bank's official number.</p>
-  <a class="sbtn sbtn-red" href="tel:1930">Call 1930</a>
-  <a class="slink" href="/already-paid">What to do in the first hour</a>
+  <h2>{{ tr("Already paid?", "पैसे भेज दिए?") }}</h2>
+  <p>{{ tr("Act in the first hour. Call the cyber-crime helpline and your bank's official number.", "पहले घंटे में कदम उठाएँ। साइबर-अपराध हेल्पलाइन और अपने बैंक के आधिकारिक नंबर पर कॉल करें।") }}</p>
+  <a class="sbtn sbtn-red" href="tel:1930">{{ tr("Call 1930", "1930 पर कॉल करें") }}</a>
+  <a class="slink" href="/already-paid">{{ tr("What to do in the first hour", "पहले घंटे में क्या करें") }}</a>
 </section>
 
 <section class="sidebox">
-  <h2>Our promise</h2>
+  <h2>{{ tr("Our promise", "हमारा वादा") }}</h2>
   <ul class="ticks">
-    <li>Your file is deleted after checking.</li>
-    <li>We never ask for your OTP, PIN or password.</li>
-    <li>We never pay, block or file anything for you.</li>
-    <li>We say "no red flags found", never "safe".</li>
+    <li>{{ tr("Your file is deleted after checking.", "जाँच के बाद आपकी फ़ाइल मिटा दी जाती है।") }}</li>
+    <li>{{ tr("We never ask for your OTP, PIN or password.", "हम आपका OTP, PIN या पासवर्ड कभी नहीं माँगते।") }}</li>
+    <li>{{ tr("We never pay, block or file anything for you.", "हम आपकी ओर से कुछ भी नहीं चुकाते, रोकते या दर्ज करते।") }}</li>
+    <li>{{ tr("We say \"no red flags found\", never \"safe\".", "हम \"कोई चेतावनी संकेत नहीं मिला\" कहते हैं, \"सुरक्षित\" कभी नहीं।") }}</li>
   </ul>
 </section>
 
 <section class="sidebox">
-  <h2>Related</h2>
+  <h2>{{ tr("Related", "संबंधित") }}</h2>
   <ul class="rel">
-    {% for label, href in related %}<li><a href="{{ href }}">{{ label }}</a></li>{% endfor %}
+    {% for label, href in related %}<li><a href="{{ href }}">{{ tr(label, RELATED_HI.get(label, label)) }}</a></li>{% endfor %}
   </ul>
 </section>
 
 <section class="sidebox sidebox-plain">
-  <h2>Need a hand?</h2>
-  <p>Ask someone you trust before you pay. <a href="/guardian">Ask family</a></p>
-  <p>Helping a customer? <a href="/helper">Helper mode</a></p>
+  <h2>{{ tr("Need a hand?", "मदद चाहिए?") }}</h2>
+  <p>{{ tr("Ask someone you trust before you pay.", "पैसे भेजने से पहले किसी भरोसेमंद से पूछें।") }} <a href="/guardian">{{ tr("Ask family", "परिवार से पूछें") }}</a></p>
+  <p>{{ tr("Helping a customer?", "किसी ग्राहक की मदद कर रहे हैं?") }} <a href="/helper">{{ tr("Helper mode", "सहायक मोड") }}</a></p>
 </section>
