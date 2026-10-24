@@ -99,7 +99,7 @@ def analyse_image(data: bytes, kind: str = "screenshot", topic: str = "", case_i
     from .extract.ocr import read_text
     from .extract.qr import decode_qr
     qr = decode_qr(data)
-    ocr = read_text(data)
+    ocr = "" if (kind == "qr" and qr) else read_text(data)  # a pure QR picture has nothing else worth the slow OCR pass
     parts = list(qr) + ([ocr] if ocr else [])
     layers: list[LayerResult] = []
     names: list[str] = []
