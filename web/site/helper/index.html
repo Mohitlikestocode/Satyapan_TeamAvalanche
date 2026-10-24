@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Helper mode · Satyapan</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="/static/fonts.css">
+<style>
+body{margin:0}
+*{box-sizing:border-box}
+a{color:#1F4E8C}a:hover{color:#163A6A}
+.sp{font-family:'Noto Sans','Noto Sans Devanagari',system-ui,sans-serif;color:#0B1F3A;background:#E6E9EE;-webkit-font-smoothing:antialiased}
+.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.col{display:flex;flex-direction:column;gap:14px;width:390px}
+.lbl{font-size:14px;font-weight:700;color:#344054;margin:0}
+.lbl span{font-weight:400;color:#475467}
+.ph{width:390px;background:#F6F7F9;border:1px solid #C9CFD8;border-radius:24px;overflow:hidden;display:flex;flex-direction:column}
+.hd{background:#fff;border-top:4px solid #0B1F3A;border-bottom:1px solid #E4E7EC;padding:8px 12px;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.wm{display:flex;align-items:center;gap:8px;text-decoration:none;color:#0B1F3A}
+.wm b{display:block;font-size:18px;line-height:1.05}
+.wm small{display:block;font-size:12px;color:#475467;line-height:1.25}
+.lang{display:flex;border:1px solid #D0D5DD;border-radius:6px;overflow:hidden}
+.lang button{border:0;background:#fff;color:#0B1F3A;font-family:inherit;font-size:13px;font-weight:600;min-height:44px;min-width:36px;padding:0 8px}
+.lang .on{background:#0B1F3A;color:#fff}
+.bd{padding:20px 16px 28px;display:flex;flex-direction:column;gap:14px}
+.card{background:#fff;border:1px solid #E4E7EC;border-radius:8px;padding:16px;display:flex;flex-direction:column;gap:10px}
+.t2{font-size:22px;line-height:1.35;font-weight:700;margin:0}
+.t3{font-size:17px;line-height:1.4;font-weight:700;margin:0}
+.tx{font-size:16px;line-height:1.6;margin:0}
+.sm{font-size:14px;line-height:1.5;color:#475467;margin:0}
+.xs{font-size:13px;line-height:1.45;color:#475467;margin:0}
+.btn{min-height:52px;border-radius:8px;font-family:inherit;font-size:17px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:10px;padding:0 16px;width:100%;text-decoration:none;cursor:pointer}
+.bp{background:#1F4E8C;color:#fff;border:1px solid #1F4E8C}
+.bs{background:#fff;color:#1F4E8C;border:1px solid #1F4E8C}
+.bn{background:#0B1F3A;color:#fff;border:1px solid #0B1F3A}
+.bq{background:#fff;color:#0B1F3A;border:1px solid #D0D5DD}
+.chip{min-height:48px;border:1px solid #D0D5DD;border-radius:6px;background:#fff;color:#0B1F3A;font-family:inherit;font-size:15px;padding:0 14px;display:inline-flex;align-items:center;gap:6px}
+.chip.on{border:2px solid #1F4E8C;background:#EEF3FA;color:#1F4E8C;font-weight:700}
+.ta{font-family:inherit;font-size:16px;line-height:1.6;color:#0B1F3A;border:1px solid #98A2B3;border-radius:8px;padding:12px;min-height:110px;width:100%;resize:vertical;background:#fff}
+.inp{font-family:inherit;font-size:16px;min-height:52px;border:1px solid #98A2B3;border-radius:8px;padding:0 12px;color:#0B1F3A;background:#fff;width:100%}
+.vb{border-radius:8px;padding:16px;display:flex;gap:14px;align-items:flex-start;border:1px solid}
+.vi{width:48px;height:48px;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;flex:none}
+.vi .i{width:28px;height:28px}
+.vw{font-size:20px;font-weight:800;letter-spacing:.03em;margin:0;line-height:1.25}
+.vs{font-size:17px;font-weight:600;margin:4px 0 0;line-height:1.4;color:#0B1F3A}
+.vr{background:#FEF3F2;border-color:#F4B4AE}.vr .vw{color:#B42318}.vr .vi{background:#B42318}
+.kv{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:10px 0;border-top:1px solid #EAECF0;font-size:15px}
+.kv .k{color:#475467;flex:none}
+.kv .v{font-weight:600;text-align:right;word-break:break-word}
+.mono{font-family:ui-monospace,'SFMono-Regular',Menlo,Consolas,monospace;font-size:14px;word-break:break-all}
+.bad{color:#B42318}
+.off{background:#F5F8FC;border:1px solid #C7D5EA;border-radius:8px;padding:14px;display:flex;flex-direction:column;gap:6px}
+.li{display:flex;gap:10px;align-items:flex-start;font-size:15px;line-height:1.5}
+.li .i{width:18px;height:18px;margin-top:2px;color:#B42318}
+.big{min-height:140px;border:2px solid #0B1F3A;border-radius:10px;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;font-family:inherit;font-size:20px;font-weight:700;color:#0B1F3A;text-decoration:none}
+.big .i{width:40px;height:40px;color:#1F4E8C}
+</style>
+<link rel="stylesheet" href="/static/site.css">
+<script src="/static/site.js" defer></script>
+<script src="/static/pages.js" defer></script>
+</head>
+<body data-page="helper" data-kind="cols">
+<div class="sp screens"><div class="screen"><div class="ph">
+<header class="hd" style="background: #0B1F3A; border-bottom: 0">
+<span class="wm" style="color: #fff"><svg aria-hidden="true" height="32" viewBox="0 0 24 24" width="32"><path d="M12 2 4 5v6c0 5.2 3.4 9.4 8 11 4.6-1.6 8-5.8 8-11V5z" fill="#fff"></path><path d="m8.4 12.2 2.5 2.5 4.8-5" fill="none" stroke="#0B1F3A" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg><span><b>Helper mode</b><small style="color: #C9D3E1">Satyapan · no login</small></span></span>
+<div aria-label="Language" data-tool="lang" class="lang" role="group" style="border-color: #5A6B85"><button aria-pressed="false">EN</button><button aria-pressed="true" class="on" style="background: #fff; color: #0B1F3A">हिन्दी</button></div>
+</header><nav aria-label="Main" class="snav"><a href="/">Home</a><a href="/check">Check</a><a href="/tools">Is this real?</a><a href="/learn">Learn</a><a href="/how-it-works">How it works</a></nav>
+<div class="bd">
+<div style="display: flex; justify-content: space-between; align-items: center"><p class="t3">Person 3 of 5</p><span class="xs">Queue today</span></div>
+<div aria-hidden="true" style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px"><span style="height: 8px; border-radius: 4px; background: #1F4E8C"></span><span style="height: 8px; border-radius: 4px; background: #1F4E8C"></span><span style="height: 8px; border-radius: 4px; background: #0B1F3A; outline: 2px solid #1F4E8C; outline-offset: 2px"></span><span style="height: 8px; border-radius: 4px; background: #D0D5DD"></span><span style="height: 8px; border-radius: 4px; background: #D0D5DD"></span></div>
+<h1 class="t2">Helping someone? Check one item at a time.</h1>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px">
+<a class="big" data-todo="1" href="#"><svg aria-hidden="true" class="i" viewBox="0 0 24 24"><rect height="18" rx="2" width="18" x="3" y="3"></rect><circle cx="9" cy="9" r="2"></circle><path d="m21 15-3.09-3.09a2 2 0 0 0-2.82 0L6 21"></path></svg>Screenshot</a>
+<a class="big" data-todo="1" href="#"><svg aria-hidden="true" class="i" viewBox="0 0 24 24"><rect height="7" rx="1" width="7" x="3" y="3"></rect><rect height="7" rx="1" width="7" x="14" y="3"></rect><rect height="7" rx="1" width="7" x="3" y="14"></rect><path d="M14 14h3v3M21 14v.01M14 21h7v-4"></path></svg>QR code</a>
+<a class="big" data-todo="1" href="#"><svg aria-hidden="true" class="i" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>Number</a>
+<a class="big" data-todo="1" href="#"><svg aria-hidden="true" class="i" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>Message</a>
+</div>
+<p class="sm">Nothing is saved between people. Results are read aloud in the person's language.</p>
+<button class="btn bq">End session</button>
+</div>
+</div></div><footer class="sfoot"><p><b>Satyapan · सत्यापन</b></p><p>Independent student project. Not affiliated with any government body, bank or company. Advisory only: it never blocks, pays or files anything for you.</p><p><b>Already lost money? Call <a href="tel:1930">1930</a>.</b></p></footer></div>
+</body></html>

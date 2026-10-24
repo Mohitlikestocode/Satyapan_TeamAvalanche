@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Check · Satyapan</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="/static/fonts.css">
+<style>
+body{margin:0}
+*{box-sizing:border-box}
+a{color:#1F4E8C}a:hover{color:#163A6A}
+.sp{font-family:'Noto Sans','Noto Sans Devanagari',system-ui,sans-serif;color:#0B1F3A;background:#E6E9EE;-webkit-font-smoothing:antialiased}
+.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.col{display:flex;flex-direction:column;gap:14px;width:390px}
+.lbl{font-size:14px;font-weight:700;color:#344054;margin:0}
+.lbl span{font-weight:400;color:#475467}
+.ph{width:390px;background:#F6F7F9;border:1px solid #C9CFD8;border-radius:24px;overflow:hidden;display:flex;flex-direction:column}
+.hd{background:#fff;border-top:4px solid #0B1F3A;border-bottom:1px solid #E4E7EC;padding:8px 12px;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.wm{display:flex;align-items:center;gap:8px;text-decoration:none;color:#0B1F3A}
+.wm b{display:block;font-size:18px;line-height:1.05}
+.wm small{display:block;font-size:12px;color:#475467;line-height:1.25}
+.tools{display:flex;gap:6px;align-items:center}
+.lang{display:flex;border:1px solid #D0D5DD;border-radius:6px;overflow:hidden}
+.lang button{border:0;background:#fff;color:#0B1F3A;font-family:inherit;font-size:13px;font-weight:600;min-height:44px;min-width:36px;padding:0 8px}
+.lang .on{background:#0B1F3A;color:#fff}
+.bd{padding:20px 16px 28px;display:flex;flex-direction:column;gap:16px}
+.card{background:#fff;border:1px solid #E4E7EC;border-radius:8px;padding:16px;display:flex;flex-direction:column;gap:10px}
+.t2{font-size:22px;line-height:1.35;font-weight:700;margin:0}
+.t3{font-size:17px;line-height:1.4;font-weight:600;margin:0}
+.tx{font-size:16px;line-height:1.6;margin:0}
+.sm{font-size:14px;line-height:1.5;color:#475467;margin:0}
+.xs{font-size:13px;line-height:1.45;color:#475467;margin:0}
+.sec{font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#475467;margin:4px 0 0}
+.btn{min-height:52px;border-radius:8px;font-family:inherit;font-size:17px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:10px;padding:0 18px;width:100%;text-decoration:none;cursor:pointer}
+.bp{background:#1F4E8C;color:#fff;border:1px solid #1F4E8C}
+.bs{background:#fff;color:#1F4E8C;border:1px solid #1F4E8C}
+.bq{background:#fff;color:#0B1F3A;border:1px solid #D0D5DD}
+.opt{background:#fff;border:1px solid #D0D5DD;border-radius:8px;min-height:64px;padding:10px 12px;display:flex;align-items:center;gap:12px;text-decoration:none;color:#0B1F3A;font-family:inherit;width:100%;text-align:left}
+.opt.on{border:2px solid #1F4E8C;background:#F5F8FC}
+.opt .ic{width:40px;height:40px;border-radius:6px;background:#EEF3FA;color:#1F4E8C;display:flex;align-items:center;justify-content:center;flex:none}
+.opt b{display:block;font-size:16px;line-height:1.3}
+.opt small{display:block;font-size:13px;color:#475467;line-height:1.35}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{min-height:44px;border:1px solid #D0D5DD;border-radius:6px;background:#fff;color:#0B1F3A;font-family:inherit;font-size:15px;padding:0 12px;display:inline-flex;align-items:center;gap:6px}
+.chip.on{border-color:#1F4E8C;background:#EEF3FA;color:#1F4E8C;font-weight:600}
+.cb{display:flex;gap:12px;align-items:flex-start;font-size:15px;line-height:1.5;min-height:44px}
+.cb input{width:22px;height:22px;margin:2px 0 0;accent-color:#1F4E8C;flex:none}
+.li{display:flex;gap:10px;align-items:flex-start;font-size:15px;line-height:1.5}
+.li .i{color:#1F4E8C;margin-top:2px;width:18px;height:18px}
+.chk{display:flex;gap:14px;align-items:flex-start;padding:14px 0;border-top:1px solid #EAECF0}
+.dot{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex:none}
+.d-done{background:#067647;color:#fff}
+.d-now{background:#fff;color:#1F4E8C;border:2px solid #1F4E8C}
+.d-wait{background:#fff;border:2px solid #D0D5DD;color:#98A2B3}
+.d-skip{background:#F2F4F7;color:#667085;border:1px dashed #98A2B3}
+.chk b{display:block;font-size:16px;line-height:1.35}
+.chk p{margin:2px 0 0;font-size:14px;line-height:1.5;color:#475467}
+.st{display:inline-block;font-size:12.5px;font-weight:700;margin-top:4px;letter-spacing:.02em}
+.mono{font-family:ui-monospace,'SFMono-Regular',Menlo,Consolas,monospace;font-size:14px}
+.file{background:#fff;border:1px solid #D0D5DD;border-radius:8px;padding:10px 12px;display:flex;align-items:center;gap:12px}
+</style>
+<link rel="stylesheet" href="/static/site.css">
+<script src="/static/site.js" defer></script>
+<script src="/static/pages.js" defer></script>
+</head>
+<body data-page="check" data-kind="cols">
+<div class="sp screens"><div class="screen"><div class="ph">
+<header class="hd">
+<a class="wm" href="/"><svg aria-hidden="true" height="32" viewBox="0 0 24 24" width="32"><path d="M12 2 4 5v6c0 5.2 3.4 9.4 8 11 4.6-1.6 8-5.8 8-11V5z" fill="#0B1F3A"></path><path d="m8.4 12.2 2.5 2.5 4.8-5" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg><span><b>Satyapan</b><small>सत्यापन</small></span></a>
+<div class="tools">
+<div aria-label="Language" data-tool="lang" class="lang" role="group"><button aria-pressed="true" class="on">EN</button><button aria-pressed="false">हिन्दी</button></div>
+<div aria-label="Text size" data-tool="size" class="lang" role="group"><button aria-pressed="true" class="on">A</button><button aria-pressed="false" style="font-size: 16px">A+</button></div>
+</div>
+</header><nav aria-label="Main" class="snav"><a href="/">Home</a><a href="/check">Check</a><a href="/tools">Is this real?</a><a href="/learn">Learn</a><a href="/how-it-works">How it works</a></nav>
+<div class="bd">
+<div style="display: flex; flex-direction: column; gap: 4px">
+<h1 class="t2">What do you want to check?</h1>
+<p lang="hi" style="margin: 0; font-size: 16px; color: #1F4E8C; font-weight: 600">क्या जाँचना है?</p>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<button aria-pressed="true" class="opt on"><span class="ic"><svg aria-hidden="true" class="i" viewBox="0 0 24 24"><rect height="18" rx="2" width="18" x="3" y="3"></rect><circle cx="9" cy="9" r="2"></circle><path d="m21 15-3.09-3.09a2 2 0 0 0-2.82 0L6 21"></path></svg></span><span style="flex: 1"><b>Screenshot or photo</b><small>Payment screen, message, ad, trading app</small></span></button>
+<div class="file" style="margin-left: 12px">
+<svg aria-hidden="true" class="i" viewBox="0 0 24 24" style="color: #067647"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg>
+<span style="flex: 1; min-width: 0"><span style="display: block; font-size: 15px; font-weight: 600">vip_profits_qr.jpg</span><span class="xs">214 KB · added 10:41 IST</span></span>
+<button aria-label="Remove file" class="chip" style="min-width: 44px; justify-content: center; padding: 0"><svg aria-hidden="true" class="i" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"></path></svg></button>
+</div>
+<button class="opt"><span class="ic"><svg aria-hidden="true" class="i" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8M16 13H8M16 17H8"></path></svg></span><span style="flex: 1"><b>PDF</b><small>Invoice, loan letter, notice</small></span></button>
+<button class="opt"><span class="ic"><svg aria-hidden="true" class="i" viewBox="0 0 24 24"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"></path><circle cx="12" cy="13" r="3"></circle></svg></span><span style="flex: 1"><b>Scan or upload a QR code</b><small>Opens your camera</small></span></button>
+<button class="opt"><span class="ic"><svg aria-hidden="true" class="i" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></span><span style="flex: 1"><b>Paste a link</b><small>We read the address. We do not open it.</small></span></button>
+<button class="opt"><span class="ic"><svg aria-hidden="true" class="i" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></span><span style="flex: 1"><b>Paste a message or phone number</b><small>SMS, WhatsApp, caller number</small></span></button>
+<button class="opt"><span class="ic"><svg aria-hidden="true" class="i" viewBox="0 0 24 24"><rect height="12" rx="3" width="6" x="9" y="2"></rect><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v3"></path></svg></span><span style="flex: 1"><b>Voice note</b><small>We turn it into text and show you first</small></span></button>
+</div>
+<div style="display: flex; flex-direction: column; gap: 10px">
+<h2 class="sec">What is this about? <span style="text-transform: none; letter-spacing: 0; font-weight: 500">(optional)</span></h2>
+<div class="chips">
+<button class="chip">Payment screenshot</button>
+<button class="chip">Invoice or bank change</button>
+<button aria-pressed="true" class="chip on"><svg aria-hidden="true" class="i" viewBox="0 0 24 24" style="width: 16px; height: 16px"><path d="M20 6 9 17l-5-5"></path></svg>Investment offer</button>
+<button class="chip">Link or QR</button>
+<button class="chip">Customer care number</button>
+<button class="chip">Other</button>
+</div>
+<p class="xs">This helps us pick the right checks. It does not decide the result.</p>
+</div>
+<section class="card" style="gap: 12px; border-color: #C7D5EA">
+<h2 class="t3">Before we check</h2>
+<div class="li"><svg aria-hidden="true" class="i" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"></path></svg>We will read the text, decode any QR code, look for signs of editing or AI generation, and check who receives the money.</div>
+<div class="li"><svg aria-hidden="true" class="i" viewBox="0 0 24 24"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>Your file is deleted after checking. We keep only the result.</div>
+<div class="li"><svg aria-hidden="true" class="i" viewBox="0 0 24 24"><rect height="12" rx="3" width="6" x="9" y="2"></rect><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path></svg>Voice is sent to a speech service (Sarvam) only if you agree.</div>
+<hr style="border: 0; height: 1px; background: #EAECF0; margin: 2px 0"/>
+<label class="cb"><input type="checkbox"/>Read the summary aloud using Sarvam voice</label>
+<label class="cb"><input checked="" type="checkbox"/>I understand</label>
+</section>
+<p class="sm" style="display: flex; gap: 8px; align-items: flex-start; color: #0B1F3A; font-weight: 500"><svg aria-hidden="true" class="i" viewBox="0 0 24 24" style="width: 18px; height: 18px; margin-top: 1px"><rect height="11" rx="2" width="18" x="3" y="11"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>Satyapan will never ask for your OTP, PIN or password.</p>
+<a class="btn bp" href="/check/progress">Check now <span lang="hi" style="font-weight: 500; opacity: .85">/ जाँच करें</span></a>
+<section style="display: flex; flex-direction: column; gap: 4px; padding-top: 4px">
+<h2 class="sec">Try a sample</h2>
+<p class="xs">Made-up examples for testing. No real people or accounts.</p>
+<a href="/result/qr" style="font-size: 15px; font-weight: 600; min-height: 44px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #EAECF0">Stock-tips QR code <span class="xs" style="font-weight: 500">Synthetic</span></a>
+<a href="/result/invoice" style="font-size: 15px; font-weight: 600; min-height: 44px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #EAECF0">Invoice with changed bank <span class="xs" style="font-weight: 500">Synthetic</span></a>
+<a href="/result/screenshot" style="font-size: 15px; font-weight: 600; min-height: 44px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #EAECF0">Payment screenshot <span class="xs" style="font-weight: 500">Synthetic</span></a>
+<a href="/tools" style="font-size: 15px; font-weight: 600; min-height: 44px; display: flex; align-items: center; justify-content: space-between">Amazon refund message <span class="xs" style="font-weight: 500">Synthetic</span></a>
+</section>
+</div>
+</div></div><footer class="sfoot"><p><b>Satyapan · सत्यापन</b></p><p>Independent student project. Not affiliated with any government body, bank or company. Advisory only: it never blocks, pays or files anything for you.</p><p><b>Already lost money? Call <a href="tel:1930">1930</a>.</b></p></footer></div>
+</body></html>
