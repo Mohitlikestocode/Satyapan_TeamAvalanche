@@ -1,0 +1,27 @@
+## Digital arrest (English)
+This is Inspector Verma, Mumbai Cyber Cell. A SIM card in your name was used for illegal activity. Do not disconnect this video call or inform anyone. Transfer Rs 90,000 to the RBI verification account to clear your name.
+
+## Digital arrest (Hindi)
+आपके नाम से एक पार्सल पकड़ा गया है जिसमें ड्रग्स मिले हैं। यह सीबीआई अधिकारी का कॉल है। वीडियो कॉल पर बने रहें और किसी को न बताएँ, वरना गिरफ़्तारी होगी।
+
+## KYC block with a link (English)
+Dear customer, your SBI YONO account is blocked due to pending KYC. Update PAN now at http://sbi-yono-kyc.in/update or your account will be closed today.
+
+## Lottery with a fee to claim (English)
+Congratulations! You have won Rs 25,00,000 in the KBC lucky draw. To claim, pay the processing fee of Rs 12,500 to UPI id kbc.claim@oksbi.
+
+## OLX army buyer (Hinglish)
+Bhai main Army mein hoon, aapka scooty pasand aaya. Advance bhej raha hoon, aap bas QR scan karke apna UPI PIN daalo, paise aa jayenge.
+
+## Guaranteed returns (English)
+Sir trading mein guaranteed profit, daily 3% return. Telegram group join karo aur payment karo.
+
+## Genuine bank alert
+Rs 2,500.00 debited from A/c XX1234 on 22-10-26 to VPA swiggy@icici. If not you, call your bank. -SBI
+
+## Genuine OTP message
+Your OTP for login is 482910. Do not share this with anyone, including bank staff. Valid for 10 minutes.
+
+## Genuine delivery (Hinglish)
+Aapka Flipkart order delivered ho gaya hai. Koi dikkat ho to app mein return request daal sakte hain.
+

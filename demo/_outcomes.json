@@ -1,0 +1,140 @@
+[
+ [
+  "message",
+  "Digital arrest (English)",
+  "SUSPICIOUS",
+  0.1
+ ],
+ [
+  "message",
+  "Digital arrest (Hindi)",
+  "SUSPICIOUS",
+  0.1
+ ],
+ [
+  "message",
+  "KYC block with a link (English)",
+  "SUSPICIOUS",
+  0.1
+ ],
+ [
+  "message",
+  "Lottery with a fee to claim (English)",
+  "HIGH_RISK",
+  0.1
+ ],
+ [
+  "message",
+  "OLX army buyer (Hinglish)",
+  "SUSPICIOUS",
+  0.1
+ ],
+ [
+  "message",
+  "Guaranteed returns (English)",
+  "SUSPICIOUS",
+  0.1
+ ],
+ [
+  "message",
+  "Genuine bank alert",
+  "NO_RED_FLAGS",
+  0.1
+ ],
+ [
+  "message",
+  "Genuine OTP message",
+  "NO_RED_FLAGS",
+  0.0
+ ],
+ [
+  "message",
+  "Genuine delivery (Hinglish)",
+  "NO_RED_FLAGS",
+  0.2
+ ],
+ [
+  "link",
+  "Look-alike bank link",
+  "SUSPICIOUS",
+  0.0
+ ],
+ [
+  "link",
+  "Real bank site",
+  "NO_RED_FLAGS",
+  0.0
+ ],
+ [
+  "qr",
+  "plain_link__clean",
+  "SUSPICIOUS",
+  0.3
+ ],
+ [
+  "qr",
+  "collect_trap__clean",
+  "SUSPICIOUS",
+  0.1
+ ],
+ [
+  "qr",
+  "broker_valid__clean",
+  "NO_RED_FLAGS",
+  0.3
+ ],
+ [
+  "qr",
+  "stock_tips_personal__clean",
+  "SUSPICIOUS",
+  0.2
+ ],
+ [
+  "screenshot",
+  "edited_000002.jpg",
+  "NO_RED_FLAGS",
+  1.8
+ ],
+ [
+  "screenshot",
+  "edited_000003.jpg",
+  "SUSPICIOUS",
+  1.2
+ ],
+ [
+  "screenshot",
+  "edited_000004.jpg",
+  "NO_RED_FLAGS",
+  1.4
+ ],
+ [
+  "screenshot",
+  "genuine_000000.jpg",
+  "NO_RED_FLAGS",
+  0.9
+ ],
+ [
+  "screenshot",
+  "genuine_000001.jpg",
+  "SUSPICIOUS",
+  2.3
+ ],
+ [
+  "screenshot",
+  "genuine_000006.jpg",
+  "NO_RED_FLAGS",
+  1.8
+ ],
+ [
+  "voice",
+  "scam_hi",
+  "SUSPICIOUS",
+  8.8
+ ],
+ [
+  "voice",
+  "normal_en",
+  "NO_RED_FLAGS",
+  7.3
+ ]
+]
