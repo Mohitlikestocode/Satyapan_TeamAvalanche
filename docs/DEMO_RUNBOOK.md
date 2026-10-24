@@ -45,4 +45,4 @@ To start the counters (`/impact`, Scam Watch, "My checks" history) at zero, stop
 | Internet down | the site, models and rules all run locally; only spoken verdicts and the public tunnel need internet |
 
 ## Answers to have ready
-See `docs/JUDGE_QA.md`. The three to rehearse: what we miss (about 3 in 8 unseen scams; 6 in 10 edited screenshots; phone-line voices), what we did not measure (real phone screenshots), and why the reviewer sign-in is a demo (no real accounts yet).
+See `docs/JUDGE_QA.md`. The three to rehearse: what we miss (scams that read like ordinary messages; 6 in 10 edited screenshots; phone-line voices), what we did not measure (real phone screenshots), and why the reviewer sign-in is a demo (no real accounts yet).

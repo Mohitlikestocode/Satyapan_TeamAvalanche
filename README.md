@@ -27,7 +27,8 @@ Then open the site and:
 2. Upload any QR image (`python tools/make_qr_kit.py kit/qr` makes real, scannable ones with phone-style damage).
 3. Upload a payment screenshot (`python tools/make_payment_screens.py out --n 20` makes synthetic ones) or a voice note.
 4. Press **हिन्दी** (top right), or open any page with `?lang=hi`: the shell, check page, reasons and spoken verdict switch to Hindi.
-5. Press **Listen** (Sarvam voice), **Ask family** (WhatsApp share), **Wrong result?** (goes to a real review queue) or **Report** (signed evidence pack).
+5. **Understand first.** On every result, above our verdict, a panel shows what we read from your message, screenshot, PDF or voice note. Pick any of 11 Indian languages and press **Explain**: Sarvam translates it (via English for accuracy), then shows our verdict in the same language, each with a **Listen** button. It says plainly that this is a suggestion and the message may or may not be a scam.
+6. Press **Listen** (Sarvam voice), **Ask family** (WhatsApp share), **Wrong result?** (goes to a real review queue) or **Report** (signed evidence pack).
 
 `demo/` has ready-made inputs (scam messages, QR codes, payment screens, voice notes) with the results we measured, including the ones we miss; `docs/DEMO_RUNBOOK.md` is the demo-day script. The models (screenshot tamper detector, voice detectors, scam-message classifier) are optional downloads that go in `var/models/`: see [section 7](#7-install-and-run). Without them the site still runs and says which checks it could not do.
 
@@ -54,7 +55,7 @@ The jury scores each row 1 to 5, weighted. For every row: what it asks, what we 
 | **1. Problem and user understanding (20)** | Named users and the actual UPI fraud patterns in India: digital arrest, KYC-block links, "refund" collect-request traps, advance-fee loans and lotteries, task-for-pay jobs, fake army buyers on OLX, family-emergency money asks, changed-bank-account invoices, cloned voices. The rule catalogue and every reason text come from these patterns. | `data/kit/*.jsonl`, [`src/satyapan/layers/l4_rules/india.py`](src/satyapan/layers/l4_rules/india.py), `/learn` |
 | **2. Deployability and scale (15)** | Runs from a plain `uvicorn` command on any machine with Python (Docker and Caddy files exist but were never built, see `docs/ops.md`), hardening middleware (CSP, size caps, rate limits), health check, backup, deploy check, measured load test, pilot sign-up form for shops, printable poster with QR, and a runbook saying who runs it and what a pilot needs. | [`docs/ops.md`](docs/ops.md), `scripts/loadtest.py`, `scripts/deploy_check.py`, `/pilot`, `/poster` |
 | **3. Communication and Q&A (10)** | "What we miss" and "what we don't know" are written down: [`docs/JUDGE_QA.md`](docs/JUDGE_QA.md). | `docs/JUDGE_QA.md` |
-| **4. Live user journey (25)** | The whole path on one flow: the scam reaches the user (any of six input kinds, or the Telegram bot) → plain alert with reasons → the user acts (listen, ask family, report, or dispute) → a human reviewer decides → the registry updates. The judge can vary the input at every step. | `/check`, `/console`, `src/satyapan/bots/telegram_bot.py` |
+| **4. Live user journey (25)** | The whole path on one flow: the scam reaches the user (any of six input kinds, or the Telegram bot) → **what it actually says, explained in the user's own language (11 Indian languages, Sarvam) before any verdict** → plain alert with reasons → the user acts (listen, ask family, report, or dispute) → a human reviewer decides → the registry updates. The judge can vary the input at every step. | `/check`, `/console`, `src/satyapan/bots/telegram_bot.py` |
 | **5. Adversarial robustness (20)** | `/attack` applies real perturbations (spacing, look-alike letters, split UPI IDs, JPEG, shrinking, phone-line audio) and shows the measured drift. We found that look-alike letters let most flagged scams through the rules, so we added a text hook that undoes them, and report the new false-alarm cost too. | `/attack`, `docs/results/attack_text.json`, [`docs/JUDGE_QA.md`](docs/JUDGE_QA.md) |
 | **6. Responsible AI and handling mistakes (10)** | Every alert says *why it fired*, from pre-written reviewed templates (nothing generated from the uploaded media). A genuine user flagged by mistake presses **Wrong result?**, gets a reference number and a status page; reviewers need a second person to add anything to the registry. Hindi text is flagged "machine-drafted" until a fluent reviewer signs it off. | `/wrong`, `/console`, `docs/disclosure/` |
 
@@ -88,13 +89,14 @@ Everything below is copied from [`docs/results/`](docs/results) and reproduced b
 
 | Test set | Scams flagged | Genuine flagged | Status |
 |---|---|---|---|
-| **`holdout_community.jsonl`** (Tanish: 40 scam + 40 genuine, English/Hindi/Hinglish, written without reading the rules) | **26 / 40** (65%) | **0 / 40** | cleanest unseen figure; the rules alone get 19/40 |
-| Before the India-specific rules and the model | 7 / 40 | 0 / 40 | kept in `docs/results/text_holdout_before_india_rules.json` |
+| **`holdout_community.jsonl`** (Tanish: 40 scam + 40 genuine, English/Hindi/Hinglish, written without reading the rules) | **33 / 40** (82%) | **0 / 40** | **optimistic**: we looked at this file's failure categories while widening the rules and the synthetic training data, and one threshold was picked by a sweep that included it. A fresh blind set is the honest test. The rules alone get 19/40 |
+| Before the India-specific rules and the retrained model | 7 / 40 | 0 / 40 | kept in `docs/results/text_holdout_before_india_rules.json` |
+| After the India rules, with the original classifier | 26 / 40 | 0 / 40 | |
 | `holdout_traction.jsonl` (drafted by the same assistant that wrote the rules) | 36 / 40 | 0 / 40 | **optimistic**: not independent |
 | Development kit (`messages.jsonl`) | 38 / 38 | 2 / 33 | **optimistic**: the rules were written against it |
 
 Reproduce: `python -m satyapan.eval.report` (needs `var/models/scam_text/`).
-**Where we fail:** scams with no fixed wording (sextortion, fake loan apps, crypto pitches, fake payment screenshots sent as text). About 3 in 8 unseen scams are still missed. The classifier is only *shipped* because on the held-out file it flagged more scams with no extra false alarms (pre-registered rule in [`docs/models.md`](docs/models.md)); it adds 2 false alarms on the development kit.
+**Where we fail:** scams that look like ordinary messages (a payment screenshot sent as text, a FASTag top-up link, a bare "your bill is due" call) are still missed, and the classifier was trained on mostly synthetic Indian scam wording, so real-world performance is lower than this file suggests. The classifier is only *shipped* because on the held-out file it flagged more scams with no extra false alarms (pre-registered rule in [`docs/models.md`](docs/models.md)); it adds 2 false alarms on the development kit.
 
 ### Payment screenshots
 
@@ -142,7 +144,7 @@ Reproduce: `python -m satyapan.eval.report` (needs `var/models/scam_text/`).
 * Cases are purged after **24 h** (7 days only if the user shares for review); **Delete this check** deletes immediately.
 * Visitors get one random cookie to count visits; no accounts, no names. Chat ids (Telegram) are stored only as salted hashes.
 * Limits: request size caps, optional rate limiting (`RATE_LIMIT=1`), strict Content-Security-Policy.
-* The text-to-speech call sends **only pre-written template sentences** to Sarvam, never the user's content.
+* **Sarvam**: spoken verdicts send only our pre-written sentences. The user's own text goes to Sarvam **only when they press Explain** (translation) or Listen on that translation; it is never stored or cached by us, and the extracted text is kept only in the user's own browser tab.
 * Moderator sign-in is a demo sign-in, **not real authentication** (say so to a judge).
 * Details: [`docs/disclosure/`](docs/disclosure) (data sources, licences, what each model was trained on).
 
@@ -200,7 +202,7 @@ python tools/make_payment_screens.py out --n 200    # synthetic payment screens 
 ## 9. Honest limits
 
 * Real-screenshot performance is **not evaluated**; screenshot numbers are on synthetic screens.
-* The message classifier misses roughly 3 in 8 unseen scams; the held-out set is 80 messages, so intervals are wide.
+* The message numbers come from an 80-message file we then used to improve the system; a fresh blind set has not been run yet, and intervals are wide.
 * Hindi text is machine-drafted and needs a fluent reviewer's sign-off.
 * No official list of valid UPI handles exists, so we never confirm a payee as registered.
 * WhatsApp needs paid business approval, so the live chat channel is Telegram.

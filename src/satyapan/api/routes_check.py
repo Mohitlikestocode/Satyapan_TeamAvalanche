@@ -78,7 +78,7 @@ async def start_check(
     db.save_case(res, topic)
     REGISTRY.emit("check", {**event, "mode": "engine", "tier": res.tier.value})
     return CheckReceipt(id=case_id, kind=kind, speak_aloud=speak_aloud, result_url=f"/case/{case_id}", mode="engine",
-                        tier=res.tier.value, notice="Checked with the payee and red-flag rules.")
+                        tier=res.tier.value, notice="Checked with the payee and red-flag rules.", text_read=res.text_read or None)
 
 
 @router.get("/case/{case_id}")

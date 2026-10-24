@@ -43,3 +43,4 @@ class CheckReceipt(BaseModel):
     mode: str = "demo-sample"  # "engine" when the real checks ran
     tier: str | None = None
     notice: str = "Demo: no detection has run. This points to a sample result."
+    text_read: str | None = None  # what we read from the input (message text, screenshot OCR, PDF text, voice transcript); not stored by us

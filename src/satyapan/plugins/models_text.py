@@ -22,7 +22,11 @@ def scam_like(text: str, found) -> LayerResult | None:
     p = m.prob([normalise(text).text[:2000]])[0]
     if p <= float(cfg["threshold"]):
         return None
-    return LayerResult(layer=Layer.L4, signals=[Signal(layer=Layer.L4, code="ML_TEXT_SCAM_LIKE", strength=Strength.WEAK_SUSPICIOUS)],
+    # above the strong threshold (no false alarm among the teammate-written genuine messages) the wording alone is enough to raise a flag;
+    # between the two thresholds it is one weak sign that needs company (a money ask or a second sign)
+    strong = cfg.get("strong_threshold")
+    strength = Strength.STRONG_SUSPICIOUS if (strong is not None and p > float(strong)) else Strength.WEAK_SUSPICIOUS
+    return LayerResult(layer=Layer.L4, signals=[Signal(layer=Layer.L4, code="ML_TEXT_SCAM_LIKE", strength=strength)],
                        model_versions={"scam_text": f"e5-small-{cfg.get('mode')}-{cfg.get('made')}"}, internal={"label_key": "ml_text", "p": p})
 
 

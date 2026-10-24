@@ -4,8 +4,8 @@
  "split": "80 messages",
  "held_out": false,
  "hardware": "CPU: Intel64 Family 6 Model 170 Stepping 4, GenuineIntel (Windows)",
- "date": "2026-10-24 22:59 UTC",
- "elapsed_s": 2.5,
+ "date": "2026-10-24 23:48 UTC",
+ "elapsed_s": 1.89,
  "reproduce": "python -m satyapan.eval.report",
  "rows": [
   {
@@ -30,11 +30,11 @@
    "name": "Whole system as deployed",
    "baseline": false,
    "tpr": {
-    "k": 36,
+    "k": 37,
     "n": 40,
-    "rate": 0.9,
-    "lo": 0.7694792561952611,
-    "hi": 0.9604211124044252
+    "rate": 0.925,
+    "lo": 0.8013546984090248,
+    "hi": 0.9741644432281419
    },
    "fpr": {
     "k": 0,
@@ -48,11 +48,11 @@
    "name": "Whole system: HIGH RISK only",
    "baseline": false,
    "tpr": {
-    "k": 4,
+    "k": 5,
     "n": 40,
-    "rate": 0.1,
-    "lo": 0.03957888759557486,
-    "hi": 0.23052074380473897
+    "rate": 0.125,
+    "lo": 0.05459419773541284,
+    "hi": 0.26112420670238146
    },
    "fpr": {
     "k": 0,
@@ -176,11 +176,11 @@
    "name": "family:electricity",
    "row": "Whole system as deployed",
    "tpr": {
-    "k": 2,
+    "k": 3,
     "n": 3,
-    "rate": 0.6666666666666666,
-    "lo": 0.2076549551264879,
-    "hi": 0.9385096847238394
+    "rate": 1.0,
+    "lo": 0.43849391955098227,
+    "hi": 1.0
    },
    "fpr": null
   },
@@ -722,11 +722,11 @@
    "name": "lang:hinglish",
    "row": "Whole system as deployed",
    "tpr": {
-    "k": 6,
+    "k": 7,
     "n": 7,
-    "rate": 0.8571428571428571,
-    "lo": 0.48686549668097007,
-    "hi": 0.9743210440510253
+    "rate": 1.0,
+    "lo": 0.6456611570247934,
+    "hi": 1.0
    },
    "fpr": {
     "k": 0,
@@ -738,15 +738,6 @@
   }
  ],
  "failures": [
-  {
-   "kind": "missed",
-   "text": "Aapka electricity connection aaj raat 9:30 baje kat jayega kyunki last bill update nahi hua. Turant is number par call karein 98XXXXXX10 aur officer se baat kar",
-   "tier": "NO_RED_FLAGS",
-   "codes": [
-    "NO_PAYEE_FOUND",
-    "NO_FLAGS_NOT_GUARANTEE"
-   ]
-  },
   {
    "kind": "missed",
    "text": "Dear sir, I am from TRAI. Your mobile number will be disconnected in 2 hours due to illegal activity. Press 9 to speak to the officer.",

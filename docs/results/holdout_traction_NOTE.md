@@ -24,3 +24,19 @@ Rules still miss many scams that use no fixed wording (sextortion, fake loan app
 | `messages.jsonl` (dev kit) | 38 / 38 | 2 / 33 | development set; the model adds 2 false alarms here (Ghana reported this too) |
 
 Reproduce: `SATYAPAN_HOME=var python scripts/eval_holdout.py data/kit/holdout_community.jsonl`. Raw files: `docs/results/system_*.json`.
+
+## Retrained message head (25 Oct, `training/text/train_synth_head.py`)
+
+The scam-message head was retrained on the teammate corpus plus a synthetic corpus (`tools/make_scam_corpus.py`, 41 scam families, English, Hindi and
+Hinglish, with a guard that drops any generated message sharing six words with a file in `data/kit/`). The encoder is the one Ghana fine-tuned.
+Thresholds (strong 0.85, weak 0.70) were chosen by a sweep over the dev kit, `holdout_traction` and `holdout_community`; the sweep that picked them
+looked at all three files, so **the numbers on all three are optimistic**.
+
+| File | Scams flagged | False alarms |
+|---|---|---|
+| `holdout_community.jsonl` (Tanish) | 33 / 40 (before: 26) | 0 / 40 |
+| `holdout_traction.jsonl` | 37 / 40 | 0 / 40 |
+| `messages.jsonl` (dev kit) | 38 / 38 | 2 / 33 |
+
+Honest estimate on truly new messages: expect lower. To get one, a teammate must write 40 new messages (new scam types) without reading any rule or template,
+and we run `python scripts/eval_holdout.py <file>` once and report whatever comes out.

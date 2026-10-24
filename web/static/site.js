@@ -164,6 +164,7 @@
           var label = state.file ? state.file.name : text.slice(0, 60);
           var t = ENGINE_TIERS[j.tier] || TIERS[j.result_url] || ["SAMPLE RESULT", "n"];
           remember({ id: j.id, kind: state.kind, label: label, at: Date.now(), url: j.result_url, tier: t[0], cls: t[1] });
+          try { sessionStorage.setItem("sp-read-" + j.id, JSON.stringify({ text: j.text_read || "", kind: state.kind })); } catch (e) { /* private mode: the page then says the text is not available */ }
           location.href = j.result_url;
         })
         .catch(function (x) { go.removeAttribute("aria-busy"); err.style.color = ""; err.textContent = "Could not start the check: " + x.message; });

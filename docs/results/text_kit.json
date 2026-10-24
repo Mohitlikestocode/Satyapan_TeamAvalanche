@@ -4,8 +4,8 @@
  "split": "71 messages",
  "held_out": false,
  "hardware": "CPU: Intel64 Family 6 Model 170 Stepping 4, GenuineIntel (Windows)",
- "date": "2026-10-24 22:59 UTC",
- "elapsed_s": 54.13,
+ "date": "2026-10-24 23:48 UTC",
+ "elapsed_s": 19.59,
  "reproduce": "python -m satyapan.eval.report",
  "rows": [
   {
@@ -48,11 +48,11 @@
    "name": "Whole system: HIGH RISK only",
    "baseline": false,
    "tpr": {
-    "k": 14,
+    "k": 17,
     "n": 38,
-    "rate": 0.3684210526315789,
-    "lo": 0.23384013155413794,
-    "hi": 0.5271632717573987
+    "rate": 0.4473684210526316,
+    "lo": 0.3014616531155089,
+    "hi": 0.6029397082091058
    },
    "fpr": {
     "k": 0,
@@ -105,11 +105,11 @@
    "row": "Whole system as deployed",
    "tpr": null,
    "fpr": {
-    "k": 0,
+    "k": 1,
     "n": 4,
-    "rate": 0.0,
-    "lo": 0.0,
-    "hi": 0.48990002040399916
+    "rate": 0.25,
+    "lo": 0.045586062644636216,
+    "hi": 0.6993639475573634
    }
   },
   {
@@ -165,11 +165,11 @@
    "row": "Whole system as deployed",
    "tpr": null,
    "fpr": {
-    "k": 1,
+    "k": 0,
     "n": 5,
-    "rate": 0.2,
-    "lo": 0.03622316096978745,
-    "hi": 0.6244717358814613
+    "rate": 0.0,
+    "lo": 0.0,
+    "hi": 0.43449149475208104
    }
   },
   {
@@ -374,7 +374,7 @@
  "failures": [
   {
    "kind": "false_alarm",
-   "text": "Sending you Rs 500 for dinner, my UPI is ravi.k@okaxis. Pay me back whenever.",
+   "text": "Demat account opening fee Rs 300. Pay at upi://pay?pa=acme.brk@validhdfc&pn=Acme%20Broking",
    "tier": "SUSPICIOUS",
    "codes": [
     "ML_TEXT_SCAM_LIKE",

@@ -40,6 +40,7 @@ class CaseResult:
     links: list[str] = field(default_factory=list)
     phones: list[str] = field(default_factory=list)
     layers_run: list[str] = field(default_factory=list)
+    text_read: str = ""       # what the check read from the input; handed to the visitor's own browser only, never saved
 
 
 def _run_hooks(hooks, *args) -> list[LayerResult]:
@@ -89,7 +90,7 @@ def analyse_text(text: str, kind: str = "message", topic: str = "", case_id: str
     return CaseResult(
         case_id=case_id, kind=kind, tier=out.tier, verdicts=verdicts,
         payees=[{"upi": u.vpa, "name": u.name or "", "amount": u.amount or ""} for u in found.upi],
-        links=found.urls[:5], phones=found.phones[:5], layers_run=names,
+        links=found.urls[:5], phones=found.phones[:5], layers_run=names, text_read=text[:3000],
     )
 
 
