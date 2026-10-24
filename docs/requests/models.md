@@ -21,6 +21,26 @@ The voice handler (`plugins/models_voice.py`) now gives a real result when the s
 test still passes in CI. On the demo server (voice stack installed) a voice upload returns `mode: "engine"`.
 No change needed now; if the test ever runs with the voice stack installed, it should accept `mode == "engine"` too.
 
+## 2b. Demo server MUST have OCR, or every screenshot is CAN'T TELL (important)
+
+Without an OCR engine `analyse_image` reads no text, the quality gate says "We could not read this file", and the edit sign is
+never shown. `rapidocr-onnxruntime` (the `.[ocr]` extra) has **no Python 3.13 build**. Either:
+- run the server on Python 3.11 or 3.12 and `pip install -e ".[ocr]"`, or
+- install Tesseract (`winget install --id UB-Mannheim.TesseractOCR -e` on Windows, `apt install tesseract-ocr tesseract-ocr-hin` on
+  Linux) and `pip install pytesseract`. On Windows, `plugins/models_ocr.py` finds Program Files\Tesseract-OCR by itself and uses the
+  English + Hindi data in `var/models/tessdata/` (we send that folder with the models).
+Measured on the GPU laptop with Tesseract: see `docs/results/screenshot_system.json`.
+Suggested core change (optional): `extract/ocr.py` could also try the newer `rapidocr` package, which supports Python 3.13.
+
+## 4. Payee rules flag genuine payment *receipts* (measured false alarms)
+
+On 150 genuine generated payment-success screenshots, the whole screenshot check flagged 23 as SUSPICIOUS; **14 of those came
+only from the payee rules** (`PAYEE_PERSONAL_ACCOUNT` + `PAYEE_UNVERIFIED`), because the screen shows money paid to a personal UPI ID
+(`docs/results/screenshot_system.json`, `false_alarm_reasons`). On a receipt the shopkeeper is the *receiver*; "pay this personal
+account" reasoning does not apply. Suggested core change: when `kind == "screenshot"` and the text says the payment already happened
+("Payment successful", "Paid to", "Money sent"), do not raise `PAYEE_PERSONAL_ACCOUNT`. This is the biggest false-alarm source for
+the shopkeeper journey.
+
 ## 3. Core `/check` page: link voice notes to the transcript-first page (optional)
 
 `/models/voice` shows the transcript for the visitor to correct before checking, as the `/check/voice` design promises.

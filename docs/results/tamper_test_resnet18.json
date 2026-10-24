@@ -1,0 +1,805 @@
+{
+ "split": "test",
+ "n": 4966,
+ "model": {
+  "tpr": {
+   "k": 954,
+   "n": 2511,
+   "rate": 0.37992831541218636,
+   "lo": 0.3611406194979411,
+   "hi": 0.39908284745918254
+  },
+  "fpr": {
+   "k": 130,
+   "n": 2455,
+   "rate": 0.05295315682281059,
+   "lo": 0.044772478692755,
+   "hi": 0.06253073270565311
+  },
+  "auroc": 0.6973763505747825,
+  "threshold": 0.9063524613843689,
+  "auroc_ci": [
+   0.6818506392646286,
+   0.7119198946225204
+  ]
+ },
+ "config": {
+  "encoder": "resnet18",
+  "size": [
+   384,
+   384
+  ],
+  "native": true,
+  "max_side": 1600
+ },
+ "threshold_from": "validation split",
+ "epoch": 2,
+ "seed": 7,
+ "target_fpr": 0.05,
+ "hardware": "NVIDIA GeForce RTX 4060 Laptop GPU",
+ "localisation_iou_on_edited": 0.3164378291603418,
+ "by_condition": {
+  "dark": {
+   "tpr": {
+    "k": 317,
+    "n": 766,
+    "rate": 0.41383812010443866,
+    "lo": 0.379473419726014,
+    "hi": 0.44906273628322224
+   },
+   "fpr": {
+    "k": 60,
+    "n": 702,
+    "rate": 0.08547008547008547,
+    "lo": 0.06697748468837877,
+    "hi": 0.10847491142995713
+   },
+   "auroc": 0.6923672015055827,
+   "threshold": 0.9063524613843689
+  },
+  "edit_clone": {
+   "tpr": {
+    "k": 57,
+    "n": 736,
+    "rate": 0.07744565217391304,
+    "lo": 0.06025407917464454,
+    "hi": 0.09902542065342679
+   },
+   "fpr": {
+    "k": 0,
+    "n": 0,
+    "rate": NaN,
+    "lo": 0.0,
+    "hi": 1.0
+   },
+   "auroc": NaN,
+   "threshold": 0.9063524613843689
+  },
+  "edit_fill": {
+   "tpr": {
+    "k": 897,
+    "n": 1775,
+    "rate": 0.5053521126760563,
+    "lo": 0.48210609286531103,
+    "hi": 0.5285750155594074
+   },
+   "fpr": {
+    "k": 0,
+    "n": 0,
+    "rate": NaN,
+    "lo": 0.0,
+    "hi": 1.0
+   },
+   "auroc": NaN,
+   "threshold": 0.9063524613843689
+  },
+  "edit_other_font": {
+   "tpr": {
+    "k": 496,
+    "n": 1259,
+    "rate": 0.39396346306592533,
+    "lo": 0.36733408405116436,
+    "hi": 0.4212379743922699
+   },
+   "fpr": {
+    "k": 0,
+    "n": 0,
+    "rate": NaN,
+    "lo": 0.0,
+    "hi": 1.0
+   },
+   "auroc": NaN,
+   "threshold": 0.9063524613843689
+  },
+  "edit_perfect": {
+   "tpr": {
+    "k": 28,
+    "n": 385,
+    "rate": 0.07272727272727272,
+    "lo": 0.050793634650132466,
+    "hi": 0.10310347923891643
+   },
+   "fpr": {
+    "k": 0,
+    "n": 0,
+    "rate": NaN,
+    "lo": 0.0,
+    "hi": 1.0
+   },
+   "auroc": NaN,
+   "threshold": 0.9063524613843689
+  },
+  "edit_same_font": {
+   "tpr": {
+    "k": 458,
+    "n": 1252,
+    "rate": 0.365814696485623,
+    "lo": 0.33958242960365237,
+    "hi": 0.39286790489713186
+   },
+   "fpr": {
+    "k": 0,
+    "n": 0,
+    "rate": NaN,
+    "lo": 0.0,
+    "hi": 1.0
+   },
+   "auroc": NaN,
+   "threshold": 0.9063524613843689
+  },
+  "edit_with_traces": {
+   "tpr": {
+    "k": 926,
+    "n": 2126,
+    "rate": 0.4355597365945437,
+    "lo": 0.4146177364021913,
+    "hi": 0.4567341988778782
+   },
+   "fpr": {
+    "k": 0,
+    "n": 0,
+    "rate": NaN,
+    "lo": 0.0,
+    "hi": 1.0
+   },
+   "auroc": NaN,
+   "threshold": 0.9063524613843689
+  },
+  "field_amount": {
+   "tpr": {
+    "k": 505,
+    "n": 997,
+    "rate": 0.506519558676028,
+    "lo": 0.4755198689925456,
+    "hi": 0.5374691994074888
+   },
+   "fpr": {
+    "k": 0,
+    "n": 0,
+    "rate": NaN,
+    "lo": 0.0,
+    "hi": 1.0
+   },
+   "auroc": NaN,
+   "threshold": 0.9063524613843689
+  },
+  "field_payee": {
+   "tpr": {
+    "k": 172,
+    "n": 517,
+    "rate": 0.33268858800773693,
+    "lo": 0.29343817848436354,
+    "hi": 0.3744070934754799
+   },
+   "fpr": {
+    "k": 0,
+    "n": 0,
+    "rate": NaN,
+    "lo": 0.0,
+    "hi": 1.0
+   },
+   "auroc": NaN,
+   "threshold": 0.9063524613843689
+  },
+  "field_ref": {
+   "tpr": {
+    "k": 77,
+    "n": 349,
+    "rate": 0.22063037249283668,
+    "lo": 0.1802968861261003,
+    "hi": 0.26704719121625387
+   },
+   "fpr": {
+    "k": 0,
+    "n": 0,
+    "rate": NaN,
+    "lo": 0.0,
+    "hi": 1.0
+   },
+   "auroc": NaN,
+   "threshold": 0.9063524613843689
+  },
+  "field_time": {
+   "tpr": {
+    "k": 132,
+    "n": 373,
+    "rate": 0.353887399463807,
+    "lo": 0.30707436939334515,
+    "hi": 0.40367943273465784
+   },
+   "fpr": {
+    "k": 0,
+    "n": 0,
+    "rate": NaN,
+    "lo": 0.0,
+    "hi": 1.0
+   },
+   "auroc": NaN,
+   "threshold": 0.9063524613843689
+  },
+  "field_vpa": {
+   "tpr": {
+    "k": 68,
+    "n": 275,
+    "rate": 0.24727272727272728,
+    "lo": 0.19999609463494428,
+    "hi": 0.3015130058722971
+   },
+   "fpr": {
+    "k": 0,
+    "n": 0,
+    "rate": NaN,
+    "lo": 0.0,
+    "hi": 1.0
+   },
+   "auroc": NaN,
+   "threshold": 0.9063524613843689
+  },
+  "font_seen": {
+   "tpr": {
+    "k": 501,
+    "n": 1244,
+    "rate": 0.40273311897106107,
+    "lo": 0.3758183674709311,
+    "hi": 0.43024676130823436
+   },
+   "fpr": {
+    "k": 71,
+    "n": 1251,
+    "rate": 0.05675459632294165,
+    "lo": 0.045237940091803396,
+    "hi": 0.07098517524004405
+   },
+   "auroc": 0.7086851419186194,
+   "threshold": 0.9063524613843689
+  },
+  "font_unseen": {
+   "tpr": {
+    "k": 453,
+    "n": 1267,
+    "rate": 0.35753749013417524,
+    "lo": 0.33161374279977235,
+    "hi": 0.3843225312409893
+   },
+   "fpr": {
+    "k": 59,
+    "n": 1204,
+    "rate": 0.049003322259136214,
+    "lo": 0.038178966733433524,
+    "hi": 0.06269651230289044
+   },
+   "auroc": 0.6864575330324858,
+   "threshold": 0.9063524613843689
+  },
+  "jpeg_q40": {
+   "tpr": {
+    "k": 173,
+    "n": 415,
+    "rate": 0.41686746987951806,
+    "lo": 0.37040512662369107,
+    "hi": 0.46485479025180565
+   },
+   "fpr": {
+    "k": 50,
+    "n": 434,
+    "rate": 0.1152073732718894,
+    "lo": 0.08848754929193117,
+    "hi": 0.1486794992479974
+   },
+   "auroc": 0.6829048914552218,
+   "threshold": 0.9063524613843689
+  },
+  "jpeg_q55": {
+   "tpr": {
+    "k": 171,
+    "n": 419,
+    "rate": 0.4081145584725537,
+    "lo": 0.36209542496217595,
+    "hi": 0.45580328699047945
+   },
+   "fpr": {
+    "k": 38,
+    "n": 429,
+    "rate": 0.08857808857808858,
+    "lo": 0.06521376479677271,
+    "hi": 0.1192453999415519
+   },
+   "auroc": 0.6798849519613243,
+   "threshold": 0.9063524613843689
+  },
+  "jpeg_q70": {
+   "tpr": {
+    "k": 150,
+    "n": 420,
+    "rate": 0.35714285714285715,
+    "lo": 0.3128017005608372,
+    "hi": 0.4040736604230776
+   },
+   "fpr": {
+    "k": 13,
+    "n": 392,
+    "rate": 0.03316326530612245,
+    "lo": 0.019481265769382,
+    "hi": 0.055906465080533735
+   },
+   "auroc": 0.6843294460641399,
+   "threshold": 0.9063524613843689
+  },
+  "jpeg_q85": {
+   "tpr": {
+    "k": 147,
+    "n": 422,
+    "rate": 0.34834123222748814,
+    "lo": 0.30443598844060993,
+    "hi": 0.3949827625691552
+   },
+   "fpr": {
+    "k": 9,
+    "n": 383,
+    "rate": 0.02349869451697128,
+    "lo": 0.012410877009746926,
+    "hi": 0.0440504756472579
+   },
+   "auroc": 0.6924752205709478,
+   "threshold": 0.9063524613843689
+  },
+  "jpeg_q90": {
+   "tpr": {
+    "k": 160,
+    "n": 435,
+    "rate": 0.367816091954023,
+    "lo": 0.32384148711176,
+    "hi": 0.4141049609916103
+   },
+   "fpr": {
+    "k": 11,
+    "n": 425,
+    "rate": 0.02588235294117647,
+    "lo": 0.01451243511063991,
+    "hi": 0.045746644232408894
+   },
+   "auroc": 0.7349073698444896,
+   "threshold": 0.9063524613843689
+  },
+  "jpeg_q95": {
+   "tpr": {
+    "k": 153,
+    "n": 400,
+    "rate": 0.3825,
+    "lo": 0.3362038597931757,
+    "hi": 0.4310316107477493
+   },
+   "fpr": {
+    "k": 9,
+    "n": 392,
+    "rate": 0.02295918367346939,
+    "lo": 0.0121248491555125,
+    "hi": 0.04305277745068553
+   },
+   "auroc": 0.7218494897959183,
+   "threshold": 0.9063524613843689
+  },
+  "light": {
+   "tpr": {
+    "k": 637,
+    "n": 1745,
+    "rate": 0.3650429799426934,
+    "lo": 0.34277302368573026,
+    "hi": 0.3879058439715808
+   },
+   "fpr": {
+    "k": 70,
+    "n": 1753,
+    "rate": 0.03993154592127781,
+    "lo": 0.031726597354258035,
+    "hi": 0.05014851307117815
+   },
+   "auroc": 0.6976497106066227,
+   "threshold": 0.9063524613843689
+  },
+  "recompressed_twice": {
+   "tpr": {
+    "k": 675,
+    "n": 1762,
+    "rate": 0.38308740068104424,
+    "lo": 0.36066564946595814,
+    "hi": 0.40601784015168363
+   },
+   "fpr": {
+    "k": 97,
+    "n": 1735,
+    "rate": 0.05590778097982709,
+    "lo": 0.04604578052961614,
+    "hi": 0.06773203569010165
+   },
+   "auroc": 0.6982849591275306,
+   "threshold": 0.9063524613843689
+  },
+  "scale_0.5": {
+   "tpr": {
+    "k": 76,
+    "n": 428,
+    "rate": 0.17757009345794392,
+    "lo": 0.14428083369259131,
+    "hi": 0.2165959322326924
+   },
+   "fpr": {
+    "k": 8,
+    "n": 403,
+    "rate": 0.019851116625310174,
+    "lo": 0.01009231796421362,
+    "hi": 0.03867752268138407
+   },
+   "auroc": 0.6009658866909394,
+   "threshold": 0.9063524613843689
+  },
+  "scale_0.6": {
+   "tpr": {
+    "k": 111,
+    "n": 438,
+    "rate": 0.2534246575342466,
+    "lo": 0.21495319109979555,
+    "hi": 0.29618383176088586
+   },
+   "fpr": {
+    "k": 8,
+    "n": 437,
+    "rate": 0.018306636155606407,
+    "lo": 0.009304690704409247,
+    "hi": 0.035703765847785465
+   },
+   "auroc": 0.6662121354607483,
+   "threshold": 0.9063524613843689
+  },
+  "scale_0.75": {
+   "tpr": {
+    "k": 159,
+    "n": 398,
+    "rate": 0.39949748743718594,
+    "lo": 0.3525588482507891,
+    "hi": 0.44835773181458993
+   },
+   "fpr": {
+    "k": 22,
+    "n": 395,
+    "rate": 0.05569620253164557,
+    "lo": 0.037065099329958676,
+    "hi": 0.08288627986418756
+   },
+   "auroc": 0.7197124864830482,
+   "threshold": 0.9063524613843689
+  },
+  "scale_0.85": {
+   "tpr": {
+    "k": 193,
+    "n": 437,
+    "rate": 0.4416475972540046,
+    "lo": 0.3957972025246826,
+    "hi": 0.4885149857987425
+   },
+   "fpr": {
+    "k": 31,
+    "n": 435,
+    "rate": 0.07126436781609195,
+    "lo": 0.050656195074211326,
+    "hi": 0.09937880616541592
+   },
+   "auroc": 0.7222809647807675,
+   "threshold": 0.9063524613843689
+  },
+  "scale_1.0": {
+   "tpr": {
+    "k": 415,
+    "n": 810,
+    "rate": 0.5123456790123457,
+    "lo": 0.47794550239711436,
+    "hi": 0.5466293042974562
+   },
+   "fpr": {
+    "k": 61,
+    "n": 785,
+    "rate": 0.07770700636942675,
+    "lo": 0.06096858960424002,
+    "hi": 0.09855849416010505
+   },
+   "auroc": 0.7649256900212315,
+   "threshold": 0.9063524613843689
+  },
+  "style_L6": {
+   "tpr": {
+    "k": 434,
+    "n": 1263,
+    "rate": 0.3436262866191607,
+    "lo": 0.31794365027976096,
+    "hi": 0.37025730554612907
+   },
+   "fpr": {
+    "k": 59,
+    "n": 1233,
+    "rate": 0.047850770478507706,
+    "lo": 0.03727666136845829,
+    "hi": 0.06123360866126904
+   },
+   "auroc": 0.681544540188367,
+   "threshold": 0.9063524613843689
+  },
+  "style_L7": {
+   "tpr": {
+    "k": 520,
+    "n": 1248,
+    "rate": 0.4166666666666667,
+    "lo": 0.38961041592000456,
+    "hi": 0.4442343772231534
+   },
+   "fpr": {
+    "k": 71,
+    "n": 1222,
+    "rate": 0.05810147299509002,
+    "lo": 0.046317422748907204,
+    "hi": 0.07265520797271297
+   },
+   "auroc": 0.7203774812203617,
+   "threshold": 0.9063524613843689
+  }
+ },
+ "failures": [
+  {
+   "kind": "missed",
+   "text": "image 000417, layout L6, perfect time edited in the same font, painted over, JPEG q70, shrunk to 60%, unseen font corbel.ttf, dark mode"
+  },
+  {
+   "kind": "missed",
+   "text": "image 017077, layout L7, payee edited in times.ttf, painted over, JPEG q40, shrunk to 50%"
+  },
+  {
+   "kind": "missed",
+   "text": "image 001918, layout L6, payee edited in the same font, background copied over, JPEG q95, shrunk to 60%, unseen font corbel.ttf"
+  },
+  {
+   "kind": "missed",
+   "text": "image 002198, layout L6, vpa edited in the same font, background copied over, JPEG q70, shrunk to 60%, unseen font gadugi.ttf"
+  },
+  {
+   "kind": "missed",
+   "text": "image 011027, layout L6, amount edited in the same font, background copied over, JPEG q55, shrunk to 50%"
+  },
+  {
+   "kind": "missed",
+   "text": "image 011816, layout L6, amount edited in consola.ttf, background copied over, JPEG q85, shrunk to 50%, unseen font bahnschrift.ttf"
+  },
+  {
+   "kind": "missed",
+   "text": "image 015446, layout L6, perfect amount edited in calibri.ttf, painted over, JPEG q70, shrunk to 60%, unseen font corbel.ttf"
+  },
+  {
+   "kind": "missed",
+   "text": "image 016468, layout L6, payee edited in gadugi.ttf, background copied over, JPEG q90, unseen font corbel.ttf"
+  },
+  {
+   "kind": "missed",
+   "text": "image 019186, layout L6, perfect ref edited in segoeui.ttf, painted over, JPEG q95, shrunk to 50%, unseen font corbel.ttf"
+  },
+  {
+   "kind": "missed",
+   "text": "image 002848, layout L6, perfect amount edited in the same font, painted over, JPEG q70, shrunk to 50%"
+  },
+  {
+   "kind": "missed",
+   "text": "image 000816, layout L6, time edited in the same font, background copied over, JPEG q85, shrunk to 50%, unseen font bahnschrift.ttf"
+  },
+  {
+   "kind": "missed",
+   "text": "image 009071, layout L6, amount edited in times.ttf, background copied over, JPEG q90, shrunk to 75%, unseen font bahnschrift.ttf"
+  },
+  {
+   "kind": "missed",
+   "text": "image 009947, layout L6, perfect ref edited in the same font, painted over, JPEG q85, shrunk to 50%, dark mode"
+  },
+  {
+   "kind": "missed",
+   "text": "image 008565, layout L6, vpa edited in the same font, painted over, JPEG q95, shrunk to 50%"
+  },
+  {
+   "kind": "missed",
+   "text": "image 017571, layout L6, perfect ref edited in calibri.ttf, painted over, JPEG q90, shrunk to 50%, unseen font gadugi.ttf, dark mode"
+  },
+  {
+   "kind": "false_alarm",
+   "text": "image 011828, layout L6, genuine, JPEG q40, shrunk to 75%, dark mode"
+  },
+  {
+   "kind": "false_alarm",
+   "text": "image 011084, layout L6, genuine, one field slightly blurred, JPEG q95, dark mode"
+  },
+  {
+   "kind": "false_alarm",
+   "text": "image 008325, layout L6, genuine, JPEG q40, shrunk to 75%, unseen font bahnschrift.ttf, dark mode"
+  },
+  {
+   "kind": "false_alarm",
+   "text": "image 003024, layout L6, genuine, one field slightly blurred, JPEG q90, unseen font bahnschrift.ttf"
+  },
+  {
+   "kind": "false_alarm",
+   "text": "image 013483, layout L6, genuine, one field slightly blurred, JPEG q40, shrunk to 75%, unseen font bahnschrift.ttf, dark mode"
+  },
+  {
+   "kind": "false_alarm",
+   "text": "image 015720, layout L6, genuine, JPEG q95, shrunk to 85%"
+  },
+  {
+   "kind": "false_alarm",
+   "text": "image 019820, layout L7, genuine, JPEG q55"
+  },
+  {
+   "kind": "false_alarm",
+   "text": "image 008538, layout L7, genuine, JPEG q40, unseen font corbel.ttf"
+  },
+  {
+   "kind": "false_alarm",
+   "text": "image 002737, layout L6, genuine, JPEG q55, shrunk to 85%, dark mode"
+  },
+  {
+   "kind": "false_alarm",
+   "text": "image 016070, layout L6, genuine, JPEG q90, shrunk to 85%, unseen font bahnschrift.ttf, dark mode"
+  },
+  {
+   "kind": "false_alarm",
+   "text": "image 001421, layout L7, genuine, one field slightly blurred, JPEG q95, unseen font bahnschrift.ttf, dark mode"
+  },
+  {
+   "kind": "false_alarm",
+   "text": "image 009471, layout L7, genuine, JPEG q55, shrunk to 50%, unseen font gadugi.ttf, dark mode"
+  },
+  {
+   "kind": "false_alarm",
+   "text": "image 000550, layout L6, genuine, JPEG q40, dark mode"
+  },
+  {
+   "kind": "false_alarm",
+   "text": "image 001110, layout L7, genuine, one field slightly blurred, JPEG q90, unseen font corbel.ttf, dark mode"
+  },
+  {
+   "kind": "false_alarm",
+   "text": "image 007992, layout L6, genuine, JPEG q95, shrunk to 85%, dark mode"
+  }
+ ],
+ "baseline_ela": {
+  "tpr": {
+   "k": 161,
+   "n": 2511,
+   "rate": 0.0641178813221824,
+   "lo": 0.055186432086664815,
+   "hi": 0.07438101263828326
+  },
+  "fpr": {
+   "k": 150,
+   "n": 2455,
+   "rate": 0.06109979633401222,
+   "lo": 0.05229354109049358,
+   "hi": 0.0712774933348228
+  },
+  "auroc": 0.5117617716264323,
+  "threshold": 5.007812977837158,
+  "auroc_ci": [
+   0.49646385435651363,
+   0.5261700047286846
+  ]
+ },
+ "run": "resnet18",
+ "train_log": {
+  "args": {
+   "data": "C:\\Users\\pghan\\satyapan\\Satyapan_TeamAvalanche\\data\\f1",
+   "out": "C:\\Users\\pghan\\satyapan\\Satyapan_TeamAvalanche\\var\\models\\runs\\resnet18\\tamper.pt",
+   "encoder": "resnet18",
+   "pretrained": "True",
+   "epochs": "10",
+   "bs": "16",
+   "lr": "0.001",
+   "size": "[704, 384]",
+   "target_fpr": "0.05",
+   "workers": "4",
+   "seed": "7",
+   "device": "auto",
+   "max_train": "0",
+   "no_augment": "False",
+   "native": "True",
+   "crop": "[384, 384]",
+   "max_side": "1600"
+  },
+  "epochs": [
+   {
+    "epoch": 1,
+    "loss": 1.3062941759748532,
+    "val_auroc": 0.6989823042454621,
+    "val_tpr": 0.3588516746411483,
+    "val_fpr": 0.05
+   },
+   {
+    "epoch": 2,
+    "loss": 1.0759706535302769,
+    "val_auroc": 0.7059118756487177,
+    "val_tpr": 0.39712918660287083,
+    "val_fpr": 0.05
+   },
+   {
+    "epoch": 3,
+    "loss": 1.0303985668570184,
+    "val_auroc": 0.5459988354725197,
+    "val_tpr": 0.11961722488038277,
+    "val_fpr": 0.05
+   },
+   {
+    "epoch": 4,
+    "loss": 0.9802168616096077,
+    "val_auroc": 0.5560321257689679,
+    "val_tpr": 0.10446570972886762,
+    "val_fpr": 0.05
+   },
+   {
+    "epoch": 5,
+    "loss": 0.9103064240549531,
+    "val_auroc": 0.5078017012227538,
+    "val_tpr": 0.06220095693779904,
+    "val_fpr": 0.05
+   },
+   {
+    "epoch": 6,
+    "loss": 0.8517750671986118,
+    "val_auroc": 0.5588330042277411,
+    "val_tpr": 0.09968102073365231,
+    "val_fpr": 0.05
+   },
+   {
+    "epoch": 7,
+    "loss": 0.8172110544751062,
+    "val_auroc": 0.6370981114402167,
+    "val_tpr": 0.2703349282296651,
+    "val_fpr": 0.05
+   },
+   {
+    "epoch": 8,
+    "loss": 0.763478171833031,
+    "val_auroc": 0.6559273815852763,
+    "val_tpr": 0.3253588516746411,
+    "val_fpr": 0.05
+   },
+   {
+    "epoch": 9,
+    "loss": 0.7173121534192654,
+    "val_auroc": 0.6931112503480924,
+    "val_tpr": 0.361244019138756,
+    "val_fpr": 0.05
+   },
+   {
+    "epoch": 10,
+    "loss": 0.6901686183555656,
+    "val_auroc": 0.7058697881066301,
+    "val_tpr": 0.3652312599681021,
+    "val_fpr": 0.05
+   }
+  ]
+ },
+ "chosen": false,
+ "choice_rule": "highest AUROC on the test layouts (threshold fixed on validation)"
+}

@@ -51,9 +51,21 @@ def team_rows() -> list[dict]:
     return rows
 
 
-def split_of(speaker: str, seed: int) -> str:
-    h = int(hashlib.sha256(f"{seed}:{speaker}".encode()).hexdigest()[:8], 16)
-    return "dev" if h % 2 == 0 else "test"
+def assign_splits(rows: list[dict], seed: int) -> None:
+    """Speaker-disjoint dev/test split, balanced per source: within each source, speakers are ordered by a seeded hash and
+    alternate dev, test, dev, ... (a plain hash put both IndicSynth speakers in dev, leaving no Hindi fakes to test)."""
+    by_source: dict[str, set[str]] = defaultdict(set)
+    for r in rows:
+        by_source[r["source"] + ":" + r["label"]].add(r["speaker"])
+    split: dict[str, str] = {}
+    for spk in by_source.values():
+        for i, s in enumerate(sorted(spk, key=lambda s: hashlib.sha256(f"{seed}:{s}".encode()).hexdigest())):
+            split.setdefault(s, "dev" if i % 2 == 0 else "test")
+    for r in rows:
+        r["split"] = split[r["speaker"]]
+
+
+MAX_SECOND_EER = 0.30  # a second opinion worse than this on the dev split would only veto good detections
 
 
 def eer(real: np.ndarray, fake: np.ndarray) -> float:
@@ -113,7 +125,7 @@ def score_all(rows: list[dict], cache_path: Path) -> dict[tuple[str, str], dict]
             for c, w in prepared:   # detectors run here, one clip at a time on the GPU
                 rec = {"file": r["file"], "cond": c, "primary": None, "second": None}
                 if w is not None:
-                    vs = audio.score(w)
+                    vs = audio.score(w, all_detectors=True)
                     rec["primary"], rec["second"] = vs.primary, vs.second
                 cache[(r["file"], c)] = rec
                 out.write(json.dumps(rec) + "\n")
@@ -141,8 +153,7 @@ def main() -> None:
         sys.exit("Spectra-AASIST3 not installed: run training/voice/download_models.py")
     manifest = [json.loads(x) for x in (DATA / "manifest.jsonl").read_text(encoding="utf-8").splitlines() if x.strip()]
     rows = manifest + team_rows()
-    for r in rows:
-        r["split"] = split_of(r["speaker"], a.seed)
+    assign_splits(rows, a.seed)
     print(f"{len(rows)} clips; dev {sum(r['split'] == 'dev' for r in rows)}, test {sum(r['split'] == 'test' for r in rows)}")
     scores = score_all(rows, DATA / "scores.jsonl")
     dets = ["primary"] + (["second"] if any(s.get("second") is not None for s in scores.values()) else [])
@@ -157,7 +168,13 @@ def main() -> None:
            "rule": "flag when score < threshold; higher score = more like a real voice; thresholds from the dev split, all conditions pooled"}
     for det in dets:
         dev_real = arr("dev", "real", det)
-        cal[det] = {"threshold": threshold(dev_real, a.target_fpr), "strong_threshold": threshold(dev_real, a.strong_fpr), "n_dev_real": int(len(dev_real))}
+        cal[det] = {"threshold": threshold(dev_real, a.target_fpr), "strong_threshold": threshold(dev_real, a.strong_fpr), "n_dev_real": int(len(dev_real)),
+                    "dev_eer": eer(dev_real, arr("dev", "fake", det))}
+    excluded = {}
+    if "second" in cal and not cal["second"]["dev_eer"] <= MAX_SECOND_EER:
+        excluded["second"] = (f"dev-split EER {100 * cal['second']['dev_eer']:.0f}% (limit {100 * MAX_SECOND_EER:.0f}%): it would veto good "
+                              "detections, so the site uses the primary detector alone")
+    cal["excluded"] = excluded
 
     def flag(det: str, s: float) -> bool:
         return s < cal[det]["threshold"]
@@ -168,7 +185,7 @@ def main() -> None:
         if not s or s["primary"] is None:
             return None
         fp = flag("primary", s["primary"])
-        if "second" in dets and s.get("second") is not None and fp != flag("second", s["second"]):
+        if "second" in dets and "second" not in excluded and s.get("second") is not None and fp != flag("second", s["second"]):
             return "disagree"
         return "fake" if fp else "real"
 
@@ -198,9 +215,10 @@ def main() -> None:
     n_fake = sum(v is not None for v in by["fake"])
     n_real = sum(v is not None for v in by["real"])
     disagree = sum(v == "disagree" for v in by["fake"] + by["real"])
-    if "second" in dets:
-        res_rows.insert(0, {"name": "As deployed: both detectors must agree (disagreement = says nothing)", "baseline": False,
-                            "tpr": rate(fake_flag, n_fake), "fpr": rate(real_flag, n_real), "disagree_rate": disagree / max(1, n_fake + n_real)})
+    deployed_name = ("As deployed: both detectors must agree (disagreement = says nothing)" if "second" in dets and "second" not in excluded
+                     else "As deployed: primary detector alone (second opinion excluded: " + excluded.get("second", "not installed") + ")")
+    res_rows.insert(0, {"name": deployed_name, "baseline": False, "tpr": rate(fake_flag, n_fake), "fpr": rate(real_flag, n_real),
+                        "disagree_rate": disagree / max(1, n_fake + n_real)})
     for r in test:
         v = combined(r["file"], "clean")
         if r["label"] == "fake" and v != "fake":
@@ -216,9 +234,11 @@ def main() -> None:
            "split": f"test split by speaker ({len(test)} clips x {len(CONDITIONS)} conditions); thresholds fixed on the dev split",
            "held_out": True, "hardware": hw, "date": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC"),
            "reproduce": "python training/voice/fetch_data.py && python training/voice/calibrate.py", "rows": res_rows,
-           "conditions": conditions, "failures": failures[:60], "calibration": {k: v for k, v in cal.items() if k in dets}}
+           "conditions": conditions, "failures": failures[:60], "calibration": {k: v for k, v in cal.items() if k in dets},
+           "excluded": excluded}
     (db.home() / "models").mkdir(parents=True, exist_ok=True)
-    (db.home() / "models" / "voice_calibration.json").write_text(json.dumps(cal, indent=1), encoding="utf-8")
+    site_cal = {k: v for k, v in cal.items() if k not in excluded}  # the site only uses detectors that passed
+    (db.home() / "models" / "voice_calibration.json").write_text(json.dumps(site_cal, indent=1), encoding="utf-8")
     res_dir = ROOT / "docs" / "results"
     res_dir.mkdir(parents=True, exist_ok=True)
     (res_dir / "voice_test.json").write_text(json.dumps(out, indent=1), encoding="utf-8")
@@ -226,7 +246,7 @@ def main() -> None:
     for r in rows:
         spk[r["split"]].add(r["speaker"])
     (res_dir / "voice_splits.json").write_text(json.dumps({
-        "rule": "split = sha256(seed:speaker) mod 2 (0 = dev, 1 = test)", "seed": a.seed,
+        "rule": "speaker-disjoint; within each source and label, speakers ordered by sha256(seed:speaker) alternate dev, test", "seed": a.seed,
         "counts": {s: {"speakers": len(v), "clips": sum(r["split"] == s for r in rows)} for s, v in spk.items()},
         "manifest_sha256": hashlib.sha256((DATA / "manifest.jsonl").read_bytes()).hexdigest()}, indent=1), encoding="utf-8")
     for r in res_rows:

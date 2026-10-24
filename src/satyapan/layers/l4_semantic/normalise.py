@@ -30,8 +30,11 @@ MIN_SPREAD_WORD = 5  # "g.u.a.r.a.n.t.e.e.d" is a trick; "U.S.A" or "K.Y.C" is o
 _WORD = re.compile(r"[^\W\d_]+", re.UNICODE)
 # three or more single letters joined by dots, dashes, stars, underscores or single spaces: g.u.a.r.a.n.t.e.e.d, o t p, K-Y-C
 _SPREAD = re.compile(r"(?<![A-Za-z])(?:[A-Za-z](?:[.\-*_]|\s(?=[A-Za-z](?:[.\-*_\s]|$|[^A-Za-z]))|[.\-*_]\s)){2,}[A-Za-z](?![A-Za-z])")
-_UPI_SPLIT = re.compile(r"([A-Za-z0-9][A-Za-z0-9._\-]{1,63})\s*(?:\(\s*at\s*\)|\[\s*at\s*\]|\{\s*at\s*\}|\s@|@\s)\s*([A-Za-z]{2,32})(?![\w@])",
+# "(at)", "[at]", "{at}" are deliberate; a stray space or line break around "@" is usually OCR noise (10% of our OCR'd
+# screenshots), so it is joined for the payee check but not counted as a trick.
+_UPI_SPLIT = re.compile(r"([A-Za-z0-9][A-Za-z0-9._\-]{1,63})\s*(?:\(\s*at\s*\)|\[\s*at\s*\]|\{\s*at\s*\})\s*([A-Za-z]{2,32})(?![\w@])",
                         re.IGNORECASE)
+_UPI_SPACED = re.compile(r"([A-Za-z0-9][A-Za-z0-9._\-]{1,63})(?:\s+@\s*|@\s+)([A-Za-z]{2,32})(?![\w@])")
 
 
 @dataclass
@@ -85,5 +88,5 @@ def normalise(text: str) -> Normalised:
     t2 = _UPI_SPLIT.sub(lambda m: f"{m.group(1)}@{m.group(2)}", t)
     if t2 != t:
         out.tricks.append("split_upi")
-    out.text = t2
+    out.text = _UPI_SPACED.sub(lambda m: f"{m.group(1)}@{m.group(2)}", t2)
     return out

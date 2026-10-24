@@ -197,6 +197,10 @@ def sections(results_dir: Path | None = None) -> list[Section]:
                  "टीम के लोगों ने असली फ़ोन और फ़ोटो एडिटर में बदले स्क्रीनशॉट, और असली स्क्रीनशॉट। स्क्रीनशॉट के लिए सबसे ईमानदार नतीजा।"),
                 ("edited screenshots", "बदले गए स्क्रीनशॉट"), ("genuine screenshots", "असली स्क्रीनशॉट"),
                 dataset="team-made, consented, names and numbers covered, kept out of git"),
+        Section("screenshot_system", ("Payment screenshots: the whole check as deployed", "पेमेंट स्क्रीनशॉट: पूरी जाँच, जैसी साइट पर चलती है"),
+                ("The full screenshot check (text reading, payee and word rules, edit model, verdict rules) on generated screens in layouts never seen in training.",
+                 "पूरी स्क्रीनशॉट जाँच (टेक्स्ट पढ़ना, पाने वाले और शब्दों के नियम, बदलाव मॉडल, नतीजे के नियम), ट्रेनिंग में कभी न देखे गए लेआउट की बनाई गई स्क्रीन पर।"),
+                ("edited screenshots", "बदले गए स्क्रीनशॉट"), ("genuine screenshots", "असली स्क्रीनशॉट")),
         Section("screenshot_synthetic", ("Payment screenshots: generated, unseen layouts", "पेमेंट स्क्रीनशॉट: बनाए गए, न देखे गए लेआउट"),
                 ("Generated payment screens in layouts and fonts the model never saw in training.",
                  "बनाई गई पेमेंट स्क्रीन, ऐसे लेआउट और फ़ॉन्ट में जो मॉडल ने ट्रेनिंग में कभी नहीं देखे।"),
@@ -222,6 +226,7 @@ def sections(results_dir: Path | None = None) -> list[Section]:
     ]
     files = {
         "screenshot_real": ["tamper_real.json"],
+        "screenshot_system": ["screenshot_system.json"],
         "screenshot_synthetic": ["tamper_test.json"] + sorted(p.name for p in d.glob("tamper_test_*.json")),
         "text_holdout": ["text_holdout.json"],
         "text_kit": ["text_kit.json"],

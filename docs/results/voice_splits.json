@@ -1,0 +1,15 @@
+{
+ "rule": "speaker-disjoint; within each source and label, speakers ordered by sha256(seed:speaker) alternate dev, test",
+ "seed": 7,
+ "counts": {
+  "test": {
+   "speakers": 256,
+   "clips": 969
+  },
+  "dev": {
+   "speakers": 259,
+   "clips": 931
+  }
+ },
+ "manifest_sha256": "1f1aba82b9d383765630a8b91fe7f99ec2338adf2c711ee07f1a136e1a1e79f1"
+}

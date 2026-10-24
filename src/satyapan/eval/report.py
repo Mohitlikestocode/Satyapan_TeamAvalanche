@@ -61,7 +61,8 @@ def measure(paths: list[Path], held_out: bool) -> dict:
 
 
 def kit_files() -> tuple[list[Path], list[Path]]:
-    return [KIT / "messages.jsonl"], sorted(KIT.glob("holdout_*.jsonl"))
+    """(development kit, held-out files). Derived lists such as holdout_*_missed.jsonl repeat messages and are skipped."""
+    return [KIT / "messages.jsonl"], sorted(p for p in KIT.glob("holdout_*.jsonl") if "missed" not in p.stem)
 
 
 def main() -> None:

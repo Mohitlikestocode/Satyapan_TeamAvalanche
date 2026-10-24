@@ -4,8 +4,8 @@
  "split": "71 messages",
  "held_out": false,
  "hardware": "CPU: Intel64 Family 6 Model 183 Stepping 1, GenuineIntel (Windows)",
- "date": "2026-10-24 14:03 UTC",
- "elapsed_s": 0.15,
+ "date": "2026-10-24 17:20 UTC",
+ "elapsed_s": 8.22,
  "reproduce": "python -m satyapan.eval.report",
  "rows": [
   {
@@ -27,21 +27,21 @@
    }
   },
   {
-   "name": "Whole system as deployed (no text model installed: same as rules)",
+   "name": "Whole system as deployed",
    "baseline": false,
    "tpr": {
-    "k": 37,
+    "k": 38,
     "n": 38,
-    "rate": 0.9736842105263158,
-    "lo": 0.8650482156319974,
-    "hi": 0.9953395324464698
+    "rate": 1.0,
+    "lo": 0.90818706741616,
+    "hi": 0.9999999999999999
    },
    "fpr": {
-    "k": 0,
+    "k": 2,
     "n": 33,
-    "rate": 0.0,
-    "lo": 0.0,
-    "hi": 0.10427343003561192
+    "rate": 0.06060606060606061,
+    "lo": 0.016780530429070947,
+    "hi": 0.19606581717798194
    }
   },
   {
@@ -117,11 +117,11 @@
    "row": "Whole system as deployed",
    "tpr": null,
    "fpr": {
-    "k": 0,
+    "k": 1,
     "n": 2,
-    "rate": 0.0,
-    "lo": 0.0,
-    "hi": 0.6576280471103807
+    "rate": 0.5,
+    "lo": 0.09452865480086614,
+    "hi": 0.9054713451991339
    }
   },
   {
@@ -165,11 +165,11 @@
    "row": "Whole system as deployed",
    "tpr": null,
    "fpr": {
-    "k": 0,
+    "k": 1,
     "n": 5,
-    "rate": 0.0,
-    "lo": 0.0,
-    "hi": 0.43449149475208104
+    "rate": 0.2,
+    "lo": 0.03622316096978745,
+    "hi": 0.6244717358814613
    }
   },
   {
@@ -224,11 +224,11 @@
    "name": "family:job_task",
    "row": "Whole system as deployed",
    "tpr": {
-    "k": 2,
+    "k": 3,
     "n": 3,
-    "rate": 0.6666666666666666,
-    "lo": 0.2076549551264879,
-    "hi": 0.9385096847238394
+    "rate": 1.0,
+    "lo": 0.43849391955098227,
+    "hi": 1.0
    },
    "fpr": null
   },
@@ -320,18 +320,18 @@
    "name": "lang:en",
    "row": "Whole system as deployed",
    "tpr": {
-    "k": 26,
+    "k": 27,
     "n": 27,
-    "rate": 0.9629629629629629,
-    "lo": 0.8171614606584348,
-    "hi": 0.9934320234669025
+    "rate": 1.0,
+    "lo": 0.8754409628553641,
+    "hi": 1.0
    },
    "fpr": {
-    "k": 0,
+    "k": 2,
     "n": 29,
-    "rate": 0.0,
-    "lo": 0.0,
-    "hi": 0.11697359446555587
+    "rate": 0.06896551724137931,
+    "lo": 0.019120864097994433,
+    "hi": 0.21964947595851925
    }
   },
   {
@@ -373,12 +373,21 @@
  ],
  "failures": [
   {
-   "kind": "missed",
-   "text": "Part time job: like YouTube videos, earn 5000 daily. Join our Telegram channel and pay 2000 deposit to start.",
-   "tier": "NO_RED_FLAGS",
+   "kind": "false_alarm",
+   "text": "Sending you Rs 500 for dinner, my UPI is ravi.k@okaxis. Pay me back whenever.",
+   "tier": "SUSPICIOUS",
    "codes": [
-    "NO_PAYEE_FOUND",
-    "NO_FLAGS_NOT_GUARANTEE"
+    "ML_TEXT_SCAM_LIKE",
+    "PAYEE_UNVERIFIED"
+   ]
+  },
+  {
+   "kind": "false_alarm",
+   "text": "Telegram channel for daily current affairs. Free, no payment needed. Join using the link in the school group.",
+   "tier": "SUSPICIOUS",
+   "codes": [
+    "ML_TEXT_SCAM_LIKE",
+    "OFFER_OFFPLATFORM"
    ]
   }
  ]

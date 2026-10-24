@@ -281,7 +281,7 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", type=Path, default=ROOT / "docs" / "results" / "attack_text.json")
     a = ap.parse_args()
-    files = sorted((ROOT / "data" / "kit").glob("*.jsonl"))
+    files = sorted(p for p in (ROOT / "data" / "kit").glob("*.jsonl") if "missed" not in p.stem)
     rows = [json.loads(x) for p in files for x in p.read_text(encoding="utf-8").splitlines() if x.strip()]
     res = sweep_text(rows, use_plugins=True)
     res |= {"dataset": ", ".join(p.relative_to(ROOT).as_posix() for p in files), "date": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC"),

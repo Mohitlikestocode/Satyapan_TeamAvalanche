@@ -20,6 +20,8 @@ def test_ordinary_text_has_no_tricks():
               "नमस्ते, आपका पार्सल आज आएगा", "U.S.A trip next week", "Please do K.Y.C at the branch", "क्या‍आप आ रहे हैं?"]:
         assert normalise(t).tricks == [], t
     assert normalise("Please do K.Y.C at the branch").text == "Please do KYC at the branch"   # joined, but not a warning sign
+    n = normalise("Paid to meena.stores @ybl")                                                # OCR noise around "@"
+    assert n.text == "Paid to meena.stores@ybl" and n.tricks == []
     assert normalise("क्या‍आप").text == "क्या‍आप"                                    # Devanagari joiners are kept
 
 
