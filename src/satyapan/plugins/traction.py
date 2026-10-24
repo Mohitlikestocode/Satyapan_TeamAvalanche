@@ -13,6 +13,7 @@ def setup(registry) -> None:
     registry.add_global_js("/static/js/traction_pv.js")
     registry.add_global_js("/static/js/traction_feedback.js")
     registry.add_global_js("/static/js/traction_pwa.js")
+    registry.add_global_js("/static/js/traction_speak.js")
     registry.add_nav(75, "pilot", "/pilot", "For shops", "दुकानों के लिए")
     registry.add_footer("Services", "Ask for a pilot at your shop", "/pilot")
     registry.add_footer("Services", "Make a shop poster", "/poster")
