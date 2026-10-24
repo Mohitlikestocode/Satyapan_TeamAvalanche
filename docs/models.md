@@ -66,9 +66,54 @@ model can learn "what genuine looks like for these six screens" instead of "what
 
 ## Results
 
-Every number below is copied from a file in `docs/results/`; `/results` shows the same files live.
+Every number below is copied from a file in `docs/results/`; `/results` shows the same files live. Hardware: NVIDIA GeForce RTX 4060
+Laptop GPU (8 GB) for training and batch evaluation; the site runs the models on CPU. Rates are Wilson 95% intervals in the files.
 
-(filled in as each measurement lands)
+### Measured
+
+| Check | Data it never trained on | Caught | Wrongly flagged | Other | File |
+|---|---|---|---|---|---|
+| Tamper model, chosen (small U-Net) | 4,966 generated screens, layouts L6+L7 never seen | 975/2,511 edits (39%) | 124/2,455 genuine (5.1%) | AUROC 0.735; box IoU 0.32 | `tamper_test.json` |
+| **Whole screenshot check as deployed** (OCR + rules + tamper model + fusion) | 300 screens from test layouts (150 edited, 150 genuine) | 62/150 edited flagged (41%) | **23/150 genuine (15%)**: 14 by the core payee rules, 9 by the edit sign | edit sign alone: 55/150 vs 9/150; CAN'T TELL 1/300 | `screenshot_system.json` |
+| Tamper model, ResNet-18 (not chosen) | same | 954/2,511 (38%) | 130/2,455 (5.3%) | AUROC 0.697 | `tamper_test_resnet18.json` |
+| Baseline: error-level analysis | same | | | AUROC 0.512 | inside both files |
+| Voice detector as deployed (Spectra-AASIST3 alone) | 969 clips from test speakers x 4 conditions | 1,980/1,980 fakes | 78/1,884 real (4.1%) | EER 3.1% (CI 2.4-3.9%) | `voice_test.json` |
+| Second voice detector (excluded) | same | 1/1,980 | 68/1,884 | EER 65.6%: worse than chance on our data | `voice_test.json` |
+| Message rules (dev kit, optimistic) | `data/kit/messages.jsonl` | 37/38 scams | 0/33 genuine | HIGH RISK on 8/38 scams | `text_kit.json` |
+| Scam-message model, full fine-tune | 79 team scams, each family held out | 23/79 (29%) | 2/62 genuine out of fold | head-only: 2/79 | `text_model_cv.json` |
+| Scam-message model ship test | dev kit | 37 -> 38 of 38 | 0 -> 2 of 33 | **kept off** (more false alarms) | `text_model_decision.json` |
+| Attack sweep, rules alone -> as deployed | dev kit scams the checks flag (37) | look-alike letters: 32 -> 0 slip through; spacing 10 -> 1; split UPI 4 -> 0; Hinglish 7 -> 7 | genuine with the same tricks flagged: 0 -> 4 of 33 | the defence was written after seeing these gaps: optimistic | `attack_text.json` |
+
+### Voice by condition (Spectra-AASIST3, test speakers)
+
+| Condition | Fakes caught | Real voices wrongly flagged |
+|---|---|---|
+| Clean | 495/495 | 5/471 (1.1%) |
+| Opus 24 kbps (WhatsApp-like) | 495/495 | 6/471 (1.3%) |
+| AAC 64 kbps | 495/495 | 8/471 (1.7%) |
+| **8 kHz telephone** | 495/495 | **59/471 (12.5%)** |
+| By source | In-The-Wild fakes 936/936, IndicSynth Hindi fakes 1,044/1,044 | FLEURS English real 67/588 (11%), FLEURS Hindi real 5/588, In-The-Wild real 6/708 |
+
+### Not evaluated (yet)
+
+- **Real, team-edited payment screenshots** (`tamper_real.json`): waiting for the 50 edited + 100 genuine set.
+- **Held-out messages from teammates** (`text_holdout.json`): waiting for `data/kit/holdout_*.jsonl`. The classifier decision will be re-run on them.
+- **Fresh voice clones** (a current TTS on a consenting teammate's voice): not evaluated. All fakes above come from public datasets.
+- PDF edit traces, QR decoding and OCR accuracy on their own; the judges' kit.
+
+### Failure cases we name
+
+1. **Tamper model misses most edits** (61% at the 5% false-alarm point), worst on "perfect" edits (exact colour, size and place) and
+   same-font edits. It is a weak sign only and never decides a verdict on its own.
+2. **Phone-line voices**: real voices through an 8 kHz phone line are wrongly flagged 12.5% of the time; English read speech (FLEURS) 11%.
+3. **The voice detector's perfect catch rate is suspicious**: the fakes come from public generators the detector may have been trained
+   on. We do not know how it does on a voice clone made today.
+4. **A cloned voice saying harmless words is not flagged** unless the voice sign is strong: one weak forensic sign never raises a flag.
+5. **Hinglish respellings** of key words ("garunteed", "prophit") let 7 of 37 flagged scams through.
+6. **Genuine payment screenshots to a personal UPI ID get flagged by the payee rules** (14 of 150 generated genuine screens:
+   `PAYEE_PERSONAL_ACCOUNT` + `PAYEE_UNVERIFIED`). These rules were written for payment *requests*; on a *receipt* they mislead a
+   shopkeeper. Reported to the integrator (`docs/requests/models.md`, item 4).
+7. **OCR is required for screenshots**: without an OCR engine every screenshot is CAN'T TELL (see `docs/requests/models.md`, item 2b).
 
 ## Model cards
 

@@ -39,7 +39,7 @@ def main() -> None:
     rnd = random.Random(a.seed)
     pick = rnd.sample([r for r in test if r["edited"]], a.n) + rnd.sample([r for r in test if not r["edited"]], a.n)
     stats: dict[str, dict[str, int]] = defaultdict(lambda: defaultdict(int))
-    failures, t0 = [], time.time()
+    missed, false_alarms, fa_codes, t0 = [], [], defaultdict(int), time.time()
     for i, r in enumerate(pick, 1):
         res = analyse_image((a.data / "images" / f"{r['id']}.jpg").read_bytes())
         codes = res.verdicts["en"].reason_codes
@@ -52,9 +52,11 @@ def main() -> None:
             if res.tier == Tier.CANT_TELL:
                 s["cant_tell"] += 1
         if r["edited"] and res.tier not in FLAGGED:
-            failures.append({"kind": "missed", "text": f"image {r['id']} ({r['field']} edited, layout {r['style']}, JPEG q{r['jpeg_q']}) -> {res.tier.value}"})
+            missed.append({"kind": "missed", "text": f"image {r['id']} ({r['field']} edited, layout {r['style']}, JPEG q{r['jpeg_q']}) -> {res.tier.value}"})
         elif not r["edited"] and res.tier in FLAGGED:
-            failures.append({"kind": "false_alarm", "text": f"image {r['id']} (genuine, layout {r['style']}) -> {res.tier.value} {codes}"})
+            for c in codes:
+                fa_codes[c] += 1
+            false_alarms.append({"kind": "false_alarm", "text": f"image {r['id']} (genuine, layout {r['style']}) -> {res.tier.value} {codes}"})
         if i % 50 == 0:
             print(f"  {i}/{len(pick)} ({time.time() - t0:.0f}s)", flush=True)
     al = stats["all"]
@@ -68,11 +70,15 @@ def main() -> None:
                      "tpr": rate(al["sign_pos"], al["pos"]), "fpr": rate(al["sign_neg"], al["neg"])}],
            "conditions": [{"name": k, "tpr": rate(s["flag_pos"], s["pos"]) if s["pos"] else None,
                            "fpr": rate(s["flag_neg"], s["neg"]) if s["neg"] else None} for k, s in sorted(stats.items()) if k != "all"],
-           "cant_tell": rate(al["cant_tell"], al["pos"] + al["neg"]), "failures": failures[:60]}
+           "cant_tell": rate(al["cant_tell"], al["pos"] + al["neg"]), "failures": false_alarms[:30] + missed[:30],
+           "false_alarm_reasons": dict(sorted(fa_codes.items(), key=lambda kv: -kv[1]))}
     (ROOT / "docs" / "results" / "screenshot_system.json").write_text(json.dumps(out, indent=1), encoding="utf-8")
     for r in out["rows"]:
         print(f"{r['name']}: edited {r['tpr']['k']}/{r['tpr']['n']}, genuine {r['fpr']['k']}/{r['fpr']['n']}")
     print(f"CAN'T TELL: {out['cant_tell']['k']}/{out['cant_tell']['n']}")
+    print("reasons on wrongly flagged genuine screens:", out["false_alarm_reasons"])
+    for f in false_alarms[:10]:
+        print("  ", f["text"])
 
 
 if __name__ == "__main__":

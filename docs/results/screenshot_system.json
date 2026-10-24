@@ -1,0 +1,484 @@
+{
+ "schema": 1,
+ "dataset": "generated screens, test layouts L6 and L7 (never seen in training)",
+ "held_out": true,
+ "split": "150 edited + 150 genuine, random sample (seed 7); OCR engine: tesseract",
+ "hardware": "CPU inference, as on the site",
+ "date": "2026-10-24 16:47 UTC",
+ "reproduce": "python training/tamper/evaluate_system.py",
+ "rows": [
+  {
+   "name": "Whole screenshot check as deployed (SUSPICIOUS or worse)",
+   "baseline": false,
+   "tpr": {
+    "k": 62,
+    "n": 150,
+    "rate": 0.41333333333333333,
+    "lo": 0.3376520916836594,
+    "hi": 0.4933429057682652
+   },
+   "fpr": {
+    "k": 23,
+    "n": 150,
+    "rate": 0.15333333333333332,
+    "lo": 0.10439879275574346,
+    "hi": 0.2195811970519548
+   }
+  },
+  {
+   "name": "Edit sign shown (\"The image shows signs of editing\")",
+   "baseline": false,
+   "tpr": {
+    "k": 55,
+    "n": 150,
+    "rate": 0.36666666666666664,
+    "lo": 0.293773196710732,
+    "hi": 0.4462191070614596
+   },
+   "fpr": {
+    "k": 9,
+    "n": 150,
+    "rate": 0.06,
+    "lo": 0.031883682005327776,
+    "hi": 0.11009092044290468
+   }
+  }
+ ],
+ "conditions": [
+  {
+   "name": "edit_perfect",
+   "tpr": {
+    "k": 2,
+    "n": 18,
+    "rate": 0.1111111111111111,
+    "lo": 0.031018868453582787,
+    "hi": 0.3280024486660421
+   },
+   "fpr": null
+  },
+  {
+   "name": "edit_with_traces",
+   "tpr": {
+    "k": 60,
+    "n": 132,
+    "rate": 0.45454545454545453,
+    "lo": 0.3720859280570039,
+    "hi": 0.5395758898249997
+   },
+   "fpr": null
+  },
+  {
+   "name": "jpeg_q40",
+   "tpr": {
+    "k": 13,
+    "n": 19,
+    "rate": 0.6842105263157895,
+    "lo": 0.4601001017506463,
+    "hi": 0.846358289955714
+   },
+   "fpr": {
+    "k": 7,
+    "n": 26,
+    "rate": 0.2692307692307692,
+    "lo": 0.13704275525067386,
+    "hi": 0.46083403419761304
+   }
+  },
+  {
+   "name": "jpeg_q55",
+   "tpr": {
+    "k": 6,
+    "n": 22,
+    "rate": 0.2727272727272727,
+    "lo": 0.1315058201581444,
+    "hi": 0.4815212369900198
+   },
+   "fpr": {
+    "k": 7,
+    "n": 32,
+    "rate": 0.21875,
+    "lo": 0.11023696931531854,
+    "hi": 0.3875533079044484
+   }
+  },
+  {
+   "name": "jpeg_q70",
+   "tpr": {
+    "k": 6,
+    "n": 29,
+    "rate": 0.20689655172413793,
+    "lo": 0.09845936515585207,
+    "hi": 0.3839044660825772
+   },
+   "fpr": {
+    "k": 5,
+    "n": 23,
+    "rate": 0.21739130434782608,
+    "lo": 0.09663835601719065,
+    "hi": 0.4190388018273492
+   }
+  },
+  {
+   "name": "jpeg_q85",
+   "tpr": {
+    "k": 11,
+    "n": 25,
+    "rate": 0.44,
+    "lo": 0.2666537494700256,
+    "hi": 0.6293298298043557
+   },
+   "fpr": {
+    "k": 2,
+    "n": 23,
+    "rate": 0.08695652173913043,
+    "lo": 0.02417949540723341,
+    "hi": 0.2679640429809402
+   }
+  },
+  {
+   "name": "jpeg_q90",
+   "tpr": {
+    "k": 12,
+    "n": 28,
+    "rate": 0.42857142857142855,
+    "lo": 0.2650829618073122,
+    "hi": 0.609295210143846
+   },
+   "fpr": {
+    "k": 2,
+    "n": 24,
+    "rate": 0.08333333333333333,
+    "lo": 0.023158327842973503,
+    "hi": 0.258492152014506
+   }
+  },
+  {
+   "name": "jpeg_q95",
+   "tpr": {
+    "k": 14,
+    "n": 27,
+    "rate": 0.5185185185185185,
+    "lo": 0.3398532458621043,
+    "hi": 0.6925704935029092
+   },
+   "fpr": {
+    "k": 0,
+    "n": 22,
+    "rate": 0.0,
+    "lo": 1.3877787807814457e-17,
+    "hi": 0.14865952572596125
+   }
+  },
+  {
+   "name": "scale_0.5",
+   "tpr": {
+    "k": 10,
+    "n": 33,
+    "rate": 0.30303030303030304,
+    "lo": 0.17375347814547223,
+    "hi": 0.4733845397473445
+   },
+   "fpr": {
+    "k": 2,
+    "n": 26,
+    "rate": 0.07692307692307693,
+    "lo": 0.02135463918337556,
+    "hi": 0.24141947480515052
+   }
+  },
+  {
+   "name": "scale_0.6",
+   "tpr": {
+    "k": 11,
+    "n": 26,
+    "rate": 0.4230769230769231,
+    "lo": 0.255441899027294,
+    "hi": 0.6105170307888017
+   },
+   "fpr": {
+    "k": 5,
+    "n": 20,
+    "rate": 0.25,
+    "lo": 0.11186005278940309,
+    "hi": 0.4687050099580636
+   }
+  },
+  {
+   "name": "scale_0.75",
+   "tpr": {
+    "k": 12,
+    "n": 23,
+    "rate": 0.5217391304347826,
+    "lo": 0.3296242986421849,
+    "hi": 0.7076313046005427
+   },
+   "fpr": {
+    "k": 6,
+    "n": 25,
+    "rate": 0.24,
+    "lo": 0.11496157730326725,
+    "hi": 0.43430059955238565
+   }
+  },
+  {
+   "name": "scale_0.85",
+   "tpr": {
+    "k": 8,
+    "n": 20,
+    "rate": 0.4,
+    "lo": 0.21880396741419272,
+    "hi": 0.613422057684794
+   },
+   "fpr": {
+    "k": 4,
+    "n": 32,
+    "rate": 0.125,
+    "lo": 0.04970053844474301,
+    "hi": 0.2806864978482796
+   }
+  },
+  {
+   "name": "scale_1.0",
+   "tpr": {
+    "k": 21,
+    "n": 48,
+    "rate": 0.4375,
+    "lo": 0.3070105464041092,
+    "hi": 0.5772522849899835
+   },
+   "fpr": {
+    "k": 6,
+    "n": 47,
+    "rate": 0.1276595744680851,
+    "lo": 0.059845227802024795,
+    "hi": 0.25174213372869025
+   }
+  }
+ ],
+ "cant_tell": {
+  "k": 1,
+  "n": 300,
+  "rate": 0.0033333333333333335,
+  "lo": 0.0005886425761407379,
+  "hi": 0.018637164554943353
+ },
+ "failures": [
+  {
+   "kind": "false_alarm",
+   "text": "image 010604 (genuine, layout L7) -> SUSPICIOUS ['PAYEE_PERSONAL_ACCOUNT', 'PAYEE_UNVERIFIED']"
+  },
+  {
+   "kind": "false_alarm",
+   "text": "image 018758 (genuine, layout L7) -> SUSPICIOUS ['PAYEE_PERSONAL_ACCOUNT', 'PAYEE_UNVERIFIED']"
+  },
+  {
+   "kind": "false_alarm",
+   "text": "image 013115 (genuine, layout L7) -> SUSPICIOUS ['PAYEE_PERSONAL_ACCOUNT', 'PAYEE_UNVERIFIED']"
+  },
+  {
+   "kind": "false_alarm",
+   "text": "image 007196 (genuine, layout L7) -> SUSPICIOUS ['PAYEE_UNVERIFIED', 'MEDIA_IMAGE_EDITED']"
+  },
+  {
+   "kind": "false_alarm",
+   "text": "image 003754 (genuine, layout L7) -> SUSPICIOUS ['PAYEE_PERSONAL_ACCOUNT', 'PAYEE_UNVERIFIED']"
+  },
+  {
+   "kind": "false_alarm",
+   "text": "image 003458 (genuine, layout L6) -> SUSPICIOUS ['MEDIA_IMAGE_EDITED']"
+  },
+  {
+   "kind": "false_alarm",
+   "text": "image 007170 (genuine, layout L7) -> SUSPICIOUS ['PAYEE_UNVERIFIED', 'MEDIA_IMAGE_EDITED']"
+  },
+  {
+   "kind": "false_alarm",
+   "text": "image 005011 (genuine, layout L7) -> SUSPICIOUS ['PAYEE_PERSONAL_ACCOUNT', 'PAYEE_UNVERIFIED']"
+  },
+  {
+   "kind": "false_alarm",
+   "text": "image 016091 (genuine, layout L6) -> SUSPICIOUS ['PAYEE_PERSONAL_ACCOUNT', 'PAYEE_UNVERIFIED']"
+  },
+  {
+   "kind": "false_alarm",
+   "text": "image 010431 (genuine, layout L7) -> SUSPICIOUS ['PAYEE_PERSONAL_ACCOUNT', 'PAYEE_UNVERIFIED']"
+  },
+  {
+   "kind": "false_alarm",
+   "text": "image 011887 (genuine, layout L7) -> SUSPICIOUS ['PAYEE_UNVERIFIED', 'MEDIA_IMAGE_EDITED']"
+  },
+  {
+   "kind": "false_alarm",
+   "text": "image 000856 (genuine, layout L6) -> SUSPICIOUS ['PAYEE_PERSONAL_ACCOUNT', 'PAYEE_UNVERIFIED']"
+  },
+  {
+   "kind": "false_alarm",
+   "text": "image 011377 (genuine, layout L7) -> SUSPICIOUS ['PAYEE_UNVERIFIED', 'MEDIA_IMAGE_EDITED']"
+  },
+  {
+   "kind": "false_alarm",
+   "text": "image 007884 (genuine, layout L7) -> SUSPICIOUS ['PAYEE_PERSONAL_ACCOUNT', 'PAYEE_UNVERIFIED', 'MEDIA_IMAGE_EDITED']"
+  },
+  {
+   "kind": "false_alarm",
+   "text": "image 000078 (genuine, layout L7) -> SUSPICIOUS ['PAYEE_UNVERIFIED', 'MEDIA_IMAGE_EDITED']"
+  },
+  {
+   "kind": "false_alarm",
+   "text": "image 002895 (genuine, layout L6) -> SUSPICIOUS ['MEDIA_IMAGE_EDITED']"
+  },
+  {
+   "kind": "false_alarm",
+   "text": "image 012954 (genuine, layout L7) -> SUSPICIOUS ['PAYEE_PERSONAL_ACCOUNT', 'PAYEE_UNVERIFIED']"
+  },
+  {
+   "kind": "false_alarm",
+   "text": "image 006147 (genuine, layout L7) -> SUSPICIOUS ['PAYEE_PERSONAL_ACCOUNT', 'PAYEE_UNVERIFIED']"
+  },
+  {
+   "kind": "false_alarm",
+   "text": "image 010957 (genuine, layout L6) -> SUSPICIOUS ['PAYEE_UNVERIFIED', 'MEDIA_IMAGE_EDITED']"
+  },
+  {
+   "kind": "false_alarm",
+   "text": "image 013187 (genuine, layout L7) -> SUSPICIOUS ['PAYEE_PERSONAL_ACCOUNT', 'PAYEE_UNVERIFIED']"
+  },
+  {
+   "kind": "false_alarm",
+   "text": "image 011597 (genuine, layout L6) -> SUSPICIOUS ['PAYEE_PERSONAL_ACCOUNT', 'PAYEE_UNVERIFIED']"
+  },
+  {
+   "kind": "false_alarm",
+   "text": "image 007282 (genuine, layout L7) -> SUSPICIOUS ['PAYEE_PERSONAL_ACCOUNT', 'PAYEE_UNVERIFIED']"
+  },
+  {
+   "kind": "false_alarm",
+   "text": "image 014021 (genuine, layout L7) -> SUSPICIOUS ['PAYEE_PERSONAL_ACCOUNT', 'PAYEE_UNVERIFIED']"
+  },
+  {
+   "kind": "missed",
+   "text": "image 010321 (ref edited, layout L7, JPEG q70) -> NO_RED_FLAGS"
+  },
+  {
+   "kind": "missed",
+   "text": "image 005045 (time edited, layout L7, JPEG q85) -> NO_RED_FLAGS"
+  },
+  {
+   "kind": "missed",
+   "text": "image 012660 (amount edited, layout L6, JPEG q40) -> NO_RED_FLAGS"
+  },
+  {
+   "kind": "missed",
+   "text": "image 001661 (payee edited, layout L6, JPEG q95) -> NO_RED_FLAGS"
+  },
+  {
+   "kind": "missed",
+   "text": "image 017570 (amount edited, layout L6, JPEG q70) -> NO_RED_FLAGS"
+  },
+  {
+   "kind": "missed",
+   "text": "image 003140 (ref edited, layout L6, JPEG q70) -> NO_RED_FLAGS"
+  },
+  {
+   "kind": "missed",
+   "text": "image 011660 (amount edited, layout L7, JPEG q55) -> NO_RED_FLAGS"
+  },
+  {
+   "kind": "missed",
+   "text": "image 001903 (payee edited, layout L7, JPEG q85) -> NO_RED_FLAGS"
+  },
+  {
+   "kind": "missed",
+   "text": "image 016687 (amount edited, layout L7, JPEG q70) -> NO_RED_FLAGS"
+  },
+  {
+   "kind": "missed",
+   "text": "image 006847 (vpa edited, layout L6, JPEG q90) -> NO_RED_FLAGS"
+  },
+  {
+   "kind": "missed",
+   "text": "image 001309 (ref edited, layout L6, JPEG q90) -> NO_RED_FLAGS"
+  },
+  {
+   "kind": "missed",
+   "text": "image 014238 (payee edited, layout L7, JPEG q85) -> NO_RED_FLAGS"
+  },
+  {
+   "kind": "missed",
+   "text": "image 002349 (payee edited, layout L7, JPEG q95) -> NO_RED_FLAGS"
+  },
+  {
+   "kind": "missed",
+   "text": "image 007779 (payee edited, layout L6, JPEG q90) -> NO_RED_FLAGS"
+  },
+  {
+   "kind": "missed",
+   "text": "image 003045 (amount edited, layout L6, JPEG q55) -> NO_RED_FLAGS"
+  },
+  {
+   "kind": "missed",
+   "text": "image 018115 (ref edited, layout L6, JPEG q55) -> NO_RED_FLAGS"
+  },
+  {
+   "kind": "missed",
+   "text": "image 013892 (ref edited, layout L7, JPEG q90) -> NO_RED_FLAGS"
+  },
+  {
+   "kind": "missed",
+   "text": "image 004161 (amount edited, layout L7, JPEG q70) -> NO_RED_FLAGS"
+  },
+  {
+   "kind": "missed",
+   "text": "image 007176 (amount edited, layout L7, JPEG q70) -> NO_RED_FLAGS"
+  },
+  {
+   "kind": "missed",
+   "text": "image 002001 (ref edited, layout L6, JPEG q85) -> NO_RED_FLAGS"
+  },
+  {
+   "kind": "missed",
+   "text": "image 019178 (ref edited, layout L7, JPEG q95) -> NO_RED_FLAGS"
+  },
+  {
+   "kind": "missed",
+   "text": "image 001721 (amount edited, layout L7, JPEG q70) -> NO_RED_FLAGS"
+  },
+  {
+   "kind": "missed",
+   "text": "image 007074 (amount edited, layout L7, JPEG q85) -> NO_RED_FLAGS"
+  },
+  {
+   "kind": "missed",
+   "text": "image 018297 (amount edited, layout L6, JPEG q70) -> NO_RED_FLAGS"
+  },
+  {
+   "kind": "missed",
+   "text": "image 009202 (ref edited, layout L7, JPEG q85) -> NO_RED_FLAGS"
+  },
+  {
+   "kind": "missed",
+   "text": "image 017766 (time edited, layout L7, JPEG q55) -> NO_RED_FLAGS"
+  },
+  {
+   "kind": "missed",
+   "text": "image 003946 (payee edited, layout L7, JPEG q70) -> NO_RED_FLAGS"
+  },
+  {
+   "kind": "missed",
+   "text": "image 005932 (ref edited, layout L6, JPEG q70) -> NO_RED_FLAGS"
+  },
+  {
+   "kind": "missed",
+   "text": "image 019068 (time edited, layout L6, JPEG q90) -> NO_RED_FLAGS"
+  },
+  {
+   "kind": "missed",
+   "text": "image 018701 (payee edited, layout L7, JPEG q85) -> NO_RED_FLAGS"
+  }
+ ],
+ "false_alarm_reasons": {
+  "PAYEE_UNVERIFIED": 21,
+  "PAYEE_PERSONAL_ACCOUNT": 15,
+  "MEDIA_IMAGE_EDITED": 9
+ }
+}
