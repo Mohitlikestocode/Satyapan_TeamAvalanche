@@ -20,7 +20,7 @@ import torch
 import torch.nn.functional as F
 from torch.utils.data import DataLoader
 
-from common import ScreenDataset, summarise, threshold_at_fpr  # noqa: E402  (common fixes sys.path)
+from common import ScreenDataset, read_meta, summarise, threshold_at_fpr  # noqa: E402  (common fixes sys.path)
 from evaluate import evaluate  # noqa: E402
 from satyapan.layers.l2_forensics.tamper_net import DEFAULT_SIZE, build, image_score  # noqa: E402
 
@@ -57,18 +57,22 @@ def main() -> None:
     ap.add_argument("--device", default="auto")
     ap.add_argument("--max-train", type=int, default=0, help="use only the first N training images (smoke tests)")
     ap.add_argument("--no-augment", action="store_true", help="turn off training-time colour, crop and JPEG augmentation")
+    ap.add_argument("--native", action="store_true", help="train on native-resolution crops (--crop) and score whole images at native resolution")
+    ap.add_argument("--crop", type=int, nargs=2, default=[512, 384], metavar=("H", "W"), help="training crop size with --native")
+    ap.add_argument("--max-side", type=int, default=1600, help="with --native: images with a longer side are shrunk to this")
     a = ap.parse_args()
 
     random.seed(a.seed); np.random.seed(a.seed); torch.manual_seed(a.seed)
     device = "cuda" if a.device == "auto" and torch.cuda.is_available() else ("cpu" if a.device == "auto" else a.device)
     size = tuple(a.size)
-    train = ScreenDataset(a.data, "train", size, augment=not a.no_augment)
+    train = ScreenDataset(a.data, "train", size, augment=not a.no_augment, native=a.native, crop=tuple(a.crop) if a.native else None,
+                          max_side=a.max_side)
     if a.max_train:
         train.rows = train.rows[: a.max_train]
-    val = ScreenDataset(a.data, "val", size)
-    print(f"device={device} train={len(train)} val={len(val)} encoder={a.encoder} size={size}")
+    val = ScreenDataset(a.data, "val", size, native=a.native, max_side=a.max_side)
+    print(f"device={device} train={len(train)} val={len(val)} encoder={a.encoder} " + (f"native, crops {a.crop}" if a.native else f"size={size}"))
     tl = DataLoader(train, batch_size=a.bs, shuffle=True, num_workers=a.workers, drop_last=len(train) > a.bs, persistent_workers=a.workers > 0)
-    vl = DataLoader(val, batch_size=a.bs, shuffle=False, num_workers=0)
+    vl = DataLoader(val, batch_size=1 if a.native else a.bs, shuffle=False, num_workers=2 if a.native else 0)
 
     model = build(a.encoder, pretrained=a.pretrained).to(device)
     opt = torch.optim.AdamW(model.parameters(), lr=a.lr, weight_decay=1e-4)
@@ -97,11 +101,11 @@ def main() -> None:
         print(f"epoch {ep:2d}  loss {log[-1]['loss']:.4f}  val AUROC {s['auroc']:.3f}  TPR {s['tpr']['rate']:.2f} at FPR {s['fpr']['rate']:.2f}  ({time.time() - t0:.0f}s)")
         if s["auroc"] >= best["auroc"]:
             best = {"auroc": s["auroc"]}
-            torch.save({"state_dict": model.state_dict(), "config": {"encoder": a.encoder, "size": list(size)}, "threshold": thr,
+            torch.save({"state_dict": model.state_dict(), "config": {"encoder": a.encoder, "size": list(a.crop if a.native else size), "native": a.native, "max_side": a.max_side}, "threshold": thr,
                         "target_fpr": a.target_fpr, "val": {k: v for k, v in s.items() if k != "threshold"}, "seed": a.seed, "epoch": ep}, a.out)
     print(f"best checkpoint saved to {a.out}")
     for split in ("val", "test"):
-        if (ScreenDataset(a.data, split, size).rows):
+        if read_meta(a.data, split):
             res = evaluate(a.out, a.data, split, device)
             path = a.out.with_name(f"tamper_{split}_metrics.json")
             path.write_text(json.dumps(res, indent=1), encoding="utf-8")

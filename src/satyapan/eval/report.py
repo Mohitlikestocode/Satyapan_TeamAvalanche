@@ -45,7 +45,7 @@ def measure(paths: list[Path], held_out: bool) -> dict:
     same = json.dumps(base["groups"], sort_keys=True) == json.dumps(full["groups"], sort_keys=True)
     out_rows = [{"name": "Rules only (baseline)", "baseline": True, "tpr": base["groups"]["all"]["flag_rate_on_scams"],
                  "fpr": base["groups"]["all"]["false_alarm_rate"]}]
-    out_rows.append({"name": "Whole system as deployed" + (" (no text model installed: same as rules)" if same else ""), "baseline": False,
+    out_rows.append({"name": "Whole system as deployed" + (" (same numbers as rules only on these messages)" if same else ""), "baseline": False,
                      "tpr": full["groups"]["all"]["flag_rate_on_scams"], "fpr": full["groups"]["all"]["false_alarm_rate"]})
     out_rows.append({"name": "Whole system: HIGH RISK only", "baseline": False, "tpr": full["groups"]["all"]["red_rate_on_scams"],
                      "fpr": full["groups"]["all"]["red_false_alarm_rate"]})

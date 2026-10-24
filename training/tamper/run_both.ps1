@@ -5,6 +5,7 @@ $ErrorActionPreference = "Stop"
 $root = (Resolve-Path "$PSScriptRoot\..\..").Path
 $py = Join-Path $root ".venv\Scripts\python.exe"
 $env:PYTHONPATH = Join-Path $root "src"
+$env:PYTHONUNBUFFERED = "1"  # print each epoch as it finishes
 Set-Location (Join-Path $root "training\tamper")
 foreach ($run in @(@{name = "small"; args = @("--encoder", "small")}, @{name = "resnet18"; args = @("--encoder", "resnet18", "--pretrained")})) {
     $out = Join-Path $root "var\models\runs\$($run.name)"

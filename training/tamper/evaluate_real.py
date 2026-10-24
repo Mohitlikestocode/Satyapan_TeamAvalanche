@@ -13,19 +13,20 @@ import json
 from pathlib import Path
 
 import torch
-from PIL import Image
+from PIL import Image, ImageOps
 
 from common import ScreenDataset, ela_score, summarise, threshold_at_fpr  # noqa: E402  (common fixes sys.path)
-from satyapan.layers.l2_forensics.tamper_net import image_score, load_checkpoint, to_tensor  # noqa: E402
+from satyapan.layers.l2_forensics.tamper_net import image_score, load_checkpoint, prepare  # noqa: E402
 
 EXT = {".jpg", ".jpeg", ".png", ".webp"}
 
 
-def score_dir(model, size, folder: Path, device: str) -> list[tuple[str, float]]:
+def score_dir(model, config: dict, folder: Path, device: str) -> list[tuple[str, float]]:
     out = []
     for p in sorted(x for x in folder.iterdir() if x.suffix.lower() in EXT):
         with torch.no_grad():
-            s = float(image_score(model(to_tensor(Image.open(p), size).unsqueeze(0).to(device)))[0])
+            img = ImageOps.exif_transpose(Image.open(p)).convert("RGB")
+            s = float(image_score(model(prepare(img, config).unsqueeze(0).to(device)))[0])
         out.append((p.name, s))
     return out
 
@@ -43,7 +44,7 @@ def main() -> None:
     model, ck = load_checkpoint(a.ckpt)
     model.to(device).eval()
     size = tuple(ck["config"]["size"])
-    e, g = score_dir(model, size, a.edited, device), score_dir(model, size, a.genuine, device)
+    e, g = score_dir(model, ck["config"], a.edited, device), score_dir(model, ck["config"], a.genuine, device)
     thr = ck["threshold"]
     res = summarise([s for _, s in e] + [s for _, s in g], [True] * len(e) + [False] * len(g), thr)
     f = lambda r: f"{100 * r['rate']:.1f}% ({r['k']}/{r['n']}, 95% CI {100 * r['lo']:.0f}-{100 * r['hi']:.0f}%)"  # noqa: E731

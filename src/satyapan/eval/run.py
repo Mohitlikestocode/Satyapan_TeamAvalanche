@@ -22,6 +22,9 @@ RED = {Tier.HIGH_RISK, Tier.REGISTRY_HIT}
 
 def evaluate(rows: list[dict], use_plugins: bool = True) -> dict:
     """use_plugins=False measures the rules alone (the baseline); True measures the whole system as the site runs it."""
+    if use_plugins:  # the site loads plugins when the app starts; a command-line run must load them too
+        from ..plugins import load_plugins
+        load_plugins()
     stats: dict[str, dict[str, int]] = defaultdict(lambda: defaultdict(int))
     fails: list[dict] = []
     for r in rows:

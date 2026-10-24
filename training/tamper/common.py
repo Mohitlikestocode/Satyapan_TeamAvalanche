@@ -15,7 +15,7 @@ from PIL import Image  # noqa: E402
 from torch.utils.data import Dataset  # noqa: E402
 
 from satyapan.eval.metrics import rate  # noqa: E402
-from satyapan.layers.l2_forensics.tamper_net import to_tensor  # noqa: E402
+from satyapan.layers.l2_forensics.tamper_net import to_tensor, to_tensor_native  # noqa: E402
 
 
 def read_meta(data: Path, split: str) -> list[dict]:
@@ -43,23 +43,70 @@ def augment(img: Image.Image, m: Image.Image, rng: np.random.Generator) -> tuple
     return img, m
 
 
+def _mask_tensor(m: Image.Image) -> torch.Tensor:
+    return torch.from_numpy((np.asarray(m, dtype="float32") > 127).astype("float32")).unsqueeze(0)
+
+
+def native_pair(img: Image.Image, m: Image.Image, max_side: int) -> tuple[torch.Tensor, torch.Tensor]:
+    """Image and mask exactly as to_tensor_native prepares an image at inference (shrink only if huge, crop to a multiple of 16)."""
+    x = to_tensor_native(img, max_side)
+    s = min(1.0, max_side / max(img.size))
+    if s < 1.0:
+        m = m.resize((max(16, int(img.width * s)), max(16, int(img.height * s))), Image.NEAREST)
+    m = m.crop((0, 0, x.shape[2], x.shape[1]))
+    return x, _mask_tensor(m)
+
+
+def random_crop(img: Image.Image, m: Image.Image, crop: tuple[int, int], rng: np.random.Generator) -> tuple[Image.Image, Image.Image]:
+    """A crop of `crop` (h, w) pixels at native resolution. For edited images, 60% of crops contain the edit."""
+    ch, cw = crop
+    if img.width < cw or img.height < ch:  # pad small images with their own edge colour
+        canvas = Image.new("RGB", (max(cw, img.width), max(ch, img.height)), img.getpixel((0, 0)))
+        canvas.paste(img, (0, 0))
+        mc = Image.new("L", canvas.size, 0)
+        mc.paste(m, (0, 0))
+        img, m = canvas, mc
+    bb = m.getbbox()
+    if bb and rng.random() < 0.6:
+        def pick(lo: int, hi: int) -> int:
+            lo, hi = max(0, lo), max(0, hi)
+            return int(rng.integers(min(lo, hi), max(lo, hi) + 1))
+        cx = pick(bb[2] - cw, min(bb[0], img.width - cw))
+        cy = pick(bb[3] - ch, min(bb[1], img.height - ch))
+    else:
+        cx, cy = int(rng.integers(0, img.width - cw + 1)), int(rng.integers(0, img.height - ch + 1))
+    cx, cy = min(max(0, cx), img.width - cw), min(max(0, cy), img.height - ch)
+    return img.crop((cx, cy, cx + cw, cy + ch)), m.crop((cx, cy, cx + cw, cy + ch))
+
+
 class ScreenDataset(Dataset):
-    def __init__(self, data: Path, split: str, size: tuple[int, int], augment: bool = False):
+    """size: fixed (h, w) input, the image is resized. native=True: native resolution (whole image at eval, `crop` patches in training)."""
+
+    def __init__(self, data: Path, split: str, size: tuple[int, int], augment: bool = False, native: bool = False,
+                 crop: tuple[int, int] | None = None, max_side: int = 1600):
         self.data, self.size, self.rows, self.augment = Path(data), size, read_meta(Path(data), split), augment
+        self.native, self.crop, self.max_side = native, crop, max_side
 
     def __len__(self) -> int:
         return len(self.rows)
 
     def __getitem__(self, i: int):
         r = self.rows[i]
-        img = Image.open(self.data / "images" / f"{r['id']}.jpg")
+        img = Image.open(self.data / "images" / f"{r['id']}.jpg").convert("RGB")
         m = Image.open(self.data / "masks" / f"{r['id']}.png")
+        # torch seeds each loader worker from the run seed, so this stays reproducible
+        rng = np.random.default_rng(int(torch.randint(0, 2**31 - 1, (1,))))
         if self.augment:
-            # torch seeds each loader worker from the run seed, so this stays reproducible
-            img, m = augment(img, m, np.random.default_rng(int(torch.randint(0, 2**31 - 1, (1,)))))
+            img, m = augment(img, m, rng)
+        if self.native:
+            if self.crop:
+                img, m = random_crop(img, m, self.crop, rng)
+                x = to_tensor_native(img, max_side=10**6)
+                return x, _mask_tensor(m.crop((0, 0, x.shape[2], x.shape[1]))), i
+            x, mt = native_pair(img, m, self.max_side)
+            return x, mt, i
         m = m.resize((self.size[1], self.size[0]), Image.NEAREST)
-        mask = torch.from_numpy((np.asarray(m, dtype="float32") > 127).astype("float32")).unsqueeze(0)
-        return to_tensor(img, self.size), mask, i
+        return to_tensor(img, self.size), _mask_tensor(m), i
 
 
 def auroc(pos: list[float], neg: list[float]) -> float:

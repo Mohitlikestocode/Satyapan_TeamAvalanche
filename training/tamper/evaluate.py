@@ -61,9 +61,11 @@ def failures(rows: list[dict], scores: list[float], thr: float, k: int = 15) -> 
 
 def evaluate(ckpt: Path, data: Path, split: str, device: str) -> dict:
     model, ck = load_checkpoint(ckpt)
-    size = tuple(ck["config"]["size"])
-    ds = ScreenDataset(data, split, size)
-    scores, ious = predict(model, ds, device)
+    cfg = ck["config"]
+    size = tuple(cfg["size"])
+    native = bool(cfg.get("native"))
+    ds = ScreenDataset(data, split, size, native=native, max_side=int(cfg.get("max_side", 1600)))
+    scores, ious = predict(model, ds, device, bs=1 if native else 8)
     edited = [r["edited"] for r in ds.rows]
     thr = ck["threshold"]
     out = {"split": split, "n": len(ds), "model": summarise(scores, edited, thr, ci=True), "config": ck["config"],
