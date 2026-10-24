@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="case">
+  <div class="ops-ok" role="status">
+    <h1 class="case-h1" style="font-size:24px">{{ tr("Thank you. We have your request.", "धन्यवाद। हमें आपका अनुरोध मिल गया।") }}</h1>
+    <p style="margin:8px 0 0">{{ tr("Someone from the team will use the contact you gave to reach you. If you left it empty, make a poster yourself below and start right away.", "टीम का कोई सदस्य आपके दिए संपर्क पर आपसे बात करेगा। अगर आपने खाली छोड़ा था, तो नीचे अपना पोस्टर खुद बनाकर अभी शुरू करें।") }}</p>
+  </div>
+  <div class="case-acts"><a class="btn bn" href="/poster" style="width:auto;padding:0 22px">{{ tr("Make my poster", "मेरा पोस्टर बनाएँ") }}</a><a class="btn bq" href="/" style="width:auto;padding:0 22px">{{ tr("Home", "मुख्य पृष्ठ") }}</a></div>
+</div>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="case">
+  <h1 class="case-h1">{{ tr("Bring Satyapan to your shop or organisation", "सत्यापन को अपनी दुकान या संस्था में लाएँ") }}</h1>
+  <p>{{ tr("Shopkeepers, NGOs, colleges, bank branches and cyber cells can ask for a free pilot. You get a printed poster with a QR code that opens Satyapan, and we ask you for honest feedback.", "दुकानदार, संस्थाएँ, कॉलेज, बैंक शाखाएँ और साइबर सेल मुफ़्त पायलट माँग सकते हैं। आपको एक छपा पोस्टर मिलेगा जिसके QR कोड से सत्यापन खुलता है, और हम आपसे सच्ची राय माँगेंगे।") }}</p>
+  <ul class="ticks">
+    <li>{{ tr("Free during the pilot. We never ask for money, OTPs, PINs or bank details.", "पायलट के दौरान मुफ़्त। हम पैसे, OTP, PIN या बैंक विवरण कभी नहीं माँगते।") }}</li>
+    <li>{{ tr("Your customers' files are not kept. Satyapan never blocks, pays or files anything.", "आपके ग्राहकों की फ़ाइलें नहीं रखी जातीं। सत्यापन कुछ भी रोकता, चुकाता या दर्ज नहीं करता।") }}</li>
+    <li>{{ tr("Your contact details are used only to reach you about the pilot.", "आपके संपर्क विवरण सिर्फ़ पायलट के बारे में आपसे बात करने के लिए इस्तेमाल होते हैं।") }}</li>
+  </ul>
+
+  <form method="post" action="/pilot" class="ops-form" novalidate>
+    <div style="position:absolute;left:-9999px" aria-hidden="true"><label>Website<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+    <div><label for="org">{{ tr("Name of your shop or organisation", "आपकी दुकान या संस्था का नाम") }}</label>
+      <input id="org" name="org" type="text" maxlength="80" value="{{ values.org or '' }}" required aria-describedby="e-org">
+      {% if errors.org %}<p id="e-org" class="ops-err" role="alert">{{ errors.org }}</p>{% endif %}</div>
+    <div><label for="org_type">{{ tr("What kind is it?", "यह किस प्रकार की है?") }}</label>
+      <select id="org_type" name="org_type" required>
+        <option value="">{{ tr("Choose one", "एक चुनें") }}</option>
+        {% for k, v in types.items() %}<option value="{{ k }}" {% if values.org_type == k %}selected{% endif %}>{{ tr(v[0], v[1]) }}</option>{% endfor %}
+      </select>
+      {% if errors.org_type %}<p class="ops-err" role="alert">{{ errors.org_type }}</p>{% endif %}</div>
+    <div><label for="city">{{ tr("City or town", "शहर या कस्बा") }}</label>
+      <input id="city" name="city" type="text" maxlength="60" value="{{ values.city or '' }}" required>
+      {% if errors.city %}<p class="ops-err" role="alert">{{ errors.city }}</p>{% endif %}</div>
+    <div><label for="purpose">{{ tr("What would you use it for? (optional)", "आप इसका क्या इस्तेमाल करेंगे? (वैकल्पिक)") }}</label>
+      <textarea id="purpose" name="purpose" maxlength="500">{{ values.purpose or '' }}</textarea></div>
+    <div><label for="weekly_checks">{{ tr("About how many checks a week? (optional)", "हफ़्ते में लगभग कितनी जाँचें? (वैकल्पिक)") }}</label>
+      <input id="weekly_checks" name="weekly_checks" type="number" min="0" max="1000000" inputmode="numeric" value="{{ values.weekly_checks or '' }}">
+      {% if errors.weekly_checks %}<p class="ops-err" role="alert">{{ errors.weekly_checks }}</p>{% endif %}</div>
+    <div><label for="contact">{{ tr("Phone number or email (optional)", "फ़ोन नंबर या ईमेल (वैकल्पिक)") }}</label>
+      <input id="contact" name="contact" type="text" maxlength="120" value="{{ values.contact or '' }}" autocomplete="off">
+      <p class="ops-hint">{{ tr("Kept only so we can reach you about the pilot. Leave it empty if you prefer.", "सिर्फ़ पायलट के बारे में आपसे संपर्क के लिए रखा जाता है। चाहें तो खाली छोड़ दें।") }}</p>
+      {% if errors.contact %}<p class="ops-err" role="alert">{{ errors.contact }}</p>{% endif %}</div>
+    <div><label class="ops-check"><input type="checkbox" name="consent" {% if values.consent %}checked{% endif %}> <span>{{ tr("I agree that Satyapan may store what I typed above to contact me about the pilot.", "मैं सहमत हूँ कि सत्यापन ऊपर लिखी जानकारी पायलट के बारे में मुझसे संपर्क के लिए रख सकता है।") }}</span></label>
+      {% if errors.consent %}<p class="ops-err" role="alert">{{ errors.consent }}</p>{% endif %}</div>
+    <button class="btn bn" type="submit" style="width:auto;padding:0 28px;justify-self:start">{{ tr("Send request", "अनुरोध भेजें") }}</button>
+  </form>
+</div>
+{% endblock %}

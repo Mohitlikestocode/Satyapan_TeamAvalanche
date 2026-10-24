@@ -1,0 +1,73 @@
+/* Traction and operations pages. Classes are prefixed ops- so nothing collides with other areas. */
+.ops-head{background:#fff;border-bottom:1px solid var(--line);padding:24px 0}
+.ops-head h1{margin:0 0 6px;font-size:30px}
+.ops-sub{margin:0 0 6px;color:var(--ink);max-width:760px}
+.ops-since{margin:0;color:var(--muted)}
+.ops-body{padding-top:24px;padding-bottom:56px;display:flex;flex-direction:column;gap:20px}
+.ops-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.ops-kpi{background:#fff;border:1px solid var(--line);border-top:4px solid var(--blue);padding:14px 16px}
+.ops-kpi small{display:block;font-size:13px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.ops-kpi b{display:block;font-size:38px;line-height:1.15;color:var(--navy)}
+.ops-kpi span{font-size:13px;color:var(--muted)}
+.ops-card{background:#fff;border:1px solid var(--line);border-top:4px solid var(--navy);padding:16px 18px}
+.ops-card h2{margin:0 0 12px;font-size:19px}
+.ops-two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.ops-row{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr) auto;gap:12px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line2)}
+.ops-row:last-of-type{border-bottom:0}
+.ops-row:not(:has(.ops-meter)){grid-template-columns:minmax(0,1fr) auto}
+.ops-row b{font-variant-numeric:tabular-nums}
+.ops-meter{height:10px;background:#E1E6ED;display:block}
+.ops-meter i{display:block;height:100%;background:var(--blue)}
+.ops-chart{width:100%;max-width:640px;height:auto}
+.ops-bar{fill:var(--blue)}
+.ops-tick{font-size:9px;fill:#4A5566}
+.ops-note{margin:10px 0 0;font-size:14px;color:var(--muted)}
+.ops-empty{color:var(--muted);margin:0;padding:8px 0}
+.ops-scroll{overflow-x:auto}
+.mono{font-family:ui-monospace,Menlo,Consolas,monospace}
+
+/* pilot and feedback */
+.ops-form{display:grid;gap:14px;max-width:640px}
+.ops-form label{font-weight:700;display:block;margin-bottom:4px}
+.ops-form input[type=text],.ops-form input[type=number],.ops-form select,.ops-form textarea{width:100%;min-height:48px;border:1px solid var(--line);border-radius:3px;padding:10px 12px;font:inherit;font-size:16px;background:#fff}
+.ops-form textarea{min-height:96px}
+.ops-hint{font-size:14px;color:var(--muted);margin:4px 0 0}
+.ops-err{color:var(--red);font-weight:700;margin:0}
+.ops-ok{background:var(--green-l);border:1px solid #9FD0AD;border-left:6px solid var(--green);padding:14px 16px}
+.ops-check{display:flex;gap:10px;align-items:flex-start;min-height:44px}
+.ops-check input{width:22px;height:22px;margin-top:2px}
+.ops-fb{margin:20px 0 0;border:1px solid var(--line);border-left:6px solid var(--blue);background:#fff;padding:14px 16px;max-width:100%}
+.ops-fb h2{margin:0 0 8px;font-size:17px}
+.ops-fb-row{display:flex;flex-wrap:wrap;gap:8px}
+.ops-fb button{min-height:48px;min-width:48px;border:1px solid var(--line);background:#fff;font:inherit;font-size:16px;font-weight:700;border-radius:3px;cursor:pointer;padding:0 14px}
+.ops-fb button:hover,.ops-fb button[aria-pressed="true"]{border-color:var(--blue);background:var(--blue-l);color:var(--blue)}
+.ops-fb textarea{width:100%;margin-top:10px;min-height:72px;border:1px solid var(--line);border-radius:3px;padding:10px;font:inherit}
+
+@media (max-width:1000px){.ops-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.ops-two{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:520px){.ops-kpi b{font-size:30px}.ops-row{grid-template-columns:minmax(0,1fr) auto}.ops-row .ops-meter{grid-column:1/-1;order:3}}
+
+/* shop poster (A4 print) */
+.ops-actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.ops-poster{width:100%;max-width:794px;margin:0 auto;background:#fff;border:1px solid var(--line);border-top:12px solid var(--navy);padding:36px 44px;display:flex;flex-direction:column;gap:22px;text-align:center;color:#0B1F3A}
+.ops-poster header h1{margin:0;font-size:48px;line-height:1.1;color:var(--navy)}
+.ops-poster header h2{margin:6px 0 0;font-size:34px;color:var(--blue)}
+.ops-poster-kicker{margin:0 0 10px;font-size:20px;font-weight:700;color:#4A5566;text-transform:uppercase;letter-spacing:.06em}
+.ops-poster-qr{display:flex;flex-direction:column;align-items:center;gap:8px}
+.ops-qr{width:300px;height:300px;padding:14px;border:6px solid var(--navy);background:#fff}
+.ops-qr svg{width:100%;height:100%;display:block}
+.ops-qr.small{width:130px;height:130px;padding:8px;border-width:3px}
+.ops-poster-scan{margin:0;font-size:22px;font-weight:700}
+.ops-poster-url{margin:0;font-size:18px;color:#4A5566}
+.ops-poster-steps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px;text-align:left;font-size:19px}
+.ops-poster-steps li{display:flex;gap:14px;align-items:flex-start}
+.ops-poster-steps b{flex:none;width:36px;height:36px;border-radius:50%;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center}
+.ops-poster-tg{display:flex;gap:16px;align-items:center;justify-content:center;font-size:18px;text-align:left}
+.ops-poster footer{border-top:2px solid var(--navy);padding-top:14px;font-size:16px}
+.ops-poster footer p{margin:4px 0}
+@media (max-width:640px){.ops-poster{padding:22px 16px}.ops-poster header h1{font-size:32px}.ops-poster header h2{font-size:24px}.ops-qr{width:240px;height:240px}}
+@media print{
+  @page{size:A4;margin:10mm}
+  .ops-noprint{display:none!important}
+  .ops-body{padding:0!important}
+  .ops-poster{border:0;border-top:12px solid var(--navy);max-width:none;padding:8mm 10mm;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}

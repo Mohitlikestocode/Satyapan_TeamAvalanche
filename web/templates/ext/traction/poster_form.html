@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="case">
+  <h1 class="case-h1">{{ tr("Make a poster for your shop", "अपनी दुकान के लिए पोस्टर बनाएँ") }}</h1>
+  <p>{{ tr("Type your shop name and city. You get a page to print or save as a PDF, with a large QR code that opens Satyapan on your customer's phone. We count how many people it brings, so you can see it work.", "अपनी दुकान का नाम और शहर लिखें। आपको छापने या PDF बनाने के लिए एक पन्ना मिलेगा, जिसमें बड़ा QR कोड है जो आपके ग्राहक के फ़ोन पर सत्यापन खोलता है। हम गिनते हैं कि इससे कितने लोग आए, ताकि आप असर देख सकें।") }}</p>
+  <form method="post" action="/poster" class="ops-form" novalidate>
+    <div><label for="name">{{ tr("Shop or organisation name", "दुकान या संस्था का नाम") }}</label>
+      <input id="name" name="name" type="text" maxlength="50" value="{{ values.name or '' }}" required>
+      {% if errors.name %}<p class="ops-err" role="alert">{{ errors.name }}</p>{% endif %}</div>
+    <div><label for="city">{{ tr("City or town", "शहर या कस्बा") }}</label>
+      <input id="city" name="city" type="text" maxlength="40" value="{{ values.city or '' }}" required>
+      {% if errors.city %}<p class="ops-err" role="alert">{{ errors.city }}</p>{% endif %}</div>
+    <button class="btn bn" type="submit" style="width:auto;padding:0 28px;justify-self:start">{{ tr("Make my poster", "मेरा पोस्टर बनाएँ") }}</button>
+  </form>
+</div>
+{% endblock %}

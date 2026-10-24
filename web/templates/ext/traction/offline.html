@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="case">
+  <h1 class="case-h1">{{ tr("You are offline", "आप ऑफ़लाइन हैं") }}</h1>
+  <p>{{ tr("Checking needs the internet. Your file stays on your phone until you are back online.", "जाँच के लिए इंटरनेट चाहिए। इंटरनेट लौटने तक आपकी फ़ाइल आपके फ़ोन में ही रहती है।") }}</p>
+  <div class="vbanner vb-r"><div><h2 class="vb-h" style="font-size:22px">{{ tr("Lost money to a scam?", "स्कैम में पैसे गँवा दिए?") }}</h2>
+    <p class="vb-act">{{ tr("Call the cyber-crime helpline 1930 now, then your bank's official number. Do not wait for the internet.", "अभी साइबर-अपराध हेल्पलाइन 1930 पर कॉल करें, फिर अपने बैंक के आधिकारिक नंबर पर। इंटरनेट का इंतज़ार न करें।") }}</p>
+    <p style="margin:10px 0 0"><a class="btn bn" href="tel:1930" style="width:auto;padding:0 22px">{{ tr("Call 1930", "1930 पर कॉल करें") }}</a></p></div></div>
+  {% if bot %}<p>{{ tr("You can also check on Telegram when your connection returns:", "इंटरनेट लौटने पर आप टेलीग्राम पर भी जाँच सकते हैं:") }} <a href="https://t.me/{{ bot }}">@{{ bot }}</a></p>{% endif %}
+  <p><a href="/">{{ tr("Try again", "फिर कोशिश करें") }}</a></p>
+</div>
+{% endblock %}
