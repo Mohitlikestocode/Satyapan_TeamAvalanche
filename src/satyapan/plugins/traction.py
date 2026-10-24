@@ -8,6 +8,8 @@ def setup(registry) -> None:
     registry.on("dispute", metrics.on_dispute)
     registry.on("decision", metrics.on_decision)
     registry.on("delete", metrics.on_delete)
+    from ..ops.hardening import Hardening
+    registry.add_middleware(Hardening)
     registry.add_global_js("/static/js/traction_pv.js")
     registry.add_global_js("/static/js/traction_feedback.js")
     registry.add_nav(75, "pilot", "/pilot", "For shops", "दुकानों के लिए")
