@@ -5,6 +5,7 @@ import json
 import logging
 import re
 import uuid
+from urllib.parse import unquote
 from dataclasses import dataclass, field
 from pathlib import Path
 
@@ -116,8 +117,8 @@ def analyse_image(data: bytes, kind: str = "screenshot", topic: str = "", case_i
     from .extract.ocr import read_text
     from .extract.qr import decode_qr
     qr = decode_qr(data)
-    ocr = "" if (kind == "qr" and qr) else read_text(data)  # a pure QR picture has nothing else worth the slow OCR pass
-    parts = list(qr) + ([ocr] if ocr else [])
+    ocr = read_text(data)  # the words printed next to a QR ("scan to receive", "enter PIN") matter as much as the code
+    parts = [unquote(q) for q in qr] + ([ocr] if ocr else [])  # %20 and friends hide the words in a UPI note from the rules
     layers: list[LayerResult] = []
     names: list[str] = []
     if kind != "qr":
