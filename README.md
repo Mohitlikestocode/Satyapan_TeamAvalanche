@@ -88,7 +88,7 @@ Everything below is copied from [`docs/results/`](docs/results) and reproduced b
 
 | Test set | Scams flagged | Genuine flagged | Status |
 |---|---|---|---|
-| **`holdout_community.jsonl`** (Tanish: 40 scam + 40 genuine, English/Hindi/Hinglish, written without reading the rules) | **25 / 40** (62%) | **0 / 40** | cleanest unseen figure; the rules alone get 18/40 |
+| **`holdout_community.jsonl`** (Tanish: 40 scam + 40 genuine, English/Hindi/Hinglish, written without reading the rules) | **26 / 40** (65%) | **0 / 40** | cleanest unseen figure; the rules alone get 19/40 |
 | Before the India-specific rules and the model | 7 / 40 | 0 / 40 | kept in `docs/results/text_holdout_before_india_rules.json` |
 | `holdout_traction.jsonl` (drafted by the same assistant that wrote the rules) | 36 / 40 | 0 / 40 | **optimistic**: not independent |
 | Development kit (`messages.jsonl`) | 38 / 38 | 2 / 33 | **optimistic**: the rules were written against it |

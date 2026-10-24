@@ -3,9 +3,9 @@
  "dataset": "data/kit/holdout_traction.jsonl",
  "split": "80 messages",
  "held_out": false,
- "hardware": "CPU: Intel64 Family 6 Model 183 Stepping 1, GenuineIntel (Windows)",
- "date": "2026-10-24 17:31 UTC",
- "elapsed_s": 0.66,
+ "hardware": "CPU: Intel64 Family 6 Model 170 Stepping 4, GenuineIntel (Windows)",
+ "date": "2026-10-24 22:59 UTC",
+ "elapsed_s": 2.5,
  "reproduce": "python -m satyapan.eval.report",
  "rows": [
   {

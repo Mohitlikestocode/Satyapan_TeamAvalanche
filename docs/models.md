@@ -90,8 +90,8 @@ Laptop GPU (8 GB) for training and batch evaluation; the site runs the models on
 | Baseline: error-level analysis | same | | | AUROC 0.512 | inside both files |
 | Voice detector as deployed (Spectra-AASIST3 alone) | 969 clips from test speakers x 4 conditions | 1,980/1,980 fakes | 78/1,884 real (4.1%) | EER 3.1% (CI 2.4-3.9%) | `voice_test.json` |
 | Second voice detector (excluded) | same | 1/1,980 | 68/1,884 | EER 65.6%: worse than chance on our data | `voice_test.json` |
-| **Messages, held out (Tanish), as deployed: rules + hidden-word check + scam-message model** | `holdout_community.jsonl` (40 scam, 40 genuine) | **25/40 scams (62%)** | **0/40 genuine** | measured after the main merge (India rules); the rule author had seen a few lines of this file | `text_holdout.json` |
-| Messages, held out (Tanish), rules only | same | 18/40 (45%) | 0/40 | | `text_holdout.json` (`rules_only` row) |
+| **Messages, held out (Tanish), as deployed: rules + hidden-word check + scam-message model** | `holdout_community.jsonl` (40 scam, 40 genuine) | **26/40 scams (65%)** | **0/40 genuine** | measured after the main merge (India rules); the rule author had seen a few lines of this file | `text_holdout.json` |
+| Messages, held out (Tanish), rules only | same | 19/40 (48%) | 0/40 | | `text_holdout.json` (`rules_only` row) |
 | Messages, held out (Tanish), before the India rules: rules only -> as deployed | same | 7/40 -> 12/40 | 0/40 -> 0/40 | the first, cleanest measurement | `text_holdout_before_rules_v2.json` |
 | Messages, Mohit's set (**tuned-on, indicative only**) | `holdout_traction.jsonl` | rules 32/40, as deployed 36/40 | 0/40 | the India rules were written after this file existed; never pooled with the held-out number | `text_holdout_tuned.json` |
 | Message rules (dev kit, optimistic) | `data/kit/messages.jsonl` | 38/38 scams | 0/33 genuine | HIGH RISK on 13/38 scams | `text_kit.json` |
@@ -124,7 +124,7 @@ Laptop GPU (8 GB) for training and batch evaluation; the site runs the models on
 3. **The voice detector's perfect catch rate is suspicious**: the fakes come from public generators the detector may have been trained
    on. We do not know how it does on a voice clone made today.
 4. **A cloned voice saying harmless words is not flagged** unless the voice sign is strong: one weak forensic sign never raises a flag.
-5. **Scams outside our own kit are still often missed**: on Tanish's held-out set the site catches 25 of 40 (it was 12 before the
+5. **Scams outside our own kit are still often missed**: on Tanish's held-out set the site catches 26 of 40 (it was 12 before the
    India rules). The 15 misses are listed in `docs/results/text_holdout.json`; Mohit's note says the rules still miss scams that use
    no fixed wording (sextortion, fake loan apps, fake support, crypto pitches). The model only adds a weak sign and needs a second
    one (for example a payment request) to flag. Only 3 of 40 reach HIGH RISK.

@@ -3,9 +3,9 @@
  "dataset": "data/kit/messages.jsonl",
  "split": "71 messages",
  "held_out": false,
- "hardware": "CPU: Intel64 Family 6 Model 183 Stepping 1, GenuineIntel (Windows)",
- "date": "2026-10-24 17:31 UTC",
- "elapsed_s": 8.04,
+ "hardware": "CPU: Intel64 Family 6 Model 170 Stepping 4, GenuineIntel (Windows)",
+ "date": "2026-10-24 22:59 UTC",
+ "elapsed_s": 54.13,
  "reproduce": "python -m satyapan.eval.report",
  "rows": [
   {
@@ -48,11 +48,11 @@
    "name": "Whole system: HIGH RISK only",
    "baseline": false,
    "tpr": {
-    "k": 13,
+    "k": 14,
     "n": 38,
-    "rate": 0.34210526315789475,
-    "lo": 0.21212220026458956,
-    "hi": 0.5010818837092545
+    "rate": 0.3684210526315789,
+    "lo": 0.23384013155413794,
+    "hi": 0.5271632717573987
    },
    "fpr": {
     "k": 0,

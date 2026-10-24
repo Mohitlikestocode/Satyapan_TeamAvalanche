@@ -3,20 +3,20 @@
  "dataset": "data/kit/holdout_community.jsonl",
  "split": "80 messages",
  "held_out": true,
- "hardware": "CPU: Intel64 Family 6 Model 183 Stepping 1, GenuineIntel (Windows)",
- "date": "2026-10-24 17:31 UTC",
- "elapsed_s": 0.73,
+ "hardware": "CPU: Intel64 Family 6 Model 170 Stepping 4, GenuineIntel (Windows)",
+ "date": "2026-10-24 22:59 UTC",
+ "elapsed_s": 3.1,
  "reproduce": "python -m satyapan.eval.report",
  "rows": [
   {
    "name": "Rules only (baseline)",
    "baseline": true,
    "tpr": {
-    "k": 18,
+    "k": 19,
     "n": 40,
-    "rate": 0.45,
-    "lo": 0.30705075280944694,
-    "hi": 0.6017117011155924
+    "rate": 0.475,
+    "lo": 0.32935229550181694,
+    "hi": 0.6250289314607027
    },
    "fpr": {
     "k": 0,
@@ -30,11 +30,11 @@
    "name": "Whole system as deployed",
    "baseline": false,
    "tpr": {
-    "k": 25,
+    "k": 26,
     "n": 40,
-    "rate": 0.625,
-    "lo": 0.47032160054531913,
-    "hi": 0.7577722646420829
+    "rate": 0.65,
+    "lo": 0.4950559699353738,
+    "hi": 0.7786566682895086
    },
    "fpr": {
     "k": 0,
@@ -476,11 +476,11 @@
    "name": "family:refund_trap",
    "row": "Whole system as deployed",
    "tpr": {
-    "k": 1,
+    "k": 2,
     "n": 2,
-    "rate": 0.5,
-    "lo": 0.09452865480086614,
-    "hi": 0.9054713451991339
+    "rate": 1.0,
+    "lo": 0.34237195288961925,
+    "hi": 1.0
    },
    "fpr": null
   },
@@ -590,11 +590,11 @@
    "name": "lang:hi",
    "row": "Whole system as deployed",
    "tpr": {
-    "k": 6,
+    "k": 7,
     "n": 12,
-    "rate": 0.5,
-    "lo": 0.2537781703934222,
-    "hi": 0.7462218296065778
+    "rate": 0.5833333333333334,
+    "lo": 0.3195073356553728,
+    "hi": 0.8067425380947535
    },
    "fpr": {
     "k": 0,
@@ -654,15 +654,6 @@
   {
    "kind": "missed",
    "text": "Beta this is your uncle, my phone is dead and I am using a friend's number. I met with an accident and need Rs 40,000 for the hospital immediately. Send to this",
-   "tier": "NO_RED_FLAGS",
-   "codes": [
-    "NO_PAYEE_FOUND",
-    "NO_FLAGS_NOT_GUARANTEE"
-   ]
-  },
-  {
-   "kind": "missed",
-   "text": "आपका ऑर्डर कैंसिल हो गया है और 2,299 रुपये रिफ़ंड होंगे। रिफ़ंड पाने के लिए अपने यूपीआई ऐप में आया अनुरोध स्वीकार करें और पिन डालें।",
    "tier": "NO_RED_FLAGS",
    "codes": [
     "NO_PAYEE_FOUND",
