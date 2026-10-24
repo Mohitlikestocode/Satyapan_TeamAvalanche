@@ -67,6 +67,8 @@ def create_app() -> FastAPI:
     async def device_cookie(request: Request, call_next):
         """Give each browser a random id (no personal data) so visits, streaks and votes can be counted without accounts."""
         response = await call_next(request)
+        if request.query_params.get("lang") in ("hi", "en") and "text/html" in response.headers.get("content-type", ""):
+            response.set_cookie("sp_lang", request.query_params["lang"], max_age=365 * 86400, samesite="lax")
         if DEVICE_COOKIE not in request.cookies and not request.url.path.startswith(("/static", "/api")) and "text/html" in response.headers.get("content-type", ""):
             response.set_cookie(DEVICE_COOKIE, secrets.token_urlsafe(12), max_age=180 * 86400, samesite="lax", httponly=True)
         return response

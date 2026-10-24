@@ -38,6 +38,8 @@
     return true;
   }
   var serverI18n = D.body.getAttribute("data-i18n") === "server";
+  var qLang = new URLSearchParams(location.search).get("lang");
+  if (qLang === "hi" || qLang === "en") set("sp-lang", qLang);   // a shared ?lang=hi link opens in Hindi
   var startLang = get("sp-lang") === "hi" ? "hi" : "en";
   if (syncLangCookie(startLang) && serverI18n) { location.reload(); return; }
   applyLang(startLang);
@@ -125,7 +127,8 @@
       var textual = state.kind === "link" || state.kind === "message";
       box.style.display = textual ? "block" : "none";
       opts[i].insertAdjacentElement("afterend", box);
-      ta.placeholder = state.kind === "link" ? "Paste the link here" : "Paste the message or phone number here";
+      var hiL = D.documentElement.getAttribute("data-lang") === "hi";
+      ta.placeholder = state.kind === "link" ? (hiL ? "यहाँ लिंक चिपकाएँ" : "Paste the link here") : (hiL ? "यहाँ संदेश या फ़ोन नंबर चिपकाएँ" : "Paste the message or phone number here");
       if (textual) { if (open) ta.focus(); } else if (open) { input.accept = ACCEPT[state.kind]; input.click(); }
     }
     opts.forEach(function (o, i) { o.addEventListener("click", function () { pick(i, true); }); });
@@ -143,11 +146,11 @@
     go.addEventListener("click", function (e) {
       e.preventDefault(); err.textContent = "";
       var text = ta.value.trim(), textual = state.kind === "link" || state.kind === "message";
-      if (textual ? !text : !state.file) { err.textContent = "Please add what you want us to check."; return; }
-      if (!cbs[1].checked) { err.textContent = "Please tick “I understand” to continue."; return; }
+      if (textual ? !text : !state.file) { err.textContent = D.documentElement.getAttribute("data-lang") === "hi" ? "कृपया वह जोड़ें जो आप जँचवाना चाहते हैं।" : "Please add what you want us to check."; return; }
+      if (!cbs[1].checked) { err.textContent = D.documentElement.getAttribute("data-lang") === "hi" ? "आगे बढ़ने के लिए “मैं समझता/समझती हूँ” पर टिक करें।" : "Please tick “I understand” to continue."; return; }
       var fd = new FormData();
       fd.append("kind", state.kind); fd.append("speak_aloud", cbs[0].checked ? "true" : "false");
-      var chip = D.querySelector(".chips .chip.on"); if (chip) fd.append("topic", chip.textContent.trim());
+      var chip = D.querySelector(".chips .chip.on"); if (chip) fd.append("topic", chip.getAttribute("data-topic") || chip.textContent.trim());
       if (textual) fd.append("text", text);
       if (state.file) fd.append("file", state.file);
       if (go.getAttribute("aria-busy") === "true") return;

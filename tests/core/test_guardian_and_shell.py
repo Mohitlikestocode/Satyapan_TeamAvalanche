@@ -32,3 +32,11 @@ def test_guardian_beacon_emits_only_for_a_real_case():
     case_id = r.json()["id"]
     c.post(f"/api/guardian/shared?case={case_id}")
     assert seen and seen[-1]["case_id"] == case_id
+
+
+def test_lang_query_switches_language_and_sets_the_cookie():
+    c = _client()
+    r = c.get("/check?lang=hi")
+    assert "आप क्या जाँचना चाहते हैं?" in r.text
+    assert "sp_lang=hi" in r.headers.get("set-cookie", "")
+    assert "What do you want to check?" in c.get("/check?lang=en").text

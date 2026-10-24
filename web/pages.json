@@ -10,7 +10,8 @@
     "Check",
     null
    ]
-  ]
+  ],
+  "i18n": "server"
  },
  {
   "route": "check/progress",

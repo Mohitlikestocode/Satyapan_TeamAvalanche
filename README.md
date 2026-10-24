@@ -26,7 +26,7 @@ Then open the site and:
 1. **Check now** → paste *"This is Inspector Verma, Mumbai Cyber Cell. Do not disconnect this video call. Transfer Rs 90,000 to the RBI verification account."* → SUSPICIOUS, with the reason "It claims to be police, CBI, TRAI or a court and threatens arrest…".
 2. Upload any QR image (`python tools/make_qr_kit.py kit/qr` makes real, scannable ones with phone-style damage).
 3. Upload a payment screenshot (`python tools/make_payment_screens.py out --n 20` makes synthetic ones) or a voice note.
-4. Press **हिन्दी** (top right): the whole shell, reasons and spoken verdict switch to Hindi.
+4. Press **हिन्दी** (top right), or open any page with `?lang=hi`: the shell, check page, reasons and spoken verdict switch to Hindi.
 5. Press **Listen** (Sarvam voice), **Ask family** (WhatsApp share), **Wrong result?** (goes to a real review queue) or **Report** (signed evidence pack).
 
 The models (screenshot tamper detector, voice detectors, scam-message classifier) are optional downloads that go in `var/models/`: see [section 7](#7-install-and-run). Without them the site still runs and says which checks it could not do.
@@ -76,6 +76,7 @@ The jury scores each row 1 to 5, weighted. For every row: what it asks, what we 
 | ![Results](docs/img/results.png) **/results**: every accuracy number is read from a file, and "not evaluated" is shown where we did not measure | ![Attack](docs/img/attack.png) **/attack**: how an attacker would evade us, measured |
 | ![Community](docs/img/community.png) **Scam Watch**: community reports with the reason it was flagged | ![Learn](docs/img/learn.png) **Learn and Scam Drill**: lessons, streaks and badges |
 | ![Impact](docs/img/impact.png) **/impact**: real traction, team traffic excluded | ![Poster](docs/img/poster.png) **Shop poster** with a QR that opens Satyapan, and referral counting |
+| ![Hindi check page](docs/img/check-hindi.png) **Hindi**: the shell, the check page, reasons and the spoken verdict switch language; any page opens in Hindi with `?lang=hi` | ![Screenshot model](docs/img/screenshot-model.png) **Screenshot check**: the suspected edit is circled, with the honest caveat |
 
 ---
 

@@ -56,52 +56,51 @@ a{color:#1F4E8C}a:hover{color:#163A6A}
 {% block content %}
 <div class="sp"><div class="bd">
 <div style="display: flex; flex-direction: column; gap: 4px">
-<h1 class="t2">What do you want to check?</h1>
-<p lang="hi" style="margin: 0; font-size: 16px; color: #1F4E8C; font-weight: 600">क्या जाँचना है?</p>
+<h1 class="t2">{{ tr("What do you want to check?", "आप क्या जाँचना चाहते हैं?") }}</h1>
 </div>
 <div style="display: flex; flex-direction: column; gap: 8px">
-<button aria-pressed="true" class="opt on"><span class="ic"><svg aria-hidden="true" class="i" viewBox="0 0 24 24"><rect height="18" rx="2" width="18" x="3" y="3"></rect><circle cx="9" cy="9" r="2"></circle><path d="m21 15-3.09-3.09a2 2 0 0 0-2.82 0L6 21"></path></svg></span><span style="flex: 1"><b>Screenshot or photo</b><small>Payment screen, message, ad, trading app</small></span></button>
+<button aria-pressed="true" class="opt on"><span class="ic"><svg aria-hidden="true" class="i" viewBox="0 0 24 24"><rect height="18" rx="2" width="18" x="3" y="3"></rect><circle cx="9" cy="9" r="2"></circle><path d="m21 15-3.09-3.09a2 2 0 0 0-2.82 0L6 21"></path></svg></span><span style="flex: 1"><b>{{ tr("Screenshot or photo", "स्क्रीनशॉट या फ़ोटो") }}</b><small>{{ tr("Payment screen, message, ad, trading app", "भुगतान की स्क्रीन, संदेश, विज्ञापन, ट्रेडिंग ऐप") }}</small></span></button>
 <div class="file" style="margin-left: 12px">
 <svg aria-hidden="true" class="i" viewBox="0 0 24 24" style="color: #067647"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg>
 <span style="flex: 1; min-width: 0"><span style="display: block; font-size: 15px; font-weight: 600">vip_profits_qr.jpg</span><span class="xs">214 KB · added 10:41 IST</span></span>
 <button aria-label="Remove file" class="chip" style="min-width: 44px; justify-content: center; padding: 0"><svg aria-hidden="true" class="i" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"></path></svg></button>
 </div>
-<button class="opt"><span class="ic"><svg aria-hidden="true" class="i" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8M16 13H8M16 17H8"></path></svg></span><span style="flex: 1"><b>PDF</b><small>Invoice, loan letter, notice</small></span></button>
-<button class="opt"><span class="ic"><svg aria-hidden="true" class="i" viewBox="0 0 24 24"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"></path><circle cx="12" cy="13" r="3"></circle></svg></span><span style="flex: 1"><b>Scan or upload a QR code</b><small>Opens your camera</small></span></button>
-<button class="opt"><span class="ic"><svg aria-hidden="true" class="i" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></span><span style="flex: 1"><b>Paste a link</b><small>We read the address. We do not open it.</small></span></button>
-<button class="opt"><span class="ic"><svg aria-hidden="true" class="i" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></span><span style="flex: 1"><b>Paste a message or phone number</b><small>SMS, WhatsApp, caller number</small></span></button>
-<button class="opt"><span class="ic"><svg aria-hidden="true" class="i" viewBox="0 0 24 24"><rect height="12" rx="3" width="6" x="9" y="2"></rect><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v3"></path></svg></span><span style="flex: 1"><b>Voice note</b><small>We turn it into text and show you first</small></span></button>
+<button class="opt"><span class="ic"><svg aria-hidden="true" class="i" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8M16 13H8M16 17H8"></path></svg></span><span style="flex: 1"><b>PDF</b><small>{{ tr("Invoice, loan letter, notice", "इनवॉइस, लोन पत्र, नोटिस") }}</small></span></button>
+<button class="opt"><span class="ic"><svg aria-hidden="true" class="i" viewBox="0 0 24 24"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"></path><circle cx="12" cy="13" r="3"></circle></svg></span><span style="flex: 1"><b>{{ tr("Scan or upload a QR code", "QR कोड स्कैन या अपलोड करें") }}</b><small>{{ tr("Opens your camera", "आपका कैमरा खुलता है") }}</small></span></button>
+<button class="opt"><span class="ic"><svg aria-hidden="true" class="i" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></span><span style="flex: 1"><b>{{ tr("Paste a link", "लिंक चिपकाएँ") }}</b><small>{{ tr("We read the address. We do not open it.", "हम पता पढ़ते हैं। खोलते नहीं।") }}</small></span></button>
+<button class="opt"><span class="ic"><svg aria-hidden="true" class="i" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></span><span style="flex: 1"><b>{{ tr("Paste a message or phone number", "संदेश या फ़ोन नंबर चिपकाएँ") }}</b><small>{{ tr("SMS, WhatsApp, caller number", "SMS, WhatsApp, कॉल करने वाले का नंबर") }}</small></span></button>
+<button class="opt"><span class="ic"><svg aria-hidden="true" class="i" viewBox="0 0 24 24"><rect height="12" rx="3" width="6" x="9" y="2"></rect><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v3"></path></svg></span><span style="flex: 1"><b>{{ tr("Voice note", "वॉइस नोट") }}</b><small>{{ tr("We turn it into text and show you first", "हम इसे पहले टेक्स्ट में बदलकर आपको दिखाते हैं") }}</small></span></button>
 </div>
 <div style="display: flex; flex-direction: column; gap: 10px">
-<h2 class="sec">What is this about? <span style="text-transform: none; letter-spacing: 0; font-weight: 500">(optional)</span></h2>
+<h2 class="sec">{{ tr("What is this about?", "यह किस बारे में है?") }} <span style="text-transform: none; letter-spacing: 0; font-weight: 500">{{ tr("(optional)", "(वैकल्पिक)") }}</span></h2>
 <div class="chips">
-<button class="chip">Payment screenshot</button>
-<button class="chip">Invoice or bank change</button>
-<button aria-pressed="true" class="chip on"><svg aria-hidden="true" class="i" viewBox="0 0 24 24" style="width: 16px; height: 16px"><path d="M20 6 9 17l-5-5"></path></svg>Investment offer</button>
-<button class="chip">Link or QR</button>
-<button class="chip">Customer care number</button>
-<button class="chip">Other</button>
+<button class="chip" data-topic="Payment screenshot">{{ tr("Payment screenshot", "भुगतान का स्क्रीनशॉट") }}</button>
+<button class="chip" data-topic="Invoice or bank change">{{ tr("Invoice or bank change", "इनवॉइस या बैंक बदलाव") }}</button>
+<button aria-pressed="true" class="chip on" data-topic="Investment offer"><svg aria-hidden="true" class="i" viewBox="0 0 24 24" style="width: 16px; height: 16px"><path d="M20 6 9 17l-5-5"></path></svg>{{ tr("Investment offer", "निवेश का ऑफ़र") }}</button>
+<button class="chip" data-topic="Link or QR">{{ tr("Link or QR", "लिंक या QR") }}</button>
+<button class="chip" data-topic="Customer care number">{{ tr("Customer care number", "कस्टमर केयर नंबर") }}</button>
+<button class="chip" data-topic="Other">{{ tr("Other", "अन्य") }}</button>
 </div>
-<p class="xs">This helps us pick the right checks. It does not decide the result.</p>
+<p class="xs">{{ tr("This helps us pick the right checks. It does not decide the result.", "इससे हमें सही जाँचें चुनने में मदद मिलती है। यह नतीजा तय नहीं करता।") }}</p>
 </div>
 <section class="card" style="gap: 12px; border-color: #C7D5EA">
-<h2 class="t3">Before we check</h2>
-<div class="li"><svg aria-hidden="true" class="i" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"></path></svg>We will read the text, decode any QR code, look for signs of editing or AI generation, and check who receives the money.</div>
-<div class="li"><svg aria-hidden="true" class="i" viewBox="0 0 24 24"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>Your file is deleted after checking. We keep only the result.</div>
-<div class="li"><svg aria-hidden="true" class="i" viewBox="0 0 24 24"><rect height="12" rx="3" width="6" x="9" y="2"></rect><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path></svg>Voice is sent to a speech service (Sarvam) only if you agree.</div>
+<h2 class="t3">{{ tr("Before we check", "जाँच से पहले") }}</h2>
+<div class="li"><svg aria-hidden="true" class="i" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"></path></svg>{{ tr("We will read the text, decode any QR code, look for signs of editing or AI generation, and check who receives the money.", "हम टेक्स्ट पढ़ेंगे, QR कोड खोलेंगे, एडिटिंग या AI से बने होने के संकेत देखेंगे, और जाँचेंगे कि पैसे किसे मिलेंगे।") }}</div>
+<div class="li"><svg aria-hidden="true" class="i" viewBox="0 0 24 24"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>{{ tr("Your file is deleted after checking. We keep only the result.", "जाँच के बाद आपकी फ़ाइल मिटा दी जाती है। हम सिर्फ़ नतीजा रखते हैं।") }}</div>
+<div class="li"><svg aria-hidden="true" class="i" viewBox="0 0 24 24"><rect height="12" rx="3" width="6" x="9" y="2"></rect><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path></svg>{{ tr("Voice is sent to a speech service (Sarvam) only if you agree.", "आवाज़ तभी स्पीच सेवा (Sarvam) को भेजी जाती है जब आप सहमत हों।") }}</div>
 <hr style="border: 0; height: 1px; background: #EAECF0; margin: 2px 0"/>
-<label class="cb"><input type="checkbox"/>Read the summary aloud using Sarvam voice</label>
-<label class="cb"><input checked="" type="checkbox"/>I understand</label>
+<label class="cb"><input type="checkbox"/>{{ tr("Read the summary aloud using Sarvam voice", "Sarvam आवाज़ में सारांश सुनाएँ") }}</label>
+<label class="cb"><input checked="" type="checkbox"/>{{ tr("I understand", "मैं समझता/समझती हूँ") }}</label>
 </section>
-<p class="sm" style="display: flex; gap: 8px; align-items: flex-start; color: #0B1F3A; font-weight: 500"><svg aria-hidden="true" class="i" viewBox="0 0 24 24" style="width: 18px; height: 18px; margin-top: 1px"><rect height="11" rx="2" width="18" x="3" y="11"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>Satyapan will never ask for your OTP, PIN or password.</p>
-<a class="btn bp" href="/check/progress">Check now <span lang="hi" style="font-weight: 500; opacity: .85">/ जाँच करें</span></a>
+<p class="sm" style="display: flex; gap: 8px; align-items: flex-start; color: #0B1F3A; font-weight: 500"><svg aria-hidden="true" class="i" viewBox="0 0 24 24" style="width: 18px; height: 18px; margin-top: 1px"><rect height="11" rx="2" width="18" x="3" y="11"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>{{ tr("Satyapan will never ask for your OTP, PIN or password.", "सत्यापन आपका OTP, PIN या पासवर्ड कभी नहीं माँगेगा।") }}</p>
+<a class="btn bp" href="/check/progress">{{ tr("Check now", "अभी जाँचें") }}</a>
 <section style="display: flex; flex-direction: column; gap: 4px; padding-top: 4px">
-<h2 class="sec">Try a sample</h2>
-<p class="xs">Made-up examples for testing. No real people or accounts.</p>
-<a href="/result/qr" style="font-size: 15px; font-weight: 600; min-height: 44px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #EAECF0">Stock-tips QR code <span class="xs" style="font-weight: 500">Synthetic</span></a>
-<a href="/result/invoice" style="font-size: 15px; font-weight: 600; min-height: 44px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #EAECF0">Invoice with changed bank <span class="xs" style="font-weight: 500">Synthetic</span></a>
-<a href="/result/screenshot" style="font-size: 15px; font-weight: 600; min-height: 44px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #EAECF0">Payment screenshot <span class="xs" style="font-weight: 500">Synthetic</span></a>
-<a href="/tools" style="font-size: 15px; font-weight: 600; min-height: 44px; display: flex; align-items: center; justify-content: space-between">Amazon refund message <span class="xs" style="font-weight: 500">Synthetic</span></a>
+<h2 class="sec">{{ tr("Try a sample", "एक नमूना आज़माएँ") }}</h2>
+<p class="xs">{{ tr("Made-up examples for testing. No real people or accounts.", "जाँच के लिए बनाए गए नमूने। कोई असली व्यक्ति या खाता नहीं।") }}</p>
+<a href="/result/qr" style="font-size: 15px; font-weight: 600; min-height: 44px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #EAECF0">{{ tr("Stock-tips QR code", "शेयर-टिप्स QR कोड") }} <span class="xs" style="font-weight: 500">{{ tr("Synthetic", "नकली नमूना") }}</span></a>
+<a href="/result/invoice" style="font-size: 15px; font-weight: 600; min-height: 44px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #EAECF0">{{ tr("Invoice with changed bank", "बदले बैंक वाला इनवॉइस") }} <span class="xs" style="font-weight: 500">{{ tr("Synthetic", "नकली नमूना") }}</span></a>
+<a href="/result/screenshot" style="font-size: 15px; font-weight: 600; min-height: 44px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #EAECF0">{{ tr("Payment screenshot", "भुगतान का स्क्रीनशॉट") }} <span class="xs" style="font-weight: 500">{{ tr("Synthetic", "नकली नमूना") }}</span></a>
+<a href="/tools" style="font-size: 15px; font-weight: 600; min-height: 44px; display: flex; align-items: center; justify-content: space-between">{{ tr("Amazon refund message", "Amazon रिफंड संदेश") }} <span class="xs" style="font-weight: 500">{{ tr("Synthetic", "नकली नमूना") }}</span></a>
 </section>
 </div></div>
 {% endblock %}

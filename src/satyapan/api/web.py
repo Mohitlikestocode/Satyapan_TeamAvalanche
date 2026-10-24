@@ -26,6 +26,10 @@ templates.env.globals["tr"] = tr
 
 
 def lang_of(request: Request) -> str:
+    """`?lang=hi` (or en) wins for that request so a Hindi link can be shared; otherwise the visitor's cookie."""
+    q = request.query_params.get("lang")
+    if q in ("hi", "en"):
+        return q
     return "hi" if request.cookies.get(LANG_COOKIE) == "hi" else "en"
 
 
