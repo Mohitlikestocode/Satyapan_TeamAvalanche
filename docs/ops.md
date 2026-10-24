@@ -77,3 +77,14 @@ Written as a plan, not an agreement: nobody has agreed to anything.
 - `INTERNAL_KEY`: any long random string in `.env`.
 - Telegram bot token (message @BotFather, `/newbot`).
 - Sarvam API key (free credits).
+
+## Running without Docker (the path the team uses)
+
+Docker is optional and was never built or tested here. The app is plain Python:
+
+```bash
+pip install -e .
+RATE_LIMIT=1 python -m uvicorn satyapan.api.app:app --host 0.0.0.0 --port 8000 --workers 2
+```
+
+Install Tesseract (with the Hindi language pack) for screenshot text reading. For a public link on a laptop, a tunnel such as `cloudflared tunnel --url http://localhost:8000` works for the demo. `python scripts/deploy_check.py http://localhost:8000` checks the running server.
