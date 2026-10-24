@@ -64,6 +64,17 @@ model can learn "what genuine looks like for these six screens" instead of "what
 - **Hidden-word check (not in the plan):** the attack sweep showed look-alike letters let 32 of 37 flagged kit scams through the
   rules. We added a text hook that undoes look-alike letters, spaced-out letters and split UPI IDs and re-runs the same rules.
 
+## Held-out messages: how they are used (written before the first run on them)
+
+`data/kit/holdout_community.jsonl` (Tanish, 40 scam + 40 genuine, EN/HI/Hinglish, written without reading the rules) arrived Saturday
+evening. Rules for it, fixed before anything was run on it:
+1. Never edited, never trained on, never used to choose a threshold. Copied byte-identical from `feat/community` (git blob `95eea96b`).
+2. The scam-message model is scored exactly as saved before the file existed (threshold from out-of-fold genuine messages, 2% target).
+3. `training/text/decide.py` decides on it: the model ships only if it flags more scams without flagging more genuine messages.
+4. Any later change to the rules, the hook or the model is measured again here and both numbers are kept; a change made after looking
+   at these failures makes this set optimistic from then on, and the page says so.
+`holdout_community_missed.jsonl` (Tanish's informal list of misses) is not used: it is a subset of the same file.
+
 ## Results
 
 Every number below is copied from a file in `docs/results/`; `/results` shows the same files live. Hardware: NVIDIA GeForce RTX 4060
@@ -79,10 +90,13 @@ Laptop GPU (8 GB) for training and batch evaluation; the site runs the models on
 | Baseline: error-level analysis | same | | | AUROC 0.512 | inside both files |
 | Voice detector as deployed (Spectra-AASIST3 alone) | 969 clips from test speakers x 4 conditions | 1,980/1,980 fakes | 78/1,884 real (4.1%) | EER 3.1% (CI 2.4-3.9%) | `voice_test.json` |
 | Second voice detector (excluded) | same | 1/1,980 | 68/1,884 | EER 65.6%: worse than chance on our data | `voice_test.json` |
+| **Messages, held out: rules only** | `holdout_community.jsonl` (Tanish; 40 scam, 40 genuine) | **7/40 scams (17%, CI 9-32%)** | **0/40 genuine (CI 0-9%)** | HIGH RISK 2/40 | `text_holdout.json` (`rules_only` row) |
+| **Messages, held out: as deployed (rules + hidden-word check + scam-message model)** | same | **12/40 scams (30%, CI 18-45%)** | **0/40 genuine (CI 0-9%)** | 28 scams still missed, listed in the file | `text_holdout.json` |
 | Message rules (dev kit, optimistic) | `data/kit/messages.jsonl` | 37/38 scams | 0/33 genuine | HIGH RISK on 8/38 scams | `text_kit.json` |
+| Messages, dev kit, as deployed | same | 38/38 | **2/33 genuine** (the model's cost on this kit) | | `text_kit.json` |
 | Scam-message model, full fine-tune | 79 team scams, each family held out | 23/79 (29%) | 2/62 genuine out of fold | head-only: 2/79 | `text_model_cv.json` |
-| Scam-message model ship test | dev kit | 37 -> 38 of 38 | 0 -> 2 of 33 | **kept off** (more false alarms) | `text_model_decision.json` |
-| Attack sweep, rules alone -> as deployed | dev kit scams the checks flag (37) | look-alike letters: 32 -> 0 slip through; spacing 10 -> 1; split UPI 4 -> 0; Hinglish 7 -> 7 | genuine with the same tricks flagged: 0 -> 4 of 33 | the defence was written after seeing these gaps: optimistic | `attack_text.json` |
+| Scam-message model ship test (rule fixed before the run) | held-out set | 7 -> 12 of 40 | 0 -> 0 of 40 | **shipped** (on the dev kit: 0 -> 2 of 33 genuine) | `text_model_decision.json` |
+| Attack sweep, rules alone -> as deployed | scams the checks flag in dev kit + held-out set | look-alike letters 37/44 -> 0/50 slip through; spacing 11/44 -> 0/50; split UPI 4/44 -> 0/50; Hinglish 7/44 -> 2/50 | genuine with the same tricks flagged, as deployed: 2 -> 14 of 73 | the hidden-word check was written after seeing these gaps: optimistic | `attack_text.json` |
 
 ### Voice by condition (Spectra-AASIST3, test speakers)
 
@@ -97,7 +111,7 @@ Laptop GPU (8 GB) for training and batch evaluation; the site runs the models on
 ### Not evaluated (yet)
 
 - **Real, team-edited payment screenshots** (`tamper_real.json`): waiting for the 50 edited + 100 genuine set.
-- **Held-out messages from teammates** (`text_holdout.json`): waiting for `data/kit/holdout_*.jsonl`. The classifier decision will be re-run on them.
+- **Mohit's held-out messages** (`holdout_traction.jsonl`): not received yet. Tanish's set is measured above.
 - **Fresh voice clones** (a current TTS on a consenting teammate's voice): not evaluated. All fakes above come from public datasets.
 - PDF edit traces, QR decoding and OCR accuracy on their own; the judges' kit.
 
@@ -109,11 +123,15 @@ Laptop GPU (8 GB) for training and batch evaluation; the site runs the models on
 3. **The voice detector's perfect catch rate is suspicious**: the fakes come from public generators the detector may have been trained
    on. We do not know how it does on a voice clone made today.
 4. **A cloned voice saying harmless words is not flagged** unless the voice sign is strong: one weak forensic sign never raises a flag.
-5. **Hinglish respellings** of key words ("garunteed", "prophit") let 7 of 37 flagged scams through.
-6. **Genuine payment screenshots to a personal UPI ID get flagged by the payee rules** (14 of 150 generated genuine screens:
+5. **Most scams outside our own kit are still missed**: on Tanish's held-out set the site catches 12 of 40. Misses span every
+   family and language: digital arrest, electricity cut, sextortion, loan apps, crypto, job tasks, lottery, relative emergency,
+   refund traps, fake payment screenshots (full list in `docs/results/text_holdout.json`). The rules know the stock-tips and KYC
+   patterns of our Round 1 kit; the model only adds a weak sign and needs a second one (for example a payment request) to flag.
+6. **Hinglish respellings** of key words ("garunteed", "prophit") let 7 of 44 flagged scams through the rules (2 of 50 as deployed).
+7. **Genuine payment screenshots to a personal UPI ID get flagged by the payee rules** (14 of 150 generated genuine screens:
    `PAYEE_PERSONAL_ACCOUNT` + `PAYEE_UNVERIFIED`). These rules were written for payment *requests*; on a *receipt* they mislead a
    shopkeeper. Reported to the integrator (`docs/requests/models.md`, item 4).
-7. **OCR is required for screenshots**: without an OCR engine every screenshot is CAN'T TELL (see `docs/requests/models.md`, item 2b).
+8. **OCR is required for screenshots**: without an OCR engine every screenshot is CAN'T TELL (see `docs/requests/models.md`, item 2b).
 
 ## Model cards
 
@@ -166,7 +184,8 @@ Laptop GPU (8 GB) for training and batch evaluation; the site runs the models on
   payment-fraud families and 62 genuine messages, English, Hindi, Hinglish; weighted 5x). `data/kit/` is never used for training.
 - **Protocol:** leave one scam family out (the model is scored on a family it never saw); the threshold flags 2% of out-of-fold genuine messages.
 - **Shipping rule:** `training/text/decide.py` turns it on only if, on held-out messages, it flags more scams without flagging more
-  genuine ones. Otherwise it stays off and this card says why.
+  genuine ones. Result on Tanish's held-out set: 7 -> 12 of 40 scams, 0 -> 0 of 40 genuine: **shipped**, as a WEAK sign only.
+  Cost on the development kit: 2 of 33 genuine messages now flagged (were 0).
 - **Reproduce:** `python training/text/fetch.py`, `python training/text/train_classifier.py`, `python training/text/decide.py`.
 
 ### 4. Hidden-word check (rules on cleaned text; no learned weights)

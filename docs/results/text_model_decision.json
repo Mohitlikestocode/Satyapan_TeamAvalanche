@@ -1,6 +1,41 @@
 {
- "date": "2026-10-24 14:26 UTC",
+ "date": "2026-10-24 17:19 UTC",
  "sets": {
+  "holdout": {
+   "n": 80,
+   "without_model": {
+    "scams_flagged": {
+     "k": 7,
+     "n": 40,
+     "rate": 0.175,
+     "lo": 0.08745302996883066,
+     "hi": 0.3195029205439244
+    },
+    "genuine_flagged": {
+     "k": 0,
+     "n": 40,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.08762453925039232
+    }
+   },
+   "with_model": {
+    "scams_flagged": {
+     "k": 12,
+     "n": 40,
+     "rate": 0.3,
+     "lo": 0.18074670915695296,
+     "hi": 0.454303106543204
+    },
+    "genuine_flagged": {
+     "k": 0,
+     "n": 40,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.08762453925039232
+    }
+   }
+  },
   "dev_kit": {
    "n": 71,
    "without_model": {
@@ -37,7 +72,7 @@
    }
   }
  },
- "decided_on": "dev_kit",
- "ship": false,
- "why": "on dev_kit: scams flagged 37 -> 38 of 38, genuine flagged 0 -> 2 of 33 (no held-out files yet: decided on the development kit, which is weaker evidence)"
+ "decided_on": "holdout",
+ "ship": true,
+ "why": "on holdout: scams flagged 7 -> 12 of 40, genuine flagged 0 -> 0 of 40"
 }

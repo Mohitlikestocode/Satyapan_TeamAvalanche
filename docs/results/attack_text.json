@@ -1,35 +1,33 @@
 {
- "n_scams": 38,
- "n_flagged_before": 37,
+ "n_scams": 78,
+ "n_flagged_before": 50,
  "attacks": [
   {
    "key": "spacing",
    "label_en": "Spacing and punctuation",
    "label_hi": "अक्षरों के बीच जगह और विराम चिह्न",
    "evasion": {
-    "k": 1,
-    "n": 37,
-    "rate": 0.02702702702702703,
-    "lo": 0.004786851054907726,
-    "hi": 0.13824378437563367
-   },
-   "genuine_flagged_before": {
     "k": 0,
-    "n": 33,
+    "n": 50,
     "rate": 0.0,
     "lo": 0.0,
-    "hi": 0.10427343003561192
+    "hi": 0.07135003417431873
+   },
+   "genuine_flagged_before": {
+    "k": 2,
+    "n": 73,
+    "rate": 0.0273972602739726,
+    "lo": 0.007545600452515573,
+    "hi": 0.09450328973196781
    },
    "genuine_flagged_after": {
-    "k": 4,
-    "n": 33,
-    "rate": 0.12121212121212122,
-    "lo": 0.04816083267584231,
-    "hi": 0.2732584325026516
+    "k": 8,
+    "n": 73,
+    "rate": 0.1095890410958904,
+    "lo": 0.056586041610119084,
+    "hi": 0.20162825897706282
    },
-   "examples": [
-    "Congratulations! Lucky draw winner. To receive your prize, pay a small tax and share your UPI PIN."
-   ]
+   "examples": []
   },
   {
    "key": "homoglyph",
@@ -37,24 +35,24 @@
    "label_hi": "हूबहू दिखने वाले दूसरे अक्षर",
    "evasion": {
     "k": 0,
-    "n": 37,
+    "n": 50,
     "rate": 0.0,
     "lo": 0.0,
-    "hi": 0.09406095745514377
+    "hi": 0.07135003417431873
    },
    "genuine_flagged_before": {
-    "k": 0,
-    "n": 33,
-    "rate": 0.0,
-    "lo": 0.0,
-    "hi": 0.10427343003561192
+    "k": 2,
+    "n": 73,
+    "rate": 0.0273972602739726,
+    "lo": 0.007545600452515573,
+    "hi": 0.09450328973196781
    },
    "genuine_flagged_after": {
-    "k": 4,
-    "n": 33,
-    "rate": 0.12121212121212122,
-    "lo": 0.04816083267584231,
-    "hi": 0.2732584325026516
+    "k": 13,
+    "n": 73,
+    "rate": 0.1780821917808219,
+    "lo": 0.10713272068797698,
+    "hi": 0.2812194219014537
    },
    "examples": []
   },
@@ -63,30 +61,29 @@
    "label_en": "Hinglish respelling",
    "label_hi": "हिंग्लिश में अलग स्पेलिंग",
    "evasion": {
-    "k": 7,
-    "n": 37,
-    "rate": 0.1891891891891892,
-    "lo": 0.09479858757337126,
-    "hi": 0.342050115709556
+    "k": 2,
+    "n": 50,
+    "rate": 0.04,
+    "lo": 0.011038652660826577,
+    "hi": 0.13460337877954667
    },
    "genuine_flagged_before": {
-    "k": 0,
-    "n": 33,
-    "rate": 0.0,
-    "lo": 0.0,
-    "hi": 0.10427343003561192
+    "k": 2,
+    "n": 73,
+    "rate": 0.0273972602739726,
+    "lo": 0.007545600452515573,
+    "hi": 0.09450328973196781
    },
    "genuine_flagged_after": {
-    "k": 0,
-    "n": 33,
-    "rate": 0.0,
-    "lo": 0.0,
-    "hi": 0.10427343003561192
+    "k": 3,
+    "n": 73,
+    "rate": 0.0410958904109589,
+    "lo": 0.01407368523428873,
+    "hi": 0.1140027733506444
    },
    "examples": [
-    "Sir trading mein guaranteed profit, daily 3% return. Telegram group join karo aur payment karo.",
-    "Your profit of Rs 1,20,000 is ready. To withdraw you must pay 18% tax first. Send Rs 21600 to tax.desk@ybl.",
-    "Withdrawal blocked. Pay a release fee of Rs 8000 to unlock your funds and withdraw today."
+    "Withdrawal blocked. Pay a release fee of Rs 8000 to unlock your funds and withdraw today.",
+    "Refund lene ke liye PIN daalo, request accept karo, paise aa jayenge."
    ]
   },
   {
@@ -95,24 +92,24 @@
    "label_hi": "UPI ID कई लाइनों में तोड़ी",
    "evasion": {
     "k": 0,
-    "n": 37,
+    "n": 50,
     "rate": 0.0,
     "lo": 0.0,
-    "hi": 0.09406095745514377
+    "hi": 0.07135003417431873
    },
    "genuine_flagged_before": {
-    "k": 0,
-    "n": 33,
-    "rate": 0.0,
-    "lo": 0.0,
-    "hi": 0.10427343003561192
+    "k": 2,
+    "n": 73,
+    "rate": 0.0273972602739726,
+    "lo": 0.007545600452515573,
+    "hi": 0.09450328973196781
    },
    "genuine_flagged_after": {
-    "k": 0,
-    "n": 33,
-    "rate": 0.0,
-    "lo": 0.0,
-    "hi": 0.10427343003561192
+    "k": 2,
+    "n": 73,
+    "rate": 0.0273972602739726,
+    "lo": 0.007545600452515573,
+    "hi": 0.09450328973196781
    },
    "examples": []
   },
@@ -121,67 +118,65 @@
    "label_en": "All of the above together",
    "label_hi": "ऊपर के सभी एक साथ",
    "evasion": {
-    "k": 1,
-    "n": 37,
-    "rate": 0.02702702702702703,
-    "lo": 0.004786851054907726,
-    "hi": 0.13824378437563367
-   },
-   "genuine_flagged_before": {
     "k": 0,
-    "n": 33,
+    "n": 50,
     "rate": 0.0,
     "lo": 0.0,
-    "hi": 0.10427343003561192
+    "hi": 0.07135003417431873
+   },
+   "genuine_flagged_before": {
+    "k": 2,
+    "n": 73,
+    "rate": 0.0273972602739726,
+    "lo": 0.007545600452515573,
+    "hi": 0.09450328973196781
    },
    "genuine_flagged_after": {
-    "k": 4,
-    "n": 33,
-    "rate": 0.12121212121212122,
-    "lo": 0.04816083267584231,
-    "hi": 0.2732584325026516
+    "k": 14,
+    "n": 73,
+    "rate": 0.1917808219178082,
+    "lo": 0.1178225404547499,
+    "hi": 0.29655717053513053
    },
-   "examples": [
-    "Congratulations! Lucky draw winner. To receive your prize, pay a small tax and share your UPI PIN."
-   ]
+   "examples": []
   }
  ],
- "dataset": "data/kit/messages.jsonl",
- "date": "2026-10-24 16:38 UTC",
+ "dataset": "data/kit/holdout_community.jsonl, data/kit/messages.jsonl",
+ "date": "2026-10-24 17:20 UTC",
  "reproduce": "python -m satyapan.eval.attacks",
  "rules_only": {
-  "n_scams": 38,
-  "n_flagged_before": 37,
+  "n_scams": 78,
+  "n_flagged_before": 44,
   "attacks": [
    {
     "key": "spacing",
     "label_en": "Spacing and punctuation",
     "label_hi": "अक्षरों के बीच जगह और विराम चिह्न",
     "evasion": {
-     "k": 10,
-     "n": 37,
-     "rate": 0.2702702702702703,
-     "lo": 0.15397298246990684,
-     "hi": 0.4297847547392133
+     "k": 11,
+     "n": 44,
+     "rate": 0.25,
+     "lo": 0.14574066080685744,
+     "hi": 0.39440849808414946
     },
     "genuine_flagged_before": {
      "k": 0,
-     "n": 33,
+     "n": 73,
      "rate": 0.0,
      "lo": 0.0,
-     "hi": 0.10427343003561192
+     "hi": 0.04999375338358389
     },
     "genuine_flagged_after": {
      "k": 0,
-     "n": 33,
+     "n": 73,
      "rate": 0.0,
      "lo": 0.0,
-     "hi": 0.10427343003561192
+     "hi": 0.04999375338358389
     },
     "examples": [
+     "Hi, I am interested in your sofa listing. I am posted in Army, I will send the money by UPI now. Please scan the QR I am",
      "Sir trading mein guaranteed profit, daily 3% return. Telegram group join karo aur payment karo.",
-     "Your profit of Rs 1,20,000 is ready. To withdraw you must pay 18% tax first. Send Rs 21600 to tax.desk@ybl.",
-     "Withdrawal blocked. Pay a release fee of Rs 8000 to unlock your funds and withdraw today."
+     "Your profit of Rs 1,20,000 is ready. To withdraw you must pay 18% tax first. Send Rs 21600 to tax.desk@ybl."
     ]
    },
    {
@@ -189,30 +184,30 @@
     "label_en": "Look-alike letters",
     "label_hi": "हूबहू दिखने वाले दूसरे अक्षर",
     "evasion": {
-     "k": 32,
-     "n": 37,
-     "rate": 0.8648648648648649,
-     "lo": 0.7202227252929444,
-     "hi": 0.9408679273749238
+     "k": 37,
+     "n": 44,
+     "rate": 0.8409090909090909,
+     "lo": 0.7063350943621745,
+     "hi": 0.920734234422816
     },
     "genuine_flagged_before": {
      "k": 0,
-     "n": 33,
+     "n": 73,
      "rate": 0.0,
      "lo": 0.0,
-     "hi": 0.10427343003561192
+     "hi": 0.04999375338358389
     },
     "genuine_flagged_after": {
      "k": 0,
-     "n": 33,
+     "n": 73,
      "rate": 0.0,
      "lo": 0.0,
-     "hi": 0.10427343003561192
+     "hi": 0.04999375338358389
     },
     "examples": [
-     "Join our VIP group on Telegram. Guaranteed 30% profit every month. Pay Rs 25000 to alpha.gain88@ybl to start.",
-     "Sir, Alpha Securities is SEBI registered. Daily 5% returns, zero risk. Scan the QR and pay now: upi://pay?pa=alphasec.pa",
-     "Free stock tips today only! Our premium group gave 200% in 2 weeks. Send 5000 to ravi.trades@paytm to join."
+     "Hi, I am interested in your sofa listing. I am posted in Army, I will send the money by UPI now. Please scan the QR I am",
+     "Your SIM will be blocked in 24 hours due to incomplete KYC. Download the QuickSupport app and share the 9 digit code wit",
+     "प्रिय ग्राहक, आपका बैंक खाता आज रात बंद हो जाएगा क्योंकि केवाईसी अपडेट नहीं है। तुरंत इस लिंक पर क्लिक करके अपडेट करें: "
     ]
    },
    {
@@ -221,24 +216,24 @@
     "label_hi": "हिंग्लिश में अलग स्पेलिंग",
     "evasion": {
      "k": 7,
-     "n": 37,
-     "rate": 0.1891891891891892,
-     "lo": 0.09479858757337126,
-     "hi": 0.342050115709556
+     "n": 44,
+     "rate": 0.1590909090909091,
+     "lo": 0.07926576557718398,
+     "hi": 0.29366490563782555
     },
     "genuine_flagged_before": {
      "k": 0,
-     "n": 33,
+     "n": 73,
      "rate": 0.0,
      "lo": 0.0,
-     "hi": 0.10427343003561192
+     "hi": 0.04999375338358389
     },
     "genuine_flagged_after": {
      "k": 0,
-     "n": 33,
+     "n": 73,
      "rate": 0.0,
      "lo": 0.0,
-     "hi": 0.10427343003561192
+     "hi": 0.04999375338358389
     },
     "examples": [
      "Sir trading mein guaranteed profit, daily 3% return. Telegram group join karo aur payment karo.",
@@ -252,24 +247,24 @@
     "label_hi": "UPI ID कई लाइनों में तोड़ी",
     "evasion": {
      "k": 4,
-     "n": 37,
-     "rate": 0.10810810810810811,
-     "lo": 0.04285120520506268,
-     "hi": 0.24708846415167163
+     "n": 44,
+     "rate": 0.09090909090909091,
+     "lo": 0.035921611478836546,
+     "hi": 0.21159519397917487
     },
     "genuine_flagged_before": {
      "k": 0,
-     "n": 33,
+     "n": 73,
      "rate": 0.0,
      "lo": 0.0,
-     "hi": 0.10427343003561192
+     "hi": 0.04999375338358389
     },
     "genuine_flagged_after": {
      "k": 0,
-     "n": 33,
+     "n": 73,
      "rate": 0.0,
      "lo": 0.0,
-     "hi": 0.10427343003561192
+     "hi": 0.04999375338358389
     },
     "examples": [
      "Sir, Alpha Securities is SEBI registered. Daily 5% returns, zero risk. Scan the QR and pay now: upi://pay?pa=alphasec.pa",
@@ -282,30 +277,30 @@
     "label_en": "All of the above together",
     "label_hi": "ऊपर के सभी एक साथ",
     "evasion": {
-     "k": 32,
-     "n": 37,
-     "rate": 0.8648648648648649,
-     "lo": 0.7202227252929444,
-     "hi": 0.9408679273749238
+     "k": 37,
+     "n": 44,
+     "rate": 0.8409090909090909,
+     "lo": 0.7063350943621745,
+     "hi": 0.920734234422816
     },
     "genuine_flagged_before": {
      "k": 0,
-     "n": 33,
+     "n": 73,
      "rate": 0.0,
      "lo": 0.0,
-     "hi": 0.10427343003561192
+     "hi": 0.04999375338358389
     },
     "genuine_flagged_after": {
      "k": 0,
-     "n": 33,
+     "n": 73,
      "rate": 0.0,
      "lo": 0.0,
-     "hi": 0.10427343003561192
+     "hi": 0.04999375338358389
     },
     "examples": [
-     "Join our VIP group on Telegram. Guaranteed 30% profit every month. Pay Rs 25000 to alpha.gain88@ybl to start.",
-     "Sir, Alpha Securities is SEBI registered. Daily 5% returns, zero risk. Scan the QR and pay now: upi://pay?pa=alphasec.pa",
-     "Free stock tips today only! Our premium group gave 200% in 2 weeks. Send 5000 to ravi.trades@paytm to join."
+     "Hi, I am interested in your sofa listing. I am posted in Army, I will send the money by UPI now. Please scan the QR I am",
+     "Your SIM will be blocked in 24 hours due to incomplete KYC. Download the QuickSupport app and share the 9 digit code wit",
+     "प्रिय ग्राहक, आपका बैंक खाता आज रात बंद हो जाएगा क्योंकि केवाईसी अपडेट नहीं है। तुरंत इस लिंक पर क्लिक करके अपडेट करें: "
     ]
    }
   ]

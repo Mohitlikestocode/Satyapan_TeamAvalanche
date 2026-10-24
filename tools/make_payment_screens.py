@@ -54,8 +54,37 @@ def usable_fonts(names: list[str]) -> list[str]:
     return found
 
 
+# Full paths for macOS and Linux, where Pillow does not find fonts by file name alone.
+SYSTEM_FONT_PATHS = [
+    "/System/Library/Fonts/Supplemental/Arial.ttf", "/System/Library/Fonts/Supplemental/Arial Bold.ttf",
+    "/System/Library/Fonts/Supplemental/Verdana.ttf", "/System/Library/Fonts/Supplemental/Tahoma.ttf",
+    "/System/Library/Fonts/Supplemental/Trebuchet MS.ttf", "/System/Library/Fonts/Helvetica.ttc", "/System/Library/Fonts/SFNS.ttf",
+    "/Library/Fonts/Arial Unicode.ttf",
+    "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
+    "/usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf", "/usr/share/fonts/truetype/noto/NotoSans-Regular.ttf",
+]
+# Last resort on any machine: the Noto Sans web fonts the site already ships (Unicode-range subsets; only those that can draw
+# a payment screen are kept).
+REPO_FONTS = Path(__file__).resolve().parents[1] / "web" / "static" / "fonts"
+NEEDED = "Payment Successful Rs 0123456789,:.@ UPI Ref AM PM Oct"
+
+
+def covers(font_name: str, text: str = NEEDED) -> bool:
+    """True when the font draws every character in `text` (not the missing-glyph box)."""
+    f = ImageFont.truetype(font_name, 24)
+
+    def draw(ch: str) -> bytes:
+        im = Image.new("L", (40, 40), 0)
+        ImageDraw.Draw(im).text((4, 2), ch, font=f, fill=255)
+        return im.tobytes()
+    missing = draw("￿")
+    return all(draw(ch) != missing for ch in set(text) if not ch.isspace())
+
+
 def fonts() -> list[str]:
-    found = usable_fonts(FONT_CANDIDATES)
+    found = usable_fonts(FONT_CANDIDATES) or usable_fonts([p for p in SYSTEM_FONT_PATHS if Path(p).exists()])
+    if not found and REPO_FONTS.exists():
+        found = [str(p) for p in sorted(REPO_FONTS.glob("*.woff2")) if usable_fonts([str(p)]) and covers(str(p))]
     if not found:
         sys.exit("No TrueType fonts found. Install any system font (DejaVu, Liberation, Noto) and retry.")
     return found
