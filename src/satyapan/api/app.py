@@ -29,6 +29,35 @@ def _load_dotenv() -> None:
             os.environ.setdefault(k.strip(), v.strip().strip('"').strip("'"))
 
 
+def _warm_up() -> None:
+    """Load the installed models once in the background so the first real check is not slow. Best effort; never raises."""
+    import io
+    import threading
+    import wave
+
+    def work() -> None:
+        try:
+            from ..plugins import models_voice
+            from ..service import analyse_text
+            analyse_text("warm up", kind="message")
+            if models_voice.ready():
+                sample = Path(__file__).with_name("warmup.wav")  # a short synthetic sentence, so speech-to-text and the voice detector both load
+                if sample.is_file():
+                    models_voice.check_voice(sample.read_bytes())
+                    return
+                buf = io.BytesIO()
+                with wave.open(buf, "wb") as w:
+                    w.setnchannels(1)
+                    w.setsampwidth(2)
+                    w.setframerate(16000)
+                    w.writeframes(bytes(2) * 16000)
+                models_voice.check_voice(buf.getvalue())
+        except Exception:  # pragma: no cover
+            pass
+
+    threading.Thread(target=work, daemon=True, name="warm-up").start()
+
+
 def create_app() -> FastAPI:
     _load_dotenv()
     app = FastAPI(title="Satyapan", version="0.3.0")
@@ -49,6 +78,8 @@ def create_app() -> FastAPI:
     app.include_router(routes_review.router)
     app.include_router(routes_pages.router)
     app.mount("/static", StaticFiles(directory=WEB / "static"), name="static")
+    if "PYTEST_CURRENT_TEST" not in os.environ and os.environ.get("WARM_UP", "1") != "0":
+        app.router.on_startup.append(_warm_up)
     return app
 
 
