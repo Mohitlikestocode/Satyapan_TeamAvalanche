@@ -9,4 +9,8 @@ def setup(registry) -> None:
     registry.on("decision", metrics.on_decision)
     registry.on("delete", metrics.on_delete)
     registry.add_global_js("/static/js/traction_pv.js")
+    registry.add_global_js("/static/js/traction_feedback.js")
+    registry.add_nav(75, "pilot", "/pilot", "For shops", "दुकानों के लिए")
+    registry.add_footer("Services", "Ask for a pilot at your shop", "/pilot")
+    registry.add_footer("Learn and about", "Tell us what to fix", "/feedback")
     registry.add_footer("Learn and about", "Live impact", "/impact")
