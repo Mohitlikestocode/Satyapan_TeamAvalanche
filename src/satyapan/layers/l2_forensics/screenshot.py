@@ -50,12 +50,11 @@ def run(data: bytes) -> LayerResult | None:
     try:
         import torch
         from PIL import Image, ImageOps
-        from .tamper_net import image_score, to_tensor
+        from .tamper_net import image_score, prepare
         model, ck = loaded
         img = ImageOps.exif_transpose(Image.open(io.BytesIO(data))).convert("RGB")
-        size = tuple(ck["config"]["size"])
         with torch.no_grad():
-            logits = model(to_tensor(img, size).unsqueeze(0))
+            logits = model(prepare(img, ck["config"]).unsqueeze(0))
         score = float(image_score(logits)[0])
         thr = float(ck["threshold"])
     except Exception:

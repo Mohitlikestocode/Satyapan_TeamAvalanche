@@ -1,0 +1,11 @@
+codes:
+  ML_TEXT_OBFUSCATED:
+    layer: L4
+    priority: 25
+    en: "The message hides its words with look-alike letters, spaced-out letters or a broken-up UPI ID. Scammers do this to get past filters."
+    hi: "संदेश अपने शब्दों को हूबहू दिखने वाले अक्षरों, बिखरे अक्षरों या टूटी हुई UPI ID से छिपाता है। ठग फ़िल्टर से बचने के लिए ऐसा करते हैं।"
+  ML_TEXT_SCAM_LIKE:
+    layer: L4
+    priority: 24
+    en: "The wording is very similar to known scam messages."
+    hi: "शब्द जाने-पहचाने स्कैम संदेशों से बहुत मिलते हैं।"

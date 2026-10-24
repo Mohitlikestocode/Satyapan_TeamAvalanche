@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="case ml-pad">
+  {% if heard %}
+  <h1 class="case-h1">{{ tr("Here's what we heard", "हमने यह सुना") }}</h1>
+  <p class="dnote">{{ tr("Voice note", "वॉइस नोट") }} · {{ seconds }} s{% if lang_heard %} · {{ {"hi": tr("Hindi", "हिंदी"), "en": tr("English", "अंग्रेज़ी")}.get(lang_heard, lang_heard) }}{% endif %}</p>
+  <p class="dnote">{{ tr("Turned into text on our own server. The audio has already been deleted; it was never sent to anyone.",
+                         "हमारे अपने सर्वर पर टेक्स्ट में बदला गया। ऑडियो पहले ही मिटा दिया गया है; उसे किसी को नहीं भेजा गया।") }}</p>
+  {% if no_text %}
+  <div class="vbanner vb-n" role="status"><div><b>{{ tr("We could not make out any words. You can type what was said below, or try a clearer recording.",
+       "हमें कोई शब्द समझ नहीं आए। आप नीचे लिख सकते हैं कि क्या कहा गया, या साफ़ रिकॉर्डिंग भेजें।") }}</b></div></div>
+  {% endif %}
+  <form class="ml-form" method="post" action="/models/voice/check">
+    <label for="ml-tr">{{ tr("Text from the voice note", "वॉइस नोट से टेक्स्ट") }} <span class="ml-muted">{{ tr("(you can fix any wrong words)", "(गलत शब्द ठीक कर सकते हैं)") }}</span></label>
+    <textarea id="ml-tr" name="transcript" maxlength="4000"{% if lang_heard == "hi" %} lang="hi"{% endif %}>{{ transcript }}</textarea>
+    <input type="hidden" name="token" value="{{ token }}">
+    <button type="submit" class="hbtn hbtn-p">{{ tr("Check this text", "यह टेक्स्ट जाँचें") }}</button>
+    <a class="hbtn hbtn-s" href="/models/voice">{{ tr("Choose a different file", "दूसरी फ़ाइल चुनें") }}</a>
+  </form>
+  {% else %}
+  <h1 class="case-h1">{{ tr("Check a voice note", "वॉइस नोट जाँचें") }}</h1>
+  <p>{{ tr("Got a voice note asking you to pay, invest or share a code? Upload it. We turn it into text on our own server, show you the words to correct, then check them like a message. We also look for signs that the voice was made by a machine.",
+           "किसी वॉइस नोट में पैसे भेजने, निवेश करने या कोड बताने को कहा गया? उसे अपलोड करें। हम उसे अपने सर्वर पर टेक्स्ट में बदलते हैं, आपको शब्द ठीक करने के लिए दिखाते हैं, फिर संदेश की तरह जाँचते हैं। हम यह भी देखते हैं कि आवाज़ मशीन से तो नहीं बनी।") }}</p>
+  <p><b>{{ tr("A familiar voice is not proof. If someone you know asks for money, call them back on a number you already have.",
+              "जानी-पहचानी आवाज़ सबूत नहीं है। कोई जान-पहचान वाला पैसे माँगे तो उन्हें अपने पास पहले से मौजूद नंबर पर वापस फ़ोन करें।") }}</b></p>
+  {% if not status.ffmpeg or not status.whisper %}
+  <div class="vbanner vb-a" role="status"><div><b>{{ tr("Voice checks are not set up on this server yet, so a voice note will get \"can't tell\".",
+       "इस सर्वर पर अभी वॉइस जाँच सेट नहीं है, इसलिए वॉइस नोट पर \"कह नहीं सकते\" आएगा।") }}</b></div></div>
+  {% elif not status.primary or not status.calibrated %}
+  <div class="vbanner vb-n" role="status"><div><b>{{ tr("The words will be checked. The cloned-voice check is not set up on this server, so we will not judge the voice.",
+       "शब्द जाँचे जाएँगे। क्लोन आवाज़ की जाँच इस सर्वर पर सेट नहीं है, इसलिए हम आवाज़ पर कुछ नहीं कहेंगे।") }}</b></div></div>
+  {% endif %}
+  {% if error %}
+  <div class="vbanner vb-a" role="alert"><div><b>
+    {% if error == "too_big" %}{{ tr("That file is too large. Please send a voice note under 15 MB.", "फ़ाइल बहुत बड़ी है। 15 MB से छोटा वॉइस नोट भेजें।") }}
+    {% elif error == "expired" %}{{ tr("That page expired. Please upload the voice note again.", "यह पेज पुराना हो गया। वॉइस नोट फिर से अपलोड करें।") }}
+    {% else %}{{ tr("We could not hear anything in that file. Please send a voice note (for example .ogg, .opus, .m4a, .mp3 or .wav) at least one second long.",
+                    "इस फ़ाइल में हमें कुछ सुनाई नहीं दिया। कम से कम एक सेकंड का वॉइस नोट भेजें (जैसे .ogg, .opus, .m4a, .mp3 या .wav)।") }}{% endif %}
+  </b></div></div>
+  {% endif %}
+  <form class="ml-form" method="post" action="/models/voice" enctype="multipart/form-data">
+    <label for="ml-audio">{{ tr("Voice note (up to 15 MB, first 2 minutes are checked)", "वॉइस नोट (15 MB तक, पहले 2 मिनट जाँचे जाते हैं)") }}</label>
+    <input id="ml-audio" name="file" type="file" accept="audio/*,.ogg,.opus,.m4a,.mp3,.wav,.aac,.amr" required>
+    <button type="submit" class="hbtn hbtn-p">{{ tr("Listen and show the words", "सुनें और शब्द दिखाएँ") }}</button>
+    <p class="dnote">{{ tr("Your audio is processed in memory and deleted straight away. We keep only the result, for a short time.",
+                           "आपका ऑडियो मेमोरी में जाँचा जाता है और तुरंत मिटा दिया जाता है। हम सिर्फ़ नतीजा कुछ समय के लिए रखते हैं।") }}</p>
+  </form>
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,56 @@
+{
+ "generator": "tools/make_payment_screens.py v3",
+ "seed": 7,
+ "n": 20000,
+ "layouts": {
+  "train": [
+   "L0",
+   "L1",
+   "L2",
+   "L3",
+   "L4"
+  ],
+  "val": [
+   "L5"
+  ],
+  "test": [
+   "L6",
+   "L7"
+  ]
+ },
+ "fonts": {
+  "train": [
+   "arial.ttf",
+   "arialbd.ttf",
+   "segoeui.ttf",
+   "segoeuib.ttf",
+   "seguisb.ttf",
+   "segoeuil.ttf",
+   "calibri.ttf",
+   "calibrib.ttf",
+   "verdana.ttf",
+   "verdanab.ttf",
+   "tahoma.ttf",
+   "tahomabd.ttf",
+   "trebuc.ttf",
+   "trebucbd.ttf",
+   "framd.ttf",
+   "micross.ttf",
+   "times.ttf"
+  ],
+  "val_test_only": [
+   "bahnschrift.ttf",
+   "gadugi.ttf",
+   "LeelawUI.ttf",
+   "corbel.ttf",
+   "ebrima.ttf"
+  ],
+  "edit_only": [
+   "georgia.ttf",
+   "consola.ttf",
+   "pala.ttf",
+   "constan.ttf"
+  ]
+ },
+ "meta_sha256": "4ab85654a8d752a7197577bad2842092ec99d58a005fa3b5bf8305e47c868ef0"
+}

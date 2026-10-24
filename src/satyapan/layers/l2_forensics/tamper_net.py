@@ -87,6 +87,28 @@ def to_tensor(img, size: tuple[int, int]) -> torch.Tensor:
     return torch.from_numpy((a - 0.5) / 0.5).permute(2, 0, 1).contiguous()
 
 
+def to_tensor_native(img, max_side: int = 1600, multiple: int = 16) -> torch.Tensor:
+    """PIL image -> normalised tensor at (close to) native resolution: only shrunk if its long side exceeds max_side,
+    then cropped to a multiple of `multiple` pixels. Keeps the fine pixel traces an edit leaves."""
+    import numpy as np
+    from PIL import Image
+    img = img.convert("RGB")
+    s = min(1.0, max_side / max(img.size))
+    if s < 1.0:
+        img = img.resize((max(multiple, int(img.width * s)), max(multiple, int(img.height * s))), Image.BILINEAR)
+    w, h = max(multiple, img.width // multiple * multiple), max(multiple, img.height // multiple * multiple)
+    img = img.crop((0, 0, w, h)) if (w, h) != img.size else img
+    a = np.asarray(img, dtype="float32") / 255.0
+    return torch.from_numpy((a - 0.5) / 0.5).permute(2, 0, 1).contiguous()
+
+
+def prepare(img, config: dict) -> torch.Tensor:
+    """The model's input for one image, as recorded in its checkpoint config (fixed size, or native resolution)."""
+    if config.get("native"):
+        return to_tensor_native(img, int(config.get("max_side", 1600)))
+    return to_tensor(img, tuple(config["size"]))
+
+
 def image_score(logits: torch.Tensor) -> torch.Tensor:
     """One number per image: the strongest 3x3-averaged edit probability anywhere."""
     p = torch.sigmoid(logits)

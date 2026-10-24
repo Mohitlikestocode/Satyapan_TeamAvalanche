@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+{% set tiers = {"HIGH_RISK": tr("High risk", "बहुत ज़्यादा खतरा"), "SUSPICIOUS": tr("Suspicious", "संदिग्ध"), "CANT_TELL": tr("Can't tell", "कह नहीं सकते"),
+                "NO_RED_FLAGS": tr("No red flags found", "कोई खतरे का संकेत नहीं मिला"), "REGISTRY_HIT": tr("Known scam", "जाना-पहचाना स्कैम")} %}
+{% block content %}
+<section class="ml-head">
+  <div class="wrap">
+    <h1>{{ tr("Attack yourself", "खुद पर हमला करके देखें") }}</h1>
+    <p class="ml-lead">{{ tr("How would a scammer get past us? Paste a message or upload a screenshot or voice note. We change it the way an attacker would, run every changed copy through our real checks, and show where the verdict changes. Nothing is stored.",
+                             "कोई ठग हमें कैसे चकमा देगा? एक संदेश चिपकाएँ या स्क्रीनशॉट या वॉइस नोट अपलोड करें। हम उसे वैसे ही बदलते हैं जैसे हमलावर बदलेगा, हर बदली कॉपी को अपनी असली जाँच से गुज़ारते हैं, और दिखाते हैं कि नतीजा कहाँ बदलता है। कुछ भी सेव नहीं होता।") }}</p>
+  </div>
+</section>
+
+<div class="wrap ml-body">
+  {% if error %}
+  <div class="vbanner vb-a" role="alert"><div><b>
+    {% if error == "too_big" %}{{ tr("That file is too large.", "फ़ाइल बहुत बड़ी है।") }}
+    {% elif error == "busy" %}{{ tr("Other attacks are running right now. Please try again in a minute.", "अभी दूसरी जाँचें चल रही हैं। एक मिनट बाद फिर कोशिश करें।") }}
+    {% elif error == "unreadable_audio" %}{{ tr("We could not hear anything in that file, or voice checks are not set up on this server.", "इस फ़ाइल में कुछ सुनाई नहीं दिया, या इस सर्वर पर वॉइस जाँच सेट नहीं है।") }}
+    {% else %}{{ tr("We could not read that file as a picture.", "हम इस फ़ाइल को तस्वीर की तरह नहीं पढ़ सके।") }}{% endif %}
+  </b></div></div>
+  {% endif %}
+
+  {% if mode %}
+  <section class="board" aria-labelledby="ml-res-h">
+    <h3 id="ml-res-h">{{ tr("What changed", "क्या बदला") }}</h3>
+    <div class="ml-pad">
+      <p>{{ tr("Original:", "मूल:") }} <b>{{ tiers[base.tier.value] }}</b>{% if mode == "audio" and info.transcript %} · {{ tr("words heard:", "सुने गए शब्द:") }} <span class="ml-ftext">{{ info.transcript[:200] }}</span>{% endif %}</p>
+      <div class="tbl-wrap">
+        <table class="tbl ml-tbl">
+          <thead><tr><th scope="col">{{ tr("Attacker's change", "हमलावर का बदलाव") }}</th><th scope="col">{{ tr("Verdict after", "बाद का नतीजा") }}</th><th scope="col">{{ tr("Did it change?", "क्या बदला?") }}</th><th scope="col">{{ tr("Signs lost / gained", "खोए / नए संकेत") }}</th></tr></thead>
+          <tbody>
+          {% for o in outs %}
+            <tr>
+              <th scope="row">{{ o.label[1] if lang == "hi" else o.label[0] }}
+                {% if o.preview and mode == "text" %}<details><summary class="ml-muted">{{ tr("see changed text", "बदला हुआ टेक्स्ट देखें") }}</summary><span class="ml-ftext">{{ o.preview }}</span></details>{% endif %}</th>
+              <td>{{ tiers[o.tier] if o.tier else tr("Unreadable", "पढ़ा नहीं गया") }}</td>
+              <td>{% if o.changed %}<span class="ml-changed">{{ tr("Yes", "हाँ") }}</span>{% else %}<span class="ml-same">{{ tr("No", "नहीं") }}</span>{% endif %}</td>
+              <td>{% if o.lost %}<span class="ml-changed">−</span> <code>{{ o.lost|join(", ") }}</code><br>{% endif %}{% if o.gained %}+ <code>{{ o.gained|join(", ") }}</code><br>{% endif %}{% if o.note %}<small class="ml-muted">{{ o.note }}</small>{% endif %}{% if not o.lost and not o.gained and not o.note %}–{% endif %}</td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <p class="dnote">{{ tr("Each row is a fresh run of the same checks the site uses. Codes are the names of the reasons in our reason list.", "हर पंक्ति साइट वाली ही जाँच का नया रन है। कोड हमारी कारण-सूची में कारणों के नाम हैं।") }}</p>
+    </div>
+  </section>
+  {% endif %}
+
+  <section class="board" aria-labelledby="ml-at-h">
+    <h3 id="ml-at-h">{{ tr("Try a message", "संदेश आज़माएँ") }}</h3>
+    <form class="ml-form ml-pad" method="post" action="/attack/text">
+      <label for="ml-at-text">{{ tr("Message to attack", "जिस संदेश पर हमला करना है") }}</label>
+      <textarea id="ml-at-text" name="text" maxlength="4000" required>{{ original or "" }}</textarea>
+      <button type="submit" class="hbtn hbtn-p">{{ tr("Attack this message", "इस संदेश पर हमला करें") }}</button>
+    </form>
+  </section>
+  <section class="board" aria-labelledby="ml-ai-h">
+    <h3 id="ml-ai-h">{{ tr("Try a screenshot", "स्क्रीनशॉट आज़माएँ") }}</h3>
+    <form class="ml-form ml-pad" method="post" action="/attack/image" enctype="multipart/form-data">
+      <label for="ml-at-img">{{ tr("Screenshot (up to 10 MB)", "स्क्रीनशॉट (10 MB तक)") }}</label>
+      <input id="ml-at-img" name="file" type="file" accept="image/jpeg,image/png,image/webp" required>
+      <button type="submit" class="hbtn hbtn-p">{{ tr("Attack this screenshot", "इस स्क्रीनशॉट पर हमला करें") }}</button>
+      <p class="dnote">{{ tr("Runs the full check six more times; it can take up to a minute.", "पूरी जाँच छह बार और चलती है; एक मिनट तक लग सकता है।") }}</p>
+    </form>
+  </section>
+  <section class="board" aria-labelledby="ml-aa-h">
+    <h3 id="ml-aa-h">{{ tr("Try a voice note", "वॉइस नोट आज़माएँ") }}</h3>
+    {% if voice_ready %}
+    <form class="ml-form ml-pad" method="post" action="/attack/audio" enctype="multipart/form-data">
+      <label for="ml-at-aud">{{ tr("Voice note (up to 15 MB)", "वॉइस नोट (15 MB तक)") }}</label>
+      <input id="ml-at-aud" name="file" type="file" accept="audio/*,.ogg,.opus,.m4a,.mp3,.wav,.aac" required>
+      <button type="submit" class="hbtn hbtn-p">{{ tr("Attack this voice note", "इस वॉइस नोट पर हमला करें") }}</button>
+    </form>
+    {% else %}
+    <p class="ml-pad ml-none">{{ tr("Voice checks are not set up on this server.", "इस सर्वर पर वॉइस जाँच सेट नहीं है।") }}</p>
+    {% endif %}
+  </section>
+
+  <section class="board" aria-labelledby="ml-know-h">
+    <h3 id="ml-know-h">{{ tr("What an attacker could do, what we miss now, what we would change", "हमलावर क्या कर सकता है, हम अभी क्या चूकते हैं, हम क्या बदलेंगे") }}</h3>
+    <div class="ml-pad">
+      <h4 class="ml-run-h">{{ tr("Messages", "संदेश") }}</h4>
+      {% if measured.text %}
+      {% set ro = measured.text.rules_only %}
+      <p>{{ tr("Measured on our message kit", "हमारी संदेश किट पर मापा गया") }} ({{ measured.text.n_flagged_before }} {{ tr("scams we flag", "स्कैम जिन्हें हम पकड़ते हैं") }}, {{ measured.text.date }}):</p>
+      <div class="tbl-wrap"><table class="tbl ml-tbl">
+        <thead><tr><th scope="col">{{ tr("Change", "बदलाव") }}</th>{% if ro %}<th scope="col">{{ tr("Slip through the rules alone", "सिर्फ़ नियमों से निकल जाते हैं") }}</th>{% endif %}<th scope="col">{{ tr("Slip through the site as deployed", "चल रही साइट से निकल जाते हैं") }}</th><th scope="col">{{ tr("Genuine messages with the same change, flagged", "वही बदलाव वाले असली संदेश, संदिग्ध बताए") }}</th></tr></thead>
+        <tbody>{% for x in measured.text.attacks %}
+          <tr><th scope="row">{{ x.label_hi if lang == "hi" else x.label_en }}</th>{% if ro %}<td>{{ fmt(ro.attacks[loop.index0].evasion, lang) }}</td>{% endif %}<td>{{ fmt(x.evasion, lang) }}</td><td>{{ x.genuine_flagged_after.k }} / {{ x.genuine_flagged_after.n }} ({{ tr("unchanged:", "बिना बदलाव:") }} {{ x.genuine_flagged_before.k }})</td></tr>
+        {% endfor %}</tbody></table></div>
+      <p class="dnote">{{ tr("We wrote the hidden-word check after the rules-alone numbers showed these gaps, on the same messages, so the as-deployed numbers are optimistic. What we still miss: Hinglish respellings of key words.",
+                             "नियमों वाले नतीजों में ये कमियाँ दिखने के बाद, उन्हीं संदेशों पर, हमने छिपे शब्दों की जाँच लिखी, इसलिए चल रही साइट के नतीजे आशावादी हैं। जो अभी भी छूटता है: मुख्य शब्दों की हिंग्लिश स्पेलिंग।") }}</p>
+      {% else %}
+      <p class="ml-none">{{ tr("Not evaluated yet.", "अभी मापा नहीं गया।") }}</p>
+      {% endif %}
+      <p>{{ tr("What we changed: the hidden-word check folds look-alike letters, spread-out letters and split UPI IDs back before the rules run again, and says the message hides words. What we would change next: teach the message model respelled copies, and test on messages written by people outside the team.",
+               "हमने क्या बदला: छिपे शब्दों की जाँच हूबहू दिखने वाले अक्षरों, बिखरे अक्षरों और टूटी UPI ID को वापस सामान्य करके नियम फिर चलाती है, और बताती है कि संदेश शब्द छिपाता है। आगे क्या बदलेंगे: संदेश मॉडल को अलग स्पेलिंग वाली कॉपियाँ सिखाना, और टीम से बाहर के लोगों के लिखे संदेशों पर परखना।") }}</p>
+
+      <h4 class="ml-run-h">{{ tr("Payment screenshots", "पेमेंट स्क्रीनशॉट") }}</h4>
+      {% set ss = measured.screenshot_real or measured.screenshot_synthetic %}
+      {% if ss %}
+      <ul class="list">
+        {% for c in ss.conditions if c.name in ("jpeg_q40", "scale_0.5", "edit_same_font", "font_unseen", "recompressed_twice") %}
+        <li>{{ cond(c.name, lang) }}: {{ tr("edits caught", "बदलाव पकड़े") }} {{ fmt(c.tpr, lang) }}</li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p class="ml-none">{{ tr("Not evaluated yet.", "अभी मापा नहीं गया।") }}</p>
+      {% endif %}
+      <p>{{ tr("An attacker can re-save the edited picture at low quality, shrink it, or photograph the screen to wash out editing traces, and a careful same-font edit leaves very little. That is why an edit sign is only ever a warning, never proof, and why the advice is always: check your own bank or UPI app. What we would change: train on photographed and re-shared screens and on real app layouts from consenting shopkeepers.",
+               "हमलावर बदली हुई तस्वीर को कम गुणवत्ता में दोबारा सेव कर सकता है, छोटा कर सकता है, या स्क्रीन की फ़ोटो लेकर बदलाव के निशान मिटा सकता है, और उसी फ़ॉन्ट में सावधानी से किया बदलाव बहुत कम निशान छोड़ता है। इसीलिए बदलाव का संकेत सिर्फ़ चेतावनी है, सबूत नहीं, और सलाह हमेशा यही है: अपना बैंक या UPI ऐप देखें। हम क्या बदलेंगे: फ़ोटो ली गई और दोबारा शेयर की गई स्क्रीन पर, और सहमति देने वाले दुकानदारों के असली ऐप लेआउट पर ट्रेनिंग।") }}</p>
+
+      <h4 class="ml-run-h">{{ tr("Voice notes", "वॉइस नोट") }}</h4>
+      {% if measured.voice %}
+      <ul class="list">
+        {% for c in measured.voice.conditions if c.name in ("clean", "opus24k", "aac64k", "tel8k") %}
+        <li>{{ c.row }} · {{ cond(c.name, lang) }}: {{ tr("cloned voices caught", "क्लोन आवाज़ें पकड़ी") }} {{ fmt(c.tpr, lang) }}; {{ tr("real voices wrongly flagged", "असली आवाज़ें गलती से संदिग्ध") }} {{ fmt(c.fpr, lang) }}</li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p class="ml-none">{{ tr("Not evaluated yet.", "अभी मापा नहीं गया।") }}</p>
+      {% endif %}
+      <p>{{ tr("An attacker can send the cloned voice through a phone line or a chat app, add noise or music, or use a voice model newer than our detectors know. The words are still checked, so a cloned voice asking for money to a new UPI ID is still caught by the payee and word checks. What we would change: calibrate per channel (phone versus chat app) and add a family safe word to the advice.",
+               "हमलावर क्लोन आवाज़ को फ़ोन लाइन या चैट ऐप से भेज सकता है, शोर या संगीत जोड़ सकता है, या ऐसा नया वॉइस मॉडल इस्तेमाल कर सकता है जिसे हमारे डिटेक्टर नहीं जानते। शब्द फिर भी जाँचे जाते हैं, इसलिए नई UPI ID पर पैसे माँगती क्लोन आवाज़ पाने वाले और शब्दों की जाँच से फिर भी पकड़ी जाती है। हम क्या बदलेंगे: हर चैनल (फ़ोन बनाम चैट ऐप) के लिए अलग कैलिब्रेशन, और सलाह में परिवार का गुप्त शब्द।") }}</p>
+    </div>
+  </section>
+</div>
+{% endblock %}

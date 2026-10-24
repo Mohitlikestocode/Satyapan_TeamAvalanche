@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+{% macro rate(r) %}{{ fmt(r, lang) }}{% endmacro %}
+{% block content %}
+<section class="ml-head">
+  <div class="wrap">
+    <h1>{{ tr("Measured results", "मापे गए नतीजे") }}</h1>
+    <p class="ml-lead">{{ tr("How often our checks catch a scam or an edit, and how often they wrongly flag something genuine. Every number on this page is read from a results file in our repository or computed live by the button below. If something was not measured, it says so.",
+                             "हमारी जाँच कितनी बार स्कैम या बदलाव पकड़ती है, और कितनी बार किसी असली चीज़ को गलती से संदिग्ध बताती है। इस पेज का हर नंबर हमारे रिपॉज़िटरी की नतीजों वाली फ़ाइल से पढ़ा गया है या नीचे के बटन से अभी गिना गया है। जो मापा नहीं गया, वह साफ़ लिखा है।") }}</p>
+    <p class="ml-lead">{{ tr("Expect the judges' own samples to score lower than ours: they will not look like our data.",
+                             "जजों के अपने नमूनों पर नतीजे हमारे नतीजों से कम आ सकते हैं: वे हमारे डेटा जैसे नहीं होंगे।") }}</p>
+  </div>
+</section>
+
+<div class="wrap ml-body">
+  <section class="board" aria-labelledby="ml-glance-h">
+    <h3 id="ml-glance-h">{{ tr("At a glance", "एक नज़र में") }}</h3>
+    <div class="tbl-wrap">
+      <table class="tbl ml-tbl">
+        <thead><tr><th scope="col">{{ tr("What", "क्या") }}</th><th scope="col">{{ tr("Status", "स्थिति") }}</th><th scope="col">{{ tr("Data never used for training or rules?", "डेटा ट्रेनिंग या नियमों में कभी इस्तेमाल नहीं हुआ?") }}</th></tr></thead>
+        <tbody>
+        {% for s in sections %}
+          <tr>
+            <td><a href="#ml-{{ s.key }}">{{ s.title[1] if lang == "hi" else s.title[0] }}</a></td>
+            <td>{% if s.status == "measured" %}<span class="pill pill-g">{{ tr("Measured", "मापा गया") }}</span>{% else %}<span class="pill pill-a">{{ tr("Not evaluated", "मापा नहीं गया") }}</span>{% endif %}</td>
+            <td>{% if s.held_out %}{{ tr("Yes", "हाँ") }}{% else %}{{ tr("No: optimistic", "नहीं: आशावादी") }}{% endif %}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  {% for s in sections %}
+  <section class="board ml-sec" id="ml-{{ s.key }}" aria-labelledby="ml-{{ s.key }}-h">
+    <h3 id="ml-{{ s.key }}-h">{{ s.title[1] if lang == "hi" else s.title[0] }}
+      {% if s.status != "measured" %}<span class="pill pill-a">{{ tr("Not evaluated", "मापा नहीं गया") }}</span>{% endif %}</h3>
+    <div class="ml-pad">
+      <p>{{ s.what[1] if lang == "hi" else s.what[0] }}</p>
+      {% if s.status != "measured" %}
+        <p class="ml-none">{{ tr("Not evaluated yet. No number is shown until a measurement exists.", "अभी मापा नहीं गया। माप होने तक कोई नंबर नहीं दिखाया जाता।") }}</p>
+      {% else %}
+        <dl class="ml-kv">
+          {% if s.dataset %}<dt>{{ tr("Data", "डेटा") }}</dt><dd>{{ s.dataset }}</dd>{% endif %}
+          {% if s.split %}<dt>{{ tr("Split", "हिस्सा") }}</dt><dd>{{ s.split }}</dd>{% endif %}
+          {% if s.hardware %}<dt>{{ tr("Hardware", "हार्डवेयर") }}</dt><dd>{{ s.hardware }}</dd>{% endif %}
+          <dt>{{ tr("Measured", "मापा गया") }}</dt><dd>{{ s.date }}</dd>
+          <dt>{{ tr("Files", "फ़ाइलें") }}</dt><dd>{% for f in s.files %}<code>docs/results/{{ f }}</code>{% if not loop.last %}, {% endif %}{% endfor %}</dd>
+          {% if s.reproduce %}<dt>{{ tr("Reproduce", "फिर से चलाएँ") }}</dt><dd><code>{{ s.reproduce }}</code></dd>{% endif %}
+        </dl>
+        <div class="tbl-wrap">
+          <table class="tbl ml-tbl">
+            <caption class="ml-cap">{{ tr("Caught", "पकड़े गए") }} = {{ s.pos[1] if lang == "hi" else s.pos[0] }} {{ tr("flagged", "संदिग्ध बताए गए") }}; {{ tr("Wrongly flagged", "गलती से संदिग्ध") }} = {{ s.neg[1] if lang == "hi" else s.neg[0] }} {{ tr("flagged", "संदिग्ध बताए गए") }}</caption>
+            <thead><tr><th scope="col">{{ tr("Method", "तरीका") }}</th><th scope="col">{{ tr("Caught", "पकड़े गए") }}</th><th scope="col">{{ tr("Wrongly flagged", "गलती से संदिग्ध") }}</th><th scope="col">AUROC / EER</th></tr></thead>
+            <tbody>
+            {% for r in s.rows %}
+              <tr{% if r.baseline %} class="ml-base"{% endif %}>
+                <th scope="row">{{ r.name }}{% if r.baseline %} <span class="pill pill-n">{{ tr("baseline", "तुलना") }}</span>{% endif %}</th>
+                <td>{{ rate(r.tpr) }}</td>
+                <td>{{ rate(r.fpr) }}</td>
+                <td>{% if r.auroc is not none %}AUROC {{ "%.3f"|format(r.auroc) }}{% if r.auroc_ci %} ({{ "%.2f"|format(r.auroc_ci[0]) }}–{{ "%.2f"|format(r.auroc_ci[1]) }}){% endif %}{% endif %}{% if r.eer is not none %}{% if r.auroc is not none %}<br>{% endif %}EER {{ "%.1f"|format(100 * r.eer) }}%{% endif %}{% if r.auroc is none and r.eer is none %}–{% endif %}</td>
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        {% if s.conditions %}
+        <details class="ml-det">
+          <summary>{{ tr("By condition", "स्थिति के हिसाब से") }} ({{ s.conditions|length }})</summary>
+          <div class="tbl-wrap">
+            <table class="tbl ml-tbl">
+              <thead><tr><th scope="col">{{ tr("Condition", "स्थिति") }}</th><th scope="col">{{ tr("Caught", "पकड़े गए") }}</th><th scope="col">{{ tr("Wrongly flagged", "गलती से संदिग्ध") }}</th></tr></thead>
+              <tbody>
+              {% for c in s.conditions %}
+                <tr><th scope="row">{{ cond(c.name, lang) }}{% if c.row %} <small class="ml-muted">({{ c.row }})</small>{% endif %}</th><td>{{ rate(c.tpr) if c.tpr else "–" }}</td><td>{{ rate(c.fpr) if c.fpr else "–" }}</td></tr>
+              {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </details>
+        {% endif %}
+        <details class="ml-det"{% if s.failures and s.failures|length <= 8 %} open{% endif %}>
+          <summary>{{ tr("Failure cases", "जहाँ गलती हुई") }} ({{ s.failures|length }})</summary>
+          {% if s.failures %}
+          <ul class="list ml-fails">
+            {% for f in s.failures[:40] %}
+            <li><span class="pill {{ 'pill-r' if f.kind == 'missed' else 'pill-a' }}">{{ tr("Missed", "छूट गया") if f.kind == "missed" else tr("False alarm", "गलत चेतावनी") }}</span>
+              <span class="ml-ftext">{{ f.text }}</span>{% if f.tier %} <small class="ml-muted">→ {{ f.tier }}</small>{% endif %}</li>
+            {% endfor %}
+          </ul>
+          {% if s.failures|length > 40 %}<p class="dnote ml-pad">{{ tr("First 40 shown. The full list is in the results file.", "पहले 40 दिखाए गए। पूरी सूची नतीजों वाली फ़ाइल में है।") }}</p>{% endif %}
+          {% else %}
+          <p class="ml-pad">{{ tr("No failures in this run.", "इस बार कोई गलती नहीं।") }}</p>
+          {% endif %}
+        </details>
+      {% endif %}
+    </div>
+  </section>
+  {% endfor %}
+
+  <section class="board ml-sec" id="ml-live" aria-labelledby="ml-live-h">
+    <h3 id="ml-live-h">{{ tr("Run the text kit now", "टेक्स्ट किट अभी चलाएँ") }}</h3>
+    <div class="ml-pad">
+      <p>{{ tr("Runs every message in our test files through the checks on this server, right now: rules only, and the whole system as deployed. Nothing is stored.",
+               "हमारी टेस्ट फ़ाइलों का हर संदेश अभी इसी सर्वर पर जाँच से गुज़रता है: सिर्फ़ नियम, और पूरा सिस्टम जैसा चल रहा है। कुछ भी सेव नहीं होता।") }}</p>
+      <button type="button" class="hbtn hbtn-p" id="ml-run">{{ tr("Run the text kit", "टेक्स्ट किट चलाएँ") }}</button>
+      <p class="ml-status" id="ml-run-status" role="status" aria-live="polite"></p>
+      <div id="ml-run-out"></div>
+    </div>
+  </section>
+
+  <section class="board ml-sec" aria-labelledby="ml-not-h">
+    <h3 id="ml-not-h">{{ tr("What we have not measured", "जो हमने नहीं मापा") }}</h3>
+    <ul class="list">
+      <li>{{ tr("The judges' kit: we have not seen it. Its result is whatever it shows live.", "जजों की किट: हमने उसे नहीं देखा। उसका नतीजा वही है जो लाइव दिखेगा।") }}</li>
+      <li>{{ tr("PDF edit traces, QR decoding and text reading from pictures (OCR) on their own: not evaluated separately.", "PDF में बदलाव के निशान, QR पढ़ना और तस्वीर से टेक्स्ट पढ़ना (OCR) अलग से: मापा नहीं गया।") }}</li>
+      <li>{{ tr("Real victims' messages and screenshots: we never collect them, so we cannot measure on them.", "असली पीड़ितों के संदेश और स्क्रीनशॉट: हम इन्हें कभी इकट्ठा नहीं करते, इसलिए इन पर माप नहीं सकते।") }}</li>
+    </ul>
+  </section>
+</div>
+{% endblock %}
