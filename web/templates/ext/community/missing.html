@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="wrap cm-wrap cm-narrow">
+  <h1>{{ tr("This page is not available", "यह पृष्ठ उपलब्ध नहीं है") }}</h1>
+  <p>{{ tr("The address may have a typo, or the page was deleted, or a report is still waiting for a person to look at it.", "हो सकता है पते में कोई ग़लती हो, पृष्ठ मिटा दिया गया हो, या कोई रिपोर्ट अभी किसी व्यक्ति की जाँच का इंतज़ार कर रही हो।") }}</p>
+  <div class="cm-actions"><a class="hbtn hbtn-p" href="/learn">{{ tr("Go to Learn", "सीखें पर जाएँ") }}</a><a class="hbtn hbtn-s" href="/community">{{ tr("Go to Scam Watch", "स्कैम वॉच पर जाएँ") }}</a></div>
+</div>
+{% endblock %}

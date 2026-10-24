@@ -1,0 +1,760 @@
+{
+ "lessons": [
+  {
+   "slug": "stock-tips-group",
+   "order": 1,
+   "check_kind": "message",
+   "title": {
+    "en": "Stock-tips group with a famous \"expert\"",
+    "hi": "मशहूर \"एक्सपर्ट\" वाला शेयर-टिप्स ग्रुप"
+   },
+   "summary": {
+    "en": "You are added to a WhatsApp group where a well-known investor seems to give free tips. Then you are pushed to pay.",
+    "hi": "आपको एक WhatsApp ग्रुप में जोड़ दिया जाता है, जहाँ कोई जाना-माना निवेशक मुफ़्त सलाह देता दिखता है। फिर आप पर पैसे भेजने का दबाव बनता है।"
+   },
+   "story": {
+    "en": "Rekha sees an advert with a famous finance anchor saying \"turn 10,000 into 1 lakh\". She taps it and is added to a group. Members post profit screenshots every day. An \"assistant\" offers a VIP group for Rs 5,000, to a personal UPI ID.",
+    "hi": "रेखा को एक विज्ञापन दिखता है जिसमें एक मशहूर फ़ाइनेंस एंकर कहता है \"10,000 को 1 लाख बनाएँ\"। वह उस पर टैप करती है और एक ग्रुप में जुड़ जाती है। सदस्य रोज़ मुनाफ़े के स्क्रीनशॉट डालते हैं। एक \"सहायक\" 5,000 रुपये में VIP ग्रुप का प्रस्ताव देता है, किसी व्यक्ति की UPI आईडी पर।"
+   },
+   "how": {
+    "en": [
+     "An advert or message uses the face or voice of a famous expert, often made by AI, and adds you to a group.",
+     "Fake members show big profits. The \"expert\" says a paid VIP group gives sure returns.",
+     "You pay a personal UPI ID, then a \"fee\" or \"tax\" again and again. The group goes quiet."
+    ],
+    "hi": [
+     "विज्ञापन या संदेश में किसी मशहूर एक्सपर्ट का चेहरा या आवाज़ होती है, जो अक्सर AI से बनी होती है, और आपको ग्रुप में जोड़ दिया जाता है।",
+     "नकली सदस्य बड़े मुनाफ़े दिखाते हैं। \"एक्सपर्ट\" कहता है कि पैसे वाले VIP ग्रुप में पक्का फ़ायदा मिलेगा।",
+     "आप किसी व्यक्ति की UPI आईडी पर पैसे भेजते हैं, फिर बार-बार \"फ़ीस\" या \"टैक्स\" माँगा जाता है। फिर ग्रुप चुप हो जाता है।"
+    ]
+   },
+   "flags": {
+    "en": [
+     "\"Guaranteed\" or \"sure\" returns, such as 30% a month",
+     "You were added to the group without asking",
+     "Payment to a personal account or UPI ID, not a company",
+     "A famous face in an advert you did not look for",
+     "Pressure: \"only 2 seats left today\""
+    ],
+    "hi": [
+     "\"गारंटीड\" या \"पक्का\" फ़ायदा, जैसे महीने में 30%",
+     "आपसे पूछे बिना ग्रुप में जोड़ दिया गया",
+     "कंपनी नहीं, किसी व्यक्ति के खाते या UPI आईडी पर पैसे",
+     "बिना ढूँढे दिखे विज्ञापन में मशहूर चेहरा",
+     "दबाव: \"आज सिर्फ़ 2 जगह बची हैं\""
+    ]
+   },
+   "do": {
+    "en": [
+     "Leave the group. Do not reply and do not pay.",
+     "Check the broker on SEBI's official website before putting money anywhere.",
+     "Ask someone in your family. A genuine investment never needs a quick decision.",
+     "If you already paid, call 1930 within the hour."
+    ],
+    "hi": [
+     "ग्रुप छोड़ दें। जवाब न दें और पैसे न भेजें।",
+     "कहीं भी पैसा लगाने से पहले SEBI की आधिकारिक वेबसाइट पर ब्रोकर को जाँचें।",
+     "अपने परिवार में किसी से पूछें। असली निवेश में जल्दबाज़ी कभी नहीं होती।",
+     "अगर पैसे भेज दिए हैं तो एक घंटे के अंदर 1930 पर कॉल करें।"
+    ]
+   },
+   "check": {
+    "en": "Paste the group message or the UPI ID into Check. Satyapan shows signs such as \"guaranteed returns\" and whether the payee is on the SEBI list it holds.",
+    "hi": "ग्रुप का संदेश या UPI आईडी \"जाँच\" में डालें। सत्यापन \"गारंटीड मुनाफ़ा\" जैसे संकेत दिखाता है और बताता है कि पाने वाला उसकी SEBI सूची में है या नहीं।"
+   }
+  },
+  {
+   "slug": "fake-trading-app",
+   "order": 2,
+   "check_kind": "screenshot",
+   "title": {
+    "en": "Fake trading app: \"pay tax to withdraw\"",
+    "hi": "नकली ट्रेडिंग ऐप: \"निकालने के लिए टैक्स भरें\""
+   },
+   "summary": {
+    "en": "An app shows your money growing. When you try to take it out, it asks for more money first.",
+    "hi": "एक ऐप में आपका पैसा बढ़ता दिखता है। निकालने जाते हैं तो पहले और पैसे माँगे जाते हैं।"
+   },
+   "story": {
+    "en": "A group asks Rekha's neighbour to install a trading app from a link. The app shows a profit of Rs 2 lakh on Rs 20,000. To withdraw, it asks for 20% \"tax\" and then a \"security deposit\".",
+    "hi": "एक ग्रुप रेखा की पड़ोसन से लिंक से एक ट्रेडिंग ऐप इंस्टॉल करवाता है। ऐप 20,000 पर 2 लाख का मुनाफ़ा दिखाता है। निकालने के लिए पहले 20% \"टैक्स\" और फिर \"सिक्योरिटी डिपॉज़िट\" माँगा जाता है।"
+   },
+   "how": {
+    "en": [
+     "You install an app from a link or file (APK), not from the official app store.",
+     "The app shows made-up profits. Small first withdrawals may even work, to build trust.",
+     "Larger withdrawals need \"tax\", \"fee\" or \"deposit\". Every payment brings a new demand."
+    ],
+    "hi": [
+     "आप लिंक या फ़ाइल (APK) से ऐप इंस्टॉल करते हैं, आधिकारिक ऐप स्टोर से नहीं।",
+     "ऐप नक़ली मुनाफ़ा दिखाता है। भरोसा बनाने के लिए शुरू में छोटी रकम निकल भी सकती है।",
+     "बड़ी रकम निकालने के लिए \"टैक्स\", \"फ़ीस\" या \"डिपॉज़िट\" माँगा जाता है। हर भुगतान के बाद नई माँग आती है।"
+    ]
+   },
+   "flags": {
+    "en": [
+     "You must pay before you can withdraw your own money",
+     "The app is not in the official store, or came by link",
+     "Profits far higher than any bank or broker gives",
+     "A \"manager\" on WhatsApp pushes you to add more",
+     "Fees go to different personal accounts each time"
+    ],
+    "hi": [
+     "अपना ही पैसा निकालने से पहले पैसे भरने पड़ें",
+     "ऐप आधिकारिक स्टोर में नहीं है या लिंक से आया है",
+     "किसी बैंक या ब्रोकर से कहीं ज़्यादा मुनाफ़ा",
+     "WhatsApp पर कोई \"मैनेजर\" और पैसे डालने को कहे",
+     "हर बार फ़ीस अलग-अलग व्यक्ति के खाते में जाए"
+    ]
+   },
+   "do": {
+    "en": [
+     "Stop paying. Real money is not released after more payments.",
+     "Do not install apps from links. Use only the official app store.",
+     "Take screenshots of the app, chats and payments as evidence.",
+     "Call 1930 and report on cybercrime.gov.in."
+    ],
+    "hi": [
+     "पैसे भेजना बंद करें। और भुगतान के बाद असली पैसा नहीं छूटता।",
+     "लिंक से ऐप इंस्टॉल न करें। सिर्फ़ आधिकारिक ऐप स्टोर इस्तेमाल करें।",
+     "ऐप, चैट और भुगतान के स्क्रीनशॉट सबूत के लिए रख लें।",
+     "1930 पर कॉल करें और cybercrime.gov.in पर शिकायत करें।"
+    ]
+   },
+   "check": {
+    "en": "Upload a screenshot of the payment request or paste the payee's UPI ID. Satyapan shows whether the payee looks like a personal account.",
+    "hi": "भुगतान की माँग का स्क्रीनशॉट डालें या पाने वाले की UPI आईडी लिखें। सत्यापन बताता है कि पाने वाला व्यक्तिगत खाता लगता है या नहीं।"
+   }
+  },
+  {
+   "slug": "kyc-link",
+   "order": 3,
+   "check_kind": "message",
+   "title": {
+    "en": "\"Your KYC has expired\" link",
+    "hi": "\"आपका KYC ख़त्म हो गया\" वाला लिंक"
+   },
+   "summary": {
+    "en": "An SMS says your bank account will be blocked today unless you click a link to update KYC.",
+    "hi": "एक SMS कहता है कि लिंक पर क्लिक करके KYC अपडेट नहीं किया तो आज आपका खाता बंद हो जाएगा।"
+   },
+   "story": {
+    "en": "Rekha gets an SMS: \"Dear customer, your account will be blocked today. Update KYC: bit.ly/...\". The page looks like her bank. It asks for card number, PIN and the OTP that just arrived.",
+    "hi": "रेखा को SMS आता है: \"प्रिय ग्राहक, आज आपका खाता बंद हो जाएगा। KYC अपडेट करें: bit.ly/...\"। पन्ना बिल्कुल उसके बैंक जैसा दिखता है। वह कार्ड नंबर, PIN और अभी आया OTP माँगता है।"
+   },
+   "how": {
+    "en": [
+     "A message pretends to be your bank and creates fear: block, penalty, today only.",
+     "The link opens a copy of the bank's page, or downloads an app file (APK).",
+     "You type card details and OTP. The scammer uses them at once to empty the account."
+    ],
+    "hi": [
+     "संदेश बैंक होने का दिखावा करके डर पैदा करता है: खाता बंद, जुर्माना, सिर्फ़ आज।",
+     "लिंक बैंक के पन्ने की नक़ल खोलता है, या एक ऐप फ़ाइल (APK) उतरवाता है।",
+     "आप कार्ड की जानकारी और OTP डालते हैं। ठग तुरंत उनसे खाता खाली कर देता है।"
+    ]
+   },
+   "flags": {
+    "en": [
+     "A link in an SMS, especially a short link",
+     "\"Account blocked today\" or other deadline",
+     "The website name is not the bank's real name",
+     "It asks for PIN, OTP, CVV or password",
+     "It asks you to install a file or app"
+    ],
+    "hi": [
+     "SMS में लिंक, ख़ासकर छोटा लिंक",
+     "\"आज खाता बंद\" जैसी समय-सीमा",
+     "वेबसाइट का नाम बैंक का असली नाम नहीं है",
+     "PIN, OTP, CVV या पासवर्ड माँगे",
+     "कोई फ़ाइल या ऐप इंस्टॉल करने को कहे"
+    ]
+   },
+   "do": {
+    "en": [
+     "Do not click. Do not share any OTP, PIN or CVV with anyone.",
+     "Open your bank's own app, or visit the branch, to check KYC.",
+     "Delete the message. If you typed details, call your bank at once on the number on your card.",
+     "Then call 1930."
+    ],
+    "hi": [
+     "क्लिक न करें। OTP, PIN या CVV किसी को न बताएँ।",
+     "KYC जाँचने के लिए बैंक का अपना ऐप खोलें या शाखा में जाएँ।",
+     "संदेश मिटा दें। अगर जानकारी डाल दी है तो कार्ड पर छपे नंबर पर तुरंत बैंक को कॉल करें।",
+     "फिर 1930 पर कॉल करें।"
+    ]
+   },
+   "check": {
+    "en": "Paste the message and the link into Check. Satyapan can show that the website name only looks like a bank's and that the message creates a deadline.",
+    "hi": "संदेश और लिंक \"जाँच\" में डालें। सत्यापन दिखा सकता है कि वेबसाइट का नाम सिर्फ़ बैंक जैसा दिखता है और संदेश जल्दबाज़ी पैदा करता है।"
+   }
+  },
+  {
+   "slug": "refund-pin-trap",
+   "order": 4,
+   "check_kind": "message",
+   "title": {
+    "en": "Refund: \"enter your PIN to receive money\"",
+    "hi": "रिफ़ंड: \"पैसे पाने के लिए PIN डालें\""
+   },
+   "summary": {
+    "en": "Someone says they will send you money and asks you to approve a request with your UPI PIN. That request takes money out.",
+    "hi": "कोई कहता है कि वह आपको पैसे भेज रहा है और UPI PIN से एक अनुरोध मंज़ूर करने को कहता है। वह अनुरोध आपका पैसा निकालता है।"
+   },
+   "story": {
+    "en": "Rekha sold a table on a resale site. The \"buyer\" says he has sent the money and now she must approve a request and enter her PIN to receive it. She nearly does.",
+    "hi": "रेखा ने एक पुरानी मेज़ ऑनलाइन बेचने के लिए डाली। \"ख़रीदार\" कहता है कि उसने पैसे भेज दिए हैं, अब पैसे पाने के लिए अनुरोध मंज़ूर करके PIN डालना होगा। वह लगभग डाल ही देती है।"
+   },
+   "how": {
+    "en": [
+     "The scammer shows interest, a refund or a prize and says money is on its way.",
+     "Instead of sending money, they send a \"collect\" request, or a QR code to scan.",
+     "You enter your PIN to \"receive\", and the amount leaves your account."
+    ],
+    "hi": [
+     "ठग दिलचस्पी, रिफ़ंड या इनाम दिखाता है और कहता है कि पैसे आ रहे हैं।",
+     "पैसे भेजने की जगह वह \"कलेक्ट\" अनुरोध या स्कैन करने के लिए QR कोड भेजता है।",
+     "\"पैसे पाने\" के लिए आप PIN डालते हैं और रकम आपके खाते से निकल जाती है।"
+    ]
+   },
+   "flags": {
+    "en": [
+     "You are asked for your PIN to receive money",
+     "A request or QR scan when you expected a payment",
+     "The screen says \"Pay\" or \"Send\", not \"Receive\"",
+     "The sender is in a hurry, and sends the same request again",
+     "You are told to ignore the amount on the screen"
+    ],
+    "hi": [
+     "पैसे पाने के लिए PIN माँगा जाए",
+     "भुगतान आने की जगह अनुरोध या QR स्कैन करना पड़े",
+     "स्क्रीन पर \"Pay\" या \"भेजें\" लिखा हो, \"पाएँ\" नहीं",
+     "भेजने वाला जल्दी में हो और वही अनुरोध फिर भेजे",
+     "स्क्रीन की रकम को अनदेखा करने को कहा जाए"
+    ]
+   },
+   "do": {
+    "en": [
+     "Remember: you never need your PIN or a QR scan to receive money.",
+     "Read the screen. If it says you will pay, press cancel.",
+     "Block the sender and do not argue. Ask for the payment to come to your UPI ID.",
+     "If money left your account, call 1930 right away."
+    ],
+    "hi": [
+     "याद रखें: पैसे पाने के लिए PIN या QR स्कैन की कभी ज़रूरत नहीं होती।",
+     "स्क्रीन पढ़ें। अगर लिखा है कि आप पैसे भेजेंगे, तो रद्द करें।",
+     "भेजने वाले को ब्लॉक करें, बहस न करें। कहें कि पैसे आपकी UPI आईडी पर आएँ।",
+     "अगर पैसे निकल गए हैं तो तुरंत 1930 पर कॉल करें।"
+    ]
+   },
+   "check": {
+    "en": "Upload the screenshot of the request or QR code. Satyapan reads the payee and amount so you can see who is really asking for money.",
+    "hi": "अनुरोध या QR कोड का स्क्रीनशॉट डालें। सत्यापन पाने वाले और रकम को पढ़कर दिखाता है कि असल में कौन पैसे माँग रहा है।"
+   }
+  },
+  {
+   "slug": "parcel-customs-fee",
+   "order": 5,
+   "check_kind": "message",
+   "title": {
+    "en": "Parcel stuck: \"pay a small customs fee\"",
+    "hi": "पार्सल अटका है: \"थोड़ी कस्टम फ़ीस भरें\""
+   },
+   "summary": {
+    "en": "A message says your parcel is held and asks for a small fee. The link steals your card details, or the call turns into something worse.",
+    "hi": "संदेश कहता है कि आपका पार्सल रुका है और थोड़ी फ़ीस माँगता है। लिंक से कार्ड की जानकारी चोरी होती है, या कॉल आगे और बुरा मोड़ ले लेती है।"
+   },
+   "story": {
+    "en": "Rekha gets: \"Your parcel could not be delivered. Pay Rs 25 to reschedule.\" She was expecting a gift from her son, so she clicks. The page asks for her card. Next day a \"courier officer\" calls about a parcel with illegal items.",
+    "hi": "रेखा को संदेश आता है: \"आपका पार्सल डिलीवर नहीं हो सका। दोबारा भेजने के लिए 25 रुपये भरें।\" उसे बेटे के भेजे उपहार का इंतज़ार था, तो वह क्लिक कर देती है। पन्ना कार्ड माँगता है। अगले दिन एक \"कूरियर अधिकारी\" अवैध सामान वाले पार्सल के बारे में फ़ोन करता है।"
+   },
+   "how": {
+    "en": [
+     "A message about a parcel arrives. You may really be expecting one.",
+     "A small fee link collects your card details and OTP.",
+     "Or a caller says the parcel has drugs or fake passports and passes you to a \"police officer\"."
+    ],
+    "hi": [
+     "पार्सल के बारे में संदेश आता है। हो सकता है आप सच में कुछ मँगा रहे हों।",
+     "छोटी फ़ीस का लिंक आपके कार्ड की जानकारी और OTP ले लेता है।",
+     "या कॉल करने वाला कहता है कि पार्सल में ड्रग्स या नक़ली पासपोर्ट मिले हैं और आपको \"पुलिस अधिकारी\" से जोड़ देता है।"
+    ]
+   },
+   "flags": {
+    "en": [
+     "A courier asking for a fee by link",
+     "A very small amount, so you do not think twice",
+     "A tracking number you cannot find on the courier's own site",
+     "A caller who says your parcel has illegal items",
+     "Being told to keep the call secret"
+    ],
+    "hi": [
+     "कूरियर लिंक के ज़रिए फ़ीस माँगे",
+     "बहुत छोटी रकम, ताकि आप सोचें नहीं",
+     "ट्रैकिंग नंबर कूरियर की अपनी साइट पर न मिले",
+     "कॉल करने वाला कहे कि पार्सल में ग़ैरक़ानूनी सामान है",
+     "कॉल को राज़ रखने को कहा जाए"
+    ]
+   },
+   "do": {
+    "en": [
+     "Do not click. Track the parcel only on the courier's own website or app.",
+     "Real couriers do not ask for card details by link.",
+     "If someone calls about illegal items, hang up. Do not pay anyone.",
+     "Report on cybercrime.gov.in or call 1930."
+    ],
+    "hi": [
+     "क्लिक न करें। पार्सल को सिर्फ़ कूरियर की अपनी वेबसाइट या ऐप पर देखें।",
+     "असली कूरियर लिंक से कार्ड की जानकारी नहीं माँगते।",
+     "अगर कोई ग़ैरक़ानूनी सामान के बारे में फ़ोन करे तो कॉल काट दें। किसी को पैसे न दें।",
+     "cybercrime.gov.in पर शिकायत करें या 1930 पर कॉल करें।"
+    ]
+   },
+   "check": {
+    "en": "Paste the message and link into Check. Satyapan shows if the website only looks like a courier's and what the message asks you to do.",
+    "hi": "संदेश और लिंक \"जाँच\" में डालें। सत्यापन दिखाता है कि वेबसाइट सिर्फ़ कूरियर जैसी दिखती है या नहीं और संदेश आपसे क्या करवाना चाहता है।"
+   }
+  },
+  {
+   "slug": "fake-customer-care",
+   "order": 6,
+   "check_kind": "message",
+   "title": {
+    "en": "Fake customer care and screen-sharing apps",
+    "hi": "नकली कस्टमर केयर और स्क्रीन-शेयर ऐप"
+   },
+   "summary": {
+    "en": "You search for a helpline number, call a fake one, and are asked to install an app that lets the caller see and control your phone.",
+    "hi": "आप हेल्पलाइन नंबर खोजते हैं, नक़ली नंबर पर कॉल करते हैं, और आपसे एक ऐप इंस्टॉल करवाया जाता है जिससे कॉल करने वाला आपका फ़ोन देख और चला सके।"
+   },
+   "story": {
+    "en": "Rekha's online order did not arrive. She searches for the company's customer care and calls the first number. The \"agent\" asks her to install a support app to \"fix the refund\". He then sees her UPI app.",
+    "hi": "रेखा का ऑनलाइन ऑर्डर नहीं आया। वह कंपनी का कस्टमर केयर ढूँढकर पहले नंबर पर कॉल करती है। \"एजेंट\" \"रिफ़ंड ठीक करने\" के लिए सपोर्ट ऐप इंस्टॉल करवाता है। फिर वह उसका UPI ऐप देख लेता है।"
+   },
+   "how": {
+    "en": [
+     "Scammers put fake numbers on search results and social media pages.",
+     "The \"agent\" asks you to install a remote-support app and read out a code.",
+     "They watch your screen, see your OTP and PIN, and move money while you talk."
+    ],
+    "hi": [
+     "ठग सर्च नतीजों और सोशल मीडिया पन्नों पर नक़ली नंबर डाल देते हैं।",
+     "\"एजेंट\" आपसे रिमोट-सपोर्ट ऐप इंस्टॉल करवाकर कोड बुलवाता है।",
+     "वे आपकी स्क्रीन देखते हैं, OTP और PIN पढ़ लेते हैं और आपके बात करते-करते पैसे निकाल लेते हैं।"
+    ]
+   },
+   "flags": {
+    "en": [
+     "A number found by searching, not in the company's own app",
+     "A request to install AnyDesk, TeamViewer or QuickSupport",
+     "\"Read out the code on your screen\"",
+     "You are asked to open your banking or UPI app during the call",
+     "A refund that needs a payment first"
+    ],
+    "hi": [
+     "नंबर सर्च में मिला, कंपनी के अपने ऐप में नहीं",
+     "AnyDesk, TeamViewer या QuickSupport इंस्टॉल करने को कहा जाए",
+     "\"स्क्रीन पर दिख रहा कोड बताइए\"",
+     "कॉल के दौरान बैंक या UPI ऐप खोलने को कहा जाए",
+     "रिफ़ंड के लिए पहले पैसे भरने पड़ें"
+    ]
+   },
+   "do": {
+    "en": [
+     "Never install a screen-sharing app for anyone who called or messaged you.",
+     "Get customer care numbers only from the company's own app, bill or website.",
+     "If you installed one, switch on flight mode, uninstall it, and call your bank.",
+     "Call 1930."
+    ],
+    "hi": [
+     "फ़ोन या संदेश करने वाले के कहने पर स्क्रीन-शेयर ऐप कभी इंस्टॉल न करें।",
+     "कस्टमर केयर का नंबर सिर्फ़ कंपनी के अपने ऐप, बिल या वेबसाइट से लें।",
+     "अगर इंस्टॉल कर लिया है तो फ़्लाइट मोड चालू करें, ऐप हटाएँ और बैंक को कॉल करें।",
+     "1930 पर कॉल करें।"
+    ]
+   },
+   "check": {
+    "en": "Paste the number or the message you were given into Check. Satyapan shows whether it matches what scammers commonly ask and whether anyone has reported it here.",
+    "hi": "आपको मिला नंबर या संदेश \"जाँच\" में डालें। सत्यापन दिखाता है कि वह ठगों की आम माँग से मिलता है या नहीं और यहाँ किसी ने उसकी शिकायत की है या नहीं।"
+   }
+  },
+  {
+   "slug": "invoice-bank-change",
+   "order": 7,
+   "check_kind": "pdf",
+   "title": {
+    "en": "Invoice with changed bank details",
+    "hi": "बदले हुए बैंक विवरण वाला बिल"
+   },
+   "summary": {
+    "en": "A supplier's e-mail says \"our bank account has changed\". The next payment goes to a thief.",
+    "hi": "सप्लायर का ई-मेल कहता है \"हमारा बैंक खाता बदल गया है\"। अगला भुगतान चोर के खाते में चला जाता है।"
+   },
+   "story": {
+    "en": "Rekha's nephew runs a small shop. A regular supplier's invoice arrives with new bank details and a polite note. The e-mail address is one letter different. He pays Rs 85,000 to the new account.",
+    "hi": "रेखा का भतीजा छोटी दुकान चलाता है। नियमित सप्लायर का बिल नए बैंक विवरण और एक विनम्र नोट के साथ आता है। ई-मेल पते में एक अक्षर अलग है। वह नए खाते में 85,000 रुपये भेज देता है।"
+   },
+   "how": {
+    "en": [
+     "A scammer copies a real supplier's invoice, or hacks their e-mail.",
+     "Only the account number, IFSC and a note \"please use our new account\" are changed.",
+     "The payment goes to the thief. The real supplier says it never arrived."
+    ],
+    "hi": [
+     "ठग किसी असली सप्लायर का बिल नक़ल कर लेता है या उसका ई-मेल हैक कर लेता है।",
+     "सिर्फ़ खाता नंबर, IFSC और \"कृपया नया खाता इस्तेमाल करें\" वाला नोट बदला जाता है।",
+     "भुगतान चोर के पास चला जाता है। असली सप्लायर कहता है कि पैसे पहुँचे ही नहीं।"
+    ]
+   },
+   "flags": {
+    "en": [
+     "New bank details sent only by e-mail or message",
+     "The IFSC code belongs to a different bank than the one named",
+     "A sender address that differs by one letter",
+     "Urgency to pay today",
+     "The account name does not match the supplier's name"
+    ],
+    "hi": [
+     "नए बैंक विवरण सिर्फ़ ई-मेल या संदेश से आए",
+     "IFSC कोड उस बैंक का नहीं जिसका नाम लिखा है",
+     "भेजने वाले का पता एक अक्षर से अलग है",
+     "आज ही भुगतान करने की जल्दी",
+     "खाते का नाम सप्लायर के नाम से नहीं मिलता"
+    ]
+   },
+   "do": {
+    "en": [
+     "Phone the supplier on a number you already had, never the one on the new invoice.",
+     "Pay a very small test amount first and ask them to confirm.",
+     "Check that the bank name and the IFSC code match.",
+     "If paid, tell your bank and call 1930 within the hour."
+    ],
+    "hi": [
+     "सप्लायर को उस नंबर पर फ़ोन करें जो आपके पास पहले से है, नए बिल वाले नंबर पर नहीं।",
+     "पहले बहुत छोटी रकम भेजकर उनसे पुष्टि करवाएँ।",
+     "जाँचें कि बैंक का नाम और IFSC कोड आपस में मेल खाते हैं।",
+     "पैसे भेज दिए हों तो बैंक को बताएँ और एक घंटे में 1930 पर कॉल करें।"
+    ]
+   },
+   "check": {
+    "en": "Upload the PDF invoice. Satyapan reads the bank details, checks the IFSC code against the bank named, and looks for signs the file was edited.",
+    "hi": "बिल की PDF डालें। सत्यापन बैंक विवरण पढ़ता है, IFSC को बताए गए बैंक से मिलाता है और देखता है कि फ़ाइल में बदलाव के निशान हैं या नहीं।"
+   }
+  },
+  {
+   "slug": "fake-payment-screenshot",
+   "order": 8,
+   "check_kind": "screenshot",
+   "title": {
+    "en": "Fake \"payment successful\" screenshot at a shop",
+    "hi": "दुकान पर नक़ली \"भुगतान सफल\" स्क्रीनशॉट"
+   },
+   "summary": {
+    "en": "A customer shows a payment screen on their phone and walks away with the goods. The money never arrived.",
+    "hi": "ग्राहक अपने फ़ोन पर भुगतान की स्क्रीन दिखाकर सामान ले जाता है। पैसे कभी आते ही नहीं।"
+   },
+   "story": {
+    "en": "At Rekha's cousin's sweet shop a customer is in a rush. He shows a green \"Payment successful, Rs 1,800\" screen and leaves with the boxes. That evening the shop's account shows nothing.",
+    "hi": "रेखा के चचेरे भाई की मिठाई की दुकान पर एक ग्राहक जल्दी में है। वह हरा \"भुगतान सफल, 1,800 रुपये\" वाला पन्ना दिखाकर डिब्बे ले जाता है। शाम को दुकान के खाते में कुछ नहीं दिखता।"
+   },
+   "how": {
+    "en": [
+     "Edit apps and fake apps can make a payment screen with any name, amount and time.",
+     "The customer shows it quickly, often at a busy time, and says the shop app is slow.",
+     "The shop hands over goods. Nothing was ever sent."
+    ],
+    "hi": [
+     "एडिट ऐप या नक़ली ऐप किसी भी नाम, रकम और समय का भुगतान-पन्ना बना सकते हैं।",
+     "ग्राहक उसे जल्दी से दिखाता है, अक्सर भीड़ के समय, और कहता है कि दुकान का ऐप धीमा है।",
+     "दुकानदार सामान दे देता है। असल में कुछ भेजा ही नहीं गया।"
+    ]
+   },
+   "flags": {
+    "en": [
+     "The customer will not wait for your own phone or soundbox to confirm",
+     "Only a screenshot or a screen, no message on your phone",
+     "Amount or reference number looks edited or blurred",
+     "The reference number has too few or too many digits",
+     "The customer is in a rush or pressures you"
+    ],
+    "hi": [
+     "ग्राहक आपके फ़ोन या साउंडबॉक्स की पुष्टि का इंतज़ार नहीं करता",
+     "सिर्फ़ स्क्रीनशॉट या स्क्रीन है, आपके फ़ोन पर संदेश नहीं",
+     "रकम या रेफ़रेंस नंबर बदला या धुँधला लगता है",
+     "रेफ़रेंस नंबर में अंक कम या ज़्यादा हैं",
+     "ग्राहक जल्दी में है या आप पर दबाव डालता है"
+    ]
+   },
+   "do": {
+    "en": [
+     "Give goods only after your own UPI app, SMS or soundbox shows the money.",
+     "A screenshot is never proof of payment.",
+     "If a customer is in a rush, take their number and ask them to pay again properly.",
+     "If you were cheated, report on cybercrime.gov.in."
+    ],
+    "hi": [
+     "सामान तभी दें जब आपके अपने UPI ऐप, SMS या साउंडबॉक्स में पैसे दिखें।",
+     "स्क्रीनशॉट भुगतान का सबूत नहीं होता।",
+     "अगर ग्राहक जल्दी में है तो उसका नंबर लें और कहें कि ठीक से दोबारा भुगतान करे।",
+     "अगर ठगे गए हैं तो cybercrime.gov.in पर शिकायत करें।"
+    ]
+   },
+   "check": {
+    "en": "Use Shopkeeper check: upload the screenshot. Satyapan looks for edited areas and for a reference number that does not look right. It cannot tell you the money arrived, so always look at your own app.",
+    "hi": "\"दुकानदार जाँच\" में स्क्रीनशॉट डालें। सत्यापन बदले हुए हिस्से और ग़लत लगते रेफ़रेंस नंबर को देखता है। यह नहीं बता सकता कि पैसे आए, इसलिए हमेशा अपना ऐप देखें।"
+   }
+  },
+  {
+   "slug": "job-task-scam",
+   "order": 9,
+   "check_kind": "message",
+   "title": {
+    "en": "Online job: \"like videos, earn money\"",
+    "hi": "ऑनलाइन नौकरी: \"वीडियो लाइक करें, कमाएँ\""
+   },
+   "summary": {
+    "en": "You are offered easy part-time tasks. Small payouts at first, then you must deposit money to continue.",
+    "hi": "आपको आसान पार्ट-टाइम काम का प्रस्ताव मिलता है। शुरू में छोटी कमाई मिलती है, फिर आगे बढ़ने के लिए पैसे जमा करने पड़ते हैं।"
+   },
+   "story": {
+    "en": "Rekha's niece, a college student, gets a message about a job liking videos for Rs 50 each. She earns Rs 150 in the first hour. Then a \"prepaid task\" needs Rs 3,000, promised back with profit.",
+    "hi": "रेखा की भतीजी, जो कॉलेज में है, को वीडियो लाइक करने की नौकरी का संदेश मिलता है, 50 रुपये प्रति वीडियो। पहले घंटे में उसे 150 रुपये मिल जाते हैं। फिर एक \"प्रीपेड टास्क\" के लिए 3,000 रुपये माँगे जाते हैं, मुनाफ़े के साथ वापसी के वादे पर।"
+   },
+   "how": {
+    "en": [
+     "A message offers easy work from home with quick pay.",
+     "A few tiny tasks are paid, to build trust. Then you are moved to a Telegram group.",
+     "\"Prepaid tasks\" ask for deposits that grow bigger. You cannot withdraw."
+    ],
+    "hi": [
+     "संदेश घर बैठे आसान काम और तुरंत कमाई का प्रस्ताव देता है।",
+     "भरोसा बनाने के लिए कुछ छोटे काम के पैसे मिलते हैं। फिर आपको टेलीग्राम ग्रुप में ले जाया जाता है।",
+     "\"प्रीपेड टास्क\" में जमा रकम बढ़ती जाती है। आप निकाल नहीं पाते।"
+    ]
+   },
+   "flags": {
+    "en": [
+     "A job that asks you to pay first",
+     "High pay for very easy work",
+     "The offer comes by WhatsApp or Telegram from an unknown number",
+     "Tasks that need you to \"top up\" to continue",
+     "A fast move away from the app to a private chat"
+    ],
+    "hi": [
+     "नौकरी जिसमें पहले आपको पैसे देने पड़ें",
+     "बहुत आसान काम के लिए बहुत ज़्यादा कमाई",
+     "अनजान नंबर से WhatsApp या टेलीग्राम पर प्रस्ताव",
+     "आगे बढ़ने के लिए \"टॉप-अप\" वाले टास्क",
+     "ऐप से जल्दी निकालकर निजी चैट में ले जाना"
+    ]
+   },
+   "do": {
+    "en": [
+     "A real employer never asks you to pay to get work.",
+     "Stop at the first request for money. Do not try to win back what you paid.",
+     "Block the number and report it in the app where it came.",
+     "Call 1930 and report on cybercrime.gov.in."
+    ],
+    "hi": [
+     "असली नियोक्ता काम देने के लिए पैसे नहीं माँगता।",
+     "पैसे की पहली माँग पर रुक जाएँ। जो दिया उसे वापस जीतने की कोशिश न करें।",
+     "नंबर ब्लॉक करें और जिस ऐप में आया उसमें शिकायत करें।",
+     "1930 पर कॉल करें और cybercrime.gov.in पर शिकायत करें।"
+    ]
+   },
+   "check": {
+    "en": "Paste the job message and the payee's UPI ID into Check. Satyapan shows signs like asking for a deposit and a personal payee.",
+    "hi": "नौकरी का संदेश और पाने वाले की UPI आईडी \"जाँच\" में डालें। सत्यापन जमा-राशि की माँग और व्यक्तिगत खाते जैसे संकेत दिखाता है।"
+   }
+  },
+  {
+   "slug": "digital-arrest",
+   "order": 10,
+   "check_kind": "message",
+   "title": {
+    "en": "\"Digital arrest\" call",
+    "hi": "\"डिजिटल अरेस्ट\" वाली कॉल"
+   },
+   "summary": {
+    "en": "Callers pretending to be police, CBI or customs say you are under \"digital arrest\" on a video call until you pay.",
+    "hi": "पुलिस, CBI या कस्टम बनकर बात करने वाले कहते हैं कि आप वीडियो कॉल पर \"डिजिटल अरेस्ट\" में हैं और पैसे देने तक नहीं हट सकते।"
+   },
+   "story": {
+    "en": "A man calls Rekha's friend, a retired teacher: \"A parcel in your name has drugs.\" He puts her on a video call with a person in a police uniform. She is told not to tell anyone, not to leave the screen, and to move her savings to a \"safe account\".",
+    "hi": "रेखा की सहेली, जो रिटायर्ड शिक्षिका है, को एक आदमी फ़ोन करता है: \"आपके नाम के पार्सल में ड्रग्स हैं।\" वह उसे वर्दी वाले व्यक्ति से वीडियो कॉल पर जोड़ देता है। उससे कहा जाता है कि किसी को न बताए, स्क्रीन से न हटे और अपनी बचत एक \"सुरक्षित खाते\" में डाल दे।"
+   },
+   "how": {
+    "en": [
+     "A call or video call claims you are in a serious case: drugs, money laundering, a crime.",
+     "They say you are \"under digital arrest\", must stay on the call and tell nobody.",
+     "You are told to move money to a \"safe\" or \"verification\" account to prove you are innocent."
+    ],
+    "hi": [
+     "कॉल या वीडियो कॉल कहती है कि आप गंभीर मामले में हैं: ड्रग्स, मनी लॉन्ड्रिंग, अपराध।",
+     "वे कहते हैं कि आप \"डिजिटल अरेस्ट\" में हैं, कॉल पर रहें और किसी को न बताएँ।",
+     "अपने को बेगुनाह साबित करने के लिए \"सुरक्षित\" या \"वेरिफ़िकेशन\" खाते में पैसे डालने को कहा जाता है।"
+    ]
+   },
+   "flags": {
+    "en": [
+     "Police or agencies calling by video and asking for money",
+     "\"Do not tell your family\"",
+     "\"You cannot leave this call\"",
+     "A \"safe account\" to move your savings",
+     "Fake documents and uniforms on screen"
+    ],
+    "hi": [
+     "पुलिस या एजेंसी वीडियो कॉल पर पैसे माँगे",
+     "\"अपने परिवार को मत बताना\"",
+     "\"आप यह कॉल नहीं छोड़ सकते\"",
+     "बचत डालने के लिए \"सुरक्षित खाता\"",
+     "स्क्रीन पर नक़ली काग़ज़ और वर्दी"
+    ]
+   },
+   "do": {
+    "en": [
+     "There is no \"digital arrest\" in Indian law. Hang up.",
+     "No officer asks for money by video call. Do not pay.",
+     "Tell a family member now, and call the local police station on its known number.",
+     "If you paid, call 1930 at once."
+    ],
+    "hi": [
+     "भारतीय क़ानून में \"डिजिटल अरेस्ट\" जैसा कुछ नहीं होता। कॉल काट दें।",
+     "कोई अधिकारी वीडियो कॉल पर पैसे नहीं माँगता। पैसे न दें।",
+     "तुरंत परिवार में किसी को बताएँ और स्थानीय थाने के जाने-पहचाने नंबर पर फ़ोन करें।",
+     "पैसे भेज दिए हों तो तुरंत 1930 पर कॉल करें।"
+    ]
+   },
+   "check": {
+    "en": "Paste any message or number they sent into Check, and use Ask family to share the result with someone you trust. A pause to ask is the best defence.",
+    "hi": "उन्होंने जो संदेश या नंबर भेजा वह \"जाँच\" में डालें और नतीजा किसी भरोसेमंद को भेजने के लिए \"परिवार से पूछें\" इस्तेमाल करें। रुककर पूछ लेना सबसे अच्छा बचाव है।"
+   }
+  },
+  {
+   "slug": "lottery-prize",
+   "order": 11,
+   "check_kind": "message",
+   "title": {
+    "en": "Lottery or lucky-draw prize",
+    "hi": "लॉटरी या लकी-ड्रॉ का इनाम"
+   },
+   "summary": {
+    "en": "You are told you won a big prize you never entered for. First you must pay a fee or tax.",
+    "hi": "आपको बताया जाता है कि आपने बड़ा इनाम जीता है, जिसमें आपने हिस्सा ही नहीं लिया था। पहले फ़ीस या टैक्स भरना होगा।"
+   },
+   "story": {
+    "en": "Rekha gets a WhatsApp message with a picture of a famous quiz show host: \"You won Rs 25 lakh.\" To claim it she must pay Rs 12,500 as \"processing tax\" to a personal account.",
+    "hi": "रेखा को WhatsApp पर एक मशहूर क्विज़ शो के होस्ट की तस्वीर वाला संदेश आता है: \"आपने 25 लाख रुपये जीते हैं।\" इनाम पाने के लिए उसे किसी व्यक्ति के खाते में 12,500 रुपये \"प्रोसेसिंग टैक्स\" भरना है।"
+   },
+   "how": {
+    "en": [
+     "A message, call or letter says you won a lottery, a car or a gift.",
+     "You are asked for a small \"processing fee\", \"insurance\" or \"tax\" first.",
+     "After the first payment more fees follow. The prize never arrives."
+    ],
+    "hi": [
+     "संदेश, कॉल या चिट्ठी कहती है कि आपने लॉटरी, गाड़ी या उपहार जीता है।",
+     "पहले छोटी \"प्रोसेसिंग फ़ीस\", \"बीमा\" या \"टैक्स\" माँगा जाता है।",
+     "पहले भुगतान के बाद और फ़ीस आती रहती है। इनाम कभी नहीं आता।"
+    ]
+   },
+   "flags": {
+    "en": [
+     "You won something you never entered",
+     "You must pay to receive a prize",
+     "A famous name or logo used without proof",
+     "Pay to a personal account or a UPI ID",
+     "A deadline to claim"
+    ],
+    "hi": [
+     "आपने कुछ जीता है जिसमें हिस्सा ही नहीं लिया",
+     "इनाम पाने के लिए पैसे देने पड़ें",
+     "बिना सबूत के किसी मशहूर नाम या लोगो का इस्तेमाल",
+     "व्यक्तिगत खाते या UPI आईडी में भुगतान",
+     "इनाम लेने की आख़िरी तारीख़"
+    ]
+   },
+   "do": {
+    "en": [
+     "A real prize never asks you to pay first. Ignore it.",
+     "Do not call back the number or click the link.",
+     "Show the message to someone in your family.",
+     "Report the number to the app or to 1930."
+    ],
+    "hi": [
+     "असली इनाम में पहले पैसे नहीं माँगे जाते। इसे अनदेखा करें।",
+     "उस नंबर पर वापस कॉल न करें और लिंक पर क्लिक न करें।",
+     "संदेश अपने परिवार में किसी को दिखाएँ।",
+     "नंबर की शिकायत ऐप में या 1930 पर करें।"
+    ]
+   },
+   "check": {
+    "en": "Paste the message into Check. Satyapan shows signs such as a prize you must pay for and a personal payee.",
+    "hi": "संदेश \"जाँच\" में डालें। सत्यापन ऐसे संकेत दिखाता है जैसे इनाम के लिए पैसे देना और व्यक्तिगत खाता।"
+   }
+  },
+  {
+   "slug": "family-emergency-voice",
+   "order": 12,
+   "check_kind": "voice",
+   "title": {
+    "en": "\"Family emergency\" call in a loved one's voice",
+    "hi": "अपने की आवाज़ में \"पारिवारिक आपातकाल\" वाली कॉल"
+   },
+   "summary": {
+    "en": "A caller sounds like your son or grandchild and begs you to send money at once. The voice may be copied by AI.",
+    "hi": "कॉल करने वाला आपके बेटे या पोते जैसी आवाज़ में गिड़गिड़ाकर तुरंत पैसे माँगता है। हो सकता है आवाज़ AI से नक़ल की गई हो।"
+   },
+   "story": {
+    "en": "Late at night Rekha's phone rings from an unknown number. A crying voice like her grandson says, \"Nani, I had an accident, please send Rs 40,000 to this number, do not tell Papa.\"",
+    "hi": "रात को रेखा के फ़ोन पर अनजान नंबर से कॉल आती है। उसके नाती जैसी रोती आवाज़ कहती है, \"नानी, मेरा एक्सीडेंट हो गया, इस नंबर पर 40,000 भेज दो, पापा को मत बताना।\""
+   },
+   "how": {
+    "en": [
+     "Scammers take a few seconds of a voice from a video or call, and copy it with AI.",
+     "They call at night or in panic, from a new number, with a story of accident, arrest or hospital.",
+     "They ask for money at once, by UPI, and say \"do not tell anyone\"."
+    ],
+    "hi": [
+     "ठग किसी वीडियो या कॉल से कुछ सेकंड की आवाज़ लेकर AI से उसकी नक़ल बना लेते हैं।",
+     "वे रात में या घबराहट में, नए नंबर से, दुर्घटना, गिरफ़्तारी या अस्पताल की कहानी लेकर कॉल करते हैं।",
+     "वे तुरंत UPI से पैसे माँगते हैं और कहते हैं \"किसी को मत बताना\"।"
+    ]
+   },
+   "flags": {
+    "en": [
+     "A new or unknown number",
+     "Panic and urgency, and a plea to keep it secret",
+     "An unusual way to pay, such as a stranger's UPI ID",
+     "The caller avoids simple questions only family would answer",
+     "Pressure not to call anyone else"
+    ],
+    "hi": [
+     "नया या अनजान नंबर",
+     "घबराहट, जल्दबाज़ी और राज़ रखने की गुहार",
+     "पैसे भेजने का अजीब तरीक़ा, जैसे किसी अनजान की UPI आईडी",
+     "कॉल करने वाला वे आसान सवाल टाल देता है जिनके जवाब सिर्फ़ परिवार को पता हैं",
+     "किसी और को फ़ोन न करने का दबाव"
+    ]
+   },
+   "do": {
+    "en": [
+     "Stay calm. Hang up and call your family member on the number you already have.",
+     "Ask for your family's safe word. A safe word is a secret word only family knows.",
+     "Call another relative to confirm. Do not send money first.",
+     "If you paid, call 1930 at once."
+    ],
+    "hi": [
+     "शांत रहें। कॉल काटकर अपने परिजन को उसी नंबर पर फ़ोन करें जो आपके पास पहले से है।",
+     "परिवार का सुरक्षित शब्द पूछें। सुरक्षित शब्द एक गुप्त शब्द है जो सिर्फ़ परिवार जानता है।",
+     "पुष्टि के लिए किसी दूसरे रिश्तेदार को फ़ोन करें। पहले पैसे न भेजें।",
+     "पैसे भेज दिए हों तो तुरंत 1930 पर कॉल करें।"
+    ]
+   },
+   "check": {
+    "en": "Make a family safe-word card today, before anyone needs it. If you have a voice note, upload it to Check and Satyapan shows what it can and cannot tell.",
+    "hi": "आज ही, ज़रूरत पड़ने से पहले, परिवार का सुरक्षित-शब्द कार्ड बना लें। अगर आपके पास वॉइस नोट है तो उसे \"जाँच\" में डालें; सत्यापन बताएगा कि वह क्या बता सकता है और क्या नहीं।"
+   }
+  }
+ ]
+}

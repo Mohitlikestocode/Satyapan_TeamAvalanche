@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="ops-head">
+  <div class="wrap">
+    <h1>{{ tr("Live impact", "लाइव असर") }}</h1>
+    <p class="ops-sub">{{ tr("Real numbers from real people, counted as they happen. Team and test traffic is not included.", "असली लोगों के असली आँकड़े, जैसे-जैसे होते हैं वैसे गिने गए। टीम और टेस्ट का इस्तेमाल इसमें नहीं गिना जाता।") }}</p>
+    <p class="ops-since">
+      {% if s.since %}{{ tr("Counting since", "गिनती शुरू") }} <b>{{ s.since }}</b>{% else %}{{ tr("Nothing counted yet. This page fills in as real people use Satyapan.", "अभी कुछ गिना नहीं गया। असली लोगों के इस्तेमाल करते ही यह पन्ना भरता जाएगा।") }}{% endif %}
+    </p>
+  </div>
+</section>
+
+<div class="wrap ops-body">
+  <section class="ops-kpis" aria-label="{{ tr('Headline numbers', 'मुख्य आँकड़े') }}">
+    <div class="ops-kpi"><small>{{ tr("People who checked", "जिन्होंने जाँच की") }}</small><b>{{ s.people }}</b><span>{{ tr("browsers or Telegram chats", "ब्राउज़र या टेलीग्राम चैट") }}</span></div>
+    <div class="ops-kpi"><small>{{ tr("Checks done", "की गई जाँचें") }}</small><b>{{ s.checks }}</b><span>{{ tr("every kind, every channel", "हर तरह की, हर माध्यम से") }}</span></div>
+    <div class="ops-kpi"><small>{{ tr("Came back another day", "दूसरे दिन लौटे") }}</small><b>{{ s.came_back }}</b><span>{{ tr("checked on 2 or more days", "2 या ज़्यादा दिन जाँच की") }}</span></div>
+    <div class="ops-kpi"><small>{{ tr("Visitors", "आने वाले") }}</small><b>{{ s.visitors }}</b><span>{{ tr("opened the site", "साइट खोली") }}</span></div>
+  </section>
+
+  <section class="ops-card">
+    <h2>{{ tr("Checks per day (last 14 days)", "रोज़ की जाँचें (पिछले 14 दिन)") }}</h2>
+    <svg class="ops-chart" viewBox="0 0 {{ chart.width }} {{ chart.h + 22 }}" role="img" aria-label="{{ tr('Bar chart of checks per day', 'रोज़ की जाँचों का बार चार्ट') }}">
+      {% for b in chart.bars %}<rect x="{{ b.x }}" y="{{ chart.h - b.h }}" width="{{ chart.w }}" height="{{ b.h if b.h else 1 }}" class="ops-bar"><title>{{ b.day }}: {{ b.n }}</title></rect>
+      <text x="{{ b.x + chart.w / 2 }}" y="{{ chart.h + 14 }}" text-anchor="middle" class="ops-tick">{{ b.day[8:] }}</text>{% endfor %}
+    </svg>
+    <p class="ops-note">{{ tr("Highest day:", "सबसे ज़्यादा वाला दिन:") }} {{ chart.top if chart.top > 1 or s.checks else 0 }}</p>
+  </section>
+
+  <div class="ops-two">
+    <section class="ops-card"><h2>{{ tr("What people check", "लोग क्या जाँचते हैं") }}</h2>
+      {% for k in kinds %}<div class="ops-row"><span>{{ k.label }}</span><span class="ops-meter"><i style="width:{{ k.pct }}%"></i></span><b>{{ k.n }}</b></div>
+      {% else %}<p class="ops-empty">{{ tr("No checks yet.", "अभी कोई जाँच नहीं।") }}</p>{% endfor %}</section>
+    <section class="ops-card"><h2>{{ tr("Where they come from", "वे कहाँ से आते हैं") }}</h2>
+      {% for k in channels %}<div class="ops-row"><span>{{ k.label }}</span><span class="ops-meter"><i style="width:{{ k.pct }}%"></i></span><b>{{ k.n }}</b></div>
+      {% else %}<p class="ops-empty">{{ tr("No checks yet.", "अभी कोई जाँच नहीं।") }}</p>{% endfor %}</section>
+  </div>
+
+  <div class="ops-two">
+    <section class="ops-card"><h2>{{ tr("What the checks found", "जाँचों में क्या मिला") }}</h2>
+      {% for k in tiers %}<div class="ops-row"><span>{{ k.label }}</span><span class="ops-meter"><i style="width:{{ k.pct }}%"></i></span><b>{{ k.n }}</b></div>
+      {% else %}<p class="ops-empty">{{ tr("No checks yet.", "अभी कोई जाँच नहीं।") }}</p>{% endfor %}</section>
+    <section class="ops-card"><h2>{{ tr("How fast", "कितनी तेज़ी से") }}</h2>
+      <div class="ops-row"><span>{{ tr("Typical time to a result (median)", "नतीजे में आमतौर पर समय (मध्यिका)") }}</span><b>{% if s.p50_ms is none %}-{% elif s.p50_ms < 1000 %}{{ s.p50_ms }} ms{% else %}{{ "%.1f"|format(s.p50_ms / 1000) }} s{% endif %}</b></div>
+      <div class="ops-row"><span>{{ tr("Slowest 1 in 20 (95th percentile)", "सबसे धीमी 20 में से 1 (95वाँ प्रतिशतक)") }}</span><b>{% if s.p95_ms is none %}-{% elif s.p95_ms < 1000 %}{{ s.p95_ms }} ms{% else %}{{ "%.1f"|format(s.p95_ms / 1000) }} s{% endif %}</b></div>
+      <p class="ops-note">{{ tr("Measured on the server for real checks, not including network time.", "असली जाँचों के लिए सर्वर पर मापा गया, नेटवर्क का समय शामिल नहीं।") }}</p></section>
+  </div>
+
+  <div class="ops-two">
+    <section class="ops-card"><h2>{{ tr("When we got it wrong", "जब हम ग़लत निकले") }}</h2>
+      <div class="ops-row"><span>{{ tr("People who said \"wrong result\"", "जिन्होंने \"नतीजा ग़लत\" कहा") }}</span><b>{{ s.disputes }}</b></div>
+      <div class="ops-row"><span>{{ tr("Cleared by a person: the result was wrong", "व्यक्ति ने जाँचा: नतीजा ग़लत था") }}</span><b>{{ s.cleared }}</b></div>
+      <div class="ops-row"><span>{{ tr("Confirmed by two reviewers: the warning stands", "दो समीक्षकों ने पुष्टि की: चेतावनी सही") }}</span><b>{{ s.confirmed }}</b></div>
+      <div class="ops-row"><span>{{ tr("Still waiting for a reviewer", "समीक्षक का इंतज़ार") }}</span><b>{{ s.pending }}</b></div>
+      <div class="ops-row"><span>{{ tr("Typical time for a person to decide", "व्यक्ति के फ़ैसले में आमतौर पर समय") }}</span><b>{{ decision }}</b></div></section>
+    <section class="ops-card"><h2>{{ tr("Was it helpful?", "क्या यह काम का था?") }}</h2>
+      {% if s.feedback_n %}<div class="ops-row"><span>{{ tr("Rated 4 or 5 out of 5", "5 में से 4 या 5 दिया") }}</span><b>{{ helpful_pct }}%</b></div>
+      <div class="ops-row"><span>{{ tr("People who answered", "जवाब देने वाले") }}</span><b>{{ s.feedback_n }}</b></div>
+      {% else %}<p class="ops-empty">{{ tr("No answers yet.", "अभी कोई जवाब नहीं।") }}</p>{% endif %}
+      <div class="ops-row"><span>{{ tr("Shops and groups that asked for a pilot", "पायलट माँगने वाली दुकानें और संस्थाएँ") }}</span><b>{{ s.pilots }}</b></div>
+      {% if s.community_posts is not none %}<div class="ops-row"><span>{{ tr("Scam reports shared by the community", "समुदाय की साझा की गई स्कैम रिपोर्टें") }}</span><b>{{ s.community_posts }}</b></div>{% endif %}</section>
+  </div>
+
+  <p class="ops-note">{{ tr("How we count: a person is one browser or one Telegram chat (someone using two browsers counts twice). We store no IP addresses, messages or files. Numbers update as you load the page.", "हम कैसे गिनते हैं: एक व्यक्ति यानी एक ब्राउज़र या एक टेलीग्राम चैट (दो ब्राउज़र इस्तेमाल करने वाला दो बार गिना जाता है)। हम IP पते, संदेश या फ़ाइलें नहीं रखते। पन्ना खोलने पर आँकड़े ताज़ा होते हैं।") }}</p>
+</div>
+{% endblock %}

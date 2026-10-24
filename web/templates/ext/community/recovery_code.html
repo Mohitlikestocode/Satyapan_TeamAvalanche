@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="wrap cm-wrap cm-narrow">
+  <h1>{{ tr("Your recovery code", "आपका रिकवरी कोड") }}</h1>
+  <p class="cm-lead">{{ tr("Write this down now. We keep only a scrambled copy, so we cannot show it to you again.", "इसे अभी लिख लें। हमारे पास सिर्फ़ इसकी उलझी हुई कॉपी है, इसलिए हम इसे दोबारा नहीं दिखा सकते।") }}</p>
+  <div class="cm-code" id="cm-code" aria-label="{{ tr('Recovery code', 'रिकवरी कोड') }}">{{ code }}</div>
+  <div class="cm-actions"><button type="button" class="hbtn hbtn-s" data-cm-copy="{{ code }}">{{ tr("Copy code", "कोड कॉपी करें") }}</button><a class="hbtn hbtn-p" href="/me">{{ tr("I have saved it", "मैंने सहेज लिया") }}</a></div>
+  <p class="cm-small">{{ tr("Anyone who has this code can use your progress, so keep it private. On a new phone, open My progress and choose \"I have a recovery code\".", "जिसके पास यह कोड होगा वह आपकी प्रगति इस्तेमाल कर सकता है, इसलिए इसे निजी रखें। नए फ़ोन पर \"मेरी प्रगति\" खोलकर \"मेरे पास रिकवरी कोड है\" चुनें।") }}</p>
+</div>
+{% endblock %}

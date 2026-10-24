@@ -1,0 +1,2092 @@
+{
+ "questions": [
+  {
+   "id": "s01",
+   "type": "scam_or_genuine",
+   "lesson": "kyc-link",
+   "text": {
+    "en": "Dear customer, your bank KYC expires today. Your account will be blocked. Update now: http://bank-kyc-update.in/login",
+    "hi": "प्रिय ग्राहक, आपका बैंक KYC आज ख़त्म हो रहा है। आपका खाता बंद हो जाएगा। अभी अपडेट करें: http://bank-kyc-update.in/login"
+   },
+   "answer": "scam",
+   "why": {
+    "en": "Banks do not ask you to update KYC through an SMS link. The deadline and the link are the warning signs.",
+    "hi": "बैंक SMS के लिंक से KYC अपडेट नहीं करवाते। समय-सीमा का दबाव और लिंक, दोनों चेतावनी के संकेत हैं।"
+   }
+  },
+  {
+   "id": "s02",
+   "type": "scam_or_genuine",
+   "lesson": "kyc-link",
+   "text": {
+    "en": "Your bank app is locked. Download the KYC app from this link and enter the OTP you receive.",
+    "hi": "आपका बैंक ऐप बंद हो गया है। इस लिंक से KYC ऐप डाउनलोड करें और आने वाला OTP डालें।"
+   },
+   "answer": "scam",
+   "why": {
+    "en": "A file or app sent by link, plus a request for an OTP, is how phones get taken over. Use only your bank's own app from the official store.",
+    "hi": "लिंक से भेजी फ़ाइल या ऐप और OTP की माँग से फ़ोन पर क़ब्ज़ा किया जाता है। सिर्फ़ आधिकारिक स्टोर से बैंक का अपना ऐप इस्तेमाल करें।"
+   }
+  },
+  {
+   "id": "s03",
+   "type": "scam_or_genuine",
+   "lesson": "refund-pin-trap",
+   "text": {
+    "en": "I have sent your payment. Approve the request I sent on your UPI app and enter your PIN to receive Rs 4,500.",
+    "hi": "मैंने आपका भुगतान भेज दिया है। मेरे भेजे अनुरोध को अपने UPI ऐप में मंज़ूर करें और Rs 4,500 पाने के लिए PIN डालें।"
+   },
+   "answer": "scam",
+   "why": {
+    "en": "You never enter a PIN to receive money. The PIN is only for sending, so this request would take money out.",
+    "hi": "पैसे पाने के लिए PIN कभी नहीं डालना पड़ता। PIN सिर्फ़ भेजने के लिए है, इसलिए यह अनुरोध आपका पैसा निकाल लेता।"
+   }
+  },
+  {
+   "id": "s04",
+   "type": "scam_or_genuine",
+   "lesson": "stock-tips-group",
+   "text": {
+    "en": "Join our VIP group. Daily 5% profit guaranteed. Pay Rs 2,999 to ravi.trades@okaxis to get your seat today.",
+    "hi": "हमारे VIP ग्रुप से जुड़ें। रोज़ 5% मुनाफ़ा गारंटीड। आज अपनी सीट के लिए ravi.trades@okaxis पर Rs 2,999 भेजें।"
+   },
+   "answer": "scam",
+   "why": {
+    "en": "\"Guaranteed\" profit and a personal UPI ID are the two biggest signs of a fake stock-tips group.",
+    "hi": "\"गारंटीड\" मुनाफ़ा और किसी व्यक्ति की UPI आईडी, नक़ली शेयर-टिप्स ग्रुप के सबसे बड़े संकेत हैं।"
+   }
+  },
+  {
+   "id": "s05",
+   "type": "scam_or_genuine",
+   "lesson": "parcel-customs-fee",
+   "text": {
+    "en": "Your parcel is on hold. Pay Rs 30 customs fee within 2 hours: http://post-delivery-help.top/pay",
+    "hi": "आपका पार्सल रुका है। 2 घंटे के अंदर Rs 30 कस्टम फ़ीस भरें: http://post-delivery-help.top/pay"
+   },
+   "answer": "scam",
+   "why": {
+    "en": "A tiny fee, a short deadline and an odd website name. The link is really after your card details, not the fee.",
+    "hi": "बहुत छोटी फ़ीस, छोटी समय-सीमा और अजीब वेबसाइट का नाम। लिंक का असली मक़सद फ़ीस नहीं, आपके कार्ड की जानकारी है।"
+   }
+  },
+  {
+   "id": "s06",
+   "type": "scam_or_genuine",
+   "lesson": "lottery-prize",
+   "text": {
+    "en": "Congratulations! You won Rs 25 lakh in our Lucky Draw. Pay Rs 8,500 processing fee to claim your prize.",
+    "hi": "बधाई हो! आपने हमारे लकी ड्रॉ में Rs 25 लाख जीते हैं। इनाम पाने के लिए Rs 8,500 प्रोसेसिंग फ़ीस भरें।"
+   },
+   "answer": "scam",
+   "why": {
+    "en": "You cannot win a draw you did not enter, and a real prize never asks you to pay first.",
+    "hi": "जिस ड्रॉ में हिस्सा नहीं लिया, उसे जीत नहीं सकते, और असली इनाम के लिए पहले पैसे नहीं माँगे जाते।"
+   }
+  },
+  {
+   "id": "s07",
+   "type": "scam_or_genuine",
+   "lesson": "job-task-scam",
+   "text": {
+    "en": "Part-time job: like 20 videos and earn Rs 3,000 a day. Message us on Telegram. Registration fee Rs 500.",
+    "hi": "पार्ट-टाइम नौकरी: 20 वीडियो लाइक करें और रोज़ Rs 3,000 कमाएँ। टेलीग्राम पर संदेश भेजें। रजिस्ट्रेशन फ़ीस Rs 500।"
+   },
+   "answer": "scam",
+   "why": {
+    "en": "Very high pay for very easy work, and a fee to start. A real job never charges you.",
+    "hi": "बहुत आसान काम पर बहुत ज़्यादा कमाई, और शुरू करने की फ़ीस। असली नौकरी में आपसे पैसे नहीं लिए जाते।"
+   }
+  },
+  {
+   "id": "s08",
+   "type": "scam_or_genuine",
+   "lesson": "digital-arrest",
+   "text": {
+    "en": "This is the CBI office. A case is registered against your Aadhaar. Stay on this video call and do not tell anyone.",
+    "hi": "यह CBI कार्यालय है। आपके आधार पर एक मामला दर्ज है। इस वीडियो कॉल पर बने रहिए और किसी को मत बताइए।"
+   },
+   "answer": "scam",
+   "why": {
+    "en": "No agency holds anyone on a video call or says \"tell nobody\". \"Digital arrest\" does not exist in law.",
+    "hi": "कोई एजेंसी किसी को वीडियो कॉल पर रोककर नहीं रखती और \"किसी को मत बताओ\" नहीं कहती। \"डिजिटल अरेस्ट\" क़ानून में है ही नहीं।"
+   }
+  },
+  {
+   "id": "s09",
+   "type": "scam_or_genuine",
+   "lesson": "fake-customer-care",
+   "text": {
+    "en": "To fix your refund, please install AnyDesk and read us the 9-digit code on your screen.",
+    "hi": "आपका रिफ़ंड ठीक करने के लिए AnyDesk इंस्टॉल करें और स्क्रीन पर दिख रहा 9 अंकों का कोड हमें बताएँ।"
+   },
+   "answer": "scam",
+   "why": {
+    "en": "That code gives the caller full control of your phone. Real support never asks for it.",
+    "hi": "वह कोड कॉल करने वाले को आपके फ़ोन पर पूरा नियंत्रण दे देता है। असली सपोर्ट यह कभी नहीं माँगता।"
+   }
+  },
+  {
+   "id": "s10",
+   "type": "scam_or_genuine",
+   "lesson": "invoice-bank-change",
+   "text": {
+    "en": "Dear sir, please note our bank account has changed. Pay this month's invoice to the new account in the attached PDF today.",
+    "hi": "आदरणीय महोदय, कृपया ध्यान दें कि हमारा बैंक खाता बदल गया है। इस महीने का बिल संलग्न PDF के नए खाते में आज ही भेजें।"
+   },
+   "answer": "scam",
+   "why": {
+    "en": "A change of bank details by e-mail is the classic invoice fraud. Confirm by phone on a number you already have.",
+    "hi": "ई-मेल से बैंक विवरण बदलना बिल-धोखाधड़ी का पुराना तरीक़ा है। अपने पास पहले से मौजूद नंबर पर फ़ोन करके पुष्टि करें।"
+   }
+  },
+  {
+   "id": "s11",
+   "type": "scam_or_genuine",
+   "lesson": "family-emergency-voice",
+   "text": {
+    "en": "Mummy, I lost my phone, this is my new number. Please send Rs 15,000 to this UPI ID today. I will explain later.",
+    "hi": "मम्मी, मेरा फ़ोन खो गया, यह मेरा नया नंबर है। आज ही इस UPI आईडी पर Rs 15,000 भेज दो। बाद में बताऊँगा।"
+   },
+   "answer": "scam",
+   "why": {
+    "en": "A \"new number\" plus urgent money to a UPI ID is a common trick. Call your child on the old number first.",
+    "hi": "\"नया नंबर\" और तुरंत किसी UPI आईडी पर पैसे, यह आम चाल है। पहले अपने बच्चे को पुराने नंबर पर फ़ोन करें।"
+   }
+  },
+  {
+   "id": "s12",
+   "type": "scam_or_genuine",
+   "lesson": "fake-trading-app",
+   "text": {
+    "en": "Your trading profit is Rs 1,80,000. To withdraw it, first pay 20% income tax to our account manager.",
+    "hi": "आपका ट्रेडिंग मुनाफ़ा Rs 1,80,000 है। निकालने के लिए पहले हमारे अकाउंट मैनेजर को 20% इनकम टैक्स भरें।"
+   },
+   "answer": "scam",
+   "why": {
+    "en": "Tax is never paid to a manager's account before you withdraw. Paying first is how this fraud keeps taking money.",
+    "hi": "टैक्स किसी मैनेजर के खाते में पैसे निकालने से पहले नहीं भरा जाता। पहले भुगतान माँगना इस ठगी का तरीक़ा है।"
+   }
+  },
+  {
+   "id": "s13",
+   "type": "scam_or_genuine",
+   "lesson": "fake-customer-care",
+   "text": {
+    "en": "Your electricity will be cut tonight at 9:30 pm because last month's bill is unpaid. Call this officer now.",
+    "hi": "पिछले महीने का बिल बाक़ी होने से आज रात 9:30 बजे आपकी बिजली कट जाएगी। इस अधिकारी को अभी कॉल करें।"
+   },
+   "answer": "scam",
+   "why": {
+    "en": "A cut-off tonight, and a number to call, is a trick. Check your bill on the electricity board's own app or office.",
+    "hi": "आज रात कनेक्शन कटने की धमकी और कॉल करने का नंबर एक चाल है। अपना बिल बिजली बोर्ड के अपने ऐप या दफ़्तर में देखें।"
+   }
+  },
+  {
+   "id": "s14",
+   "type": "scam_or_genuine",
+   "lesson": "refund-pin-trap",
+   "text": {
+    "en": "Your refund of Rs 2,499 is ready. Scan this QR code with your UPI app to receive it.",
+    "hi": "आपका Rs 2,499 का रिफ़ंड तैयार है। इसे पाने के लिए अपने UPI ऐप से यह QR कोड स्कैन करें।"
+   },
+   "answer": "scam",
+   "why": {
+    "en": "Scanning a QR code is how you pay, not how you receive. A refund comes to your account without any scan.",
+    "hi": "QR कोड स्कैन करने से आप पैसे भेजते हैं, पाते नहीं। रिफ़ंड बिना स्कैन के सीधे आपके खाते में आता है।"
+   }
+  },
+  {
+   "id": "s15",
+   "type": "scam_or_genuine",
+   "lesson": "stock-tips-group",
+   "text": {
+    "en": "SEBI-registered expert Mr Gupta gives sure-shot IPO tips. Send Rs 5,000 to this number for the secret list.",
+    "hi": "SEBI-पंजीकृत एक्सपर्ट श्री गुप्ता पक्के IPO टिप्स देते हैं। गुप्त सूची के लिए इस नंबर पर Rs 5,000 भेजें।"
+   },
+   "answer": "scam",
+   "why": {
+    "en": "Anyone can write \"SEBI-registered\". Check the name on SEBI's official site. Registered advisers do not sell \"sure shot\" lists for a phone number.",
+    "hi": "\"SEBI-पंजीकृत\" कोई भी लिख सकता है। नाम SEBI की आधिकारिक साइट पर जाँचें। पंजीकृत सलाहकार किसी फ़ोन नंबर पर \"पक्की\" सूची नहीं बेचते।"
+   }
+  },
+  {
+   "id": "s16",
+   "type": "scam_or_genuine",
+   "lesson": "lottery-prize",
+   "text": {
+    "en": "You are selected for a Rs 5,000 gift voucher. Click the link and enter your card number and CVV to claim. Ends in 1 hour.",
+    "hi": "आपको Rs 5,000 के गिफ़्ट वाउचर के लिए चुना गया है। पाने के लिए लिंक पर क्लिक करें और कार्ड नंबर व CVV डालें। 1 घंटे में ख़त्म।"
+   },
+   "answer": "scam",
+   "why": {
+    "en": "A free gift never needs your card number and CVV. The one-hour limit is there to stop you thinking.",
+    "hi": "मुफ़्त उपहार के लिए कार्ड नंबर और CVV कभी नहीं लगते। एक घंटे की सीमा आपको सोचने से रोकने के लिए है।"
+   }
+  },
+  {
+   "id": "g01",
+   "type": "scam_or_genuine",
+   "lesson": "kyc-link",
+   "text": {
+    "en": "Rs 1,200.00 debited from A/c XX4521 on 24-Oct for a UPI payment to Ramesh Store. If this was not you, call the helpline number on your card.",
+    "hi": "24-अक्टू. को UPI भुगतान के लिए खाता XX4521 से Rs 1,200.00 कटे, रमेश स्टोर को। अगर यह आपने नहीं किया तो कार्ड पर छपे हेल्पलाइन नंबर पर कॉल करें।"
+   },
+   "answer": "genuine",
+   "why": {
+    "en": "This is a normal debit alert. It has no link and asks you to do nothing except call the number on your own card if it was not you.",
+    "hi": "यह सामान्य डेबिट अलर्ट है। इसमें कोई लिंक नहीं है और आपसे बस इतना कहा गया है कि आपने न किया हो तो अपने कार्ड वाले नंबर पर फ़ोन करें।"
+   }
+  },
+  {
+   "id": "g02",
+   "type": "scam_or_genuine",
+   "lesson": "kyc-link",
+   "text": {
+    "en": "123456 is your OTP to log in to your bank app. Do not share it with anyone, including bank staff. Valid for 10 minutes.",
+    "hi": "123456 आपके बैंक ऐप में लॉग-इन का OTP है। इसे किसी को न बताएँ, बैंक के कर्मचारी को भी नहीं। 10 मिनट तक मान्य।"
+   },
+   "answer": "genuine",
+   "why": {
+    "en": "An OTP message you asked for, which tells you not to share it, is genuine. It becomes a problem only if you read it out to someone.",
+    "hi": "जो OTP संदेश आपने ख़ुद माँगा हो और जिसमें इसे न बताने की चेतावनी हो, वह असली है। ख़तरा तब है जब आप इसे किसी को पढ़कर सुना दें।"
+   }
+  },
+  {
+   "id": "g03",
+   "type": "scam_or_genuine",
+   "lesson": "fake-customer-care",
+   "text": {
+    "en": "Your electricity bill of Rs 842 for September is generated. Due date 05 Nov. Pay on the official app or at the counter.",
+    "hi": "सितंबर का Rs 842 का आपका बिजली बिल बन गया है। अंतिम तारीख़ 05 नवंबर। आधिकारिक ऐप या काउंटर पर भरें।"
+   },
+   "answer": "genuine",
+   "why": {
+    "en": "A bill with a due date weeks away, no link and no threat, and a normal way to pay. Nothing here is rushing you.",
+    "hi": "बिल की अंतिम तारीख़ हफ़्तों दूर है, कोई लिंक या धमकी नहीं, और भरने का सामान्य तरीक़ा बताया गया है। कहीं भी जल्दबाज़ी नहीं है।"
+   }
+  },
+  {
+   "id": "g04",
+   "type": "scam_or_genuine",
+   "lesson": "parcel-customs-fee",
+   "text": {
+    "en": "Your order #4521 has been delivered. Thank you for shopping with us.",
+    "hi": "आपका ऑर्डर #4521 डिलीवर हो गया है। हमसे ख़रीदारी के लिए धन्यवाद।"
+   },
+   "answer": "genuine",
+   "why": {
+    "en": "A plain delivery notice that asks for nothing. Most messages you get are like this one.",
+    "hi": "सीधी डिलीवरी सूचना जिसमें कुछ माँगा नहीं गया। आपको आने वाले ज़्यादातर संदेश ऐसे ही होते हैं।"
+   }
+  },
+  {
+   "id": "g05",
+   "type": "scam_or_genuine",
+   "lesson": null,
+   "text": {
+    "en": "Reminder: Dr Mehta's clinic, appointment tomorrow at 11:30 am. Please call the clinic if you need to change the time.",
+    "hi": "याद दिलाना: डॉ. मेहता का क्लिनिक, कल सुबह 11:30 बजे अपॉइंटमेंट। समय बदलना हो तो क्लिनिक को फ़ोन करें।"
+   },
+   "answer": "genuine",
+   "why": {
+    "en": "A reminder about something you booked, with no payment and no link. Calling the clinic you already know is the safe way.",
+    "hi": "आपने जो समय लिया था उसकी याद, बिना भुगतान और बिना लिंक के। पहले से जाने हुए क्लिनिक को फ़ोन करना ठीक तरीक़ा है।"
+   }
+  },
+  {
+   "id": "g06",
+   "type": "scam_or_genuine",
+   "lesson": "family-emergency-voice",
+   "text": {
+    "en": "Mummy, I have reached home safely. I will call after dinner. Please take your medicines.",
+    "hi": "मम्मी, मैं सही-सलामत घर पहुँच गया। खाने के बाद फ़ोन करूँगा। अपनी दवाइयाँ ले लेना।"
+   },
+   "answer": "genuine",
+   "why": {
+    "en": "A normal family message from a number you know. It asks for nothing. Not every message from family is a trick.",
+    "hi": "जाने-पहचाने नंबर से आया सामान्य पारिवारिक संदेश। इसमें कुछ माँगा नहीं गया। परिवार का हर संदेश चाल नहीं होता।"
+   }
+  },
+  {
+   "id": "g07",
+   "type": "scam_or_genuine",
+   "lesson": "fake-payment-screenshot",
+   "text": {
+    "en": "Your LPG cylinder booking is confirmed. Delivery expected within 2 days. Pay the delivery person only the amount shown on your receipt.",
+    "hi": "आपकी LPG सिलेंडर की बुकिंग पक्की हो गई है। 2 दिन में डिलीवरी होगी। डिलीवरी वाले को सिर्फ़ रसीद पर लिखी रकम दें।"
+   },
+   "answer": "genuine",
+   "why": {
+    "en": "A booking confirmation that asks nothing and even warns you to pay only what is on the receipt.",
+    "hi": "बुकिंग की पुष्टि जिसमें कुछ माँगा नहीं गया और रसीद पर लिखी रकम ही देने की सलाह भी दी गई है।"
+   }
+  },
+  {
+   "id": "g08",
+   "type": "scam_or_genuine",
+   "lesson": null,
+   "text": {
+    "en": "Your EPF contribution for September has been credited to your passbook.",
+    "hi": "सितंबर का आपका EPF योगदान आपकी पासबुक में जमा हो गया है।"
+   },
+   "answer": "genuine",
+   "why": {
+    "en": "A simple notice about money added to your account. It has no link and no request.",
+    "hi": "आपके खाते में जमा हुई रकम की सरल सूचना। इसमें कोई लिंक या माँग नहीं है।"
+   }
+  },
+  {
+   "id": "g09",
+   "type": "scam_or_genuine",
+   "lesson": null,
+   "text": {
+    "en": "School fees for the third quarter are due on 10 November. Please pay at the school office or through the school's own website that you already use.",
+    "hi": "तीसरी तिमाही की स्कूल फ़ीस 10 नवंबर तक देय है। कृपया स्कूल के दफ़्तर में या स्कूल की उसी वेबसाइट पर भरें जो आप पहले से इस्तेमाल करते हैं।"
+   },
+   "answer": "genuine",
+   "why": {
+    "en": "It points you to the places you already know and gives a normal due date. There is no new link and no threat.",
+    "hi": "यह आपको उन्हीं जगहों पर भेजता है जो आप जानते हैं और सामान्य अंतिम तारीख़ बताता है। कोई नया लिंक या धमकी नहीं है।"
+   }
+  },
+  {
+   "id": "g10",
+   "type": "scam_or_genuine",
+   "lesson": "refund-pin-trap",
+   "text": {
+    "en": "You received Rs 500 from Sunita on UPI. Your new balance is shown in your bank app.",
+    "hi": "आपको UPI से सुनीता से Rs 500 मिले। नया बैलेंस आपके बैंक ऐप में दिख रहा है।"
+   },
+   "answer": "genuine",
+   "why": {
+    "en": "Money coming in needs no action from you. If you want to be sure, open your own bank app.",
+    "hi": "आने वाले पैसों के लिए आपको कुछ करना नहीं पड़ता। पक्का करना हो तो अपना बैंक ऐप खोलें।"
+   }
+  },
+  {
+   "id": "g11",
+   "type": "scam_or_genuine",
+   "lesson": null,
+   "text": {
+    "en": "Your train ticket is confirmed. Coach S4, seat 23. Please carry a valid ID card.",
+    "hi": "आपका रेल टिकट पक्का हो गया है। कोच S4, सीट 23। कृपया पहचान-पत्र साथ रखें।"
+   },
+   "answer": "genuine",
+   "why": {
+    "en": "A ticket confirmation with no payment or link. Most messages are like this.",
+    "hi": "भुगतान या लिंक के बिना टिकट की पुष्टि। ज़्यादातर संदेश ऐसे ही होते हैं।"
+   }
+  },
+  {
+   "id": "g12",
+   "type": "scam_or_genuine",
+   "lesson": null,
+   "text": {
+    "en": "Your mobile recharge of Rs 299 was successful. Validity 28 days.",
+    "hi": "आपका Rs 299 का मोबाइल रिचार्ज सफल रहा। वैधता 28 दिन।"
+   },
+   "answer": "genuine",
+   "why": {
+    "en": "A recharge you made yourself and a plain confirmation. Nothing is being asked of you.",
+    "hi": "रिचार्ज आपने ख़ुद किया था और पुष्टि सीधी है। आपसे कुछ माँगा नहीं गया।"
+   }
+  },
+  {
+   "id": "t01",
+   "type": "tap_words",
+   "lesson": "kyc-link",
+   "segments": {
+    "en": [
+     [
+      "Dear customer,",
+      0
+     ],
+     [
+      "your KYC expires today",
+      1
+     ],
+     [
+      "and your account will be blocked.",
+      1
+     ],
+     [
+      "Update now:",
+      0
+     ],
+     [
+      "http://bank-kyc-update.in",
+      1
+     ],
+     [
+      "to continue using your account.",
+      0
+     ]
+    ],
+    "hi": [
+     [
+      "प्रिय ग्राहक,",
+      0
+     ],
+     [
+      "आपका KYC आज ख़त्म हो रहा है",
+      1
+     ],
+     [
+      "और खाता बंद हो जाएगा।",
+      1
+     ],
+     [
+      "अभी अपडेट करें:",
+      0
+     ],
+     [
+      "http://bank-kyc-update.in",
+      1
+     ],
+     [
+      "ताकि खाता चलता रहे।",
+      0
+     ]
+    ]
+   },
+   "why": {
+    "en": "The warning signs are the deadline, the threat to block the account, and a link in an SMS.",
+    "hi": "चेतावनी के संकेत हैं: समय-सीमा, खाता बंद करने की धमकी, और SMS में लिंक।"
+   }
+  },
+  {
+   "id": "t02",
+   "type": "tap_words",
+   "lesson": "stock-tips-group",
+   "segments": {
+    "en": [
+     [
+      "Namaste,",
+      0
+     ],
+     [
+      "guaranteed 30% profit every month",
+      1
+     ],
+     [
+      "in our VIP group.",
+      0
+     ],
+     [
+      "Only 3 seats left today.",
+      1
+     ],
+     [
+      "Pay Rs 5,000 to ravi.trades@okaxis",
+      1
+     ],
+     [
+      "to join.",
+      0
+     ]
+    ],
+    "hi": [
+     [
+      "नमस्ते,",
+      0
+     ],
+     [
+      "हर महीने 30% मुनाफ़ा गारंटीड",
+      1
+     ],
+     [
+      "हमारे VIP ग्रुप में।",
+      0
+     ],
+     [
+      "आज सिर्फ़ 3 जगह बची हैं।",
+      1
+     ],
+     [
+      "ravi.trades@okaxis पर Rs 5,000 भेजें",
+      1
+     ],
+     [
+      "जुड़ने के लिए।",
+      0
+     ]
+    ]
+   },
+   "why": {
+    "en": "Guaranteed returns, a rush (\"3 seats left\") and a payment to a personal UPI ID. No real investment works like this.",
+    "hi": "गारंटीड मुनाफ़ा, जल्दबाज़ी (\"3 जगह बची\") और व्यक्तिगत UPI आईडी पर भुगतान। कोई असली निवेश ऐसे नहीं चलता।"
+   }
+  },
+  {
+   "id": "t03",
+   "type": "tap_words",
+   "lesson": "refund-pin-trap",
+   "segments": {
+    "en": [
+     [
+      "Hello,",
+      0
+     ],
+     [
+      "I have sent your payment.",
+      0
+     ],
+     [
+      "Approve the request",
+      1
+     ],
+     [
+      "and enter your UPI PIN",
+      1
+     ],
+     [
+      "to receive the money.",
+      0
+     ],
+     [
+      "Please do it quickly.",
+      1
+     ]
+    ],
+    "hi": [
+     [
+      "नमस्ते,",
+      0
+     ],
+     [
+      "मैंने आपका भुगतान भेज दिया है।",
+      0
+     ],
+     [
+      "मेरा अनुरोध मंज़ूर करें",
+      1
+     ],
+     [
+      "और अपना UPI PIN डालें",
+      1
+     ],
+     [
+      "पैसे पाने के लिए।",
+      0
+     ],
+     [
+      "कृपया जल्दी करें।",
+      1
+     ]
+    ]
+   },
+   "why": {
+    "en": "A PIN is never needed to receive money. Asking you to approve a request and hurry is the trap.",
+    "hi": "पैसे पाने के लिए PIN की कभी ज़रूरत नहीं होती। अनुरोध मंज़ूर करवाना और जल्दी मचाना ही जाल है।"
+   }
+  },
+  {
+   "id": "t04",
+   "type": "tap_words",
+   "lesson": "parcel-customs-fee",
+   "segments": {
+    "en": [
+     [
+      "Your parcel is on hold.",
+      0
+     ],
+     [
+      "Pay Rs 30 customs fee",
+      1
+     ],
+     [
+      "within 2 hours",
+      1
+     ],
+     [
+      "at http://post-delivery-help.top/pay",
+      1
+     ],
+     [
+      "or it will be returned.",
+      0
+     ]
+    ],
+    "hi": [
+     [
+      "आपका पार्सल रुका है।",
+      0
+     ],
+     [
+      "Rs 30 कस्टम फ़ीस भरें",
+      1
+     ],
+     [
+      "2 घंटे के अंदर",
+      1
+     ],
+     [
+      "http://post-delivery-help.top/pay पर",
+      1
+     ],
+     [
+      "वरना वापस चला जाएगा।",
+      0
+     ]
+    ]
+   },
+   "why": {
+    "en": "A fee by link, a short deadline, and a website that is not the courier's own.",
+    "hi": "लिंक से फ़ीस, छोटी समय-सीमा, और ऐसी वेबसाइट जो कूरियर की अपनी नहीं है।"
+   }
+  },
+  {
+   "id": "t05",
+   "type": "tap_words",
+   "lesson": "lottery-prize",
+   "segments": {
+    "en": [
+     [
+      "Congratulations!",
+      0
+     ],
+     [
+      "You won Rs 25 lakh",
+      1
+     ],
+     [
+      "in our lucky draw.",
+      0
+     ],
+     [
+      "To claim, pay Rs 8,500 processing fee",
+      1
+     ],
+     [
+      "to this personal UPI ID",
+      1
+     ],
+     [
+      "today.",
+      0
+     ]
+    ],
+    "hi": [
+     [
+      "बधाई हो!",
+      0
+     ],
+     [
+      "आपने Rs 25 लाख जीते हैं",
+      1
+     ],
+     [
+      "हमारे लकी ड्रॉ में।",
+      0
+     ],
+     [
+      "पाने के लिए Rs 8,500 प्रोसेसिंग फ़ीस भरें",
+      1
+     ],
+     [
+      "इस व्यक्तिगत UPI आईडी पर",
+      1
+     ],
+     [
+      "आज ही।",
+      0
+     ]
+    ]
+   },
+   "why": {
+    "en": "You cannot win what you never entered, a prize never needs a fee, and the money goes to a personal UPI ID.",
+    "hi": "जिसमें हिस्सा नहीं लिया वह जीत नहीं सकते, इनाम के लिए फ़ीस नहीं लगती, और पैसा व्यक्तिगत UPI आईडी पर जाता है।"
+   }
+  },
+  {
+   "id": "t06",
+   "type": "tap_words",
+   "lesson": "job-task-scam",
+   "segments": {
+    "en": [
+     [
+      "Work from home.",
+      0
+     ],
+     [
+      "Earn Rs 3,000 every day",
+      1
+     ],
+     [
+      "by liking videos.",
+      0
+     ],
+     [
+      "Registration fee Rs 500",
+      1
+     ],
+     [
+      "must be paid first.",
+      1
+     ],
+     [
+      "Join our Telegram group.",
+      0
+     ]
+    ],
+    "hi": [
+     [
+      "घर से काम करें।",
+      0
+     ],
+     [
+      "रोज़ Rs 3,000 कमाएँ",
+      1
+     ],
+     [
+      "वीडियो लाइक करके।",
+      0
+     ],
+     [
+      "रजिस्ट्रेशन फ़ीस Rs 500",
+      1
+     ],
+     [
+      "पहले भरनी होगी।",
+      1
+     ],
+     [
+      "हमारे टेलीग्राम ग्रुप से जुड़ें।",
+      0
+     ]
+    ]
+   },
+   "why": {
+    "en": "High pay for easy work, and a fee that must be paid before you start. A real employer pays you, not the other way round.",
+    "hi": "आसान काम पर ज़्यादा कमाई, और शुरू करने से पहले फ़ीस। असली नियोक्ता आपको पैसे देता है, आपसे नहीं लेता।"
+   }
+  },
+  {
+   "id": "t07",
+   "type": "tap_words",
+   "lesson": "digital-arrest",
+   "segments": {
+    "en": [
+     [
+      "Listen carefully.",
+      0
+     ],
+     [
+      "A case is registered against your Aadhaar.",
+      1
+     ],
+     [
+      "You are under digital arrest.",
+      1
+     ],
+     [
+      "Stay on this video call",
+      1
+     ],
+     [
+      "and do not tell your family.",
+      1
+     ]
+    ],
+    "hi": [
+     [
+      "ध्यान से सुनिए।",
+      0
+     ],
+     [
+      "आपके आधार पर मामला दर्ज है।",
+      1
+     ],
+     [
+      "आप डिजिटल अरेस्ट में हैं।",
+      1
+     ],
+     [
+      "इस वीडियो कॉल पर बने रहिए",
+      1
+     ],
+     [
+      "और अपने परिवार को मत बताइए।",
+      1
+     ]
+    ]
+   },
+   "why": {
+    "en": "Every sentence after the first is a warning sign. \"Digital arrest\" is not real, and keeping you secret is how they stop you asking for help.",
+    "hi": "पहले वाक्य के बाद हर वाक्य चेतावनी का संकेत है। \"डिजिटल अरेस्ट\" असली नहीं है, और आपको चुप रखकर वे मदद माँगने से रोकते हैं।"
+   }
+  },
+  {
+   "id": "t08",
+   "type": "tap_words",
+   "lesson": "fake-customer-care",
+   "segments": {
+    "en": [
+     [
+      "Thank you for calling support.",
+      0
+     ],
+     [
+      "Please install AnyDesk",
+      1
+     ],
+     [
+      "and read out the code on your screen",
+      1
+     ],
+     [
+      "so we can fix your refund.",
+      0
+     ],
+     [
+      "Keep your banking app open.",
+      1
+     ]
+    ],
+    "hi": [
+     [
+      "सपोर्ट को कॉल करने के लिए धन्यवाद।",
+      0
+     ],
+     [
+      "कृपया AnyDesk इंस्टॉल करें",
+      1
+     ],
+     [
+      "और स्क्रीन पर दिख रहा कोड बताएँ",
+      1
+     ],
+     [
+      "ताकि हम आपका रिफ़ंड ठीक कर सकें।",
+      0
+     ],
+     [
+      "अपना बैंकिंग ऐप खुला रखें।",
+      1
+     ]
+    ]
+   },
+   "why": {
+    "en": "Installing a remote-control app, sharing its code, and keeping your banking app open lets them see and use your account.",
+    "hi": "रिमोट-कंट्रोल ऐप इंस्टॉल करना, उसका कोड बताना और बैंकिंग ऐप खुला रखना, इन सबसे वे आपका खाता देख और चला सकते हैं।"
+   }
+  },
+  {
+   "id": "t09",
+   "type": "tap_words",
+   "lesson": "invoice-bank-change",
+   "segments": {
+    "en": [
+     [
+      "Dear sir,",
+      0
+     ],
+     [
+      "our bank account has changed.",
+      1
+     ],
+     [
+      "Please pay this invoice",
+      0
+     ],
+     [
+      "to the new account below",
+      1
+     ],
+     [
+      "today.",
+      1
+     ],
+     [
+      "Thank you.",
+      0
+     ]
+    ],
+    "hi": [
+     [
+      "आदरणीय महोदय,",
+      0
+     ],
+     [
+      "हमारा बैंक खाता बदल गया है।",
+      1
+     ],
+     [
+      "कृपया यह बिल भरें",
+      0
+     ],
+     [
+      "नीचे दिए नए खाते में",
+      1
+     ],
+     [
+      "आज ही।",
+      1
+     ],
+     [
+      "धन्यवाद।",
+      0
+     ]
+    ]
+   },
+   "why": {
+    "en": "A change of account sent by e-mail, with pressure to pay today. Phone the supplier on a number you already have.",
+    "hi": "ई-मेल से खाता बदलने की सूचना और आज ही भुगतान का दबाव। सप्लायर को अपने पास पहले से मौजूद नंबर पर फ़ोन करें।"
+   }
+  },
+  {
+   "id": "t10",
+   "type": "tap_words",
+   "lesson": "family-emergency-voice",
+   "segments": {
+    "en": [
+     [
+      "Mummy, I lost my phone.",
+      0
+     ],
+     [
+      "This is my new number.",
+      1
+     ],
+     [
+      "Send Rs 15,000 to this UPI ID right now",
+      1
+     ],
+     [
+      "and do not tell Papa.",
+      1
+     ],
+     [
+      "I will explain later.",
+      0
+     ]
+    ],
+    "hi": [
+     [
+      "मम्मी, मेरा फ़ोन खो गया।",
+      0
+     ],
+     [
+      "यह मेरा नया नंबर है।",
+      1
+     ],
+     [
+      "अभी इस UPI आईडी पर Rs 15,000 भेजो",
+      1
+     ],
+     [
+      "और पापा को मत बताना।",
+      1
+     ],
+     [
+      "मैं बाद में बताऊँगा।",
+      0
+     ]
+    ]
+   },
+   "why": {
+    "en": "A new number, money at once to a UPI ID, and a request to keep it from the family. Call your child on the old number first.",
+    "hi": "नया नंबर, तुरंत UPI आईडी पर पैसे, और परिवार से छिपाने को कहना। पहले अपने बच्चे को पुराने नंबर पर फ़ोन करें।"
+   }
+  },
+  {
+   "id": "t11",
+   "type": "tap_words",
+   "lesson": "fake-trading-app",
+   "segments": {
+    "en": [
+     [
+      "Your trading profit is Rs 1,80,000.",
+      0
+     ],
+     [
+      "To withdraw, first pay 20% tax",
+      1
+     ],
+     [
+      "to our manager's personal account.",
+      1
+     ],
+     [
+      "Withdrawal closes tonight.",
+      1
+     ]
+    ],
+    "hi": [
+     [
+      "आपका ट्रेडिंग मुनाफ़ा Rs 1,80,000 है।",
+      0
+     ],
+     [
+      "निकालने के लिए पहले 20% टैक्स भरें",
+      1
+     ],
+     [
+      "हमारे मैनेजर के व्यक्तिगत खाते में।",
+      1
+     ],
+     [
+      "निकासी आज रात बंद हो रही है।",
+      1
+     ]
+    ]
+   },
+   "why": {
+    "en": "Paying to withdraw your own money, to a personal account, and a rush. All three together are a clear sign.",
+    "hi": "अपना ही पैसा निकालने के लिए भुगतान, वह भी व्यक्तिगत खाते में, और जल्दबाज़ी। तीनों मिलकर साफ़ संकेत हैं।"
+   }
+  },
+  {
+   "id": "t12",
+   "type": "tap_words",
+   "lesson": "fake-payment-screenshot",
+   "segments": {
+    "en": [
+     [
+      "Customer: Bhaiya, I have paid, see this screen.",
+      0
+     ],
+     [
+      "I am in a hurry,",
+      1
+     ],
+     [
+      "my app is slow,",
+      1
+     ],
+     [
+      "your soundbox will ring later.",
+      1
+     ],
+     [
+      "Please give the boxes.",
+      0
+     ]
+    ],
+    "hi": [
+     [
+      "ग्राहक: भैया, मैंने पैसे भेज दिए, यह स्क्रीन देखिए।",
+      0
+     ],
+     [
+      "मैं जल्दी में हूँ,",
+      1
+     ],
+     [
+      "मेरा ऐप धीमा है,",
+      1
+     ],
+     [
+      "आपका साउंडबॉक्स बाद में बोलेगा।",
+      1
+     ],
+     [
+      "कृपया डिब्बे दे दीजिए।",
+      0
+     ]
+    ]
+   },
+   "why": {
+    "en": "The hurry and the excuses stop you from waiting for your own confirmation. A screen is not proof; your own app or soundbox is.",
+    "hi": "जल्दबाज़ी और बहाने आपको अपनी पुष्टि का इंतज़ार करने से रोकते हैं। स्क्रीन सबूत नहीं है; आपका अपना ऐप या साउंडबॉक्स सबूत है।"
+   }
+  },
+  {
+   "id": "t13",
+   "type": "tap_words",
+   "lesson": "refund-pin-trap",
+   "segments": {
+    "en": [
+     [
+      "Your refund of Rs 2,499 is ready.",
+      0
+     ],
+     [
+      "Scan this QR code",
+      1
+     ],
+     [
+      "with your UPI app",
+      0
+     ],
+     [
+      "and enter your PIN",
+      1
+     ],
+     [
+      "to receive it.",
+      0
+     ]
+    ],
+    "hi": [
+     [
+      "आपका Rs 2,499 का रिफ़ंड तैयार है।",
+      0
+     ],
+     [
+      "यह QR कोड स्कैन करें",
+      1
+     ],
+     [
+      "अपने UPI ऐप से",
+      0
+     ],
+     [
+      "और अपना PIN डालें",
+      1
+     ],
+     [
+      "पाने के लिए।",
+      0
+     ]
+    ]
+   },
+   "why": {
+    "en": "A QR scan and a PIN are for paying. A refund needs neither.",
+    "hi": "QR स्कैन और PIN भेजने के लिए होते हैं। रिफ़ंड के लिए दोनों नहीं लगते।"
+   }
+  },
+  {
+   "id": "t14",
+   "type": "tap_words",
+   "lesson": "fake-customer-care",
+   "segments": {
+    "en": [
+     [
+      "Your electricity will be cut tonight at 9:30 pm.",
+      1
+     ],
+     [
+      "Last month's bill is unpaid.",
+      0
+     ],
+     [
+      "Call this officer now",
+      1
+     ],
+     [
+      "and pay by UPI immediately.",
+      1
+     ]
+    ],
+    "hi": [
+     [
+      "आज रात 9:30 बजे आपकी बिजली कट जाएगी।",
+      1
+     ],
+     [
+      "पिछले महीने का बिल बाक़ी है।",
+      0
+     ],
+     [
+      "इन अधिकारी को अभी कॉल करें",
+      1
+     ],
+     [
+      "और तुरंत UPI से भुगतान करें।",
+      1
+     ]
+    ]
+   },
+   "why": {
+    "en": "A cut-off tonight, a number to call and an order to pay at once. Check your bill in the electricity board's own app.",
+    "hi": "आज रात कनेक्शन कटने की धमकी, कॉल करने का नंबर और तुरंत भुगतान का आदेश। अपना बिल बिजली बोर्ड के अपने ऐप में देखें।"
+   }
+  },
+  {
+   "id": "t15",
+   "type": "tap_words",
+   "lesson": "lottery-prize",
+   "segments": {
+    "en": [
+     [
+      "You are selected for a Rs 5,000 gift voucher.",
+      0
+     ],
+     [
+      "Click the link",
+      1
+     ],
+     [
+      "and enter your card number and CVV",
+      1
+     ],
+     [
+      "to claim.",
+      0
+     ],
+     [
+      "Offer ends in 1 hour.",
+      1
+     ]
+    ],
+    "hi": [
+     [
+      "आपको Rs 5,000 के गिफ़्ट वाउचर के लिए चुना गया है।",
+      0
+     ],
+     [
+      "लिंक पर क्लिक करें",
+      1
+     ],
+     [
+      "और कार्ड नंबर व CVV डालें",
+      1
+     ],
+     [
+      "पाने के लिए।",
+      0
+     ],
+     [
+      "ऑफ़र 1 घंटे में ख़त्म।",
+      1
+     ]
+    ]
+   },
+   "why": {
+    "en": "A free gift never needs your card number and CVV. The one-hour limit is there to rush you.",
+    "hi": "मुफ़्त उपहार के लिए कार्ड नंबर और CVV नहीं लगते। एक घंटे की सीमा आपको जल्दी में डालने के लिए है।"
+   }
+  },
+  {
+   "id": "t16",
+   "type": "tap_words",
+   "lesson": "stock-tips-group",
+   "segments": {
+    "en": [
+     [
+      "SEBI-registered expert Mr Gupta",
+      1
+     ],
+     [
+      "gives sure-shot IPO tips.",
+      1
+     ],
+     [
+      "Send Rs 5,000 to this number",
+      1
+     ],
+     [
+      "for the secret list.",
+      0
+     ]
+    ],
+    "hi": [
+     [
+      "SEBI-पंजीकृत एक्सपर्ट श्री गुप्ता",
+      1
+     ],
+     [
+      "पक्के IPO टिप्स देते हैं।",
+      1
+     ],
+     [
+      "इस नंबर पर Rs 5,000 भेजें",
+      1
+     ],
+     [
+      "गुप्त सूची के लिए।",
+      0
+     ]
+    ]
+   },
+   "why": {
+    "en": "An unproven \"registered\" claim, \"sure shot\" and a payment to a phone number. Check any adviser on SEBI's own website.",
+    "hi": "बिना सबूत \"पंजीकृत\" का दावा, \"पक्का\" वादा और फ़ोन नंबर पर भुगतान। किसी भी सलाहकार को SEBI की अपनी वेबसाइट पर जाँचें।"
+   }
+  },
+  {
+   "id": "f01",
+   "type": "first_step",
+   "lesson": "kyc-link",
+   "text": {
+    "en": "An SMS says your KYC expires today and gives a link. What should you do first?",
+    "hi": "एक SMS कहता है कि आपका KYC आज ख़त्म हो रहा है और लिंक देता है। सबसे पहले क्या करें?"
+   },
+   "options": [
+    {
+     "en": "Open your bank's own app, or visit the branch, to check",
+     "hi": "बैंक का अपना ऐप खोलकर या शाखा में जाकर जाँचें",
+     "id": "a"
+    },
+    {
+     "en": "Click the link and update quickly",
+     "hi": "लिंक पर क्लिक करके जल्दी अपडेट करें",
+     "id": "b"
+    },
+    {
+     "en": "Reply with your OTP",
+     "hi": "अपना OTP भेजकर जवाब दें",
+     "id": "c"
+    },
+    {
+     "en": "Forward it to everyone you know",
+     "hi": "इसे सबको आगे भेज दें",
+     "id": "d"
+    }
+   ],
+   "answer": "a",
+   "why": {
+    "en": "Your own bank app shows the truth. The link in an SMS is where the trap is.",
+    "hi": "आपके बैंक का अपना ऐप सच दिखाता है। SMS का लिंक ही जाल है।"
+   }
+  },
+  {
+   "id": "f02",
+   "type": "first_step",
+   "lesson": "refund-pin-trap",
+   "text": {
+    "en": "A buyer says he has sent you money and asks you to enter your UPI PIN to receive it. What do you do first?",
+    "hi": "एक ख़रीदार कहता है कि उसने पैसे भेज दिए और पाने के लिए UPI PIN डालने को कहता है। सबसे पहले क्या करें?"
+   },
+   "options": [
+    {
+     "en": "Enter the PIN to get the money",
+     "hi": "पैसे पाने के लिए PIN डालें",
+     "id": "a"
+    },
+    {
+     "en": "Send a photo of your debit card",
+     "hi": "अपने डेबिट कार्ड की फ़ोटो भेजें",
+     "id": "b"
+    },
+    {
+     "en": "Wait an hour and then enter it",
+     "hi": "एक घंटा रुककर फिर डालें",
+     "id": "c"
+    },
+    {
+     "en": "Do not enter the PIN. You never need it to receive money",
+     "hi": "PIN न डालें। पैसे पाने के लिए इसकी ज़रूरत नहीं होती",
+     "id": "d"
+    }
+   ],
+   "answer": "d",
+   "why": {
+    "en": "The PIN is only for sending money. Asking for it to receive money is the trap.",
+    "hi": "PIN सिर्फ़ पैसे भेजने के लिए है। पाने के लिए माँगना ही जाल है।"
+   }
+  },
+  {
+   "id": "f03",
+   "type": "first_step",
+   "lesson": "digital-arrest",
+   "text": {
+    "en": "A video call says you are under \"digital arrest\" and must pay to be released. What do you do first?",
+    "hi": "एक वीडियो कॉल कहती है कि आप \"डिजिटल अरेस्ट\" में हैं और छूटने के लिए पैसे देने होंगे। सबसे पहले क्या करें?"
+   },
+   "options": [
+    {
+     "en": "Pay into the \"safe account\"",
+     "hi": "\"सुरक्षित खाते\" में पैसे डालें",
+     "id": "a"
+    },
+    {
+     "en": "Stay on the call and stay silent",
+     "hi": "कॉल पर रहें और चुप रहें",
+     "id": "b"
+    },
+    {
+     "en": "Hang up and tell someone in your family",
+     "hi": "कॉल काटें और परिवार में किसी को बताएँ",
+     "id": "c"
+    },
+    {
+     "en": "Send your Aadhaar to prove you are innocent",
+     "hi": "बेगुनाही साबित करने के लिए आधार भेजें",
+     "id": "d"
+    }
+   ],
+   "answer": "c",
+   "why": {
+    "en": "No such arrest exists. Hanging up and telling family breaks the scammers' hold on you.",
+    "hi": "ऐसी कोई गिरफ़्तारी होती ही नहीं। कॉल काटना और परिवार को बताना ठगों की पकड़ तोड़ देता है।"
+   }
+  },
+  {
+   "id": "f04",
+   "type": "first_step",
+   "lesson": "family-emergency-voice",
+   "text": {
+    "en": "A call from a new number in your grandson's voice asks for Rs 40,000 at once. What do you do first?",
+    "hi": "नए नंबर से आपके नाती की आवाज़ में कॉल आती है और तुरंत Rs 40,000 माँगे जाते हैं। सबसे पहले क्या करें?"
+   },
+   "options": [
+    {
+     "en": "Send half now and half later",
+     "hi": "आधे अभी और आधे बाद में भेजें",
+     "id": "a"
+    },
+    {
+     "en": "Hang up and call him on the number you already have",
+     "hi": "कॉल काटें और उसे उस नंबर पर फ़ोन करें जो आपके पास पहले से है",
+     "id": "b"
+    },
+    {
+     "en": "Ask the caller to send his bank details",
+     "hi": "कॉल करने वाले से बैंक विवरण भेजने को कहें",
+     "id": "c"
+    },
+    {
+     "en": "Ask a neighbour to send the money",
+     "hi": "पड़ोसी से पैसे भिजवाएँ",
+     "id": "d"
+    }
+   ],
+   "answer": "b",
+   "why": {
+    "en": "A voice can be copied by AI. Calling the number you already know is the quickest way to learn the truth.",
+    "hi": "आवाज़ AI से नक़ल हो सकती है। जाने-पहचाने नंबर पर फ़ोन करना सच जानने का सबसे तेज़ तरीक़ा है।"
+   }
+  },
+  {
+   "id": "f05",
+   "type": "first_step",
+   "lesson": "fake-customer-care",
+   "text": {
+    "en": "The customer-care agent asks you to install a remote-support app. What do you do first?",
+    "hi": "कस्टमर-केयर एजेंट आपसे रिमोट-सपोर्ट ऐप इंस्टॉल करने को कहता है। सबसे पहले क्या करें?"
+   },
+   "options": [
+    {
+     "en": "Refuse, hang up, and use the company's own app or bill",
+     "hi": "मना करें, कॉल काटें और कंपनी का अपना ऐप या बिल इस्तेमाल करें",
+     "id": "a"
+    },
+    {
+     "en": "Install it but do not open it",
+     "hi": "इंस्टॉल करें पर खोलें नहीं",
+     "id": "b"
+    },
+    {
+     "en": "Install it and read out only the code",
+     "hi": "इंस्टॉल करें और सिर्फ़ कोड बताएँ",
+     "id": "c"
+    },
+    {
+     "en": "Install it from a link he sends",
+     "hi": "उसके भेजे लिंक से इंस्टॉल करें",
+     "id": "d"
+    }
+   ],
+   "answer": "a",
+   "why": {
+    "en": "Installing it at all gives them a way in. Real support never needs it.",
+    "hi": "इंस्टॉल करना ही उन्हें अंदर आने का रास्ता दे देता है। असली सपोर्ट को इसकी ज़रूरत नहीं होती।"
+   }
+  },
+  {
+   "id": "f06",
+   "type": "first_step",
+   "lesson": "invoice-bank-change",
+   "text": {
+    "en": "An e-mail from a supplier gives new bank details for this month's payment. What do you do first?",
+    "hi": "सप्लायर के ई-मेल में इस महीने के भुगतान के लिए नए बैंक विवरण हैं। सबसे पहले क्या करें?"
+   },
+   "options": [
+    {
+     "en": "Pay today to avoid a delay",
+     "hi": "देरी से बचने के लिए आज ही भुगतान करें",
+     "id": "a"
+    },
+    {
+     "en": "Reply to the same e-mail asking if it is real",
+     "hi": "उसी ई-मेल पर जवाब देकर पूछें कि यह असली है या नहीं",
+     "id": "b"
+    },
+    {
+     "en": "Pay half now and half later",
+     "hi": "आधा अभी और आधा बाद में दें",
+     "id": "c"
+    },
+    {
+     "en": "Phone the supplier on a number you already have",
+     "hi": "सप्लायर को उस नंबर पर फ़ोन करें जो आपके पास पहले से है",
+     "id": "d"
+    }
+   ],
+   "answer": "d",
+   "why": {
+    "en": "If the e-mail is fake, replying to it reaches the scammer. A known phone number reaches the real supplier.",
+    "hi": "अगर ई-मेल नक़ली है तो उसका जवाब ठग तक जाएगा। जाना-पहचाना फ़ोन नंबर असली सप्लायर तक पहुँचाता है।"
+   }
+  },
+  {
+   "id": "f07",
+   "type": "first_step",
+   "lesson": "fake-payment-screenshot",
+   "text": {
+    "en": "A customer in a hurry shows a green \"payment successful\" screen. What do you do first?",
+    "hi": "जल्दी में एक ग्राहक हरा \"भुगतान सफल\" पन्ना दिखाता है। सबसे पहले क्या करें?"
+   },
+   "options": [
+    {
+     "en": "Hand over the goods and check later",
+     "hi": "सामान दे दें, बाद में देख लेंगे",
+     "id": "a"
+    },
+    {
+     "en": "Ask him to send the screenshot on WhatsApp",
+     "hi": "उससे स्क्रीनशॉट WhatsApp पर भेजने को कहें",
+     "id": "b"
+    },
+    {
+     "en": "Check your own UPI app, SMS or soundbox for the money",
+     "hi": "अपने UPI ऐप, SMS या साउंडबॉक्स में पैसे देखें",
+     "id": "c"
+    },
+    {
+     "en": "Trust the green tick",
+     "hi": "हरे निशान पर भरोसा करें",
+     "id": "d"
+    }
+   ],
+   "answer": "c",
+   "why": {
+    "en": "A screen can be edited or faked. Only the money in your own account counts.",
+    "hi": "स्क्रीन को बदला या नक़ली बनाया जा सकता है। सिर्फ़ आपके अपने खाते में आए पैसे गिने जाते हैं।"
+   }
+  },
+  {
+   "id": "f08",
+   "type": "first_step",
+   "lesson": "stock-tips-group",
+   "text": {
+    "en": "You are added to a group that promises 30% a month. What do you do first?",
+    "hi": "आपको ऐसे ग्रुप में जोड़ दिया गया है जो महीने में 30% का वादा करता है। सबसे पहले क्या करें?"
+   },
+   "options": [
+    {
+     "en": "Pay the small VIP fee to try it",
+     "hi": "आज़माने के लिए छोटी VIP फ़ीस भरें",
+     "id": "a"
+    },
+    {
+     "en": "Leave without paying, and check any broker on SEBI's website",
+     "hi": "बिना पैसे दिए ग्रुप छोड़ दें और किसी भी ब्रोकर को SEBI की वेबसाइट पर जाँचें",
+     "id": "b"
+    },
+    {
+     "en": "Invite a friend so you both get a bonus",
+     "hi": "दोस्त को जोड़ें ताकि दोनों को बोनस मिले",
+     "id": "c"
+    },
+    {
+     "en": "Reply to ask how it works",
+     "hi": "जवाब देकर पूछें कि यह कैसे चलता है",
+     "id": "d"
+    }
+   ],
+   "answer": "b",
+   "why": {
+    "en": "No honest investment promises 30% a month. Leaving costs nothing; paying can cost everything.",
+    "hi": "कोई ईमानदार निवेश महीने में 30% का वादा नहीं करता। ग्रुप छोड़ने में कुछ नहीं जाता; पैसे देने पर सब जा सकता है।"
+   }
+  },
+  {
+   "id": "f09",
+   "type": "first_step",
+   "lesson": "fake-trading-app",
+   "text": {
+    "en": "A trading app asks you to pay a tax before you can withdraw your profit. What do you do first?",
+    "hi": "एक ट्रेडिंग ऐप मुनाफ़ा निकालने से पहले टैक्स भरने को कहता है। सबसे पहले क्या करें?"
+   },
+   "options": [
+    {
+     "en": "Stop paying, save screenshots, and call 1930",
+     "hi": "पैसे देना बंद करें, स्क्रीनशॉट रखें और 1930 पर कॉल करें",
+     "id": "a"
+    },
+    {
+     "en": "Pay the tax once, then it will clear",
+     "hi": "एक बार टैक्स भर दें, फिर सब ठीक हो जाएगा",
+     "id": "b"
+    },
+    {
+     "en": "Pay half the tax",
+     "hi": "आधा टैक्स भरें",
+     "id": "c"
+    },
+    {
+     "en": "Install the app's update",
+     "hi": "ऐप का अपडेट इंस्टॉल करें",
+     "id": "d"
+    }
+   ],
+   "answer": "a",
+   "why": {
+    "en": "Each payment brings a new demand. The screenshots help the police follow the money.",
+    "hi": "हर भुगतान के बाद नई माँग आती है। स्क्रीनशॉट से पुलिस को पैसे का रास्ता पकड़ने में मदद मिलती है।"
+   }
+  },
+  {
+   "id": "f10",
+   "type": "first_step",
+   "lesson": "job-task-scam",
+   "text": {
+    "en": "A job message asks you to pay Rs 500 to register before you start earning. What do you do first?",
+    "hi": "नौकरी के एक संदेश में कमाई शुरू करने से पहले Rs 500 रजिस्ट्रेशन भरने को कहा गया है। सबसे पहले क्या करें?"
+   },
+   "options": [
+    {
+     "en": "Pay, it is only Rs 500",
+     "hi": "भर दें, सिर्फ़ Rs 500 ही तो हैं",
+     "id": "a"
+    },
+    {
+     "en": "Ask a friend to pay it for you",
+     "hi": "किसी दोस्त से भरवा लें",
+     "id": "b"
+    },
+    {
+     "en": "Pay by credit card to be safe",
+     "hi": "सुरक्षा के लिए क्रेडिट कार्ड से भरें",
+     "id": "c"
+    },
+    {
+     "en": "Do not pay. Real jobs never charge you to start",
+     "hi": "पैसे न भरें। असली नौकरी शुरू करने के पैसे नहीं लेती",
+     "id": "d"
+    }
+   ],
+   "answer": "d",
+   "why": {
+    "en": "A small first fee is how the next, bigger demands begin.",
+    "hi": "पहली छोटी फ़ीस से ही अगली बड़ी माँगों की शुरुआत होती है।"
+   }
+  },
+  {
+   "id": "f11",
+   "type": "first_step",
+   "lesson": "lottery-prize",
+   "text": {
+    "en": "A message says you won Rs 25 lakh but must pay Rs 8,500 first. What do you do first?",
+    "hi": "संदेश कहता है कि आपने Rs 25 लाख जीते हैं पर पहले Rs 8,500 भरने होंगे। सबसे पहले क्या करें?"
+   },
+   "options": [
+    {
+     "en": "Pay, as the prize is much bigger",
+     "hi": "भर दें, इनाम तो इससे कहीं बड़ा है",
+     "id": "a"
+    },
+    {
+     "en": "Call the number to bargain the fee",
+     "hi": "फ़ीस कम करवाने के लिए नंबर पर कॉल करें",
+     "id": "b"
+    },
+    {
+     "en": "Ignore it, and show the message to someone in your family",
+     "hi": "अनदेखा करें और संदेश परिवार में किसी को दिखाएँ",
+     "id": "c"
+    },
+    {
+     "en": "Send your Aadhaar and PAN",
+     "hi": "आधार और PAN भेजें",
+     "id": "d"
+    }
+   ],
+   "answer": "c",
+   "why": {
+    "en": "A prize that costs money to collect is not a prize.",
+    "hi": "जिस इनाम को लेने के लिए पैसे देने पड़ें, वह इनाम नहीं है।"
+   }
+  },
+  {
+   "id": "f12",
+   "type": "first_step",
+   "lesson": "parcel-customs-fee",
+   "text": {
+    "en": "A caller says your parcel has illegal items and passes you to a \"police officer\". What do you do first?",
+    "hi": "कॉल करने वाला कहता है कि आपके पार्सल में ग़ैरक़ानूनी सामान है और आपको \"पुलिस अधिकारी\" से जोड़ देता है। सबसे पहले क्या करें?"
+   },
+   "options": [
+    {
+     "en": "Give your bank details to prove who you are",
+     "hi": "अपनी पहचान साबित करने के लिए बैंक विवरण दें",
+     "id": "a"
+    },
+    {
+     "en": "Hang up and report on cybercrime.gov.in or call 1930",
+     "hi": "कॉल काटें और cybercrime.gov.in पर शिकायत करें या 1930 पर कॉल करें",
+     "id": "b"
+    },
+    {
+     "en": "Do what the officer says",
+     "hi": "अधिकारी जो कहे वह करें",
+     "id": "c"
+    },
+    {
+     "en": "Call back on the same number",
+     "hi": "उसी नंबर पर वापस कॉल करें",
+     "id": "d"
+    }
+   ],
+   "answer": "b",
+   "why": {
+    "en": "Real police do not investigate by a phone call that asks for money or secrecy.",
+    "hi": "असली पुलिस पैसे या गोपनीयता माँगने वाली फ़ोन कॉल से जाँच नहीं करती।"
+   }
+  },
+  {
+   "id": "f13",
+   "type": "first_step",
+   "lesson": "fake-trading-app",
+   "text": {
+    "en": "You realise you sent Rs 10,000 to a scammer 20 minutes ago. What do you do first?",
+    "hi": "आपको पता चला कि 20 मिनट पहले आपने ठग को Rs 10,000 भेज दिए। सबसे पहले क्या करें?"
+   },
+   "options": [
+    {
+     "en": "Call 1930 right away and tell your bank",
+     "hi": "तुरंत 1930 पर कॉल करें और अपने बैंक को बताएँ",
+     "id": "a"
+    },
+    {
+     "en": "Wait a day to see if it returns",
+     "hi": "एक दिन रुककर देखें कि पैसे लौटते हैं या नहीं",
+     "id": "b"
+    },
+    {
+     "en": "Message the scammer to ask for it back",
+     "hi": "ठग को संदेश भेजकर पैसे वापस माँगें",
+     "id": "c"
+    },
+    {
+     "en": "Delete all the chats",
+     "hi": "सारी चैट मिटा दें",
+     "id": "d"
+    }
+   ],
+   "answer": "a",
+   "why": {
+    "en": "The first hour matters most. Fast reports give a chance of freezing the money. Keep the chats as evidence.",
+    "hi": "पहला घंटा सबसे अहम है। जल्दी शिकायत से पैसे रोके जाने की संभावना रहती है। चैट सबूत के लिए रखें।"
+   }
+  },
+  {
+   "id": "f14",
+   "type": "first_step",
+   "lesson": "kyc-link",
+   "text": {
+    "en": "A person who says he is from your bank asks for the OTP that just arrived. What do you do first?",
+    "hi": "बैंक से बताने वाला व्यक्ति अभी आया OTP माँगता है। सबसे पहले क्या करें?"
+   },
+   "options": [
+    {
+     "en": "Read it out, he knows your name",
+     "hi": "पढ़कर बता दें, उसे आपका नाम पता है",
+     "id": "a"
+    },
+    {
+     "en": "Share only the last three digits",
+     "hi": "सिर्फ़ आख़िरी तीन अंक बताएँ",
+     "id": "b"
+    },
+    {
+     "en": "Share it if he sounds polite",
+     "hi": "अगर वह विनम्र लगे तो बता दें",
+     "id": "c"
+    },
+    {
+     "en": "Never share it. Hang up and call the number on your card",
+     "hi": "कभी न बताएँ। कॉल काटें और कार्ड पर छपे नंबर पर फ़ोन करें",
+     "id": "d"
+    }
+   ],
+   "answer": "d",
+   "why": {
+    "en": "A bank never asks for your OTP. Knowing your name proves nothing, because names leak easily.",
+    "hi": "बैंक आपका OTP कभी नहीं माँगता। नाम पता होना कुछ साबित नहीं करता, क्योंकि नाम आसानी से लीक हो जाते हैं।"
+   }
+  },
+  {
+   "id": "f15",
+   "type": "first_step",
+   "lesson": null,
+   "text": {
+    "en": "You are about to pay a stranger and you are not sure. What do you do first?",
+    "hi": "आप किसी अनजान को पैसे भेजने वाले हैं और आपको पक्का भरोसा नहीं है। सबसे पहले क्या करें?"
+   },
+   "options": [
+    {
+     "en": "Pay a small amount to test",
+     "hi": "परखने के लिए थोड़ी रकम भेजें",
+     "id": "a"
+    },
+    {
+     "en": "Pay now and ask questions later",
+     "hi": "अभी भेजें, सवाल बाद में पूछें",
+     "id": "b"
+    },
+    {
+     "en": "Pause, then check it with Satyapan or ask someone you trust",
+     "hi": "रुकें, फिर सत्यापन से जाँचें या किसी भरोसेमंद से पूछें",
+     "id": "c"
+    },
+    {
+     "en": "Trust his profile photo",
+     "hi": "उसकी प्रोफ़ाइल फ़ोटो पर भरोसा करें",
+     "id": "d"
+    }
+   ],
+   "answer": "c",
+   "why": {
+    "en": "A pause is your best protection. Scams depend on you acting before you think.",
+    "hi": "रुकना आपका सबसे अच्छा बचाव है। ठगी इसी पर टिकी है कि आप सोचने से पहले कदम उठा लें।"
+   }
+  },
+  {
+   "id": "f16",
+   "type": "first_step",
+   "lesson": "family-emergency-voice",
+   "text": {
+    "en": "You want your family to be ready for fake voice calls. What can you do today?",
+    "hi": "आप चाहते हैं कि आपका परिवार नक़ली आवाज़ वाली कॉल के लिए तैयार रहे। आज क्या कर सकते हैं?"
+   },
+   "options": [
+    {
+     "en": "Post everyone's phone numbers online",
+     "hi": "सबके फ़ोन नंबर ऑनलाइन डाल दें",
+     "id": "a"
+    },
+    {
+     "en": "Agree on a safe word that only your family knows",
+     "hi": "एक सुरक्षित शब्द तय करें जो सिर्फ़ आपका परिवार जानता हो",
+     "id": "b"
+    },
+    {
+     "en": "Stop answering unknown calls for ever",
+     "hi": "अनजान कॉल कभी न उठाएँ",
+     "id": "c"
+    },
+    {
+     "en": "Do nothing, it will not happen to us",
+     "hi": "कुछ न करें, हमारे साथ ऐसा नहीं होगा",
+     "id": "d"
+    }
+   ],
+   "answer": "b",
+   "why": {
+    "en": "A safe word is simple, free and works even when the voice sounds exactly right.",
+    "hi": "सुरक्षित शब्द सरल और मुफ़्त है, और तब भी काम करता है जब आवाज़ बिल्कुल सही लगे।"
+   }
+  },
+  {
+   "id": "f17",
+   "type": "first_step",
+   "lesson": "digital-arrest",
+   "text": {
+    "en": "A message with a \"court notice\" says to pay a Rs 5,000 fine today by UPI. What do you do first?",
+    "hi": "\"कोर्ट नोटिस\" वाला संदेश कहता है कि आज UPI से Rs 5,000 का जुर्माना भरें। सबसे पहले क्या करें?"
+   },
+   "options": [
+    {
+     "en": "Do not pay. Show it to family, as courts do not fine by UPI message",
+     "hi": "पैसे न दें। परिवार को दिखाएँ, क्योंकि अदालतें UPI संदेश से जुर्माना नहीं माँगतीं",
+     "id": "a"
+    },
+    {
+     "en": "Pay it to avoid trouble",
+     "hi": "झंझट से बचने के लिए भर दें",
+     "id": "b"
+    },
+    {
+     "en": "Call the number in the message",
+     "hi": "संदेश वाले नंबर पर कॉल करें",
+     "id": "c"
+    },
+    {
+     "en": "Pay half and ask for time",
+     "hi": "आधा भरें और समय माँगें",
+     "id": "d"
+    }
+   ],
+   "answer": "a",
+   "why": {
+    "en": "Courts and police use official letters and known offices, not a UPI request.",
+    "hi": "अदालतें और पुलिस आधिकारिक पत्र और जाने-माने दफ़्तर इस्तेमाल करती हैं, UPI अनुरोध नहीं।"
+   }
+  },
+  {
+   "id": "f18",
+   "type": "first_step",
+   "lesson": "kyc-link",
+   "text": {
+    "en": "You clicked a bank link and typed your card number, then you got worried. What do you do first?",
+    "hi": "आपने बैंक वाले लिंक पर क्लिक करके कार्ड नंबर डाल दिया, फिर घबराहट हुई। सबसे पहले क्या करें?"
+   },
+   "options": [
+    {
+     "en": "Wait to see if money goes",
+     "hi": "देखें कि पैसे जाते हैं या नहीं",
+     "id": "a"
+    },
+    {
+     "en": "Change your phone wallpaper",
+     "hi": "फ़ोन का वॉलपेपर बदलें",
+     "id": "b"
+    },
+    {
+     "en": "Delete the UPI app only",
+     "hi": "सिर्फ़ UPI ऐप हटा दें",
+     "id": "c"
+    },
+    {
+     "en": "Call your bank on the number on your card to block the card, then 1930",
+     "hi": "कार्ड पर छपे नंबर पर बैंक को फ़ोन करके कार्ड बंद करवाएँ, फिर 1930",
+     "id": "d"
+    }
+   ],
+   "answer": "d",
+   "why": {
+    "en": "Blocking the card quickly can stop the thief before they use it.",
+    "hi": "कार्ड जल्दी बंद करवाने से चोर के इस्तेमाल करने से पहले उसे रोका जा सकता है।"
+   }
+  },
+  {
+   "id": "f19",
+   "type": "first_step",
+   "lesson": "fake-customer-care",
+   "text": {
+    "en": "Search results show a customer-care number for your delivery company. What do you do first?",
+    "hi": "सर्च नतीजों में आपकी डिलीवरी कंपनी का कस्टमर-केयर नंबर दिखता है। सबसे पहले क्या करें?"
+   },
+   "options": [
+    {
+     "en": "Call the first number you see",
+     "hi": "जो पहला नंबर दिखे उसी पर कॉल करें",
+     "id": "a"
+    },
+    {
+     "en": "Share it with friends",
+     "hi": "इसे दोस्तों को भेज दें",
+     "id": "b"
+    },
+    {
+     "en": "Use the number inside the company's own app, or on your bill",
+     "hi": "कंपनी के अपने ऐप में या अपने बिल पर लिखा नंबर इस्तेमाल करें",
+     "id": "c"
+    },
+    {
+     "en": "Ask a stranger online if it is right",
+     "hi": "किसी अनजान से ऑनलाइन पूछ लें कि सही है या नहीं",
+     "id": "d"
+    }
+   ],
+   "answer": "c",
+   "why": {
+    "en": "Scammers pay to put fake numbers on search results. The company's own app does not lie.",
+    "hi": "ठग पैसे देकर सर्च नतीजों में नक़ली नंबर डलवाते हैं। कंपनी का अपना ऐप झूठ नहीं बोलता।"
+   }
+  },
+  {
+   "id": "f20",
+   "type": "first_step",
+   "lesson": "refund-pin-trap",
+   "text": {
+    "en": "A QR code is sent to \"receive\" your refund. What do you do first?",
+    "hi": "आपका रिफ़ंड \"पाने\" के लिए QR कोड भेजा गया है। सबसे पहले क्या करें?"
+   },
+   "options": [
+    {
+     "en": "Scan it with your UPI app",
+     "hi": "अपने UPI ऐप से स्कैन करें",
+     "id": "a"
+    },
+    {
+     "en": "Do not scan. Ask for the refund to come to your UPI ID",
+     "hi": "स्कैन न करें। कहें कि रिफ़ंड आपकी UPI आईडी पर आए",
+     "id": "b"
+    },
+    {
+     "en": "Scan it from a friend's phone",
+     "hi": "किसी दोस्त के फ़ोन से स्कैन करें",
+     "id": "c"
+    },
+    {
+     "en": "Print it and keep it",
+     "hi": "प्रिंट करके रख लें",
+     "id": "d"
+    }
+   ],
+   "answer": "b",
+   "why": {
+    "en": "Scanning a QR code is how you pay. You do not scan to receive.",
+    "hi": "QR कोड स्कैन करना पैसे भेजने का तरीक़ा है। पाने के लिए स्कैन नहीं किया जाता।"
+   }
+  },
+  {
+   "id": "f21",
+   "type": "first_step",
+   "lesson": "job-task-scam",
+   "text": {
+    "en": "You already paid a deposit for a task job and they ask for more to release your earnings. What do you do first?",
+    "hi": "आप टास्क वाली नौकरी के लिए डिपॉज़िट भर चुके हैं और अब कमाई छुड़ाने के लिए और माँगा जा रहा है। सबसे पहले क्या करें?"
+   },
+   "options": [
+    {
+     "en": "Stop paying and report it to 1930",
+     "hi": "पैसे देना बंद करें और 1930 पर बताएँ",
+     "id": "a"
+    },
+    {
+     "en": "Pay more to get back what you paid",
+     "hi": "जो दिया है उसे वापस पाने के लिए और भरें",
+     "id": "b"
+    },
+    {
+     "en": "Borrow money to finish the tasks",
+     "hi": "काम पूरा करने के लिए उधार लें",
+     "id": "c"
+    },
+    {
+     "en": "Pay in cryptocurrency",
+     "hi": "क्रिप्टोकरेंसी में भुगतान करें",
+     "id": "d"
+    }
+   ],
+   "answer": "a",
+   "why": {
+    "en": "More payments never release the earlier ones. Each one is lost too.",
+    "hi": "और भुगतान से पहले वाले नहीं छूटते। हर भुगतान भी डूब जाता है।"
+   }
+  },
+  {
+   "id": "f22",
+   "type": "first_step",
+   "lesson": "parcel-customs-fee",
+   "text": {
+    "en": "Your son did send you a parcel, and a message gives a link to pay Rs 20 for redelivery. What do you do first?",
+    "hi": "आपके बेटे ने सच में पार्सल भेजा था और संदेश में Rs 20 भरने का लिंक है। सबसे पहले क्या करें?"
+   },
+   "options": [
+    {
+     "en": "Pay through the link",
+     "hi": "लिंक से भुगतान करें",
+     "id": "a"
+    },
+    {
+     "en": "Enter card details to be quick",
+     "hi": "जल्दी के लिए कार्ड की जानकारी डालें",
+     "id": "b"
+    },
+    {
+     "en": "Reply with the OTP",
+     "hi": "OTP भेजकर जवाब दें",
+     "id": "c"
+    },
+    {
+     "en": "Track it on the courier's own app, or ask your son",
+     "hi": "पार्सल को कूरियर के अपने ऐप पर देखें, या बेटे से पूछें",
+     "id": "d"
+    }
+   ],
+   "answer": "d",
+   "why": {
+    "en": "A true parcel can be checked in a safe way. A link is not needed for that.",
+    "hi": "सच्चे पार्सल को सुरक्षित तरीक़े से जाँचा जा सकता है। उसके लिए लिंक की ज़रूरत नहीं है।"
+   }
+  }
+ ]
+}

@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% from "ext/community/_cm.html" import helpline with context %}
+{% block content %}
+<div class="wrap cm-wrap cm-narrow">
+  <h1>{{ tr("Six safety rules", "सुरक्षा के छह नियम") }}</h1>
+  <p class="cm-lead">{{ tr("If you remember only six things, remember these.", "अगर आप सिर्फ़ छह बातें याद रखें, तो यही रखें।") }}</p>
+  <ol class="cm-steps">{% for r in rules %}<li><span class="cm-num">{{ loop.index }}</span><span><b>{{ tr(r.title.en, r.title.hi) }}</b><br>{{ tr(r.body.en, r.body.hi) }}</span></li>{% endfor %}</ol>
+  {{ helpline() }}
+  <div class="cm-actions"><a class="hbtn hbtn-p" href="/learn">{{ tr("Learn the 12 scams", "12 ठगियाँ सीखें") }}</a><a class="hbtn hbtn-s" href="/learn/safe-word">{{ tr("Make a safe-word card", "सुरक्षित-शब्द कार्ड बनाएँ") }}</a><a class="hbtn hbtn-s" href="/check">{{ tr("Check something", "कुछ जाँचें") }}</a></div>
+</div>
+{% endblock %}

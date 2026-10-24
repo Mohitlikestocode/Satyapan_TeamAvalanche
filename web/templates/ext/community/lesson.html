@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% from "ext/community/_cm.html" import helpline with context %}
+{% block content %}
+<div class="wrap cm-wrap cm-narrow">
+  <p class="cm-crumb"><a href="/learn">‹ {{ tr("All lessons", "सारे पाठ") }}</a> · {{ tr("Lesson " ~ l.order ~ " of 12", "पाठ " ~ l.order ~ " / 12") }}</p>
+  <h1>{{ tr(l.title.en, l.title.hi) }}</h1>
+  <p class="cm-lead">{{ tr(l.summary.en, l.summary.hi) }}</p>
+
+  {% if read == "new" %}<div class="cm-note" role="status">{{ tr("Marked as read. +5 XP.", "पढ़ा हुआ चिह्नित किया। +5 XP।") }}</div>{% elif read == "again" %}<div class="cm-note" role="status">{{ tr("You had already marked this lesson.", "आप यह पाठ पहले ही चिह्नित कर चुके हैं।") }}</div>{% endif %}
+
+  <h2 class="cm-h2">{{ tr("An example", "एक उदाहरण") }}</h2>
+  <blockquote class="cm-quote"><p>{{ tr(l.story.en, l.story.hi) }}</p></blockquote>
+  <p class="cm-small">{{ tr("This is a made-up example based on how this fraud usually goes. It is not a real person's case.", "यह एक गढ़ा हुआ उदाहरण है, जो बताता है कि यह ठगी आम तौर पर कैसे होती है। यह किसी असली व्यक्ति का मामला नहीं है।") }}</p>
+
+  <h2 class="cm-h2">{{ tr("How it works", "यह कैसे होता है") }}</h2>
+  <ol class="cm-steps">{% for step in (l.how.hi if lang == "hi" else l.how.en) %}<li><span class="cm-num">{{ loop.index }}</span><span>{{ step }}</span></li>{% endfor %}</ol>
+
+  <h2 class="cm-h2">{{ tr("Red flags", "चेतावनी के संकेत") }}</h2>
+  <ul class="cm-flags">{% for f in (l.flags.hi if lang == "hi" else l.flags.en) %}<li>{{ f }}</li>{% endfor %}</ul>
+
+  <h2 class="cm-h2">{{ tr("What to do", "क्या करें") }}</h2>
+  <ul class="ticks">{% for f in (l.do.hi if lang == "hi" else l.do.en) %}<li>{{ f }}</li>{% endfor %}</ul>
+
+  <section class="cm-box">
+    <h2 class="cm-h2">{{ tr("Check it with Satyapan", "सत्यापन से जाँचें") }}</h2>
+    <p>{{ tr(l.check.en, l.check.hi) }}</p>
+    <a class="hbtn hbtn-p" href="/check?type={{ l.check_kind if l.check_kind != 'voice' else 'message' }}">{{ tr("Check something now", "अभी कुछ जाँचें") }}</a>
+  </section>
+  {{ helpline() }}
+
+  <div class="cm-actions">
+    {% if done %}<span class="pill pill-g">{{ tr("You have read this lesson", "आप यह पाठ पढ़ चुके हैं") }}</span>
+    {% else %}<form method="post" action="/learn/{{ l.slug }}/read"><button class="hbtn hbtn-p cm-btn" type="submit">{{ tr("I have read this", "मैंने यह पढ़ लिया") }}</button></form>{% endif %}
+    <a class="hbtn hbtn-s" href="/learn/drill">{{ tr("Practise in Scam Drill", "स्कैम ड्रिल में अभ्यास करें") }}</a>
+  </div>
+  <p class="cm-actions-b">
+    <a class="btn-sm" href="/warn?type={{ l.slug }}">{{ tr("Make a warning card", "चेतावनी कार्ड बनाएँ") }}</a>
+    <a class="btn-sm" href="/learn/posters/{{ l.slug }}.pdf?lang={{ lang }}">{{ tr("Print this as a poster (A4)", "इसे पोस्टर की तरह छापें (A4)") }}</a></p>
+  <nav class="cm-pager" aria-label="{{ tr('Lessons', 'पाठ') }}">
+    {% if prev %}<a class="btn-sm" href="/learn/{{ prev.slug }}">‹ {{ tr("Previous", "पिछला") }}</a>{% else %}<span></span>{% endif %}
+    {% if nxt %}<a class="btn-sm" href="/learn/{{ nxt.slug }}">{{ tr("Next", "अगला") }} ›</a>{% endif %}</nav>
+</div>
+{% endblock %}

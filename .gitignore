@@ -13,7 +13,7 @@ secrets/
 
 # Large / third-party assets (never committed; see docs/ASSETS.md)
 assets/
-models/
+/models/
 datasets/
 media/
 *.wav
@@ -73,3 +73,4 @@ data/cache/
 *.parquet
 *.zip
 .venv/
+data/corpus/uci_sms/

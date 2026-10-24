@@ -25,10 +25,13 @@
 (function () {
   var en = {{ msg_en|tojson }}, hi = {{ msg_hi|tojson }}, box = document.getElementById("gmsg"), wa = document.getElementById("wa");
   function set(t, b, other) { box.value = t; wa.href = "https://wa.me/?text=" + encodeURIComponent(t); b.classList.add("bn"); b.classList.remove("bq"); other.classList.add("bq"); other.classList.remove("bn"); }
+  function beacon() { try { fetch("/api/guardian/shared?case=" + encodeURIComponent({{ c.case_id|tojson }}), {method: "POST", keepalive: true}); } catch (e) {} }
+  wa.addEventListener("click", beacon);
   var be = document.getElementById("lang-en"), bh = document.getElementById("lang-hi");
   be.addEventListener("click", function () { set(en, be, bh); }); bh.addEventListener("click", function () { set(hi, bh, be); });
   box.addEventListener("input", function () { wa.href = "https://wa.me/?text=" + encodeURIComponent(box.value); });
   document.getElementById("gcopy").addEventListener("click", function () {
+    beacon();
     (navigator.clipboard ? navigator.clipboard.writeText(box.value) : Promise.reject()).then(function () { window.satyapanToast("Copied"); }, function () { box.select(); window.satyapanToast("Select and copy the text"); });
   });
 })();

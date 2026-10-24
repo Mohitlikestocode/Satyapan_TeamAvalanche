@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="wrap cm-wrap cm-narrow">
+  <h1>{{ tr("Use a recovery code", "रिकवरी कोड इस्तेमाल करें") }}</h1>
+  <p class="cm-lead">{{ tr("Type the code you saved. This phone will then share that progress. Progress already on this phone is not merged: it is replaced.", "सहेजा हुआ कोड लिखें। फिर यह फ़ोन उसी प्रगति को इस्तेमाल करेगा। इस फ़ोन की मौजूदा प्रगति जुड़ती नहीं, बदल जाती है।") }}</p>
+  {% if error == "bad" %}<div class="cm-error" role="alert">{{ tr("That code did not match. Check each letter and try again.", "यह कोड मेल नहीं खाया। हर अक्षर जाँचकर दोबारा कोशिश करें।") }}</div>
+  {% elif error == "limit" %}<div class="cm-error" role="alert">{{ tr("Too many tries today. Please try again tomorrow.", "आज बहुत कोशिशें हो गईं। कृपया कल फिर कोशिश करें।") }}</div>{% endif %}
+  <form method="post" action="/me/recover" class="cm-form"><div class="cm-field"><label for="cm-rc">{{ tr("Recovery code", "रिकवरी कोड") }}</label>
+    <input class="cm-in" id="cm-rc" name="code" type="text" autocomplete="off" maxlength="40" placeholder="SP-XXXX-XXXX-XXXX" style="text-transform:uppercase" required></div>
+    <div><button class="hbtn hbtn-p cm-btn" type="submit">{{ tr("Restore my progress", "मेरी प्रगति वापस लाएँ") }}</button></div></form>
+</div>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="wrap cm-wrap cm-narrow">
+{% set answered = view.answered if view else st.answered %}{% set total = view.total if view else st.total %}
+<p class="cm-progress"><span>{{ tr("Question " ~ ((answered if view else st.number)) ~ " of " ~ total, "सवाल " ~ ((answered if view else st.number)) ~ " / " ~ total) }}</span><span>{{ tr("Scam Drill", "स्कैम ड्रिल") }}</span></p>
+<div class="prog" role="progressbar" aria-valuemin="0" aria-valuemax="{{ total }}" aria-valuenow="{{ answered }}" aria-label="{{ tr('Round progress', 'राउंड की प्रगति') }}"><i style="width:{{ (100 * answered / total)|round|int }}%"></i></div>
+{% if error %}<div class="cm-error" role="alert">{{ tr(error[0], error[1]) }}</div>{% endif %}
+
+{% if view %}
+  {% set q = view.question %}{% set rv = view.reveal %}
+  <div class="cm-feedback {{ 'ok' if rv.correct else 'no' }}" role="status"><b>{{ tr("Right!", "सही!") if rv.correct else tr("Not quite.", "ठीक नहीं।") }}</b> {{ rv.why }}</div>
+  {% if q.type == "scam_or_genuine" %}
+    <div class="cm-q-text">{{ q.text }}</div>
+    <p><b>{{ tr("The right answer:", "सही उत्तर:") }}</b> {{ tr("Scam", "ठगी") if rv.answer == "scam" else tr("Genuine", "असली") }} · {{ tr("You said:", "आपने कहा:") }} {{ tr("Scam", "ठगी") if rv.given == "scam" else tr("Genuine", "असली") }}</p>
+  {% elif q.type == "first_step" %}
+    <div class="cm-q-text">{{ q.text }}</div>
+    <div class="cm-opts">{% for o in q.options %}<div class="cm-opt {% if o.id == rv.answer %}right{% elif o.id == rv.given %}wrong{% endif %}">{{ o.label }}{% if o.id == rv.answer %} ✓{% elif o.id == rv.given %} ✗{% endif %}</div>{% endfor %}</div>
+  {% else %}
+    <p><b>{{ tr("The warning signs:", "चेतावनी के संकेत:") }}</b></p>
+    <div class="cm-words">{% for m in rv.marks %}<span class="cm-word {% if m.warning and m.picked %}right{% elif m.warning %}missed{% elif m.picked %}wrong{% endif %}">{{ m.text }}{% if m.warning and m.picked %} ✓{% elif m.warning %} ({{ tr("missed", "छूटा") }}){% elif m.picked %} ✗{% endif %}</span>{% endfor %}</div>
+  {% endif %}
+  {% if rv.lesson and not rv.correct %}<p><a href="/learn/{{ rv.lesson }}">{{ tr("Read the lesson about this", "इसके बारे में पाठ पढ़ें") }}</a></p>{% endif %}
+  <div class="cm-actions">{% if view.finished %}<a class="hbtn hbtn-p" href="/learn/drill/score?r={{ rid }}">{{ tr("See my score", "मेरा स्कोर देखें") }}</a>{% else %}<a class="hbtn hbtn-p" href="/drill/play?r={{ rid }}">{{ tr("Next question", "अगला सवाल") }}</a>{% endif %}</div>
+{% else %}
+  {% set q = st.question %}
+  <form method="post" action="/drill/answer">
+    <input type="hidden" name="r" value="{{ rid }}"><input type="hidden" name="qid" value="{{ q.id }}">
+    {% if q.type == "scam_or_genuine" %}
+      <h1 class="cm-h2">{{ tr("Is this a scam or a genuine message?", "यह ठगी है या असली संदेश?") }}</h1>
+      <div class="cm-q-text">{{ q.text }}</div>
+      <div class="cm-opts"><button class="cm-opt" type="submit" name="a" value="scam">{{ tr("Scam", "ठगी") }}</button><button class="cm-opt" type="submit" name="a" value="genuine">{{ tr("Genuine", "असली") }}</button></div>
+    {% elif q.type == "first_step" %}
+      <h1 class="cm-h2">{{ tr("What should you do first?", "सबसे पहले क्या करें?") }}</h1>
+      <div class="cm-q-text">{{ q.text }}</div>
+      <div class="cm-opts">{% for o in q.options %}<button class="cm-opt" type="submit" name="a" value="{{ o.id }}">{{ o.label }}</button>{% endfor %}</div>
+    {% else %}
+      <h1 class="cm-h2">{{ tr("Tap the warning signs in this message", "इस संदेश में चेतावनी के संकेत चुनें") }}</h1>
+      <fieldset class="cm-words" style="border:0;padding:0"><legend class="cm-small">{{ tr("Tick every phrase that is a warning sign, then press Check.", "हर वह वाक्यांश चुनें जो चेतावनी का संकेत है, फिर \"जाँचें\" दबाएँ।") }}</legend>
+        {% for p in q.phrases %}<label class="cm-word-label"><input type="checkbox" name="w" value="{{ loop.index0 }}" class="cm-word-box"><span class="cm-word">{{ p }}</span></label>{% endfor %}</fieldset>
+      <div class="cm-actions"><button class="hbtn hbtn-p cm-btn" type="submit">{{ tr("Check my answer", "मेरा उत्तर जाँचें") }}</button></div>
+    {% endif %}
+  </form>
+{% endif %}
+</div>
+{% endblock %}

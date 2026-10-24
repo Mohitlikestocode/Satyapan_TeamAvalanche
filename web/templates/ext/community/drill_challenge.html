@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="wrap cm-wrap cm-narrow">
+  <h1>{{ tr("You have been challenged", "आपको चुनौती मिली है") }}</h1>
+  <p class="cm-lead">{{ tr((intro["from"] or "A relative") ~ " played the Satyapan Scam Drill and wants to see if you can beat the score. You get the same 5 questions.", (intro["from"] or "आपके किसी रिश्तेदार") ~ " ने सत्यापन स्कैम ड्रिल खेली और जानना चाहता है कि क्या आप उसका स्कोर पार कर सकते हैं। आपको वही 5 सवाल मिलेंगे।") }}</p>
+  <p class="cm-small">{{ tr(intro.played ~ " people have played this challenge so far.", "अब तक " ~ intro.played ~ " लोग यह चुनौती खेल चुके हैं।") }}</p>
+  <form method="post" action="/drill/start"><input type="hidden" name="c" value="{{ intro.code }}"><button class="hbtn hbtn-p cm-btn" type="submit">{{ tr("Start the challenge", "चुनौती शुरू करें") }}</button></form>
+</div>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+{% macro row(p, actions) %}
+<tr><td>#{{ p.id }}</td><td><span class="pill pill-{{ p.tier_class }}">{{ p.tier }}</span></td>
+<td class="cm-excerpt">{{ p.excerpt }}{% if p.entity_display %}<br><b>{{ p.entity_display }}</b>{% endif %}</td>
+<td>{% for f in p.flags %}<span class="pill pill-a">{{ f }}</span> {% endfor %}{% for r, n in p.abuse %}<span class="pill pill-r">{{ r }} × {{ n }}</span> {% endfor %}</td>
+<td class="cm-row-acts">{% for a in actions %}<form method="post" action="/community/moderate/{{ p.id }}/{{ a[0] }}"><button class="btn-sm {% if a[0] in ('reject','remove') %}danger{% endif %}" type="submit">{{ a[1] }}</button></form>{% endfor %}</td></tr>
+{% endmacro %}
+<div class="wrap cm-wrap">
+  <h1>{{ tr("Moderate Scam Watch", "स्कैम वॉच की निगरानी") }}</h1>
+  <p class="cm-lead">{{ tr("Signed in as " ~ me ~ ". Every action is written to the audit log with your name. You only see the cleaned text, never the original.", me ~ " के रूप में साइन-इन। हर कदम आपके नाम के साथ ऑडिट लॉग में लिखा जाता है। आपको सिर्फ़ साफ़ किया हुआ पाठ दिखता है, मूल पाठ नहीं।") }}</p>
+  {% if done %}<div class="cm-note" role="status">{% if done == "none" %}{{ tr("Nothing changed (the post was already handled).", "कुछ नहीं बदला (पोस्ट पर पहले ही कार्रवाई हो चुकी है)।") }}{% else %}{{ tr("Done: " ~ done, "हो गया: " ~ done) }}{% endif %}</div>{% endif %}
+  <section class="kpis"><div class="kpi kpi-a"><small>{{ tr("Waiting", "इंतज़ार में") }}</small><b>{{ stats.pending }}</b></div>
+    <div class="kpi kpi-r"><small>{{ tr("Hidden by reports", "शिकायत से छिपी") }}</small><b>{{ stats.held }}</b></div>
+    <div class="kpi"><small>{{ tr("Open abuse reports", "खुली शिकायतें") }}</small><b>{{ stats.abuse_open }}</b></div>
+    <div class="kpi kpi-g"><small>{{ tr("Public posts", "सार्वजनिक पोस्ट") }}</small><b>{{ stats.posts }}</b></div></section>
+
+  <h2 class="cm-h2">{{ tr("Waiting for a decision", "फ़ैसले के इंतज़ार में") }}</h2>
+  {% if q.pending %}<div class="tbl-wrap"><table class="tbl"><thead><tr><th>ID</th><th>{{ tr("Verdict", "नतीजा") }}</th><th>{{ tr("Cleaned text", "साफ़ किया पाठ") }}</th><th>{{ tr("Notes", "टिप्पणी") }}</th><th>{{ tr("Action", "कार्रवाई") }}</th></tr></thead><tbody>
+    {% for p in q.pending %}{{ row(p, [("approve", tr("Publish", "प्रकाशित करें")), ("reject", tr("Reject", "अस्वीकार करें"))]) }}{% endfor %}</tbody></table></div>
+  {% else %}<p class="cm-empty-s">{{ tr("Nothing is waiting.", "कुछ इंतज़ार में नहीं है।") }}</p>{% endif %}
+
+  <h2 class="cm-h2">{{ tr("Hidden after abuse reports", "शिकायतों के बाद छिपी") }}</h2>
+  {% if q.held %}<div class="tbl-wrap"><table class="tbl"><thead><tr><th>ID</th><th>{{ tr("Verdict", "नतीजा") }}</th><th>{{ tr("Cleaned text", "साफ़ किया पाठ") }}</th><th>{{ tr("Reports", "शिकायतें") }}</th><th>{{ tr("Action", "कार्रवाई") }}</th></tr></thead><tbody>
+    {% for p in q.held %}{{ row(p, [("dismiss", tr("Reports wrong: show again", "शिकायत ग़लत: फिर दिखाएँ")), ("remove", tr("Remove for good", "हमेशा के लिए हटाएँ"))]) }}{% endfor %}</tbody></table></div>
+  {% else %}<p class="cm-empty-s">{{ tr("Nothing is hidden.", "कुछ छिपा नहीं है।") }}</p>{% endif %}
+
+  <h2 class="cm-h2">{{ tr("Public posts (latest 20)", "सार्वजनिक पोस्ट (नवीनतम 20)") }}</h2>
+  {% if q.approved %}<div class="tbl-wrap"><table class="tbl"><thead><tr><th>ID</th><th>{{ tr("Verdict", "नतीजा") }}</th><th>{{ tr("Cleaned text", "साफ़ किया पाठ") }}</th><th>{{ tr("Reports", "शिकायतें") }}</th><th>{{ tr("Action", "कार्रवाई") }}</th></tr></thead><tbody>
+    {% for p in q.approved %}{{ row(p, [("remove", tr("Remove", "हटाएँ"))]) }}{% endfor %}</tbody></table></div>
+  {% else %}<p class="cm-empty-s">{{ tr("No public posts yet.", "अभी कोई सार्वजनिक पोस्ट नहीं।") }}</p>{% endif %}
+
+  <h2 class="cm-h2">{{ tr("Recent moderation log", "हाल का निगरानी लॉग") }}</h2>
+  {% if trail %}<ul class="list">{% for a in trail %}<li><b>{{ a.action }}</b> · {{ a.target }} · {{ a.actor }} · {{ fmt_ts(a.ts) }}<br><span class="cm-small">{{ a.detail }}</span></li>{% endfor %}</ul>
+  {% else %}<p class="cm-empty-s">{{ tr("No actions yet.", "अभी कोई कार्रवाई नहीं।") }}</p>{% endif %}
+</div>
+{% endblock %}

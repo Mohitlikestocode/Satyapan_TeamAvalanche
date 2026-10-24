@@ -1,0 +1,66 @@
+codes:
+  OFFER_AUTHORITY_THREAT:
+    layer: L4
+    priority: 14
+    en: "It claims to be police, CBI, TRAI or a court and threatens arrest or disconnection. No real agency does this by message or call, and none asks you to keep it secret."
+    hi: "यह खुद को पुलिस, सीबीआई, ट्राई या अदालत बताकर गिरफ़्तारी या कनेक्शन कटने की धमकी देता है। कोई असली एजेंसी संदेश या कॉल पर ऐसा नहीं करती और न ही इसे गुप्त रखने को कहती है।"
+  OFFER_ADVANCE_FEE:
+    layer: L4
+    priority: 15
+    en: "It asks you to pay a fee first (processing, registration, insurance, customs or similar) before you get a prize, loan, job or parcel. This is a classic fraud."
+    hi: "यह इनाम, लोन, नौकरी या पार्सल मिलने से पहले आपसे फीस (प्रोसेसिंग, रजिस्ट्रेशन, बीमा, कस्टम आदि) माँगता है। यह धोखाधड़ी का पुराना तरीका है।"
+  OFFER_PRIZE_CLAIM:
+    layer: L4
+    priority: 26
+    en: "It says you have won a prize or lottery you never entered."
+    hi: "यह कहता है कि आपने कोई इनाम या लॉटरी जीती है, जबकि आपने कभी हिस्सा नहीं लिया।"
+  OFFER_CREDENTIAL_REQUEST:
+    layer: L4
+    priority: 13
+    en: "It asks for your OTP, PIN, CVV, card details or password. A real bank or shop never asks for these."
+    hi: "यह आपका OTP, PIN, CVV, कार्ड की जानकारी या पासवर्ड माँगता है। असली बैंक या दुकान ये कभी नहीं माँगते।"
+  OFFER_APPROVE_TO_RECEIVE:
+    layer: L4
+    priority: 16
+    en: "It tells you to scan a QR or approve a request to receive money. Receiving money never needs a PIN or an approval, so this takes money out of your account."
+    hi: "यह पैसे पाने के लिए QR स्कैन करने या रिक्वेस्ट मंज़ूर करने को कहता है। पैसे पाने में PIN या मंज़ूरी नहीं लगती, इसलिए इससे आपके खाते से पैसे कटते हैं।"
+  OFFER_EARN_FOR_TASKS:
+    layer: L4
+    priority: 17
+    en: "It promises easy daily earnings for simple online tasks. Task and work-from-home offers like this are a common way to take deposits."
+    hi: "यह आसान ऑनलाइन कामों से रोज़ कमाई का वादा करता है। ऐसे टास्क और घर बैठे काम के ऑफ़र जमा के नाम पर पैसे लेने का आम तरीका हैं।"
+  OFFER_FAMILY_EMERGENCY:
+    layer: L4
+    priority: 19
+    en: "It pretends to be a relative in an emergency and asks for money right away. Call that person on the number you already have before paying."
+    hi: "यह किसी रिश्तेदार की आपात स्थिति का बहाना बनाकर तुरंत पैसे माँगता है। पैसे भेजने से पहले उस व्यक्ति को उसके पुराने नंबर पर फ़ोन करें।"
+  OFFER_WRONG_TRANSFER_RETURN:
+    layer: L4
+    priority: 22
+    en: "It says money was sent to you by mistake and asks you to send it back. Check your own bank statement first: usually nothing was sent."
+    hi: "यह कहता है कि गलती से आपके खाते में पैसे आ गए हैं और वापस माँगता है। पहले अपना बैंक स्टेटमेंट देखें: अक्सर कुछ आया ही नहीं होता।"
+  OFFER_CRYPTO_DOUBLE:
+    layer: L4
+    priority: 23
+    en: "It promises to give back double if you send crypto or money first. This does not happen."
+    hi: "यह पहले क्रिप्टो या पैसे भेजने पर दोगुना लौटाने का वादा करता है। ऐसा नहीं होता।"
+  OFFER_FORCES_ADVANCE:
+    layer: L4
+    priority: 27
+    en: "The sender claims to be in the army or posted far away and wants you to take a QR, token or advance. Sellers are paid by receiving, never by scanning or entering a PIN."
+    hi: "भेजने वाला खुद को सेना में या दूर तैनात बताता है और QR, टोकन या एडवांस की बात करता है। बेचने वाले को पैसे पाने के लिए स्कैन या PIN की ज़रूरत नहीं होती।"
+  OFFER_ACCOUNT_THREAT:
+    layer: L4
+    priority: 28
+    en: "It threatens that your account, card, SIM or connection will be blocked or cut soon unless you act."
+    hi: "यह धमकाता है कि आपका खाता, कार्ड, सिम या कनेक्शन जल्द ही बंद या कट जाएगा, जब तक आप कुछ न करें।"
+  OFFER_VERIFY_LINK:
+    layer: L4
+    priority: 29
+    en: "It asks you to click a link to verify, update or claim something. Open your bank or provider's own app instead."
+    hi: "यह किसी चीज़ की पुष्टि, अपडेट या दावे के लिए लिंक पर क्लिक करने को कहता है। इसके बजाय अपने बैंक या कंपनी का अपना ऐप खोलें।"
+  OFFER_AUTHORITY_REFUND_CLAIM:
+    layer: L4
+    priority: 30
+    en: "It says a refund, subsidy, scholarship or reward is waiting for you. Genuine ones arrive in your account without you paying or entering card details."
+    hi: "यह कहता है कि आपका रिफंड, सब्सिडी, स्कॉलरशिप या इनाम इंतज़ार कर रहा है। असली रक़म बिना आपके पैसे दिए या कार्ड की जानकारी डाले खाते में आती है।"

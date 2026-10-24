@@ -137,6 +137,10 @@ def purge(now: int | None = None) -> int:
         n = c.execute(
             "DELETE FROM cases WHERE (shared=0 AND created<?) OR (shared=1 AND created<?)", (now - CASE_TTL_S, now - SHARED_TTL_S)
         ).rowcount
+        try:
+            c.execute("DELETE FROM community_events WHERE ts<?", (now - 2 * 86400,))
+        except sqlite3.OperationalError:  # table is created lazily by the community plugin
+            pass
     if n:
         audit("system", "purge", "cases", f"{n} expired")
     return n

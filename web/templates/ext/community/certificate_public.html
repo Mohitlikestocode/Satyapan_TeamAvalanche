@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="wrap cm-wrap cm-narrow">
+{% if cert %}
+  <h1>{{ tr("Scam-Aware certificate", "स्कैम-सजग प्रमाणपत्र") }}</h1>
+  <img class="cm-cert" src="/learn/certificate/{{ token|urlencode }}.png?lang={{ lang }}" alt="{{ tr('Scam-Aware learning certificate for ' ~ cert.handle, cert.handle ~ ' के लिए स्कैम-सजग सीखने का प्रमाणपत्र') }}" width="800" height="566">
+  <p class="cm-small">{{ tr("Satyapan Scam-Aware, a learning certificate, not an official qualification.", "सत्यापन स्कैम-सजग, सीखने का प्रमाणपत्र है, कोई आधिकारिक योग्यता नहीं।") }}</p>
+  <a class="hbtn hbtn-p" href="/learn">{{ tr("Learn to spot scams too", "आप भी स्कैम पहचानना सीखें") }}</a>
+{% else %}
+  <h1>{{ tr("Certificate not found", "प्रमाणपत्र नहीं मिला") }}</h1><p>{{ tr("This link is not valid.", "यह लिंक मान्य नहीं है।") }}</p><a class="hbtn hbtn-p" href="/learn">{{ tr("Go to lessons", "पाठों पर जाएँ") }}</a>
+{% endif %}
+</div>
+{% endblock %}

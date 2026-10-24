@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="wrap ops-body" style="padding-top:32px;padding-bottom:48px;max-width:640px">
+  {% if state == "on" %}
+    <h1>{{ tr("This browser is now marked as team traffic", "यह ब्राउज़र अब टीम ट्रैफ़िक के रूप में चिह्नित है") }}</h1>
+    <p>{{ tr("Checks and visits from this browser are stored but left out of every public number. Open /internal?off=1 to undo.", "इस ब्राउज़र की जाँचें और विज़िट रखी जाती हैं पर किसी सार्वजनिक आँकड़े में नहीं गिनी जातीं। वापस करने के लिए /internal?off=1 खोलें।") }}</p>
+  {% elif state == "off" %}
+    <h1>{{ tr("This browser is counted again", "यह ब्राउज़र फिर से गिना जाएगा") }}</h1>
+  {% else %}
+    <h1>{{ tr("Not found", "नहीं मिला") }}</h1>
+  {% endif %}
+  <p><a href="/">{{ tr("Home", "मुख्य पृष्ठ") }}</a></p>
+</div>
+{% endblock %}
