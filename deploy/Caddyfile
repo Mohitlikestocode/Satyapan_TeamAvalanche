@@ -1,0 +1,14 @@
+# Caddy gets and renews the HTTPS certificate by itself for SITE_ADDRESS (a domain, or <server-ip>.sslip.io when there is no domain).
+{$SITE_ADDRESS} {
+	encode zstd gzip
+	request_body {
+		max_size 30MB
+	}
+	reverse_proxy app:8000 {
+		header_up X-Forwarded-Proto {scheme}
+	}
+	log {
+		output stdout
+		format console
+	}
+}

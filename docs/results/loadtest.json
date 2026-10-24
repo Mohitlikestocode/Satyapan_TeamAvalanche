@@ -1,0 +1,74 @@
+{
+ "target": "http://127.0.0.1:8011",
+ "healthz": {
+  "status": "ok",
+  "database": "ok",
+  "uptime_s": 7,
+  "version": "dev",
+  "build_time": "",
+  "rate_limit": false,
+  "plugins": [
+   "traction"
+  ]
+ },
+ "machine_running_the_test": {
+  "platform": "Windows-11-10.0.26300-SP0",
+  "python": "3.12.10",
+  "cpus": 18
+ },
+ "note": "the machine running the test is not necessarily the server; the server's own hardware must be stated next to these numbers",
+ "mix": {
+  "message": 0.6,
+  "link": 0.15,
+  "qr_image": 0.15,
+  "pdf": 0.1
+ },
+ "date": "2026-10-24 17:24",
+ "levels": [
+  {
+   "users": 1,
+   "seconds": 9.9,
+   "requests": 22,
+   "ok": 22,
+   "throttled_429": 0,
+   "errors": 0,
+   "error_rate": 0.0,
+   "checks_per_second": 2.22,
+   "p50_ms": 81.7,
+   "p95_ms": 1183.4,
+   "p99_ms": 1821.5,
+   "mean_ms": 303.5
+  },
+  {
+   "users": 4,
+   "seconds": 10.0,
+   "requests": 35,
+   "ok": 35,
+   "throttled_429": 0,
+   "errors": 0,
+   "error_rate": 0.0,
+   "checks_per_second": 3.48,
+   "p50_ms": 748.4,
+   "p95_ms": 2250.2,
+   "p99_ms": 2721.3,
+   "mean_ms": 1021.3
+  },
+  {
+   "users": 8,
+   "seconds": 11.4,
+   "requests": 66,
+   "ok": 66,
+   "throttled_429": 0,
+   "errors": 0,
+   "error_rate": 0.0,
+   "checks_per_second": 5.78,
+   "p50_ms": 1057.3,
+   "p95_ms": 2716.0,
+   "p99_ms": 2717.9,
+   "mean_ms": 1165.1
+  }
+ ],
+ "cost": {
+  "note": "give --price-per-month to compute"
+ }
+}
