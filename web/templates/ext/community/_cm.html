@@ -1,0 +1,12 @@
+{% macro kind_label(k) %}{% for key, en, hi in cm_kinds %}{% if key == k %}{{ tr(en, hi) }}{% endif %}{% endfor %}{% endmacro %}
+{% macro lang_label(k) %}{% for key, en, hi in cm_langs %}{% if key == k %}{{ tr(en, hi) }}{% endif %}{% endfor %}{% endmacro %}
+{% macro pill(p) %}<span class="pill pill-{{ p.tier_class }}">{{ p.tier_label }}</span>{% endmacro %}
+{% macro seen_by(n) %}{% if n == 1 %}{{ tr("Seen by 1 person", "1 व्यक्ति ने देखा") }}{% else %}{{ tr("Seen by " ~ n ~ " people", n ~ " लोगों ने देखा") }}{% endif %}{% endmacro %}
+{% macro card(p) %}
+<article class="cm-card">
+  <div class="cm-card-top">{{ pill(p) }}<span class="cm-meta">{{ kind_label(p.kind) }} · {{ p.created|cm_date }}{% if p.place %} · {{ p.place }}{% endif %}</span></div>
+  <p class="cm-excerpt">{{ p.excerpt }}</p>
+  {% if p.entity %}<p class="cm-entity"><span>{% if p.entity_kind == "upi" %}{{ tr("Payee", "भुगतान पाने वाला") }}{% elif p.entity_kind == "domain" %}{{ tr("Website", "वेबसाइट") }}{% else %}{{ tr("Number", "नंबर") }}{% endif %}:</span> <b>{{ p.entity }}</b></p>{% endif %}
+  <div class="cm-card-foot"><b class="cm-seen">{{ seen_by(p.sightings) }}</b><a class="btn-sm" href="/community/post/{{ p.id }}">{{ tr("Open", "खोलें") }}<span class="cm-sr"> {{ tr("report", "रिपोर्ट") }} {{ p.id }}</span></a></div>
+</article>
+{% endmacro %}
