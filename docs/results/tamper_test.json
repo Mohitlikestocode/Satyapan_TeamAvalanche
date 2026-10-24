@@ -1,0 +1,805 @@
+{
+ "split": "test",
+ "n": 4966,
+ "model": {
+  "tpr": {
+   "k": 975,
+   "n": 2511,
+   "rate": 0.38829151732377537,
+   "lo": 0.3694132827677561,
+   "hi": 0.4075110372371301
+  },
+  "fpr": {
+   "k": 124,
+   "n": 2455,
+   "rate": 0.0505091649694501,
+   "lo": 0.04252691118608622,
+   "hi": 0.0598959533042494
+  },
+  "auroc": 0.7346928909944919,
+  "threshold": 0.990961493061615,
+  "auroc_ci": [
+   0.7211127069407844,
+   0.7479718525656156
+  ]
+ },
+ "config": {
+  "encoder": "small",
+  "size": [
+   384,
+   384
+  ],
+  "native": true,
+  "max_side": 1600
+ },
+ "threshold_from": "validation split",
+ "epoch": 10,
+ "seed": 7,
+ "target_fpr": 0.05,
+ "hardware": "NVIDIA GeForce RTX 4060 Laptop GPU",
+ "localisation_iou_on_edited": 0.3166696157020678,
+ "by_condition": {
+  "dark": {
+   "tpr": {
+    "k": 253,
+    "n": 766,
+    "rate": 0.3302872062663185,
+    "lo": 0.2978997875877263,
+    "hi": 0.3643683984910723
+   },
+   "fpr": {
+    "k": 26,
+    "n": 702,
+    "rate": 0.037037037037037035,
+    "lo": 0.02539835332902019,
+    "hi": 0.05371514749042711
+   },
+   "auroc": 0.72062849151622,
+   "threshold": 0.990961493061615
+  },
+  "edit_clone": {
+   "tpr": {
+    "k": 57,
+    "n": 736,
+    "rate": 0.07744565217391304,
+    "lo": 0.06025407917464454,
+    "hi": 0.09902542065342679
+   },
+   "fpr": {
+    "k": 0,
+    "n": 0,
+    "rate": NaN,
+    "lo": 0.0,
+    "hi": 1.0
+   },
+   "auroc": NaN,
+   "threshold": 0.990961493061615
+  },
+  "edit_fill": {
+   "tpr": {
+    "k": 918,
+    "n": 1775,
+    "rate": 0.5171830985915493,
+    "lo": 0.49392389569623657,
+    "hi": 0.5403680839831233
+   },
+   "fpr": {
+    "k": 0,
+    "n": 0,
+    "rate": NaN,
+    "lo": 0.0,
+    "hi": 1.0
+   },
+   "auroc": NaN,
+   "threshold": 0.990961493061615
+  },
+  "edit_other_font": {
+   "tpr": {
+    "k": 517,
+    "n": 1259,
+    "rate": 0.4106433677521843,
+    "lo": 0.38378049981237927,
+    "hi": 0.43804988651635746
+   },
+   "fpr": {
+    "k": 0,
+    "n": 0,
+    "rate": NaN,
+    "lo": 0.0,
+    "hi": 1.0
+   },
+   "auroc": NaN,
+   "threshold": 0.990961493061615
+  },
+  "edit_perfect": {
+   "tpr": {
+    "k": 33,
+    "n": 385,
+    "rate": 0.08571428571428572,
+    "lo": 0.06168270806635609,
+    "hi": 0.11793181877439346
+   },
+   "fpr": {
+    "k": 0,
+    "n": 0,
+    "rate": NaN,
+    "lo": 0.0,
+    "hi": 1.0
+   },
+   "auroc": NaN,
+   "threshold": 0.990961493061615
+  },
+  "edit_same_font": {
+   "tpr": {
+    "k": 458,
+    "n": 1252,
+    "rate": 0.365814696485623,
+    "lo": 0.33958242960365237,
+    "hi": 0.39286790489713186
+   },
+   "fpr": {
+    "k": 0,
+    "n": 0,
+    "rate": NaN,
+    "lo": 0.0,
+    "hi": 1.0
+   },
+   "auroc": NaN,
+   "threshold": 0.990961493061615
+  },
+  "edit_with_traces": {
+   "tpr": {
+    "k": 942,
+    "n": 2126,
+    "rate": 0.4430856067732832,
+    "lo": 0.4220910253784157,
+    "hi": 0.4642855014017917
+   },
+   "fpr": {
+    "k": 0,
+    "n": 0,
+    "rate": NaN,
+    "lo": 0.0,
+    "hi": 1.0
+   },
+   "auroc": NaN,
+   "threshold": 0.990961493061615
+  },
+  "field_amount": {
+   "tpr": {
+    "k": 500,
+    "n": 997,
+    "rate": 0.5015045135406219,
+    "lo": 0.4705215897934542,
+    "hi": 0.5324758875296307
+   },
+   "fpr": {
+    "k": 0,
+    "n": 0,
+    "rate": NaN,
+    "lo": 0.0,
+    "hi": 1.0
+   },
+   "auroc": NaN,
+   "threshold": 0.990961493061615
+  },
+  "field_payee": {
+   "tpr": {
+    "k": 165,
+    "n": 517,
+    "rate": 0.3191489361702128,
+    "lo": 0.28042690779763235,
+    "hi": 0.36053879079479967
+   },
+   "fpr": {
+    "k": 0,
+    "n": 0,
+    "rate": NaN,
+    "lo": 0.0,
+    "hi": 1.0
+   },
+   "auroc": NaN,
+   "threshold": 0.990961493061615
+  },
+  "field_ref": {
+   "tpr": {
+    "k": 87,
+    "n": 349,
+    "rate": 0.2492836676217765,
+    "lo": 0.20679200074499773,
+    "hi": 0.29723473533147393
+   },
+   "fpr": {
+    "k": 0,
+    "n": 0,
+    "rate": NaN,
+    "lo": 0.0,
+    "hi": 1.0
+   },
+   "auroc": NaN,
+   "threshold": 0.990961493061615
+  },
+  "field_time": {
+   "tpr": {
+    "k": 137,
+    "n": 373,
+    "rate": 0.3672922252010724,
+    "lo": 0.3199537271451047,
+    "hi": 0.4173364234115219
+   },
+   "fpr": {
+    "k": 0,
+    "n": 0,
+    "rate": NaN,
+    "lo": 0.0,
+    "hi": 1.0
+   },
+   "auroc": NaN,
+   "threshold": 0.990961493061615
+  },
+  "field_vpa": {
+   "tpr": {
+    "k": 86,
+    "n": 275,
+    "rate": 0.31272727272727274,
+    "lo": 0.26083043497899655,
+    "hi": 0.36978422223140534
+   },
+   "fpr": {
+    "k": 0,
+    "n": 0,
+    "rate": NaN,
+    "lo": 0.0,
+    "hi": 1.0
+   },
+   "auroc": NaN,
+   "threshold": 0.990961493061615
+  },
+  "font_seen": {
+   "tpr": {
+    "k": 482,
+    "n": 1244,
+    "rate": 0.387459807073955,
+    "lo": 0.3607733728586013,
+    "hi": 0.41483917283630106
+   },
+   "fpr": {
+    "k": 67,
+    "n": 1251,
+    "rate": 0.053557154276578735,
+    "lo": 0.04239203370045223,
+    "hi": 0.06745577497914526
+   },
+   "auroc": 0.7391713638735314,
+   "threshold": 0.990961493061615
+  },
+  "font_unseen": {
+   "tpr": {
+    "k": 493,
+    "n": 1267,
+    "rate": 0.38910812943962114,
+    "lo": 0.3626355133786691,
+    "hi": 0.4162511708469652
+   },
+   "fpr": {
+    "k": 57,
+    "n": 1204,
+    "rate": 0.0473421926910299,
+    "lo": 0.036718791956688736,
+    "hi": 0.060844994553065516
+   },
+   "auroc": 0.7301221657878106,
+   "threshold": 0.990961493061615
+  },
+  "jpeg_q40": {
+   "tpr": {
+    "k": 161,
+    "n": 415,
+    "rate": 0.38795180722891565,
+    "lo": 0.3423008740749694,
+    "hi": 0.43565814432243916
+   },
+   "fpr": {
+    "k": 32,
+    "n": 434,
+    "rate": 0.07373271889400922,
+    "lo": 0.05270958010155875,
+    "hi": 0.10223595271213458
+   },
+   "auroc": 0.7151518516462162,
+   "threshold": 0.990961493061615
+  },
+  "jpeg_q55": {
+   "tpr": {
+    "k": 170,
+    "n": 419,
+    "rate": 0.40572792362768495,
+    "lo": 0.35977317625259414,
+    "hi": 0.45339563211441597
+   },
+   "fpr": {
+    "k": 26,
+    "n": 429,
+    "rate": 0.06060606060606061,
+    "lo": 0.04169122805406003,
+    "hi": 0.08732040114239428
+   },
+   "auroc": 0.7071198491246224,
+   "threshold": 0.990961493061615
+  },
+  "jpeg_q70": {
+   "tpr": {
+    "k": 156,
+    "n": 420,
+    "rate": 0.37142857142857144,
+    "lo": 0.3265779443269277,
+    "hi": 0.41860988055859555
+   },
+   "fpr": {
+    "k": 22,
+    "n": 392,
+    "rate": 0.05612244897959184,
+    "lo": 0.037350988186505646,
+    "hi": 0.08350947721177487
+   },
+   "auroc": 0.7270590379008747,
+   "threshold": 0.990961493061615
+  },
+  "jpeg_q85": {
+   "tpr": {
+    "k": 165,
+    "n": 422,
+    "rate": 0.3909952606635071,
+    "lo": 0.34562049103778486,
+    "hi": 0.4383367362504838
+   },
+   "fpr": {
+    "k": 16,
+    "n": 383,
+    "rate": 0.04177545691906005,
+    "lo": 0.025875152081322784,
+    "hi": 0.06677672403541338
+   },
+   "auroc": 0.7436489178721245,
+   "threshold": 0.990961493061615
+  },
+  "jpeg_q90": {
+   "tpr": {
+    "k": 176,
+    "n": 435,
+    "rate": 0.4045977011494253,
+    "lo": 0.35950343057458695,
+    "hi": 0.4513622667521933
+   },
+   "fpr": {
+    "k": 13,
+    "n": 425,
+    "rate": 0.03058823529411765,
+    "lo": 0.01796136838919065,
+    "hi": 0.0516251642606269
+   },
+   "auroc": 0.7686977687626775,
+   "threshold": 0.990961493061615
+  },
+  "jpeg_q95": {
+   "tpr": {
+    "k": 147,
+    "n": 400,
+    "rate": 0.3675,
+    "lo": 0.32172062764064313,
+    "hi": 0.41580022211827217
+   },
+   "fpr": {
+    "k": 15,
+    "n": 392,
+    "rate": 0.03826530612244898,
+    "lo": 0.02332396728172653,
+    "hi": 0.062168815690048035
+   },
+   "auroc": 0.7500956632653061,
+   "threshold": 0.990961493061615
+  },
+  "light": {
+   "tpr": {
+    "k": 722,
+    "n": 1745,
+    "rate": 0.41375358166189113,
+    "lo": 0.3908592807934558,
+    "hi": 0.4370267896202398
+   },
+   "fpr": {
+    "k": 98,
+    "n": 1753,
+    "rate": 0.055904164289788935,
+    "lo": 0.04608858729912227,
+    "hi": 0.0676619067693242
+   },
+   "auroc": 0.7431008978468348,
+   "threshold": 0.990961493061615
+  },
+  "recompressed_twice": {
+   "tpr": {
+    "k": 683,
+    "n": 1762,
+    "rate": 0.387627695800227,
+    "lo": 0.3651462934966767,
+    "hi": 0.4105980314756197
+   },
+   "fpr": {
+    "k": 96,
+    "n": 1735,
+    "rate": 0.0553314121037464,
+    "lo": 0.04552288122960743,
+    "hi": 0.06710474396638513
+   },
+   "auroc": 0.7293513069703997,
+   "threshold": 0.990961493061615
+  },
+  "scale_0.5": {
+   "tpr": {
+    "k": 100,
+    "n": 428,
+    "rate": 0.2336448598130841,
+    "lo": 0.19603355855171914,
+    "hi": 0.27599507416916735
+   },
+   "fpr": {
+    "k": 36,
+    "n": 403,
+    "rate": 0.08933002481389578,
+    "lo": 0.06522232134388227,
+    "hi": 0.12119322711527235
+   },
+   "auroc": 0.6120654669418613,
+   "threshold": 0.990961493061615
+  },
+  "scale_0.6": {
+   "tpr": {
+    "k": 154,
+    "n": 438,
+    "rate": 0.3515981735159817,
+    "lo": 0.308348426732312,
+    "hi": 0.3974284851745795
+   },
+   "fpr": {
+    "k": 26,
+    "n": 437,
+    "rate": 0.059496567505720827,
+    "lo": 0.04092192858576994,
+    "hi": 0.08574851267930124
+   },
+   "auroc": 0.6917129034617514,
+   "threshold": 0.990961493061615
+  },
+  "scale_0.75": {
+   "tpr": {
+    "k": 156,
+    "n": 398,
+    "rate": 0.39195979899497485,
+    "lo": 0.3452488395837479,
+    "hi": 0.4407364839865345
+   },
+   "fpr": {
+    "k": 20,
+    "n": 395,
+    "rate": 0.05063291139240506,
+    "lo": 0.03301278654877561,
+    "hi": 0.076909548533623
+   },
+   "auroc": 0.7416830990395014,
+   "threshold": 0.990961493061615
+  },
+  "scale_0.85": {
+   "tpr": {
+    "k": 177,
+    "n": 437,
+    "rate": 0.40503432494279173,
+    "lo": 0.3600289656479378,
+    "hi": 0.451694791819597
+   },
+   "fpr": {
+    "k": 14,
+    "n": 435,
+    "rate": 0.03218390804597701,
+    "lo": 0.01926620936240383,
+    "hi": 0.053292089577350286
+   },
+   "auroc": 0.7563797048843999,
+   "threshold": 0.990961493061615
+  },
+  "scale_1.0": {
+   "tpr": {
+    "k": 388,
+    "n": 810,
+    "rate": 0.47901234567901235,
+    "lo": 0.44478922303496443,
+    "hi": 0.5134336055842657
+   },
+   "fpr": {
+    "k": 28,
+    "n": 785,
+    "rate": 0.035668789808917196,
+    "lo": 0.024791485878795753,
+    "hi": 0.05106861074896831
+   },
+   "auroc": 0.7980828811826689,
+   "threshold": 0.990961493061615
+  },
+  "style_L6": {
+   "tpr": {
+    "k": 444,
+    "n": 1263,
+    "rate": 0.3515439429928741,
+    "lo": 0.3256981875587059,
+    "hi": 0.3782900616430885
+   },
+   "fpr": {
+    "k": 53,
+    "n": 1233,
+    "rate": 0.042984590429845905,
+    "lo": 0.033011739276608235,
+    "hi": 0.05579639913012065
+   },
+   "auroc": 0.736140087935431,
+   "threshold": 0.990961493061615
+  },
+  "style_L7": {
+   "tpr": {
+    "k": 531,
+    "n": 1248,
+    "rate": 0.4254807692307692,
+    "lo": 0.39831965638861055,
+    "hi": 0.453099245172098
+   },
+   "fpr": {
+    "k": 71,
+    "n": 1222,
+    "rate": 0.05810147299509002,
+    "lo": 0.046317422748907204,
+    "hi": 0.07265520797271297
+   },
+   "auroc": 0.7434792558437199,
+   "threshold": 0.990961493061615
+  }
+ },
+ "failures": [
+  {
+   "kind": "missed",
+   "text": "image 007172, layout L6, ref edited in the same font, background copied over, JPEG q95, shrunk to 50%, unseen font bahnschrift.ttf"
+  },
+  {
+   "kind": "missed",
+   "text": "image 009947, layout L6, perfect ref edited in the same font, painted over, JPEG q85, shrunk to 50%, dark mode"
+  },
+  {
+   "kind": "missed",
+   "text": "image 011816, layout L6, amount edited in consola.ttf, background copied over, JPEG q85, shrunk to 50%, unseen font bahnschrift.ttf"
+  },
+  {
+   "kind": "missed",
+   "text": "image 013185, layout L6, time edited in ebrima.ttf, painted over, JPEG q70, shrunk to 60%, unseen font bahnschrift.ttf"
+  },
+  {
+   "kind": "missed",
+   "text": "image 010577, layout L6, time edited in the same font, painted over, JPEG q85, shrunk to 50%, dark mode"
+  },
+  {
+   "kind": "missed",
+   "text": "image 019044, layout L6, payee edited in ebrima.ttf, background copied over, JPEG q55, shrunk to 50%, unseen font corbel.ttf, dark mode"
+  },
+  {
+   "kind": "missed",
+   "text": "image 018111, layout L6, amount edited in the same font, background copied over, JPEG q90"
+  },
+  {
+   "kind": "missed",
+   "text": "image 013877, layout L6, amount edited in the same font, background copied over, JPEG q70, shrunk to 85%"
+  },
+  {
+   "kind": "missed",
+   "text": "image 019068, layout L6, time edited in pala.ttf, painted over, JPEG q90, shrunk to 50%, dark mode"
+  },
+  {
+   "kind": "missed",
+   "text": "image 010157, layout L6, perfect amount edited in ebrima.ttf, painted over, JPEG q95, shrunk to 50%"
+  },
+  {
+   "kind": "missed",
+   "text": "image 018994, layout L6, ref edited in the same font, painted over, JPEG q95, shrunk to 50%"
+  },
+  {
+   "kind": "missed",
+   "text": "image 001164, layout L6, time edited in the same font, painted over, JPEG q40, shrunk to 50%, unseen font LeelawUI.ttf"
+  },
+  {
+   "kind": "missed",
+   "text": "image 009061, layout L6, perfect amount edited in consola.ttf, painted over, JPEG q95, shrunk to 75%, dark mode"
+  },
+  {
+   "kind": "missed",
+   "text": "image 010776, layout L6, amount edited in corbel.ttf, background copied over, JPEG q55, shrunk to 60%, unseen font LeelawUI.ttf"
+  },
+  {
+   "kind": "missed",
+   "text": "image 004831, layout L6, amount edited in the same font, background copied over, JPEG q40, shrunk to 50%"
+  },
+  {
+   "kind": "false_alarm",
+   "text": "image 007018, layout L7, genuine, JPEG q90, shrunk to 60%"
+  },
+  {
+   "kind": "false_alarm",
+   "text": "image 000137, layout L7, genuine, JPEG q85, shrunk to 60%, dark mode"
+  },
+  {
+   "kind": "false_alarm",
+   "text": "image 002895, layout L6, genuine, JPEG q40, shrunk to 50%"
+  },
+  {
+   "kind": "false_alarm",
+   "text": "image 008598, layout L6, genuine, JPEG q40, shrunk to 60%"
+  },
+  {
+   "kind": "false_alarm",
+   "text": "image 012596, layout L6, genuine, JPEG q70, shrunk to 60%, unseen font LeelawUI.ttf"
+  },
+  {
+   "kind": "false_alarm",
+   "text": "image 018846, layout L7, genuine, one field slightly blurred, JPEG q70, shrunk to 60%, unseen font LeelawUI.ttf"
+  },
+  {
+   "kind": "false_alarm",
+   "text": "image 015119, layout L7, genuine, JPEG q55, shrunk to 60%, unseen font ebrima.ttf"
+  },
+  {
+   "kind": "false_alarm",
+   "text": "image 011887, layout L7, genuine, one field slightly blurred, JPEG q55, unseen font corbel.ttf, dark mode"
+  },
+  {
+   "kind": "false_alarm",
+   "text": "image 000409, layout L6, genuine, JPEG q55, shrunk to 75%"
+  },
+  {
+   "kind": "false_alarm",
+   "text": "image 010929, layout L7, genuine, JPEG q55, shrunk to 50%, unseen font corbel.ttf"
+  },
+  {
+   "kind": "false_alarm",
+   "text": "image 007619, layout L6, genuine, one field slightly blurred, JPEG q90, shrunk to 75%"
+  },
+  {
+   "kind": "false_alarm",
+   "text": "image 006793, layout L7, genuine, JPEG q55, shrunk to 60%, unseen font ebrima.ttf"
+  },
+  {
+   "kind": "false_alarm",
+   "text": "image 006146, layout L6, genuine, JPEG q40, dark mode"
+  },
+  {
+   "kind": "false_alarm",
+   "text": "image 011138, layout L6, genuine, JPEG q70, unseen font ebrima.ttf"
+  },
+  {
+   "kind": "false_alarm",
+   "text": "image 003116, layout L7, genuine, JPEG q95, shrunk to 75%"
+  }
+ ],
+ "baseline_ela": {
+  "tpr": {
+   "k": 161,
+   "n": 2511,
+   "rate": 0.0641178813221824,
+   "lo": 0.055186432086664815,
+   "hi": 0.07438101263828326
+  },
+  "fpr": {
+   "k": 150,
+   "n": 2455,
+   "rate": 0.06109979633401222,
+   "lo": 0.05229354109049358,
+   "hi": 0.0712774933348228
+  },
+  "auroc": 0.5117617716264323,
+  "threshold": 5.007812977837158,
+  "auroc_ci": [
+   0.49646385435651363,
+   0.5261700047286846
+  ]
+ },
+ "run": "small",
+ "train_log": {
+  "args": {
+   "data": "C:\\Users\\pghan\\satyapan\\Satyapan_TeamAvalanche\\data\\f1",
+   "out": "C:\\Users\\pghan\\satyapan\\Satyapan_TeamAvalanche\\var\\models\\runs\\small\\tamper.pt",
+   "encoder": "small",
+   "pretrained": "False",
+   "epochs": "10",
+   "bs": "16",
+   "lr": "0.002",
+   "size": "[704, 384]",
+   "target_fpr": "0.05",
+   "workers": "4",
+   "seed": "7",
+   "device": "auto",
+   "max_train": "0",
+   "no_augment": "False",
+   "native": "True",
+   "crop": "[384, 384]",
+   "max_side": "1600"
+  },
+  "epochs": [
+   {
+    "epoch": 1,
+    "loss": 1.370997411363265,
+    "val_auroc": 0.5048777246145668,
+    "val_tpr": 0.06299840510366826,
+    "val_fpr": 0.05
+   },
+   {
+    "epoch": 2,
+    "loss": 1.176756506228386,
+    "val_auroc": 0.5009423812055391,
+    "val_tpr": 0.06140350877192982,
+    "val_fpr": 0.05
+   },
+   {
+    "epoch": 3,
+    "loss": 1.1512238452654056,
+    "val_auroc": 0.5014613554087238,
+    "val_tpr": 0.0685805422647528,
+    "val_fpr": 0.05
+   },
+   {
+    "epoch": 4,
+    "loss": 1.1346791970455432,
+    "val_auroc": 0.5071412749044327,
+    "val_tpr": 0.05901116427432217,
+    "val_fpr": 0.05
+   },
+   {
+    "epoch": 5,
+    "loss": 1.1258206098433345,
+    "val_auroc": 0.5058887749677223,
+    "val_tpr": 0.05661881977671451,
+    "val_fpr": 0.05
+   },
+   {
+    "epoch": 6,
+    "loss": 1.1075375679966128,
+    "val_auroc": 0.5553289790131896,
+    "val_tpr": 0.13157894736842105,
+    "val_fpr": 0.05
+   },
+   {
+    "epoch": 7,
+    "loss": 1.0665871103096496,
+    "val_auroc": 0.6795084301663249,
+    "val_tpr": 0.2799043062200957,
+    "val_fpr": 0.05
+   },
+   {
+    "epoch": 8,
+    "loss": 1.0257835922491214,
+    "val_auroc": 0.7117414748993697,
+    "val_tpr": 0.3652312599681021,
+    "val_fpr": 0.05
+   },
+   {
+    "epoch": 9,
+    "loss": 0.9970278874839968,
+    "val_auroc": 0.7216880585301638,
+    "val_tpr": 0.3827751196172249,
+    "val_fpr": 0.05
+   },
+   {
+    "epoch": 10,
+    "loss": 0.9400875294757316,
+    "val_auroc": 0.7327596136806662,
+    "val_tpr": 0.4082934609250399,
+    "val_fpr": 0.05
+   }
+  ]
+ },
+ "chosen": true,
+ "choice_rule": "highest AUROC on the test layouts (threshold fixed on validation)"
+}
