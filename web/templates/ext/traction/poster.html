@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="wrap ops-body">
+  <div class="ops-noprint ops-actions">
+    <button type="button" class="hbtn hbtn-p" data-print>{{ tr("Print or save as PDF", "छापें या PDF में सहेजें") }}</button>
+    <a class="hbtn hbtn-s" href="{{ wa }}" target="_blank" rel="noopener">{{ tr("Share the link on WhatsApp", "लिंक WhatsApp पर भेजें") }}</a>
+    <a class="hbtn hbtn-s" href="/poster">{{ tr("Make another", "दूसरा बनाएँ") }}</a>
+    <p class="ops-note" style="flex-basis:100%">{{ tr("Tip: in the print window choose A4 and turn background graphics on. Your referral code is", "सुझाव: प्रिंट विंडो में A4 चुनें और बैकग्राउंड ग्राफ़िक्स चालू करें। आपका रेफ़रल कोड है") }} <b class="mono">{{ code }}</b>.</p>
+  </div>
+
+  <section class="ops-poster" aria-label="{{ tr('Poster', 'पोस्टर') }}">
+    <header>
+      <p class="ops-poster-kicker">{{ name }} · {{ city }}</p>
+      <h1>Check before you pay</h1>
+      <h2 lang="hi">पैसे भेजने से पहले जाँचें</h2>
+    </header>
+    <div class="ops-poster-qr">
+      <div class="ops-qr" role="img" aria-label="{{ tr('QR code that opens Satyapan', 'सत्यापन खोलने वाला QR कोड') }}">{{ qr|safe }}</div>
+      <p class="ops-poster-scan">Scan with your phone camera <span lang="hi">· फ़ोन के कैमरे से स्कैन करें</span></p>
+      <p class="ops-poster-url mono">{{ short }}</p>
+    </div>
+    <ol class="ops-poster-steps">
+      <li><b>1</b><span>Send us the suspicious message, QR, screenshot, PDF or link <span lang="hi">· शक वाला संदेश, QR, स्क्रीनशॉट, PDF या लिंक भेजें</span></span></li>
+      <li><b>2</b><span>Get a plain answer in about a minute, in English or Hindi <span lang="hi">· लगभग एक मिनट में सरल जवाब, हिन्दी या अंग्रेज़ी में</span></span></li>
+      <li><b>3</b><span>Ask someone you trust before you pay <span lang="hi">· पैसे भेजने से पहले किसी भरोसेमंद से पूछें</span></span></li>
+    </ol>
+    {% if tg_qr %}<div class="ops-poster-tg"><div class="ops-qr small">{{ tg_qr|safe }}</div><p>Telegram: @{{ bot }}<br><span lang="hi">टेलीग्राम पर भी जाँचें</span></p></div>{% endif %}
+    <footer>
+      <p><b>Free. We never ask for your OTP, PIN or password.</b> <span lang="hi">मुफ़्त। हम आपका OTP, PIN या पासवर्ड कभी नहीं माँगते।</span></p>
+      <p>Satyapan only advises. It never blocks or moves money. Lost money? Call <b>1930</b> <span lang="hi">· पैसे गँवा दिए? 1930 पर कॉल करें</span></p>
+    </footer>
+  </section>
+</div>
+{% endblock %}

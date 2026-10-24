@@ -1,0 +1,16 @@
+{
+  "name": "Satyapan: check before you pay",
+  "short_name": "Satyapan",
+  "description": "Check a suspicious payment message, link, QR, PDF or screenshot before you pay.",
+  "start_url": "/?source=pwa",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#F3F5F8",
+  "theme_color": "#0B2A4A",
+  "lang": "en-IN",
+  "icons": [
+    {"src": "/static/traction-icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},
+    {"src": "/static/traction-icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any"},
+    {"src": "/static/traction-icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+  ]
+}
