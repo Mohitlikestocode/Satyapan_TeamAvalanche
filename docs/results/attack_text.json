@@ -147,7 +147,7 @@
   }
  ],
  "dataset": "data/kit/messages.jsonl",
- "date": "2026-10-24 14:03 UTC",
+ "date": "2026-10-24 16:38 UTC",
  "reproduce": "python -m satyapan.eval.attacks",
  "rules_only": {
   "n_scams": 38,

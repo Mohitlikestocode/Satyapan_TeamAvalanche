@@ -48,10 +48,86 @@ model can learn "what genuine looks like for these six screens" instead of "what
 - **Tanish and Mohit**: `data/kit/holdout_community.jsonl` and `holdout_traction.jsonl` (40 scam and 40 genuine each, written without reading the rules).
 - **Mohit (integrator)**: receives `tamper.pt` and the voice model files by chat or drive, never git.
 
+## What changed from the plan, and why
+
+- **Tamper model, first GPU run (Saturday 19:15): stopped after 2 epochs.** Validation AUROC 0.50 both epochs (chance). Two causes, both fixed:
+  (1) the whole screenshot was shrunk to 704x384 before the model saw it, which washes out the pixel traces an edit leaves; now the
+  model trains on 384x384 crops at full resolution and scores whole screenshots at full resolution (`--native`);
+  (2) generator v2 made edits *too* perfect (exact fill colour, exact size and place), so there was nothing to learn. Generator v3
+  adds the small traces real editors leave (eyedropper colour off by a few levels, retyped text a pixel or size off, a forwarded
+  screenshot's JPEG blocks missing in the repainted patch) and keeps 15% "perfect" edits, reported separately as the hard case.
+  The error-level-analysis baseline was also at chance on v2 (AUROC 0.49 on 400 validation images), which confirmed the data problem.
+- **Second voice detector:** the brief named XLS-R-SLS. Its repository has no licence, its weights are only on Google Drive or Baidu,
+  and it needs fairseq plus another 1.2 GB checkpoint, so we used `MelodyMachine/Deepfake-audio-detection-V2` (Apache-2.0) instead.
+  Its authors do not document its training data, so it is only a second opinion: disagreement means we say nothing about the voice.
+- **ffmpeg:** shipped through `imageio-ffmpeg` (a static ffmpeg build from PyPI), so no system install is needed on the server.
+- **Hidden-word check (not in the plan):** the attack sweep showed look-alike letters let 32 of 37 flagged kit scams through the
+  rules. We added a text hook that undoes look-alike letters, spaced-out letters and split UPI IDs and re-runs the same rules.
+
 ## Results
 
-Not evaluated yet. This section is filled from `docs/results/` as each measurement lands.
+Every number below is copied from a file in `docs/results/`; `/results` shows the same files live.
+
+(filled in as each measurement lands)
 
 ## Model cards
 
-To be written per model (purpose, base, data, split, metrics, failures, limits, licence, how to reproduce).
+### 1. Payment-screenshot tamper model (trained by us)
+
+- **Purpose:** find signs that an amount, name, UPI ID, time or reference on a "payment successful" screenshot was edited, and where.
+  Adds `MEDIA_IMAGE_EDITED` (L2, WEAK, or STRONG when very confident). Forensics alone can never make a result HIGH RISK.
+- **Model:** U-Net. Encoders: ResNet-18 from ImageNet weights, and a small encoder from scratch (`tamper_net.py`). Loss: BCE (positive
+  weight 8) + Dice on the edit mask. Image score = the strongest 3x3-averaged edit probability anywhere. AdamW, one-cycle schedule,
+  mixed precision, 10 epochs, batch 16, seed 7.
+- **Input:** full-resolution screenshot (shrunk only if the long side is over 1600 px). Training uses 384x384 crops, 60% of crops
+  on edited images contain the edit. Training-time augmentation: colour channel swap, brightness, crop, one more JPEG pass.
+- **Data:** 20,000 generated screens (`tools/make_payment_screens.py` v3, seed 7). 8 layout families, random light and dark palettes,
+  status bars, logos made of shapes, notes and buttons, 17 training fonts. Half are edited: one field erased (painted over or
+  background copied) and retyped (same font 50%, other font 50%), sometimes softened; 15% of edits are "perfect". Genuine look-alikes:
+  20% of genuine screens have one field slightly blurred. Chat-app copies: shrink to 50-100%, JPEG 40-95, sometimes twice; 60% were
+  already a JPEG before editing.
+- **Split:** by layout family. Train L0-L4, validation L5, test L6 and L7 (never seen in training). Five fonts appear only in
+  validation and test images. Split and hash: `docs/results/tamper_splits.json`.
+- **Threshold:** chosen on the validation layouts so that 5% of genuine screens are flagged; never re-tuned on test or real data.
+- **Choosing between encoders:** highest AUROC on the test layouts (the brief's rule). This makes the chosen test number slightly
+  optimistic; the real-screenshot set is the independent check.
+- **Reproduce:** `python tools/make_payment_screens.py data/f1 --n 20000 --seed 7 --holdout-styles 3`, then
+  `powershell -File training/tamper/run_both.ps1`, then `python training/tamper/finalize.py`, then
+  `python training/tamper/evaluate_real.py --ckpt var/models/tamper.pt --edited data/real/edited --genuine data/real/genuine --data data/f1 --json docs/results/tamper_real.json`.
+- **Licence:** our code and our generated data. ResNet-18 ImageNet weights from torchvision (BSD-3-Clause).
+
+### 2. Voice notes: transcription and cloned-voice detection (pretrained, calibrated by us)
+
+- **Pipeline:** ffmpeg (no shell, input only from a pipe, `-protocol_whitelist pipe`, metadata stripped, 30 s time limit, 15 MB and
+  120 s limits) -> 16 kHz mono -> faster-whisper small (local; Hindi and English) -> the same payee and word checks as a message ->
+  plus the voice sign from the detectors. `/models/voice` shows the transcript for the visitor to correct before checking; the voice
+  result travels to the second step only as a signed token holding the band (fake, real, disagree, unknown), never audio or scores.
+- **Detectors:** Spectra-AASIST3 (wav2vec2 XLS-R 300M + KAN-AASIST; Apache-2.0) as primary; Deepfake-audio-detection-V2
+  (wav2vec2-base; Apache-2.0) as second opinion. Each scores the first ~8 s (two windows). Flag when the score is below the threshold.
+  Both must say "fake" for the sign; if they disagree we say nothing about the voice. The sign is WEAK, or STRONG below the
+  1%-false-alarm threshold; never "real voice".
+- **Calibration data:** In-The-Wild (800 random clips, 400 real and 400 deepfake, Apache-2.0), FLEURS Hindi and English test (300 + 300
+  real, CC-BY-4.0), IndicSynth Hindi (500 machine-made, CC-BY-NC-4.0), plus consented team recordings when present
+  (`data/audio/team/real|fake/<speaker>_*.ext`). Every clip also as Opus 24 kbps, AAC 64 kbps and 8 kHz telephone copies.
+- **Split:** by speaker (sha256 of seed and speaker id, mod 2): dev for thresholds, test for the numbers. FLEURS has no speaker ids,
+  so its clips are grouped by sentence id (one sentence is read by 1-3 speakers: a known leak, small).
+- **Reproduce:** `python training/voice/download_models.py`, `python training/voice/fetch_data.py`, `python training/voice/calibrate.py`.
+
+### 3. Scam-message classifier (fine-tuned by us)
+
+- **Purpose:** catch scam wording the rules miss (paraphrases, new families). Adds `ML_TEXT_SCAM_LIKE` (L4, WEAK only).
+- **Base:** `intfloat/multilingual-e5-small` (MIT). Two variants: frozen encoder + trained linear head, and the whole encoder fine-tuned.
+- **Data:** UCI SMS Spam Collection (5,574 English SMS, CC BY 4.0) and our team corpus `data/corpus/team_*.jsonl` (79 scams in 9 Indian
+  payment-fraud families and 62 genuine messages, English, Hindi, Hinglish; weighted 5x). `data/kit/` is never used for training.
+- **Protocol:** leave one scam family out (the model is scored on a family it never saw); the threshold flags 2% of out-of-fold genuine messages.
+- **Shipping rule:** `training/text/decide.py` turns it on only if, on held-out messages, it flags more scams without flagging more
+  genuine ones. Otherwise it stays off and this card says why.
+- **Reproduce:** `python training/text/fetch.py`, `python training/text/train_classifier.py`, `python training/text/decide.py`.
+
+### 4. Hidden-word check (rules on cleaned text; no learned weights)
+
+- **Purpose:** undo look-alike Cyrillic and Greek letters inside Latin words, zero-width characters, letters spread out with dots or
+  spaces (5+ letters count as a trick; "K.Y.C" is joined but not counted), and UPI IDs written as "name (at) bank" or split across lines.
+  Then the same payee and word rules run again, and `ML_TEXT_OBFUSCATED` (WEAK) says the message hides words.
+- **Not handled on purpose:** Hinglish respellings (undoing them would only memorise our own attack list).
+- **Measured:** `docs/results/attack_text.json` (rules alone vs as deployed, on the same kit, so optimistic).
