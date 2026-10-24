@@ -10,3 +10,8 @@
   <div class="cm-card-foot"><b class="cm-seen">{{ seen_by(p.sightings) }}</b><a class="btn-sm" href="/community/post/{{ p.id }}">{{ tr("Open", "खोलें") }}<span class="cm-sr"> {{ tr("report", "रिपोर्ट") }} {{ p.id }}</span></a></div>
 </article>
 {% endmacro %}
+{% macro lvl(l) %}{{ tr("Level " ~ l.level ~ " · " ~ l.name_en, "स्तर " ~ l.level ~ " · " ~ l.name_hi) }}{% endmacro %}
+{% macro bar(l) %}<div class="prog" role="progressbar" aria-valuemin="0" aria-valuemax="{{ l.span }}" aria-valuenow="{{ l.into }}" aria-label="{{ tr('Progress to the next level', 'अगले स्तर तक प्रगति') }}"><i style="width:{{ (100 * l.into / l.span)|round|int }}%"></i></div>{% endmacro %}
+{% macro badge_grid(items) %}<div class="cm-badges">{% for b in items %}
+  <div class="cm-badge {% if not b.got %}locked{% endif %}"><b>{{ tr(b.en, b.hi) }}{% if b.got %} <span class="pill pill-g">{{ tr("Earned", "मिला") }}</span>{% endif %}</b><span>{{ tr(b.how_en, b.how_hi) }}</span></div>{% endfor %}</div>{% endmacro %}
+{% macro helpline() %}<p class="cm-helpline"><b>{{ tr("Lost money? Act in the first hour.", "पैसे चले गए? पहले घंटे में कदम उठाएँ।") }}</b> {{ tr("Call", "कॉल करें") }} <a href="tel:1930">1930</a> {{ tr("or report at", "या शिकायत करें:") }} <a href="https://cybercrime.gov.in" rel="noopener">cybercrime.gov.in</a></p>{% endmacro %}

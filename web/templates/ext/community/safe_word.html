@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="wrap cm-wrap cm-narrow">
+  <h1>{{ tr("Family safe-word card", "परिवार का सुरक्षित-शब्द कार्ड") }}</h1>
+  <p class="cm-lead">{{ tr("A safe word is a secret word only your family knows. If a caller who sounds like your son or grandchild asks for money, ask for the word. A copied voice cannot know it.", "सुरक्षित शब्द एक गुप्त शब्द है जो सिर्फ़ आपके परिवार को पता होता है। अगर आपके बेटे या पोते जैसी आवाज़ वाला कोई पैसे माँगे तो शब्द पूछिए। नक़ल की गई आवाज़ उसे नहीं जान सकती।") }}</p>
+  <form method="get" action="/learn/safe-word" class="cm-form">
+    <input type="hidden" name="card" value="1">
+    <div class="cm-field"><label for="cm-sw">{{ tr("The safe word (two plain words work well)", "सुरक्षित शब्द (दो सीधे शब्द ठीक रहते हैं)") }}</label>
+      <input class="cm-in" id="cm-sw" name="word" type="text" maxlength="40" value="{{ word }}" required>
+      <p class="cm-help">{{ tr("Do not use a name, birthday or phone number. Press \"Suggest another\" for a random pair.", "नाम, जन्मतिथि या फ़ोन नंबर न रखें। रैंडम जोड़ी के लिए \"दूसरा सुझाएँ\" दबाएँ।") }}</p></div>
+    <div class="cm-field"><label for="cm-who">{{ tr("Who is this card for? (optional)", "यह कार्ड किसके लिए है? (वैकल्पिक)") }}</label>
+      <input class="cm-in" id="cm-who" name="who" type="text" maxlength="30" value="{{ who }}" placeholder="{{ tr('For example: Nani, Papa', 'जैसे: नानी, पापा') }}"></div>
+    <div class="cm-actions"><button class="hbtn hbtn-p cm-btn" type="submit">{{ tr("Make the card", "कार्ड बनाएँ") }}</button>
+      <button class="hbtn hbtn-s cm-btn" type="submit" name="suggest" value="1" formnovalidate>{{ tr("Suggest another word", "दूसरा शब्द सुझाएँ") }}</button></div>
+  </form>
+  <p class="cm-small">{{ tr("Nothing you type here is saved. The card is drawn for you and then forgotten.", "यहाँ आप जो लिखते हैं वह सहेजा नहीं जाता। कार्ड बनाकर भुला दिया जाता है।") }}</p>
+  {% if show %}
+  <section class="cm-box"><h2 class="cm-h2">{{ tr("Your card (A4, ready to print)", "आपका कार्ड (A4, छापने के लिए तैयार)") }}</h2>
+    <img class="cm-card-img" src="/learn/safe-word/card.png?{{ qs }}&lang={{ lang }}" alt="{{ tr('Safe-word card with the word ' ~ word, 'सुरक्षित-शब्द कार्ड, शब्द: ' ~ word) }}" width="420" height="594">
+    <div class="cm-actions"><a class="hbtn hbtn-p" href="/learn/safe-word/card.png?{{ qs }}&lang={{ lang }}" download="safe-word-card.png">{{ tr("Download to print", "छापने के लिए डाउनलोड करें") }}</a>
+      <a class="hbtn hbtn-s" href="/learn/safe-word/card.png?{{ qs }}&lang={{ 'en' if lang == 'hi' else 'hi' }}" download="safe-word-card-other-language.png">{{ tr("Download in Hindi", "अंग्रेज़ी में डाउनलोड करें") }}</a></div>
+    <p class="cm-small">{{ tr("Show it to every family member by hand. Do not send it by message.", "इसे हर सदस्य को हाथ में दिखाएँ। संदेश से न भेजें।") }}</p></section>{% endif %}
+</div>
+{% endblock %}

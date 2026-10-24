@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% from "ext/community/_cm.html" import lvl, bar, helpline with context %}
+{% block content %}
+<div class="wrap cm-wrap">
+  <h1>{{ tr("Learn to spot scams", "स्कैम पहचानना सीखें") }}</h1>
+  <p class="cm-lead">{{ tr("Twelve short lessons on how fraud really reaches people in India, a quick game to practise, and a family safe word. Plain words, two minutes each.", "भारत में ठगी सचमुच कैसे पहुँचती है, इस पर बारह छोटे पाठ, अभ्यास के लिए एक छोटा खेल और परिवार का सुरक्षित शब्द। सरल भाषा, हर पाठ दो मिनट का।") }}</p>
+
+  <section class="cm-two-col" aria-label="{{ tr('Start here', 'यहाँ से शुरू करें') }}">
+    <div class="cm-box green">
+      <h2 class="cm-h2">{{ tr("Today's challenge", "आज की चुनौती") }}</h2>
+      <p>{{ tr("The same 5 questions for everyone today. Come back every day to keep your streak.", "आज सबके लिए वही 5 सवाल। अपनी लगातार-लड़ी बनाए रखने के लिए रोज़ आइए।") }}</p>
+      {% if daily.finished %}<p><span class="pill pill-g">{{ tr("Done today", "आज पूरा हुआ") }}</span> {{ tr("You scored " ~ daily.score ~ " out of 5.", "आपने 5 में से " ~ daily.score ~ " अंक पाए।") }}</p>
+      <a class="hbtn hbtn-s" href="/learn/drill/score?r={{ daily.round }}">{{ tr("See my result", "मेरा नतीजा देखें") }}</a>
+      {% else %}<form method="post" action="/drill/start"><input type="hidden" name="mode" value="daily"><button class="hbtn hbtn-p cm-btn" type="submit">{{ tr("Play today's challenge", "आज की चुनौती खेलें") }}</button></form>{% endif %}
+    </div>
+    <div class="cm-box">
+      <h2 class="cm-h2">{{ tr("Scam Drill", "स्कैम ड्रिल") }}</h2>
+      <p>{{ tr(n_questions ~ " questions, 5 in a round. You find out right away if you were right, and why.", n_questions ~ " सवाल, हर राउंड में 5। सही-ग़लत और कारण तुरंत पता चलता है।") }}</p>
+      <form method="post" action="/drill/start"><input type="hidden" name="mode" value="random"><button class="hbtn hbtn-p cm-btn" type="submit">{{ tr("Start a round", "राउंड शुरू करें") }}</button></form>
+    </div>
+  </section>
+
+  {% if me %}<section class="cm-box" aria-label="{{ tr('Your progress', 'आपकी प्रगति') }}">
+    <p><b>{{ lvl(me.level) }}</b> · {{ me.level.xp }} XP · {{ tr("Streak: " ~ me.streak ~ " days", "लगातार: " ~ me.streak ~ " दिन") }} · {{ tr(me.reads|length ~ " of " ~ lessons|length ~ " lessons read", lessons|length ~ " में से " ~ me.reads|length ~ " पाठ पढ़े") }}</p>
+    {{ bar(me.level) }} <a class="btn-sm" href="/me">{{ tr("My progress and badges", "मेरी प्रगति और बैज") }}</a>
+  </section>{% endif %}
+
+  <h2 class="cm-h2">{{ tr("12 scams to know", "जानने लायक 12 ठगियाँ") }}</h2>
+  <div class="cm-grid">{% for l in lessons %}
+    <a class="cm-tile {% if me and l.slug in me.reads %}done{% endif %}" href="/learn/{{ l.slug }}"><b>{{ l.order }}. {{ tr(l.title.en, l.title.hi) }}</b><span>{{ tr(l.summary.en, l.summary.hi) }}</span>
+      {% if me and l.slug in me.reads %}<span class="pill pill-g">{{ tr("Read", "पढ़ा") }}</span>{% endif %}</a>{% endfor %}</div>
+
+  <h2 class="cm-h2">{{ tr("More ways to stay safe", "सुरक्षित रहने के और तरीक़े") }}</h2>
+  <div class="cm-grid">
+    <a class="cm-tile" href="/learn/safe-word"><b>{{ tr("Family safe-word card", "परिवार का सुरक्षित-शब्द कार्ड") }}</b><span>{{ tr("A secret word for the day someone copies a voice you love.", "उस दिन के लिए एक गुप्त शब्द जब कोई आपके अपने की आवाज़ की नक़ल करे।") }}</span></a>
+    <a class="cm-tile" href="/learn/safety"><b>{{ tr("The 6 safety rules", "सुरक्षा के 6 नियम") }}</b><span>{{ tr("If you remember only six things.", "अगर आप सिर्फ़ छह बातें याद रखें।") }}</span></a>
+    <a class="cm-tile" href="/warn"><b>{{ tr("Make a warning card", "चेतावनी कार्ड बनाएँ") }}</b><span>{{ tr("A picture to send on WhatsApp, in Hindi or English.", "WhatsApp पर भेजने के लिए तस्वीर, हिन्दी या अंग्रेज़ी में।") }}</span></a>
+    <a class="cm-tile" href="/learn/posters"><b>{{ tr("Posters to print", "छापने के लिए पोस्टर") }}</b><span>{{ tr("For a shop or a housing-society notice board.", "दुकान या सोसाइटी के नोटिस-बोर्ड के लिए।") }}</span></a>
+    <a class="cm-tile" href="/learn/certificate"><b>{{ tr("Scam-Aware certificate", "स्कैम-सजग प्रमाणपत्र") }}</b><span>{{ tr("Read all 12 lessons and play 3 rounds.", "सारे 12 पाठ पढ़ें और 3 राउंड खेलें।") }}</span></a>
+    <a class="cm-tile" href="/community"><b>{{ tr("Scam Watch", "स्कैम वॉच") }}</b><span>{{ tr("See what others reported, and report what you saw.", "देखें दूसरों ने क्या बताया, और आपने जो देखा वह बताएँ।") }}</span></a>
+  </div>
+
+  {% if board.top %}<h2 class="cm-h2">{{ tr("This week's top learners", "इस हफ़्ते के शीर्ष सीखने वाले") }}</h2>
+  <ol>{% for r in board.top %}<li {% if r.me %}class="cm-me"{% endif %}><b>{{ r.handle }}</b> · {{ r.week }} XP</li>{% endfor %}</ol><a href="/learn/leaderboard">{{ tr("Full leaderboard", "पूरी लीडरबोर्ड") }}</a>{% endif %}
+  {{ helpline() }}
+</div>
+{% endblock %}

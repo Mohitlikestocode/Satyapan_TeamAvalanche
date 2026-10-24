@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="wrap cm-wrap">
+  <h1>{{ tr("Posters to print", "छापने के लिए पोस्टर") }}</h1>
+  <p class="cm-lead">{{ tr("One A4 page for each of the 12 scams, in Hindi or English, for a shop counter or a housing-society notice board. Each page has a QR code to " ~ site ~ " and the 1930 helpline.", "12 ठगियों में से हर एक का एक A4 पन्ना, हिन्दी या अंग्रेज़ी में, दुकान के काउंटर या सोसाइटी के नोटिस-बोर्ड के लिए। हर पन्ने पर " ~ site ~ " का QR कोड और 1930 हेल्पलाइन है।") }}</p>
+  <div class="cm-actions"><a class="hbtn hbtn-p" href="/learn/posters/all.pdf?lang=hi">{{ tr("All 12 in Hindi (PDF)", "सारे 12 हिन्दी में (PDF)") }}</a><a class="hbtn hbtn-s" href="/learn/posters/all.pdf?lang=en">{{ tr("All 12 in English (PDF)", "सारे 12 अंग्रेज़ी में (PDF)") }}</a></div>
+  <h2 class="cm-h2">{{ tr("One at a time", "एक-एक करके") }}</h2>
+  <ul class="list">{% for l in lessons %}<li><b>{{ l.order }}. {{ tr(l.title.en, l.title.hi) }}</b> · <a href="/learn/posters/{{ l.slug }}.pdf?lang=hi">हिन्दी</a> · <a href="/learn/posters/{{ l.slug }}.pdf?lang=en">English</a></li>{% endfor %}</ul>
+  <p class="cm-small">{{ tr("Posters hold no photographs, logos or names. Print them in black and white if you need to; the text stays clear.", "पोस्टर में कोई फ़ोटो, लोगो या नाम नहीं है। चाहें तो श्वेत-श्याम छापें; लिखावट साफ़ रहती है।") }}</p>
+</div>
+{% endblock %}

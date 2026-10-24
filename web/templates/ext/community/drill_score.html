@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% from "ext/community/_cm.html" import lvl, bar, badge_grid with context %}
+{% block content %}
+<div class="wrap cm-wrap cm-narrow">
+{% if not res %}
+  <h1>{{ tr("This score is not available", "यह स्कोर उपलब्ध नहीं है") }}</h1>
+  <p>{{ tr("The round was not found on this phone, or it is not finished yet.", "यह राउंड इस फ़ोन पर नहीं मिला, या अभी पूरा नहीं हुआ।") }}</p>
+  <a class="hbtn hbtn-p" href="/learn/drill">{{ tr("Back to Scam Drill", "स्कैम ड्रिल पर वापस") }}</a>
+{% else %}
+  <h1>{{ tr("Your score", "आपका स्कोर") }}</h1>
+  <section class="cm-box green"><p style="font-size:44px;margin:8px 0;font-weight:800;color:var(--navy)">{{ res.score }} / {{ res.total }}</p>
+    <p>{{ tr("You earned " ~ res.xp ~ " XP in this round.", "इस राउंड में आपने " ~ res.xp ~ " XP कमाए।") }}
+    {% if me %}{{ lvl(me.level) }} · {{ tr("Streak: " ~ me.streak ~ " days", "लगातार: " ~ me.streak ~ " दिन") }}{% endif %}</p>
+    {% if me %}{{ bar(me.level) }}{% endif %}
+    {% if res.score == res.total %}<p><span class="pill pill-g">{{ tr("Perfect round", "पूरे अंक") }}</span></p>{% endif %}</section>
+
+  {% if res.challenge %}<section class="cm-box" id="challenge-result"><h2 class="cm-h2">{{ tr("Family challenge", "परिवार की चुनौती") }}</h2>
+    {% if res.challenge.is_creator %}
+      <p>{{ tr("Your score: " ~ res.score ~ " out of " ~ res.total ~ ".", "आपका स्कोर: " ~ res.total ~ " में से " ~ res.score ~ "।") }}</p>
+      {% if res.challenge.players|length > 1 or (res.challenge.players|length == 1 and not res.challenge.players[0].me) %}
+        <ul class="list">{% for p in res.challenge.players %}{% if not p.me %}<li>{{ p.handle or tr("A relative", "एक रिश्तेदार") }}: <b>{{ p.score }} / {{ res.total }}</b></li>{% endif %}{% endfor %}</ul>
+      {% else %}<p>{{ tr("Nobody has played your challenge yet.", "अभी किसी ने आपकी चुनौती नहीं खेली।") }}</p>{% endif %}
+    {% else %}
+      <p>{{ tr("You: " ~ res.score ~ " · " ~ (res.challenge.creator_handle or "Your relative") ~ ": " ~ res.challenge.creator_score, "आप: " ~ res.score ~ " · " ~ (res.challenge.creator_handle or "आपके रिश्तेदार") ~ ": " ~ res.challenge.creator_score) }}
+        <b>{% if res.score > res.challenge.creator_score %}{{ tr("You won!", "आप जीत गए!") }}{% elif res.score == res.challenge.creator_score %}{{ tr("A tie!", "बराबरी!") }}{% else %}{{ tr("Your relative is ahead. Try again!", "आपके रिश्तेदार आगे हैं। फिर कोशिश करें!") }}{% endif %}</b></p>
+    {% endif %}</section>{% endif %}
+
+  {% if res.review %}<h2 class="cm-h2">{{ tr("Worth reviewing", "दोबारा पढ़ने लायक") }}</h2><ul class="cm-flags">{% for r in res.review %}<li><a href="/learn/{{ r.slug }}">{{ r.title }}</a></li>{% endfor %}</ul>
+  {% else %}<p>{{ tr("Nothing to review. Well done.", "दोबारा पढ़ने को कुछ नहीं। शाबाश।") }}</p>{% endif %}
+
+  <h2 class="cm-h2">{{ tr("Your answers", "आपके उत्तर") }}</h2>
+  {% for it in res["items"] %}<details class="faq"><summary>{{ loop.index }}. {{ "✓" if it.reveal.correct else "✗" }} {% if it.question.type == "tap_words" %}{{ tr("Warning signs", "चेतावनी के संकेत") }}{% else %}{{ it.question.text[:70] }}{% endif %}</summary><p>{{ it.reveal.why }}</p></details>{% endfor %}
+
+  <div class="cm-actions" id="challenge">
+    <form method="post" action="/drill/start"><input type="hidden" name="mode" value="random"><button class="hbtn hbtn-p cm-btn" type="submit">{{ tr("Play again", "फिर खेलें") }}</button></form>
+    {% if res.mode != "challenge" %}
+      {% if link %}<a class="hbtn hbtn-s" href="{{ share }}" target="_blank" rel="noopener">{{ tr("Send the challenge on WhatsApp", "WhatsApp पर चुनौती भेजें") }}</a>
+        <button class="hbtn hbtn-s" type="button" data-cm-copy="{{ link }}">{{ tr("Copy link", "लिंक कॉपी करें") }}</button>
+      {% else %}<form method="post" action="/drill/challenge"><input type="hidden" name="r" value="{{ res.id }}"><button class="hbtn hbtn-s cm-btn" type="submit">{{ tr("Challenge a family member", "परिवार के किसी सदस्य को चुनौती दें") }}</button></form>{% endif %}
+    {% endif %}
+  </div>
+  {% if link %}<p class="cm-small">{{ tr("Challenge code: ", "चुनौती-कोड: ") }}<b>{{ res.code }}</b>. {{ tr("They get the same 5 questions, and you will see both scores.", "उन्हें वही 5 सवाल मिलेंगे, और आप दोनों के स्कोर देखेंगे।") }}</p>{% endif %}
+  {% if me and me.certificate_ready %}<p><a class="btn-sm" href="/learn/certificate">{{ tr("You can get your certificate", "आप अपना प्रमाणपत्र पा सकते हैं") }}</a></p>{% endif %}
+{% endif %}
+</div>
+{% endblock %}

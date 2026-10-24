@@ -43,3 +43,24 @@
     if (d && !window.confirm(d.getAttribute("data-cm-confirm"))) e.preventDefault();
   });
 })();
+
+/* Share a picture the way phones expect (WhatsApp and others), with a plain download as the fallback. */
+(function () {
+  var D = document;
+  D.addEventListener("click", function (e) {
+    var b = e.target.closest("[data-cm-share-img]");
+    if (!b) return;
+    var url = b.getAttribute("data-cm-share-img");
+    fetch(url).then(function (r) { return r.blob(); }).then(function (blob) {
+      var file = new File([blob], "satyapan-warning.png", { type: "image/png" });
+      if (navigator.canShare && navigator.canShare({ files: [file] })) return navigator.share({ files: [file], title: "Satyapan" });
+      var a = D.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "satyapan-warning.png"; D.body.appendChild(a); a.click(); a.remove();
+    }).catch(function () {});
+  });
+
+  // Tell the server the visitor's time zone (minutes east of UTC) so streaks change at their own midnight.
+  try {
+    var off = String(-new Date().getTimezoneOffset());
+    if (D.cookie.indexOf("sp_tz=" + off) < 0) D.cookie = "sp_tz=" + off + "; path=/; max-age=31536000; samesite=lax";
+  } catch (err) { /* cookies blocked: the server falls back to India time */ }
+})();

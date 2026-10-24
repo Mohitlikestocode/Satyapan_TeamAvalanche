@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="wrap cm-wrap cm-narrow">
+  <h1>{{ tr("Scam-Aware certificate", "स्कैम-सजग प्रमाणपत्र") }}</h1>
+  {% if cert %}
+    <p class="cm-lead">{{ tr("Well done, " ~ cert.handle ~ ". You read all the lessons and finished 3 rounds.", "शाबाश, " ~ cert.handle ~ "। आपने सारे पाठ पढ़े और 3 राउंड पूरे किए।") }}</p>
+    <img class="cm-cert" src="/learn/certificate.png?lang={{ lang }}" alt="{{ tr('Scam-Aware learning certificate for ' ~ cert.handle, cert.handle ~ ' के लिए स्कैम-सजग सीखने का प्रमाणपत्र') }}" width="800" height="566">
+    <div class="cm-actions"><a class="hbtn hbtn-p" href="/learn/certificate.png?lang={{ lang }}" download="satyapan-scam-aware.png">{{ tr("Download picture", "तस्वीर डाउनलोड करें") }}</a>
+      <a class="hbtn hbtn-s" href="{{ share }}" target="_blank" rel="noopener">{{ tr("Share on WhatsApp", "WhatsApp पर भेजें") }}</a>
+      <button class="hbtn hbtn-s" type="button" data-cm-copy="{{ link }}">{{ tr("Copy link", "लिंक कॉपी करें") }}</button></div>
+    <p class="cm-small">{{ tr("Satyapan Scam-Aware, a learning certificate, not an official qualification. Anyone with the link can see your public name, level and date.", "सत्यापन स्कैम-सजग, सीखने का प्रमाणपत्र है, कोई आधिकारिक योग्यता नहीं। लिंक वाला कोई भी आपका सार्वजनिक नाम, स्तर और तारीख़ देख सकता है।") }}</p>
+  {% else %}
+    <p class="cm-lead">{{ tr("The certificate is for people who have read every lesson and played 3 rounds. Here is where you are.", "प्रमाणपत्र उनके लिए है जिन्होंने हर पाठ पढ़ा और 3 राउंड खेले। आप यहाँ तक पहुँचे हैं।") }}</p>
+    <ul class="cm-flags">
+      <li>{{ tr("Lessons read: " ~ (me.reads|length if me else 0) ~ " of " ~ n_lessons, "पढ़े पाठ: " ~ n_lessons ~ " में से " ~ (me.reads|length if me else 0)) }}</li>
+      <li>{{ tr("Rounds finished: " ~ (me.rounds if me else 0) ~ " of 3", "पूरे राउंड: 3 में से " ~ (me.rounds if me else 0)) }}</li>
+      <li>{{ tr("Public name chosen: " ~ ("yes" if me and me.handle else "not yet"), "सार्वजनिक नाम: " ~ ("चुन लिया" if me and me.handle else "अभी नहीं")) }}</li></ul>
+    <div class="cm-actions"><a class="hbtn hbtn-p" href="/learn">{{ tr("Go to lessons", "पाठों पर जाएँ") }}</a><a class="hbtn hbtn-s" href="/me">{{ tr("Choose a public name", "सार्वजनिक नाम चुनें") }}</a></div>
+  {% endif %}
+</div>
+{% endblock %}

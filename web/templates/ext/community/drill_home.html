@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% from "ext/community/_cm.html" import lvl, bar with context %}
+{% block content %}
+<div class="wrap cm-wrap cm-narrow">
+  <h1>{{ tr("Scam Drill", "स्कैम ड्रिल") }}</h1>
+  <p class="cm-lead">{{ tr("Five questions a round: spot the warning words, tell a scam from a real message, and choose the first thing to do. Most messages you get are fine, and the drill includes those too.", "हर राउंड में पाँच सवाल: चेतावनी वाले शब्द पहचानें, ठगी और असली संदेश में फ़र्क़ बताएँ, और पहला कदम चुनें। आपको आने वाले ज़्यादातर संदेश ठीक होते हैं, और ड्रिल में वे भी हैं।") }}</p>
+  {% if error %}<div class="cm-error" role="alert">{{ tr(error[0], error[1]) }}</div>{% endif %}
+  <div class="cm-actions">
+    <form method="post" action="/drill/start"><input type="hidden" name="mode" value="random"><button class="hbtn hbtn-p cm-btn" type="submit">{{ tr("Start a round", "राउंड शुरू करें") }}</button></form>
+    {% if daily.finished %}<a class="hbtn hbtn-s" href="/learn/drill/score?r={{ daily.round }}">{{ tr("Today's challenge: done, see result", "आज की चुनौती: पूरी, नतीजा देखें") }}</a>
+    {% else %}<form method="post" action="/drill/start"><input type="hidden" name="mode" value="daily"><button class="hbtn hbtn-s cm-btn" type="submit">{{ tr("Today's challenge", "आज की चुनौती") }}</button></form>{% endif %}
+  </div>
+  <form class="cm-box" method="get" action="/drill/play">
+    <h2 class="cm-h2">{{ tr("Did a relative send you a challenge?", "क्या किसी रिश्तेदार ने आपको चुनौती भेजी है?") }}</h2>
+    <label for="cm-ccode">{{ tr("Challenge code", "चुनौती-कोड") }}</label><br>
+    <input class="cm-in" id="cm-ccode" name="c" type="text" maxlength="12" autocomplete="off" style="text-transform:uppercase">
+    <button class="btn-sm" type="submit">{{ tr("Open", "खोलें") }}</button>
+  </form>
+  {% if me %}<section class="cm-box"><p><b>{{ lvl(me.level) }}</b> · {{ me.level.xp }} XP · {{ tr("Streak: " ~ me.streak ~ " days", "लगातार: " ~ me.streak ~ " दिन") }}</p>{{ bar(me.level) }}<a href="/me">{{ tr("My progress", "मेरी प्रगति") }}</a></section>{% endif %}
+  <h2 class="cm-h2">{{ tr("How points work", "अंक कैसे मिलते हैं") }}</h2>
+  <ul class="ticks"><li>{{ tr("10 XP for each right answer. 20 extra for all five right.", "हर सही उत्तर पर 10 XP। पाँचों सही होने पर 20 अतिरिक्त।") }}</li>
+    <li>{{ tr("A streak grows each day you learn something. Miss a day and it starts again.", "आप जिस दिन भी कुछ सीखते हैं, लगातार-लड़ी बढ़ती है। एक दिन छूटा तो फिर से शुरू होगी।") }}</li>
+    <li>{{ tr("Pick a public name on My progress to appear on the weekly leaderboard.", "साप्ताहिक लीडरबोर्ड पर आने के लिए \"मेरी प्रगति\" में सार्वजनिक नाम चुनें।") }}</li></ul>
+  {% if board.top %}<h2 class="cm-h2">{{ tr("This week's top learners", "इस हफ़्ते के शीर्ष सीखने वाले") }}</h2><ol>{% for r in board.top %}<li><b>{{ r.handle }}</b> · {{ r.week }} XP</li>{% endfor %}</ol><a href="/learn/leaderboard">{{ tr("Full leaderboard", "पूरी लीडरबोर्ड") }}</a>{% endif %}
+</div>
+{% endblock %}

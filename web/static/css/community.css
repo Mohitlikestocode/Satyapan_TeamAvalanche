@@ -131,3 +131,8 @@ aside .board{margin-bottom:16px}
   .cm-code{font-size:19px}
 }
 @media print{.cm-noprint{display:none!important}.cm-a4{border:2px solid #000}}
+.cm-word-label{display:inline-block;cursor:pointer}
+.cm-word-box{position:absolute;opacity:0;width:1px;height:1px}
+.cm-word-box:checked+.cm-word{border-color:var(--blue);background:var(--blue-l);font-weight:700}
+.cm-word-box:focus-visible+.cm-word{outline:3px solid #F5A524;outline-offset:2px}
+.cm-me{font-weight:700}

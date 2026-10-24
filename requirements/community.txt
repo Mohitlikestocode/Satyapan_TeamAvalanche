@@ -1,3 +1,4 @@
 # Community, education and gamification (branch feat/community). Install with: pip install -r requirements/community.txt
 # reportlab is used for printable posters and certificates' PDF versions. Pillow is already a core dependency. Add what else you use.
 reportlab>=4.2
+segno>=1.6

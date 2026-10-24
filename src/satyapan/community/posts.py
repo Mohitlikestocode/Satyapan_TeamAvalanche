@@ -161,7 +161,11 @@ def submit(raw: str, kind: str, lang: str, place: str, dev: str, consent: bool) 
             (int(time.time()), kind, lang, s.excerpt, res.tier.value, json.dumps(codes), json.dumps(reasons_en, ensure_ascii=False),
              json.dumps(reasons_hi, ensure_ascii=False), ent.kind if ent else None, key, ent.display if ent else None,
              phone.display if phone else None, sanitise_place(place), dev, status, root["id"] if root else None, json.dumps(flags)))
-        return Submitted(cur.lastrowid, status, root["id"] if root else None)
+        new_id = cur.lastrowid
+    if status == "approved":
+        from . import progress
+        progress.post_approved(dev)
+    return Submitted(new_id, status, root["id"] if root else None)
 
 
 # ---- reading -----------------------------------------------------------------------------------------------
@@ -321,7 +325,7 @@ def moderation_queue() -> dict:
 def moderate(post_id: int, action: str, actor: str) -> bool:
     """approve | reject | remove | dismiss. Every action is written to the audit log with the actor; the log never holds post text."""
     with store.conn() as c:
-        r = c.execute("SELECT id, status, tier, entity_key, parent_id FROM community_posts WHERE id=?", (post_id,)).fetchone()
+        r = c.execute("SELECT id, status, tier, entity_key, parent_id, dev FROM community_posts WHERE id=?", (post_id,)).fetchone()
         if not r:
             return False
         st = r["status"]
@@ -342,6 +346,9 @@ def moderate(post_id: int, action: str, actor: str) -> bool:
         else:
             return False
     db.audit(actor, f"community_{action}", f"post:{post_id}", f"was {st}, tier {r['tier']}")
+    if action == "approve" and st == "pending":
+        from . import progress
+        progress.post_approved(r["dev"])
     return True
 
 

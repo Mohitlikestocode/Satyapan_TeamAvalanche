@@ -58,11 +58,13 @@ CREATE TABLE IF NOT EXISTS learn_answers(
 );
 CREATE TABLE IF NOT EXISTS learn_badges(profile_id INTEGER NOT NULL, badge TEXT NOT NULL, ts INTEGER NOT NULL, PRIMARY KEY(profile_id, badge));
 CREATE TABLE IF NOT EXISTS learn_challenges(
-  code TEXT PRIMARY KEY, creator_profile INTEGER NOT NULL, qids TEXT NOT NULL, created INTEGER NOT NULL
+  code TEXT PRIMARY KEY, creator_profile INTEGER NOT NULL, creator_round TEXT NOT NULL, qids TEXT NOT NULL, created INTEGER NOT NULL
 );
 CREATE TABLE IF NOT EXISTS learn_invites(
   code TEXT NOT NULL, inviter_profile INTEGER NOT NULL, invitee_profile INTEGER NOT NULL, ts INTEGER NOT NULL, PRIMARY KEY(code, invitee_profile)
 );
+CREATE TABLE IF NOT EXISTS learn_xp(profile_id INTEGER NOT NULL, ts INTEGER NOT NULL, amount INTEGER NOT NULL, why TEXT NOT NULL);
+CREATE INDEX IF NOT EXISTS learn_xp_week ON learn_xp(ts, profile_id);
 CREATE TABLE IF NOT EXISTS learn_events(id INTEGER PRIMARY KEY AUTOINCREMENT, profile_id INTEGER NOT NULL, kind TEXT NOT NULL, ts INTEGER NOT NULL);
 """
 
