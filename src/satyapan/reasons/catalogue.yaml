@@ -1,0 +1,258 @@
+# Reason-code catalogue. Templates are the ONLY source of user-facing reason text.
+# `hi:` lines are machine-drafted and MUST be reviewed by a fluent speaker (HUMAN_TODO H-05):
+# `reviewed_by` stays null until then. Placeholders: {payee} {domain} are validated entity
+# values, HTML/Markdown-escaped at render time. No other media-derived text may appear here.
+# priority: lower = shown first (registry > payee > offer > media).
+version: 1
+codes:
+  REG_PAYEE:
+    layer: REGISTRY
+    priority: 1
+    en: "A reviewer previously confirmed this payee ({payee}) in a scam campaign."
+    hi: "एक समीक्षक पहले इस भुगतान-पाने वाले ({payee}) को धोखाधड़ी अभियान में पुष्टि कर चुका है।"
+  REG_MEDIA:
+    layer: REGISTRY
+    priority: 1
+    en: "A reviewer previously confirmed a copy of this video or audio in a scam campaign."
+    hi: "एक समीक्षक पहले इस वीडियो या ऑडियो की प्रति को धोखाधड़ी अभियान में पुष्टि कर चुका है।"
+  REG_URL:
+    layer: REGISTRY
+    priority: 1
+    en: "A reviewer previously confirmed this link ({domain}) in a scam campaign."
+    hi: "एक समीक्षक पहले इस लिंक ({domain}) को धोखाधड़ी अभियान में पुष्टि कर चुका है।"
+
+  PAYEE_NOT_VALID_HANDLE:
+    layer: L3
+    priority: 10
+    en: "{payee} is an ordinary UPI ID, not an @valid handle, and this message asks for payment together with {trigger}. SEBI-registered brokers must collect on @valid handles."
+    hi: "{payee} एक सामान्य UPI आईडी है, @valid हैंडल नहीं, और यह संदेश {trigger} के साथ भुगतान माँगता है। SEBI-पंजीकृत ब्रोकरों को @valid हैंडल पर ही भुगतान लेना होता है।"
+  PAYEE_FAKE_VALID_HANDLE:
+    layer: L3
+    priority: 9
+    en: "{payee} looks like an @valid handle but is not in the SEBI list we hold (dated {snapshot_date})."
+    hi: "{payee} @valid हैंडल जैसा दिखता है, पर हमारी SEBI सूची ({snapshot_date}) में नहीं है।"
+  PAYEE_PERSONAL_ACCOUNT:
+    layer: L3
+    priority: 11
+    en: "It asks you to pay a personal bank account or UPI ID."
+    hi: "यह आपसे किसी व्यक्तिगत बैंक खाते या UPI आईडी में पैसे भेजने को कहता है।"
+  PAYEE_VALID_REGISTERED:
+    layer: L3
+    priority: 40
+    en: "{payee} matches a registered intermediary in the SEBI list we hold (dated {snapshot_date})."
+    hi: "{payee} हमारी SEBI सूची ({snapshot_date}) में पंजीकृत मध्यस्थ से मेल खाता है।"
+  PAYEE_DEMO_REGISTERED:
+    layer: L3
+    priority: 39
+    en: "Demo register entry: fictional. {payee} matches the one fictional payee in this demo's register (dated {snapshot_date}). It is not a SEBI record."
+    hi: "डेमो रजिस्टर प्रविष्टि: काल्पनिक। {payee} इस डेमो के रजिस्टर ({snapshot_date}) के एकमात्र काल्पनिक भुगतान-पाने वाले से मेल खाता है। यह SEBI का रिकॉर्ड नहीं है।"
+  PAYEE_UNVERIFIED:
+    layer: FUSION
+    priority: 30
+    en: "A payee is mentioned that we could not confirm as registered."
+    hi: "एक भुगतान-पाने वाले का उल्लेख है जिसे हम पंजीकृत के रूप में पुष्टि नहीं कर सके।"
+  LINK_LOOKALIKE_DOMAIN:
+    layer: L3
+    priority: 8
+    en: "The link {domain} imitates an official website."
+    hi: "लिंक {domain} किसी आधिकारिक वेबसाइट की नकल करता है।"
+  LINK_UNOFFICIAL_INVITE:
+    layer: L3
+    priority: 12
+    en: "It invites you to a group that is not on the official-channel list."
+    hi: "यह आपको ऐसे ग्रुप में बुलाता है जो आधिकारिक चैनल सूची में नहीं है।"
+  LINK_APK:
+    layer: L3
+    priority: 9
+    en: "It asks you to install an app from outside the app store."
+    hi: "यह आपसे ऐप स्टोर के बाहर से ऐप इंस्टॉल करने को कहता है।"
+
+  OFFER_GUARANTEED_RETURNS:
+    layer: L4
+    priority: 20
+    en: "“Guaranteed returns” is a common fraud sign."
+    hi: "“गारंटीड रिटर्न” धोखाधड़ी का आम संकेत है।"
+  OFFER_FIXED_PERIODIC_RETURN:
+    layer: L4
+    priority: 21
+    en: "A fixed high return every day, week or month is a common fraud sign."
+    hi: "हर दिन, सप्ताह या महीने में तय ऊँचा मुनाफ़ा धोखाधड़ी का आम संकेत है।"
+  OFFER_URGENCY:
+    layer: L4
+    priority: 25
+    en: "It pressures you to act right now."
+    hi: "यह आप पर तुरंत कदम उठाने का दबाव डालता है।"
+  OFFER_VIP_GROUP:
+    layer: L4
+    priority: 22
+    en: "It invites you to a “VIP” or paid tips group."
+    hi: "यह आपको “VIP” या पेड टिप्स ग्रुप में बुलाता है।"
+  OFFER_OFFPLATFORM:
+    layer: L4
+    priority: 26
+    en: "It asks you to move to a private chat or another app."
+    hi: "यह आपसे किसी निजी चैट या दूसरे ऐप पर जाने को कहता है।"
+  OFFER_FEE_TO_WITHDRAW:
+    layer: L4
+    priority: 21
+    en: "It demands a fee or tax before you can withdraw."
+    hi: "यह पैसे निकालने से पहले शुल्क या टैक्स माँगता है।"
+  OFFER_REGULATOR_IMPERSONATION:
+    layer: L4
+    priority: 23
+    en: "It claims an endorsement from a regulator or exchange."
+    hi: "यह किसी नियामक या एक्सचेंज के समर्थन का दावा करता है।"
+
+  MEDIA_VOICE_SYNTHETIC:
+    layer: L2
+    priority: 50
+    en: "The voice shows signs of being AI-generated."
+    hi: "इस आवाज़ में AI से बनी होने के संकेत हैं।"
+  MEDIA_FACE_SYNTHETIC:
+    layer: L2
+    priority: 51
+    en: "The face in the video shows signs of AI manipulation."
+    hi: "वीडियो के चेहरे में AI से छेड़छाड़ के संकेत हैं।"
+  MEDIA_LIPSYNC_MISMATCH:
+    layer: L2
+    priority: 52
+    en: "The lip movement does not match the audio."
+    hi: "होंठों की हरकत आवाज़ से मेल नहीं खाती।"
+  MEDIA_IMAGE_EDITED:
+    layer: L2
+    priority: 53
+    en: "The image shows signs of editing."
+    hi: "इस तस्वीर में एडिटिंग के संकेत हैं।"
+  PROV_AI_LABELLED:
+    layer: L1
+    priority: 45
+    en: "The file carries a label saying it was made with AI."
+    hi: "फ़ाइल पर लेबल है कि यह AI से बनी है।"
+  PROV_VALID_CREDENTIALS:
+    layer: L1
+    priority: 60
+    en: "The file carries valid content credentials (this supports, but does not prove, authenticity)."
+    hi: "फ़ाइल में मान्य कंटेंट क्रेडेंशियल हैं (यह प्रामाणिकता का समर्थन करता है, प्रमाण नहीं)।"
+
+  QUALITY_TOO_SHORT:
+    layer: GATE
+    priority: 70
+    manual: true
+    en: "The clip is too short to check reliably."
+    hi: "क्लिप इतनी छोटी है कि भरोसे से जाँची नहीं जा सकती।"
+  QUALITY_NOISY:
+    layer: GATE
+    priority: 70
+    manual: true
+    en: "The audio is too noisy to check reliably."
+    hi: "ऑडियो में शोर इतना है कि भरोसे से जाँचा नहीं जा सकता।"
+  QUALITY_COMPRESSED:
+    layer: GATE
+    priority: 70
+    manual: true
+    en: "The file is too heavily compressed to check reliably (common after being forwarded many times)."
+    hi: "फ़ाइल बहुत ज़्यादा कंप्रेस हो चुकी है, इसलिए भरोसे से नहीं जाँची जा सकती (बार-बार फ़ॉरवर्ड होने पर ऐसा होता है)।"
+  QUALITY_NO_FACE:
+    layer: GATE
+    priority: 70
+    manual: true
+    en: "No clear face was found to check."
+    hi: "जाँचने के लिए कोई साफ़ चेहरा नहीं मिला।"
+  QUALITY_NO_SPEECH:
+    layer: GATE
+    priority: 70
+    manual: true
+    en: "No clear speech was found to check."
+    hi: "जाँचने के लिए कोई साफ़ बोली नहीं मिली।"
+  QUALITY_UNREADABLE:
+    layer: GATE
+    priority: 70
+    manual: true
+    en: "We could not read this file."
+    hi: "हम इस फ़ाइल को पढ़ नहीं सके।"
+  INPUT_TOO_LARGE:
+    layer: GATE
+    priority: 70
+    manual: true
+    en: "This file is larger than 50 MB. Please send a shorter clip or a screenshot."
+    hi: "यह फ़ाइल 50 MB से बड़ी है। कृपया छोटी क्लिप या स्क्रीनशॉट भेजें।"
+  INPUT_TOO_LONG:
+    layer: GATE
+    priority: 70
+    manual: true
+    en: "This clip is longer than 120 seconds. Please send the part with the payment request."
+    hi: "यह क्लिप 120 सेकंड से लंबी है। कृपया वह हिस्सा भेजें जिसमें पैसे माँगे गए हैं।"
+  INPUT_TYPE_NOT_ALLOWED:
+    layer: GATE
+    priority: 70
+    manual: true
+    en: "We can only check videos, voice notes, images, links and text."
+    hi: "हम केवल वीडियो, वॉइस नोट, तस्वीरें, लिंक और टेक्स्ट जाँच सकते हैं।"
+  CONFLICT_MEDIA:
+    layer: FUSION
+    priority: 71
+    manual: true
+    en: "Our checks of this media disagree with each other, so we cannot say."
+    hi: "इस मीडिया की हमारी जाँचें एक-दूसरे से मेल नहीं खातीं, इसलिए हम कुछ नहीं कह सकते।"
+  LAYER_TIMEOUT:
+    layer: FUSION
+    priority: 72
+    manual: true
+    en: "One of our checks did not finish, so this result uses only the rest."
+    hi: "हमारी एक जाँच पूरी नहीं हुई, इसलिए यह नतीजा बाकी जाँचों पर आधारित है।"
+  FORENSICS_NOT_USED:
+    layer: FUSION
+    priority: 88
+    en: "Voice and face forensics were not used for this result, so it says nothing about whether the media itself is real or synthetic."
+    hi: "इस नतीजे में आवाज़ और चेहरे की फ़ोरेंसिक जाँच इस्तेमाल नहीं हुई, इसलिए यह नहीं बताता कि मीडिया असली है या नकली।"
+  NO_PAYEE_FOUND:
+    layer: FUSION
+    priority: 89
+    en: "No payee or payment request was found in this item, so there was nothing to check on that side."
+    hi: "इस सामग्री में कोई भुगतान-पाने वाला या पैसे माँगने की बात नहीं मिली, इसलिए उस पक्ष की जाँच करने को कुछ नहीं था।"
+  NO_FLAGS_NOT_GUARANTEE:
+    layer: FUSION
+    priority: 90
+    en: "No red flags found in what we checked: the words used and the payee. This is not a guarantee."
+    hi: "हमने जो जाँचा (इस्तेमाल हुए शब्द और भुगतान-पाने वाला) उसमें कोई चेतावनी संकेत नहीं मिला। यह कोई गारंटी नहीं है।"
+
+# Fixed vocabulary for the {trigger} placeholder: only these ids may be passed (never media text).
+# Hindi is machine-drafted, pending native review (HUMAN_TODO H-05).
+triggers:
+  guaranteed_returns: {en: "a “guaranteed returns” promise", hi: "“गारंटीड रिटर्न” का वादा"}
+  fixed_periodic_return: {en: "a fixed high return every period", hi: "हर अवधि में तय ऊँचा मुनाफ़ा"}
+  vip_group: {en: "a “VIP” or paid tips group", hi: "“VIP” या पेड टिप्स ग्रुप"}
+  app_install: {en: "an app install outside the app store", hi: "ऐप स्टोर के बाहर से ऐप इंस्टॉल"}
+  pay_to_join: {en: "a payment to join", hi: "जुड़ने के लिए भुगतान"}
+  fee_to_withdraw: {en: "a fee demanded before withdrawal", hi: "पैसे निकालने से पहले शुल्क की माँग"}
+
+tiers:
+  HIGH_RISK:
+    headline: {en: "HIGH RISK", hi: "ज़्यादा जोखिम"}
+    action:
+      en: "Do not pay or join. Do not install any app. Check the payee on SEBI Check and keep the evidence."
+      hi: "पैसे न भेजें, ग्रुप में न जुड़ें, कोई ऐप इंस्टॉल न करें। SEBI Check पर भुगतान-पाने वाले को जाँचें और सबूत सहेजें।"
+  REGISTRY_HIT:
+    headline: {en: "REGISTRY HIT: HIGH RISK", hi: "रजिस्ट्री मिलान: ज़्यादा जोखिम"}
+    action:
+      en: "A reviewer confirmed this campaign before. Do not pay or join. Check the payee on SEBI Check and keep the evidence."
+      hi: "एक समीक्षक इस अभियान की पहले पुष्टि कर चुका है। पैसे न भेजें, ग्रुप में न जुड़ें। SEBI Check पर भुगतान-पाने वाले को जाँचें और सबूत सहेजें।"
+  SUSPICIOUS:
+    headline: {en: "SUSPICIOUS", hi: "संदिग्ध"}
+    action:
+      en: "Verify before acting. Check the payee on SEBI Check and ask someone you trust, using a number you already have."
+      hi: "कदम उठाने से पहले जाँच लें। SEBI Check पर भुगतान-पाने वाले को जाँचें और अपने पास पहले से मौजूद नंबर पर किसी भरोसेमंद व्यक्ति से पूछें।"
+  CANT_TELL:
+    headline: {en: "CAN'T TELL", hi: "कह नहीं सकते"}
+    action:
+      en: "We do not have enough evidence either way. Manual steps: check the payee on SEBI Check; look for the same video on the official channel of the person or company; ask the sender for the original file; do not pay until you have verified."
+      hi: "हमारे पास किसी भी तरफ़ के लिए पर्याप्त सबूत नहीं हैं। हाथ से जाँचें: SEBI Check पर भुगतान-पाने वाले को देखें; उसी वीडियो को व्यक्ति या कंपनी के आधिकारिक चैनल पर खोजें; भेजने वाले से मूल फ़ाइल माँगें; जाँच के बिना पैसे न भेजें।"
+  NO_RED_FLAGS:
+    headline: {en: "NO RED FLAGS FOUND", hi: "कोई चेतावनी संकेत नहीं मिला"}
+    action:
+      en: "This is not a guarantee. Before you pay anyone, verify the payee on SEBI Check."
+      hi: "यह कोई गारंटी नहीं है। किसी को भी पैसे भेजने से पहले SEBI Check पर भुगतान-पाने वाले को जाँचें।"
+
+footer:
+  en: "Shows signs only; not proof. Satyapan is advisory: it never moves or blocks money."
+  hi: "ये केवल संकेत हैं, प्रमाण नहीं। सत्यापन केवल सलाह देता है: यह पैसे न रोकता है, न भेजता है।"

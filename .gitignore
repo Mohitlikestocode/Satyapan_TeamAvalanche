@@ -1,0 +1,65 @@
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+
+# Secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets/
+
+# Large / third-party assets (never committed; see docs/ASSETS.md)
+assets/
+models/
+datasets/
+media/
+*.wav
+*.mp3
+*.mp4
+*.mov
+*.m4a
+*.ogg
+*.webm
+*.onnx
+*.safetensors
+*.pt
+*.pth
+*.bin
+*.ckpt
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Runtime state / build output
+var/
+data/runtime/
+dist/
+build/
+node_modules/
+*.sqlite
+*.sqlite3
+*.db
+*.log
+.cache/
+
+# Organiser documents and research drafts (not ours to redistribute / not final)
+docs/*.pdf
+docs/*.docx
+docs/_draft_*.md
+
+# generated demo replay data
+web/sim/replay_data.json
+reports/
+.hypothesis/
