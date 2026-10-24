@@ -9,7 +9,11 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def test_generator_writes_images_masks_and_style_split(tmp_path):
-    subprocess.run([sys.executable, str(ROOT / "tools" / "make_payment_screens.py"), str(tmp_path), "--n", "30", "--seed", "3"], check=True, capture_output=True)
+    run = subprocess.run([sys.executable, str(ROOT / "tools" / "make_payment_screens.py"), str(tmp_path), "--n", "30", "--seed", "3"], capture_output=True, text=True)
+    if "No TrueType fonts found" in (run.stdout + run.stderr):
+        import pytest
+        pytest.skip("no system fonts on this machine (e.g. a bare CI image)")
+    assert run.returncode == 0, run.stderr
     rows = [json.loads(line) for line in (tmp_path / "meta.jsonl").read_text(encoding="utf-8").splitlines()]
     assert len(rows) == 30
     train_styles = {r["style"] for r in rows if r["split"] == "train"}

@@ -5,12 +5,13 @@ import json
 from urllib.parse import quote
 
 from fastapi import APIRouter, Request
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, JSONResponse
 
 from ..evidence.pack import build_pack, public_key_id, report_id, sign_pack
+from ..plugins import REGISTRY
 from ..store import db
 from .routes_review import STATUS_LABEL
-from .web import WEB, render, screen
+from .web import WEB, device_id, render, screen
 
 router = APIRouter()
 
@@ -20,6 +21,14 @@ PERSONAL = {"HIGH_RISK": "high risk", "REGISTRY_HIT": "a known scam", "SUSPICIOU
 
 def _case(case: str) -> db.StoredCase | None:
     return db.get_case(case) if case else None
+
+
+@router.post("/api/guardian/shared", include_in_schema=False)
+def guardian_shared(request: Request, case: str = "") -> JSONResponse:
+    """Beacon from the Ask-family page when the visitor presses Share or Copy. Only counted for a real saved check."""
+    if _case(case):
+        REGISTRY.emit("guardian", {"case_id": case, "device": device_id(request)})
+    return JSONResponse({"ok": True})
 
 
 @router.get("/case/{case_id}", response_class=HTMLResponse, include_in_schema=False)
