@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% from "ext/community/_cm.html" import lvl, bar, badge_grid with context %}
+{% block content %}
+<div class="wrap cm-wrap">
+  <h1>{{ tr("My progress", "मेरी प्रगति") }}</h1>
+  {% if saved == "handle" %}<div class="cm-note" role="status">{{ tr("Your public name is saved.", "आपका सार्वजनिक नाम सहेज लिया गया।") }}</div>{% endif %}
+  {% if recovered %}<div class="cm-note" role="status">{{ tr("Done. This phone now has your progress.", "हो गया। अब इस फ़ोन में आपकी प्रगति है।") }}</div>{% endif %}
+  {% if not me %}
+    <div class="empty cm-empty"><h3>{{ tr("You have not started yet", "आपने अभी शुरू नहीं किया") }}</h3>
+      <p>{{ tr("Read a lesson or play a round, and your level, streak and badges will show here. Nothing is kept about you except your progress on this phone.", "कोई पाठ पढ़ें या एक राउंड खेलें, तो आपका स्तर, लगातार-लड़ी और बैज यहाँ दिखेंगे। इस फ़ोन की प्रगति के सिवा आपके बारे में कुछ नहीं रखा जाता।") }}</p>
+      <a class="hbtn hbtn-p" href="/learn">{{ tr("Start learning", "सीखना शुरू करें") }}</a> <a class="hbtn hbtn-s" href="/me/recover">{{ tr("I have a recovery code", "मेरे पास रिकवरी कोड है") }}</a></div>
+  {% else %}
+  <section class="kpis" aria-label="{{ tr('Your numbers', 'आपके आँकड़े') }}">
+    <div class="kpi"><small>{{ tr("Level", "स्तर") }}</small><b>{{ me.level.level }}</b><span>{{ tr(me.level.name_en, me.level.name_hi) }}</span></div>
+    <div class="kpi kpi-a"><small>XP</small><b>{{ me.level.xp }}</b><span>{{ tr(me.week_xp ~ " this week", "इस हफ़्ते " ~ me.week_xp) }}</span></div>
+    <div class="kpi kpi-r"><small>{{ tr("Streak (days)", "लगातार (दिन)") }}</small><b>{{ me.streak }}</b><span>{{ tr("best " ~ me.best_streak, "सबसे अच्छा " ~ me.best_streak) }}</span></div>
+    <div class="kpi kpi-g"><small>{{ tr("Rounds played", "खेले राउंड") }}</small><b>{{ me.rounds }}</b><span>{{ tr(me.correct ~ " of " ~ me.answered ~ " answers right", me.answered ~ " में से " ~ me.correct ~ " सही") }}</span></div>
+  </section>
+  {{ bar(me.level) }}<p class="cm-small">{{ tr((me.level.next_at - me.level.xp) ~ " XP to the next level", "अगले स्तर तक " ~ (me.level.next_at - me.level.xp) ~ " XP") }}</p>
+
+  <section class="cm-box"><h2 class="cm-h2">{{ tr("Your public name", "आपका सार्वजनिक नाम") }}</h2>
+    {% if handle_error %}<div class="cm-error" role="alert">{{ tr(handle_error[0], handle_error[1]) }}</div>{% endif %}
+    <p>{% if me.handle %}{{ tr("Shown on the leaderboard and on your certificate:", "लीडरबोर्ड और प्रमाणपत्र पर दिखता है:") }} <b>{{ me.handle }}</b>{% else %}{{ tr("Choose a name to appear on the weekly leaderboard. Do not use your real name or phone number.", "साप्ताहिक लीडरबोर्ड पर आने के लिए नाम चुनें। अपना असली नाम या फ़ोन नंबर न रखें।") }}{% endif %}</p>
+    <form method="post" action="/me/handle" class="cm-form"><div class="cm-field"><label for="cm-handle">{{ tr("Name (3 to 20 letters, numbers or _)", "नाम (3 से 20 अक्षर, अंक या _)") }}</label>
+      <input class="cm-in" id="cm-handle" name="handle" type="text" minlength="3" maxlength="20" autocomplete="off" value="{{ me.handle or '' }}" required></div>
+      <div class="cm-hp" aria-hidden="true"><label>Website<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+      <div><button class="hbtn hbtn-p cm-btn" type="submit">{{ tr("Save name", "नाम सहेजें") }}</button></div></form></section>
+
+  <h2 class="cm-h2">{{ tr("Badges", "बैज") }}</h2>{{ badge_grid(me.badges) }}
+
+  <h2 class="cm-h2">{{ tr("Lessons read: " ~ me.reads|length ~ " of " ~ lessons|length, "पढ़े गए पाठ: " ~ lessons|length ~ " में से " ~ me.reads|length) }}</h2>
+  <ul class="cm-flags">{% for l in lessons %}<li><a href="/learn/{{ l.slug }}">{{ tr(l.title.en, l.title.hi) }}</a> {% if l.slug in me.reads %}<span class="pill pill-g">{{ tr("Read", "पढ़ा") }}</span>{% endif %}</li>{% endfor %}</ul>
+
+  <section class="cm-box"><h2 class="cm-h2">{{ tr("Certificate", "प्रमाणपत्र") }}</h2>
+    <p>{% if me.certificate_ready and me.handle %}{{ tr("You have qualified. Get your Scam-Aware certificate.", "आप योग्य हो गए हैं। अपना स्कैम-सजग प्रमाणपत्र पाएँ।") }}{% else %}{{ tr("Read all 12 lessons, finish 3 rounds and choose a public name.", "सारे 12 पाठ पढ़ें, 3 राउंड पूरे करें और सार्वजनिक नाम चुनें।") }}{% endif %}</p>
+    <a class="btn-sm" href="/learn/certificate">{{ tr("Open certificate page", "प्रमाणपत्र पृष्ठ खोलें") }}</a></section>
+
+  <h2 class="cm-h2">{{ tr("My Scam Watch reports", "स्कैम वॉच पर मेरी रिपोर्ट") }}</h2>
+  {% if me.posts %}<ul class="list">{% for p in me.posts %}<li><a href="/community/post/{{ p.id }}">{{ tr("Report", "रिपोर्ट") }} #{{ p.id }}</a> · {{ p.created|cm_date }} · {% if p.status == "approved" %}{{ tr("public", "सार्वजनिक") }}{% elif p.status == "pending" %}{{ tr("waiting for a person", "व्यक्ति की जाँच का इंतज़ार") }}{% else %}{{ tr("hidden", "छिपी") }}{% endif %}</li>{% endfor %}</ul>
+  {% else %}<p>{{ tr("None yet.", "अभी कोई नहीं।") }} <a href="/community/report">{{ tr("Report a scam you saw", "देखी हुई धोखाधड़ी बताएँ") }}</a></p>{% endif %}
+  <p>{{ tr("People you challenged who played: ", "आपकी चुनौती खेलने वाले लोग: ") }}<b>{{ me.invited }}</b></p>
+
+  <section class="cm-box red"><h2 class="cm-h2">{{ tr("Save my recovery code", "मेरा रिकवरी कोड सहेजें") }}</h2>
+    <p>{{ tr("There is no e-mail or password. If you get a new phone, a recovery code brings your progress back. It is shown once, so write it down. Making a new one cancels the old one.", "यहाँ ई-मेल या पासवर्ड नहीं है। नया फ़ोन लें तो रिकवरी कोड आपकी प्रगति वापस ले आता है। यह सिर्फ़ एक बार दिखता है, इसलिए लिख लें। नया कोड बनाने पर पुराना बंद हो जाता है।") }}</p>
+    <form method="post" action="/me/recovery"><button class="hbtn hbtn-p cm-btn" type="submit">{{ tr("Show my recovery code", "मेरा रिकवरी कोड दिखाएँ") }}</button></form>
+    <p><a href="/me/recover">{{ tr("I already have a code (use it on this phone)", "मेरे पास कोड है (इस फ़ोन पर इस्तेमाल करें)") }}</a></p></section>
+  {% endif %}
+</div>
+{% endblock %}

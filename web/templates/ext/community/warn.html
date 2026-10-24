@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="wrap cm-wrap cm-narrow">
+  <h1>{{ tr("Make a warning card", "चेतावनी कार्ड बनाएँ") }}</h1>
+  <p class="cm-lead">{{ tr("Turn a scam into a picture you can send to your family group on WhatsApp. Pick a type of scam or a report from Scam Watch, and a language.", "किसी ठगी को ऐसी तस्वीर बनाएँ जिसे आप परिवार के WhatsApp ग्रुप में भेज सकें। ठगी का प्रकार या स्कैम वॉच की कोई रिपोर्ट चुनें, और भाषा चुनें।") }}</p>
+  <form method="get" action="/warn" class="cm-form">
+    <div class="cm-field"><label for="cm-type">{{ tr("Type of scam", "ठगी का प्रकार") }}</label>
+      <select id="cm-type" name="type">{% for l in lessons %}<option value="{{ l.slug }}" {% if l.slug == slug %}selected{% endif %}>{{ tr(l.title.en, l.title.hi) }}</option>{% endfor %}</select></div>
+    {% if recent %}<div class="cm-field"><label for="cm-post">{{ tr("Or a report from Scam Watch", "या स्कैम वॉच की कोई रिपोर्ट") }}</label>
+      <select id="cm-post" name="post"><option value="">{{ tr("None, use the type above", "कोई नहीं, ऊपर का प्रकार इस्तेमाल करें") }}</option>
+      {% for p in recent %}<option value="{{ p.id }}" {% if chosen_post and chosen_post.root_id == p.id %}selected{% endif %}>#{{ p.id }} · {{ p.tier_label }} · {{ p.excerpt[:50] }}</option>{% endfor %}</select></div>{% endif %}
+    <fieldset><legend>{{ tr("Language of the card", "कार्ड की भाषा") }}</legend><div class="cm-choices">
+      <label class="cm-choice"><input type="radio" name="lang" value="hi" {% if lg == "hi" %}checked{% endif %}><span>हिन्दी</span></label>
+      <label class="cm-choice"><input type="radio" name="lang" value="en" {% if lg == "en" %}checked{% endif %}><span>English</span></label></div></fieldset>
+    <div><button class="hbtn hbtn-p cm-btn" type="submit">{{ tr("Make the card", "कार्ड बनाएँ") }}</button></div>
+  </form>
+  <section class="cm-box"><h2 class="cm-h2">{{ tr("Your card", "आपका कार्ड") }}</h2>
+    <img class="cm-card-img" src="/warn/card.png?{{ qs }}" alt="{{ tr('Warning card about this scam', 'इस ठगी के बारे में चेतावनी कार्ड') }}" width="432" height="540">
+    <div class="cm-actions">
+      <button type="button" class="hbtn hbtn-p cm-btn" data-cm-share-img="/warn/card.png?{{ qs }}">{{ tr("Share the picture", "तस्वीर भेजें") }}</button>
+      <a class="hbtn hbtn-s" href="{{ share }}" target="_blank" rel="noopener">{{ tr("Share a WhatsApp message with the link", "लिंक के साथ WhatsApp संदेश भेजें") }}</a>
+      <a class="hbtn hbtn-s" href="/warn/card.png?{{ qs }}" download="satyapan-warning.png">{{ tr("Download", "डाउनलोड करें") }}</a></div>
+    <p class="cm-small">{{ tr("The card holds no names or phone numbers. If you sent a Scam Watch report, its text was already cleaned.", "कार्ड में कोई नाम या फ़ोन नंबर नहीं है। स्कैम वॉच की रिपोर्ट का पाठ पहले ही साफ़ किया जा चुका है।") }}</p></section>
+</div>
+{% endblock %}

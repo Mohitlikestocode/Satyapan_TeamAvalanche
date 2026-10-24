@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="wrap cm-wrap cm-narrow">
+  <h1>{{ tr("Report a scam you saw", "देखी हुई धोखाधड़ी बताएँ") }}</h1>
+  <p class="cm-lead">{{ tr("Tell us what reached you. Satyapan checks it with the same rules as the Check page and shows people the reasons.", "बताइए आपके पास क्या आया। सत्यापन उसे वही नियमों से जाँचता है जो जाँच वाले पृष्ठ पर हैं, और लोगों को कारण दिखाता है।") }}</p>
+
+  {% if error %}<div class="cm-error" role="alert"><b>{{ tr(error[0], error[1]) }}</b></div>{% endif %}
+
+  <form class="cm-form" method="post" action="/community/report" novalidate>
+    <fieldset>
+      <legend>{{ tr("1. What kind of scam was it?", "1. यह किस तरह की धोखाधड़ी थी?") }}</legend>
+      <div class="cm-choices">
+        {% for key, en, hi in cm_kinds %}
+        <label class="cm-choice"><input type="radio" name="kind" value="{{ key }}" {% if values.kind == key %}checked{% endif %} required><span>{{ tr(en, hi) }}</span></label>
+        {% endfor %}
+      </div>
+    </fieldset>
+
+    <div class="cm-field">
+      <label for="cm-text">{{ tr("2. Paste or write it here", "2. इसे यहाँ चिपकाएँ या लिखें") }}</label>
+      <p id="cm-text-help" class="cm-help">{{ tr("The message, the link, the UPI ID, or what the caller or QR code asked for. Up to " ~ max_len ~ " characters.", "संदेश, लिंक, UPI आईडी, या कॉल करने वाले या QR कोड ने क्या माँगा। " ~ max_len ~ " अक्षर तक।") }}</p>
+      <textarea id="cm-text" name="text" rows="6" maxlength="{{ max_len }}" aria-describedby="cm-text-help cm-preview" data-preview="/api/v1/community/preview" required>{{ values.text or "" }}</textarea>
+      <p class="cm-count" aria-live="polite"><span id="cm-count">0</span> / {{ max_len }}</p>
+    </div>
+
+    <section id="cm-preview" class="cm-preview" aria-live="polite" hidden>
+      <h2>{{ tr("What other people will see", "दूसरे लोग क्या देखेंगे") }}</h2>
+      <p id="cm-preview-text" class="cm-excerpt"></p>
+      <p id="cm-preview-note" class="cm-small"></p>
+    </section>
+
+    <div class="cm-two">
+      <div class="cm-field"><label for="cm-place">{{ tr("3. City or state (optional)", "3. शहर या राज्य (वैकल्पिक)") }}</label>
+        <input id="cm-place" name="place" type="text" maxlength="40" autocomplete="off" value="{{ values.place or '' }}"></div>
+      <div class="cm-field"><label for="cm-lang">{{ tr("Language of the message", "संदेश की भाषा") }}</label>
+        <select id="cm-lang" name="lang"><option value="auto">{{ tr("Detect automatically", "अपने आप पहचानें") }}</option>
+        {% for key, en, hi in cm_langs %}<option value="{{ key }}" {% if values.lang == key %}selected{% endif %}>{{ tr(en, hi) }}</option>{% endfor %}</select></div>
+    </div>
+
+    <div class="cm-hp" aria-hidden="true"><label>Website<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+
+    <div class="cm-consent">
+      <label class="cm-check"><input type="checkbox" name="consent" value="1" {% if values.consent %}checked{% endif %}>
+        <span>{{ tr("I agree that this report will be public. I have not included anyone's private details on purpose.", "मैं मानता/मानती हूँ कि यह रिपोर्ट सबको दिखेगी। मैंने जानबूझकर किसी की निजी जानकारी नहीं डाली है।") }}</span></label>
+    </div>
+
+    <div class="cm-privacy">
+      <b>{{ tr("What we keep and what we do not", "हम क्या रखते हैं और क्या नहीं") }}</b>
+      <ul class="ticks">
+        <li>{{ tr("Phone numbers, e-mail addresses, long numbers, OTP or PIN values and names after \"Dear\" are hidden before saving.", "फ़ोन नंबर, ई-मेल, लंबे नंबर, OTP या PIN और \"प्रिय\" के बाद के नाम सहेजने से पहले छिपा दिए जाते हैं।") }}</li>
+        <li>{{ tr("Links are shown as the website name only, and they cannot be clicked.", "लिंक सिर्फ़ वेबसाइट के नाम की तरह दिखते हैं, उन पर क्लिक नहीं होता।") }}</li>
+        <li>{{ tr("We never keep your original text, your name or your phone number. You can delete your report any time from this phone.", "हम आपका मूल लिखा हुआ, आपका नाम या फ़ोन नंबर नहीं रखते। आप इसी फ़ोन से कभी भी अपनी रिपोर्ट मिटा सकते हैं।") }}</li>
+      </ul>
+    </div>
+
+    <div class="cm-actions">
+      <button type="submit" class="hbtn hbtn-p cm-btn">{{ tr("Send report", "रिपोर्ट भेजें") }}</button>
+      <a class="hbtn hbtn-s" href="/community">{{ tr("Cancel", "रद्द करें") }}</a>
+    </div>
+    <p class="cm-small">{{ tr("You can send " ~ left ~ " more reports today.", "आज आप " ~ left ~ " और रिपोर्ट भेज सकते हैं।") }}</p>
+  </form>
+</div>
+{% endblock %}

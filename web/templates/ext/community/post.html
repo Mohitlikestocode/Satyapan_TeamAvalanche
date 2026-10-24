@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% from "ext/community/_cm.html" import pill, kind_label, lang_label, seen_by with context %}
+{% block content %}
+<div class="wrap cm-wrap cm-narrow">
+  {% if new %}<div class="cm-note" role="status">
+    {% if dup %}{{ tr("This was already reported and you are already counted. Thank you for checking.", "यह पहले ही बताया जा चुका है और आप पहले से गिने गए हैं। जाँचने के लिए धन्यवाद।") }}
+    {% elif p.status == "approved" and p.parent_id %}{{ tr("This looks like a scam others have already reported. We added your report to it, so it counts as one more person who saw it.", "यह ऐसी धोखाधड़ी लगती है जो दूसरे पहले ही बता चुके हैं। हमने आपकी रिपोर्ट उसमें जोड़ दी, यानी एक और व्यक्ति ने इसे देखा।") }}
+    {% elif p.status == "approved" %}{{ tr("Thank you. Your report is now public and helps others spot this scam.", "धन्यवाद। आपकी रिपोर्ट अब सबको दिखती है और दूसरों को यह धोखाधड़ी पहचानने में मदद करेगी।") }}
+    {% else %}{{ tr("Thank you. A person will look at your report before it is shown to others. Only you can see it until then.", "धन्यवाद। दूसरों को दिखने से पहले कोई व्यक्ति आपकी रिपोर्ट देखेगा। तब तक इसे सिर्फ़ आप देख सकते हैं।") }}{% endif %}
+  </div>{% endif %}
+  {% if seen == "ok" %}<div class="cm-note" role="status">{{ tr("Thank you. Your \"I saw this too\" was counted.", "धन्यवाद। आपका \"मैंने भी देखा\" गिना गया।") }}</div>
+  {% elif seen == "already" %}<div class="cm-note" role="status">{{ tr("You already said you saw this.", "आप पहले ही बता चुके हैं कि आपने इसे देखा।") }}</div>
+  {% elif seen == "own" %}<div class="cm-note" role="status">{{ tr("You reported this one, so you are already counted.", "यह आपने ही बताया था, इसलिए आप पहले से गिने गए हैं।") }}</div>
+  {% elif seen == "limit" %}<div class="cm-error" role="alert">{{ tr("You have used today's limit of 30 taps. Please come back tomorrow.", "आज की 30 बार की सीमा पूरी हो गई। कृपया कल आइए।") }}</div>{% endif %}
+  {% if flagged == "ok" %}<div class="cm-note" role="status">{{ tr("Thank you. We will look at this report.", "धन्यवाद। हम इस रिपोर्ट को देखेंगे।") }}</div>
+  {% elif flagged == "already" %}<div class="cm-note" role="status">{{ tr("You already reported this post.", "आप इस पोस्ट की शिकायत पहले कर चुके हैं।") }}</div>
+  {% elif flagged == "limit" %}<div class="cm-error" role="alert">{{ tr("You have reached today's limit of reports.", "आज की शिकायतों की सीमा पूरी हो गई।") }}</div>{% endif %}
+  {% if err == "delete" %}<div class="cm-error" role="alert">{{ tr("Only the phone that sent this report can delete it.", "इस रिपोर्ट को सिर्फ़ वही फ़ोन मिटा सकता है जिससे यह भेजी गई थी।") }}</div>{% endif %}
+
+  {% if p.status == "pending" %}<div class="vbanner vb-n" role="status"><div><b>{{ tr("Waiting for a person to look at it", "किसी व्यक्ति की जाँच का इंतज़ार") }}</b> · {{ tr("only you can see this page for now", "अभी इस पृष्ठ को सिर्फ़ आप देख सकते हैं") }}</div></div>
+  {% elif p.status == "held" %}<div class="vbanner vb-n" role="status"><div><b>{{ tr("Hidden after reports from other people", "दूसरे लोगों की शिकायत के बाद छिपाई गई") }}</b> · {{ tr("a person will decide whether it comes back", "कोई व्यक्ति तय करेगा कि यह वापस दिखे या नहीं") }}</div></div>{% endif %}
+
+  <p class="cm-crumb"><a href="/community">‹ {{ tr("All reports", "सभी रिपोर्ट") }}</a></p>
+  <section class="vbanner vb-{{ p.tier_class }}" aria-labelledby="cm-vh">
+    <div class="vb-icon" aria-hidden="true">{% if p.tier_class == "g" %}✓{% elif p.tier_class == "n" %}?{% elif p.tier_class == "a" %}!{% else %}✕{% endif %}</div>
+    <div>
+      <h1 id="cm-vh" class="vb-h">{{ p.tier_label }}</h1>
+      <p class="vb-act">{{ tr("This is what Satyapan's checks say about what was reported. It shows signs, not proof.", "रिपोर्ट किए गए संदेश के बारे में सत्यापन की जाँच यही कहती है। यह संकेत है, प्रमाण नहीं।") }}</p>
+    </div>
+  </section>
+
+  <p class="cm-meta">{{ kind_label(p.kind) }} · {{ lang_label(p.lang) }} · {{ p.created|cm_date }}{% if p.place %} · {{ p.place }}{% endif %}</p>
+  <h2 class="cm-h2">{{ tr("What was reported", "क्या बताया गया") }}</h2>
+  <blockquote class="cm-quote"><p class="cm-excerpt">{{ p.excerpt }}</p></blockquote>
+  <p class="cm-small">{{ tr("Links are shown as a website name and cannot be clicked. Never open them. Phone numbers, names and long numbers were hidden before this was saved.", "लिंक सिर्फ़ वेबसाइट के नाम की तरह दिखते हैं और उन पर क्लिक नहीं होता। उन्हें कभी न खोलें। सहेजने से पहले फ़ोन नंबर, नाम और लंबे नंबर छिपा दिए गए।") }}</p>
+  {% if p.entity %}<dl class="kv2 cm-kv"><div><dt>{% if p.entity_kind == "upi" %}{{ tr("Payee", "भुगतान पाने वाला") }}{% elif p.entity_kind == "domain" %}{{ tr("Website", "वेबसाइट") }}{% else %}{{ tr("Number", "नंबर") }}{% endif %}</dt><dd class="mono">{{ p.entity }}</dd></div></dl>{% endif %}
+
+  <h2 class="cm-h2">{{ tr("Why it was flagged", "यह क्यों चिह्नित हुई") }}</h2>
+  {% if p.reasons %}<ol class="rlist">{% for t in p.reasons %}<li><span class="rn">{{ loop.index }}</span><p>{{ t }}</p></li>{% endfor %}</ol>
+  {% else %}<p>{{ tr("The checks found nothing specific. A person decides whether to show this report.", "जाँच में कुछ ख़ास नहीं मिला। इस रिपोर्ट को दिखाना है या नहीं, यह कोई व्यक्ति तय करता है।") }}</p>{% endif %}
+  <p class="cm-small">{{ tr("Reasons come from fixed templates. Reports are shared by other users and are not verified by a bank or the police.", "कारण तय साँचों से आते हैं। रिपोर्ट दूसरे उपयोगकर्ता भेजते हैं; बैंक या पुलिस ने इन्हें सत्यापित नहीं किया है।") }}</p>
+
+  {% if p.status == "approved" %}
+  <section class="cm-seen-box" aria-labelledby="cm-sh">
+    <h2 id="cm-sh" class="cm-h2">{{ seen_by(p.sightings) }}</h2>
+    {% if p.others %}<details class="faq"><summary>{{ tr("Other versions people reported", "लोगों ने जो दूसरे रूप बताए") }} ({{ p.others|length }})</summary>
+      {% for o in p.others %}<p class="cm-excerpt">{{ o.excerpt }}</p>{% endfor %}</details>{% endif %}
+    <div class="cm-actions">
+      {% if p.can_vote %}<form method="post" action="/community/post/{{ p.root_id }}/seen"><button class="hbtn hbtn-p cm-btn" type="submit">{{ tr("I saw this too", "मैंने भी देखा") }}</button></form>
+      {% elif p.voted or p.mine %}<span class="pill pill-g">{{ tr("You are counted", "आप गिने गए हैं") }}</span>{% endif %}
+      <a class="hbtn hbtn-s" href="{{ share }}" rel="noopener" target="_blank">{{ tr("Share on WhatsApp", "WhatsApp पर भेजें") }}</a>
+      <button class="hbtn hbtn-s" type="button" data-cm-copy="{{ link }}">{{ tr("Copy link", "लिंक कॉपी करें") }}</button>
+    </div>
+    <p class="cm-actions-b"><a class="btn-sm" href="/check">{{ tr("Check something similar", "इसी जैसी कोई चीज़ जाँचें") }}</a>
+      <a class="btn-sm" href="/warn?post={{ p.root_id }}">{{ tr("Make a warning card", "चेतावनी कार्ड बनाएँ") }}</a></p>
+  </section>{% endif %}
+
+  <section class="cm-more">
+    {% if p.mine %}<form method="post" action="/community/post/{{ p.id }}/delete" class="cm-inline">
+      <button class="btn-sm danger" type="submit" data-cm-confirm="{{ tr('Delete this report? The text will be erased and cannot be brought back.', 'यह रिपोर्ट मिटाएँ? लिखा हुआ मिट जाएगा और वापस नहीं आएगा।') }}">{{ tr("Delete my post", "मेरी पोस्ट मिटाएँ") }}</button></form>{% endif %}
+    {% if not p.mine and not p.reported and p.status != "pending" %}
+    <details class="cm-abuse"><summary>{{ tr("Report this post", "इस पोस्ट की शिकायत करें") }}</summary>
+      <form method="post" action="/community/post/{{ p.id }}/abuse">
+        <fieldset><legend>{{ tr("What is wrong with it?", "इसमें क्या ग़लत है?") }}</legend>
+        {% for key, en, hi in cm_abuse %}<label class="cm-choice"><input type="radio" name="reason" value="{{ key }}" {% if loop.first %}checked{% endif %}><span>{{ tr(en, hi) }}</span></label>{% endfor %}</fieldset>
+        <button class="btn-sm danger" type="submit">{{ tr("Send", "भेजें") }}</button>
+      </form></details>{% endif %}
+  </section>
+  <p class="cm-small">{{ tr("Lost money? Call 1930 or report at cybercrime.gov.in.", "पैसे चले गए? 1930 पर कॉल करें या cybercrime.gov.in पर रिपोर्ट करें।") }}</p>
+</div>
+{% endblock %}

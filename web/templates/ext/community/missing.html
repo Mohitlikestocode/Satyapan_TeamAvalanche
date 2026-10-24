@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="wrap cm-wrap cm-narrow">
+  <h1>{{ tr("This report is not available", "यह रिपोर्ट उपलब्ध नहीं है") }}</h1>
+  <p>{{ tr("It may have been deleted, or it is waiting for a person to look at it.", "हो सकता है इसे मिटा दिया गया हो, या यह किसी व्यक्ति की जाँच का इंतज़ार कर रही हो।") }}</p>
+  <p><a class="hbtn hbtn-p" href="/community">{{ tr("Back to Scam Watch", "स्कैम वॉच पर वापस") }}</a></p>
+</div>
+{% endblock %}

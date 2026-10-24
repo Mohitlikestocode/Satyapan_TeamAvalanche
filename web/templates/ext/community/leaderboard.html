@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="wrap cm-wrap cm-narrow">
+  <h1>{{ tr("Weekly leaderboard", "साप्ताहिक लीडरबोर्ड") }}</h1>
+  <p class="cm-lead">{{ tr("XP earned since Monday " ~ fmt(board.since) ~ ". Only public names are shown, never real names. It starts again every Monday.", "सोमवार " ~ fmt(board.since) ~ " से कमाए XP। सिर्फ़ सार्वजनिक नाम दिखते हैं, असली नाम कभी नहीं। यह हर सोमवार नए सिरे से शुरू होती है।") }}</p>
+  {% if board.top %}<div class="tbl-wrap"><table class="cm-lb"><thead><tr><th>#</th><th>{{ tr("Name", "नाम") }}</th><th>{{ tr("This week", "इस हफ़्ते") }}</th><th>{{ tr("Level", "स्तर") }}</th></tr></thead><tbody>
+    {% for r in board.top %}<tr {% if r.me %}class="me"{% endif %}><td>{{ r.rank }}</td><td>{{ r.handle }}{% if r.me %} ({{ tr("you", "आप") }}){% endif %}</td><td>{{ r.week }} XP</td><td>{{ r.level }}</td></tr>{% endfor %}
+    {% if board.me %}<tr class="me"><td>{{ board.me.rank }}</td><td>{{ board.me.handle }} ({{ tr("you", "आप") }})</td><td>{{ board.me.week }} XP</td><td>{{ board.me.level }}</td></tr>{% endif %}</tbody></table></div>
+  {% else %}<div class="empty cm-empty"><h3>{{ tr("Nobody is on the board yet this week", "इस हफ़्ते अभी बोर्ड पर कोई नहीं") }}</h3><p>{{ tr("Play a round and choose a public name to be the first.", "एक राउंड खेलें और सार्वजनिक नाम चुनें, और पहले बनें।") }}</p></div>{% endif %}
+  {% if me and not me.handle %}<p><a class="hbtn hbtn-p" href="/me">{{ tr("Choose a public name", "सार्वजनिक नाम चुनें") }}</a></p>{% endif %}
+  <p><a class="hbtn hbtn-s" href="/learn/drill">{{ tr("Play Scam Drill", "स्कैम ड्रिल खेलें") }}</a></p>
+</div>
+{% endblock %}

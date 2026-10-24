@@ -1,0 +1,70 @@
+{
+ "rules": [
+  {
+   "id": "pause",
+   "title": {
+    "en": "Stop and take a breath",
+    "hi": "रुकिए और गहरी साँस लीजिए"
+   },
+   "body": {
+    "en": "Scammers need you to rush. A message that says \"today only\", \"last chance\" or \"you will be arrested\" is trying to stop you from thinking. Take five minutes and ask someone you trust.",
+    "hi": "ठग चाहते हैं कि आप जल्दी करें। \"सिर्फ़ आज\", \"आख़िरी मौक़ा\" या \"आप गिरफ़्तार हो जाएँगे\" जैसे संदेश आपको सोचने से रोकना चाहते हैं। पाँच मिनट रुकिए और किसी भरोसेमंद से पूछिए।"
+   }
+  },
+  {
+   "id": "secrets",
+   "title": {
+    "en": "Never share OTP, PIN, CVV or password",
+    "hi": "OTP, PIN, CVV या पासवर्ड कभी न बताएँ"
+   },
+   "body": {
+    "en": "Not with the bank, not with the police, not with a courier, not with a relative on the phone. Nobody real needs them from you.",
+    "hi": "न बैंक को, न पुलिस को, न कूरियर वाले को, न फ़ोन पर किसी रिश्तेदार को। असली व्यक्ति को ये आपसे कभी नहीं चाहिए।"
+   }
+  },
+  {
+   "id": "receive",
+   "title": {
+    "en": "You never need a PIN or a scan to receive money",
+    "hi": "पैसे पाने के लिए PIN या स्कैन की ज़रूरत नहीं"
+   },
+   "body": {
+    "en": "A PIN and a QR scan are for sending money. If someone says \"enter your PIN to receive\", the money will leave your account, not arrive.",
+    "hi": "PIN और QR स्कैन पैसे भेजने के लिए हैं। अगर कोई कहे \"पाने के लिए PIN डालिए\" तो पैसे आपके खाते से जाएँगे, आएँगे नहीं।"
+   }
+  },
+  {
+   "id": "links",
+   "title": {
+    "en": "Do not open links or install apps from strangers",
+    "hi": "अनजान लोगों के लिंक न खोलें, ऐप इंस्टॉल न करें"
+   },
+   "body": {
+    "en": "Install apps only from the official app store. Never install a screen-sharing app because a caller asked you to. Open your bank by its own app, not a link.",
+    "hi": "ऐप सिर्फ़ आधिकारिक ऐप स्टोर से इंस्टॉल करें। कॉल करने वाले के कहने पर स्क्रीन-शेयर ऐप कभी इंस्टॉल न करें। बैंक को उसके अपने ऐप से खोलें, लिंक से नहीं।"
+   }
+  },
+  {
+   "id": "known-number",
+   "title": {
+    "en": "Call back on a number you already have",
+    "hi": "अपने पास पहले से मौजूद नंबर पर वापस फ़ोन करें"
+   },
+   "body": {
+    "en": "If a caller says they are your bank, your son or your supplier, hang up and call the number on your card, in your phone, or on an old bill. Never the number they give you.",
+    "hi": "अगर कॉल करने वाला ख़ुद को आपका बैंक, बेटा या सप्लायर बताए तो कॉल काटें और कार्ड, अपने फ़ोन या पुराने बिल वाले नंबर पर फ़ोन करें। उनके दिए नंबर पर कभी नहीं।"
+   }
+  },
+  {
+   "id": "first-hour",
+   "title": {
+    "en": "If you paid, act in the first hour",
+    "hi": "अगर पैसे भेज दिए हैं तो पहले घंटे में कदम उठाएँ"
+   },
+   "body": {
+    "en": "Call 1930, the national cyber-crime helpline, and tell your bank. Report on cybercrime.gov.in. Keep the chats and screenshots. Do not delete anything and do not pay again to \"get it back\".",
+    "hi": "राष्ट्रीय साइबर-अपराध हेल्पलाइन 1930 पर कॉल करें और अपने बैंक को बताएँ। cybercrime.gov.in पर शिकायत करें। चैट और स्क्रीनशॉट रखें। कुछ न मिटाएँ और पैसे \"वापस पाने\" के लिए दोबारा न भरें।"
+   }
+  }
+ ]
+}
