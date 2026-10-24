@@ -56,7 +56,7 @@
   </dl>
 
   <h2 class="sec">{{ ui.checked }}</h2>
-  <ul class="list" style="border:1px solid var(--line)">{% for l in res.layers_run %}<li>{{ {"payee": ("Who is asking for the money: UPI IDs, links and names", "पैसे कौन माँग रहा है: UPI आईडी, लिंक और नाम"), "rules": ("Warning words in English, Hindi and Hinglish", "अंग्रेज़ी, हिन्दी और हिंग्लिश में चेतावनी वाले शब्द"), "pdf": ("The PDF file: its text and signs it was changed", "PDF फ़ाइल: उसका पाठ और बदले जाने के संकेत"), "image": ("The picture: signs that part of it was edited", "तस्वीर: उसके किसी हिस्से के बदले जाने के संकेत")}[l][0 if lang == "en" else 1] }}</li>{% endfor %}</ul>
+  <ul class="list" style="border:1px solid var(--line)">{% for l in res.layers_run %}<li>{{ {"payee": ("Who is asking for the money: UPI IDs, links and names", "पैसे कौन माँग रहा है: UPI आईडी, लिंक और नाम"), "rules": ("Warning words in English, Hindi and Hinglish", "अंग्रेज़ी, हिन्दी और हिंग्लिश में चेतावनी वाले शब्द"), "pdf": ("The PDF file: its text and signs it was changed", "PDF फ़ाइल: उसका पाठ और बदले जाने के संकेत"), "image": ("The picture: signs that part of it was edited", "तस्वीर: उसके किसी हिस्से के बदले जाने के संकेत")}.get(l, reg.layer_labels.get(l, (l, l)))[0 if lang == "en" else 1] }}</li>{% endfor %}</ul>
   <h2 class="sec">{{ ui.notchecked }}</h2>
   <p class="sm" style="margin:0">{% if "image" in res.layers_run %}{{ "Voice and video forensics were not used. A clean picture check never proves a payment is real: check your own UPI app." if lang == "en" else "आवाज़ और वीडियो की फ़ोरेंसिक जाँच इस्तेमाल नहीं हुई। तस्वीर की जाँच साफ़ होने से भुगतान असली साबित नहीं होता: अपना UPI ऐप देखें।" }}{% else %}{{ ui.nc }}{% endif %}</p>
 

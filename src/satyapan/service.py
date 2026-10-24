@@ -1,18 +1,21 @@
-"""Run a check end to end on text (a message, a pasted link, or text decoded from a QR code)."""
+"""Run a check end to end on text (a message, a pasted link, or text decoded from a QR code, a PDF or an image)."""
 from __future__ import annotations
 
 import json
+import logging
 import uuid
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from .contracts.models import (FusionInput, Lang, LayerResult, QualityReport, Tier, Verdict)
+from .contracts.models import FusionInput, Lang, LayerResult, QualityReport, Tier, Verdict
 from .extract.entities import Found, extract
 from .fusion.rules import fuse
 from .layers.l3_payee import layer as l3
 from .layers.l4_rules import layer as l4
+from .plugins import REGISTRY
 from .reasons.render import build_verdict
 
+log = logging.getLogger("satyapan.service")
 SNAPSHOT_PATH = Path(__file__).resolve().parents[2] / "data" / "sebi_snapshot.json"
 MAX_TEXT = 4000
 
@@ -37,8 +40,22 @@ class CaseResult:
     layers_run: list[str] = field(default_factory=list)
 
 
+def _run_hooks(hooks, *args) -> list[LayerResult]:
+    out = []
+    for fn in hooks:
+        try:
+            r = fn(*args)
+        except Exception:  # a broken plugin must not break a check
+            log.exception("hook %s failed", getattr(fn, "__name__", fn))
+            continue
+        if r is not None:
+            out.append(r)
+    return out
+
+
 def analyse_text(text: str, kind: str = "message", topic: str = "", case_id: str | None = None, use_registry: bool = True,
-                 extra_layers: list[LayerResult] | None = None, readable: bool = True, extra_names: list[str] | None = None) -> CaseResult:
+                 extra_layers: list[LayerResult] | None = None, readable: bool = True, extra_names: list[str] | None = None,
+                 use_plugins: bool = True) -> CaseResult:
     """Text is untrusted data. It is only matched against fixed patterns and never chooses a template or a tier."""
     case_id = case_id or uuid.uuid4().hex[:12]
     text = (text or "")[:MAX_TEXT]
@@ -57,13 +74,15 @@ def analyse_text(text: str, kind: str = "message", topic: str = "", case_id: str
         from .layers.l3_payee.domains import hostname
         from .store import db
         matches = db.registry_matches([u.vpa for u in found.upi], [h for h in (hostname(u) for u in found.urls) if h])
-    out = fuse(FusionInput(results=[l3res, l4res, *(extra_layers or [])], registry_matches=matches, quality=quality, media_present=False, payees_confirmed_registered=payee_confirmed,
-                         money_ask_present=bool(found.upi or found.ifsc or found.urls)))
+    hooked = _run_hooks(REGISTRY.text_hooks, text, found) if (use_plugins and usable) else []
+    out = fuse(FusionInput(results=[l3res, l4res, *(extra_layers or []), *hooked], registry_matches=matches, quality=quality, media_present=False,
+                           payees_confirmed_registered=payee_confirmed, money_ask_present=bool(found.upi or found.ifsc or found.urls)))
     verdicts = {lang.value: build_verdict(case_id, out, lang) for lang in Lang}
+    names = ["payee", "rules"] + list(extra_names or []) + [r.internal.get("label_key", "") for r in hooked if r.internal.get("label_key")]
     return CaseResult(
         case_id=case_id, kind=kind, tier=out.tier, verdicts=verdicts,
         payees=[{"upi": u.vpa, "name": u.name or "", "amount": u.amount or ""} for u in found.upi],
-        links=found.urls[:5], phones=found.phones[:5], layers_run=["payee", "rules"] + list(extra_names or []),
+        links=found.urls[:5], phones=found.phones[:5], layers_run=names,
     )
 
 
@@ -71,18 +90,28 @@ def analyse_pdf(data: bytes, topic: str = "", case_id: str | None = None) -> Cas
     """Read the PDF's text and look for signs of editing, then run the same payee and word checks as for a message."""
     from .layers.l2_forensics.pdf import analyse_pdf as read_pdf
     info = read_pdf(data)
-    res = analyse_text(info.text, kind="pdf", topic=topic or "invoice", case_id=case_id, extra_layers=[info.result], readable=info.readable, extra_names=["pdf"])
-    return res
+    return analyse_text(info.text, kind="pdf", topic=topic or "invoice", case_id=case_id, extra_layers=[info.result], readable=info.readable,
+                        extra_names=["pdf"])
 
 
 def analyse_image(data: bytes, kind: str = "screenshot", topic: str = "", case_id: str | None = None) -> CaseResult:
-    """Decode any QR code and read the text in an image, then check both. Detects nothing about pixels yet."""
+    """Decode any QR code, read the text, and run the picture checks (tamper model and any image hooks)."""
     from .extract.ocr import read_text
     from .extract.qr import decode_qr
     qr = decode_qr(data)
     ocr = read_text(data)
     parts = list(qr) + ([ocr] if ocr else [])
-    from .layers.l2_forensics import screenshot
-    forensic = screenshot.run(data) if kind != "qr" else None
+    layers: list[LayerResult] = []
+    names: list[str] = []
+    if kind != "qr":
+        from .layers.l2_forensics import screenshot
+        forensic = screenshot.run(data)
+        if forensic is not None:
+            layers.append(forensic)
+            names.append("image")
+        for r in _run_hooks(REGISTRY.image_hooks, data):
+            layers.append(r)
+            if r.internal.get("label_key"):
+                names.append(r.internal["label_key"])
     return analyse_text("\n".join(parts), kind=kind, topic=topic, case_id=case_id, readable=bool(parts),
-                        extra_layers=[forensic] if forensic else None, extra_names=["image"] if forensic else None)
+                        extra_layers=layers or None, extra_names=names or None)

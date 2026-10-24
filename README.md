@@ -33,6 +33,9 @@ make run     # http://127.0.0.1:8000/
 make test
 ```
 
+## Contributing
+Three people work in parallel on three branches without touching each other's files: see `docs/WORK_SPLIT.md` and `docs/BUILDER_GUIDE.md`.
+
 ## Measure it
 ```
 python tools/make_qr_kit.py kit/qr          # real, scannable QR images with phone-style damage (synthetic payees)

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-lang="en">
+<html lang="{{ lang or 'en' }}" data-lang="{{ lang or 'en' }}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,10 +9,14 @@
 <link rel="stylesheet" href="/static/fonts.css">
 {% block css %}{% endblock %}
 <link rel="stylesheet" href="/static/gov.css">
-<script src="/static/site.js" defer></script>
+{% for c in reg.global_css %}<link rel="stylesheet" href="{{ c }}">
+{% endfor %}{% for c in page.extra_css or [] %}<link rel="stylesheet" href="{{ c }}">
+{% endfor %}<script src="/static/site.js" defer></script>
 <script src="/static/pages.js" defer></script>
-</head>
-<body data-page="{{ page.route or 'home' }}" data-kind="{{ page.kind }}">
+{% for j in reg.global_js %}<script src="{{ j }}" defer></script>
+{% endfor %}{% for j in page.extra_js or [] %}<script src="{{ j }}" defer></script>
+{% endfor %}</head>
+<body data-page="{{ page.route or 'home' }}" data-kind="{{ page.kind }}"{% if page.i18n == "server" %} data-i18n="server"{% endif %}>
 <a class="skip" href="#main">Skip to main content</a>
 
 {% if page.kind != "console" %}
@@ -94,16 +98,17 @@
     </div>
     <nav aria-label="Services"><h2>Services</h2><ul>
       <li><a href="/check">Check something</a></li><li><a href="/dashboard">My checks</a></li><li><a href="/tools">Is this really Amazon?</a></li>
-      <li><a href="/shopkeeper">Shopkeeper check</a></li><li><a href="/helper">Helper mode</a></li></ul></nav>
+      <li><a href="/shopkeeper">Shopkeeper check</a></li><li><a href="/helper">Helper mode</a></li>{% for l, h in reg.footer_extra("Services") %}<li><a href="{{ h }}">{{ l }}</a></li>{% endfor %}</ul></nav>
     <nav aria-label="After a scam"><h2>If you paid</h2><ul>
       <li><a href="/already-paid">First hour: what to do</a></li><li><a href="/report">Evidence report</a></li><li><a href="/report/complaint">Complaint draft</a></li>
-      <li><a href="/guardian">Ask family (Guardian Review)</a></li><li><a href="/wrong">Wrong result?</a></li></ul></nav>
+      <li><a href="/guardian">Ask family (Guardian Review)</a></li><li><a href="/wrong">Wrong result?</a></li>{% for l, h in reg.footer_extra("If you paid") %}<li><a href="{{ h }}">{{ l }}</a></li>{% endfor %}</ul></nav>
     <nav aria-label="Learn and about"><h2>Learn and about</h2><ul>
       <li><a href="/learn">Learn</a></li><li><a href="/learn/drill">Scam Drill</a></li><li><a href="/learn/safe-word">Family safe-word card</a></li>
-      <li><a href="/how-it-works">How it works and methodology</a></li><li><a href="/states">System states</a></li><li><a href="/console">Reviewer console (pilot)</a></li></ul></nav>
+      <li><a href="/how-it-works">How it works and methodology</a></li><li><a href="/states">System states</a></li><li><a href="/console">Reviewer console (pilot)</a></li>{% for l, h in reg.footer_extra("Learn and about") %}<li><a href="{{ h }}">{{ l }}</a></li>{% endfor %}</ul></nav>
   </div>
   <div class="foot-bar"><div class="wrap">
     <p>Independent student project. Not affiliated with any government body, bank or company. Results are advisory and shown as sample results in this demo.</p>
+    <p>We set one random cookie to count visits and keep your place, never to identify you. Language and text-size choices stay on your device.</p>
     <p>Content owned by Team Avalanche · Last updated 24 Oct 2026 · Best viewed on current Chrome, Edge, Firefox or Safari</p>
   </div></div>
 </footer>

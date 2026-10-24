@@ -7,13 +7,9 @@
 """
 from __future__ import annotations
 
-import yaml
-from pathlib import Path
-
 from ..contracts.models import FusionInput, FusionOutput, Layer, ReasonRef, Strength, Tier
+from ..reasons.render import priority
 
-_CAT = yaml.safe_load((Path(__file__).resolve().parents[1] / "reasons" / "catalogue.yaml").read_text(encoding="utf-8"))
-PRIORITY = {code: v["priority"] for code, v in _CAT["codes"].items()}
 CLAIM = {Layer.L3, Layer.L4}
 
 
@@ -68,7 +64,7 @@ def _has_payee(signals, inp: FusionInput) -> bool:
 
 def _order(reasons: list[ReasonRef]) -> list[ReasonRef]:
     seen, out = set(), []
-    for r in sorted(reasons, key=lambda r: PRIORITY.get(r.code, 99)):
+    for r in sorted(reasons, key=lambda r: priority(r.code)):
         key = (r.code, tuple(sorted(r.params.items())))
         if key not in seen:
             seen.add(key)

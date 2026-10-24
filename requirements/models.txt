@@ -1,0 +1,5 @@
+# Models and measurement (branch feat/models-eval). Install with: pip install -r requirements/models.txt
+# Add the exact versions you actually use. For CUDA, install torch from pytorch.org first.
+torch>=2.3
+torchvision>=0.18
+numpy>=1.26

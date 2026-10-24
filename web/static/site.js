@@ -31,7 +31,16 @@
     H.classList.toggle("hc", on);
     D.querySelectorAll("[data-contrast]").forEach(function (b) { b.setAttribute("aria-pressed", on ? "true" : "false"); });
   }
-  applyLang(get("sp-lang") === "hi" ? "hi" : "en");
+  function syncLangCookie(l) {  // lets the server render pages in the visitor's language
+    var m = D.cookie.match(/(?:^|; )sp_lang=([^;]*)/), cur = m ? m[1] : "en";
+    if (cur === l) return false;
+    D.cookie = "sp_lang=" + l + "; path=/; max-age=31536000; samesite=lax";
+    return true;
+  }
+  var serverI18n = D.body.getAttribute("data-i18n") === "server";
+  var startLang = get("sp-lang") === "hi" ? "hi" : "en";
+  if (syncLangCookie(startLang) && serverI18n) { location.reload(); return; }
+  applyLang(startLang);
   applySize(get("sp-size") === "0" ? 0 : get("sp-size") === "2" ? 2 : 1);
   applyContrast(get("sp-hc") === "1");
 
@@ -41,6 +50,7 @@
       var g = b.parentElement, idx = Array.prototype.indexOf.call(g.querySelectorAll("button"), b), tool = g.getAttribute("data-tool");
       if (tool === "lang") {
         set("sp-lang", idx ? "hi" : "en"); applyLang(idx ? "hi" : "en");
+        if (syncLangCookie(idx ? "hi" : "en") && serverI18n) { location.reload(); return; }
         if (!variants && idx) toast("Language saved. Result pages are shown in Hindi; other screens are English for now.");
       }
       if (tool === "size") { set("sp-size", String(idx)); applySize(idx); }

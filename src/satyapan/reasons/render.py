@@ -1,4 +1,8 @@
-"""Reason text comes only from the catalogue templates. Placeholders take validated values; HTML pages escape on output."""
+"""Reason text comes only from the catalogue templates. Placeholders take validated values; HTML pages escape on output.
+
+The catalogue is `catalogue.yaml` plus any `ext/*.yaml` (one file per feature area). Ext files may add codes and triggers but
+may not redefine an existing code.
+"""
 from __future__ import annotations
 
 import re
@@ -10,12 +14,31 @@ import yaml
 from ..contracts.models import FusionOutput, Lang, ReasonRef, Verdict
 
 _PATH = Path(__file__).with_name("catalogue.yaml")
+_EXT = Path(__file__).with_name("ext")
 _PLACEHOLDER = re.compile(r"\{(\w+)\}")
 
 
 @lru_cache(maxsize=1)
 def catalogue() -> dict:
-    return yaml.safe_load(_PATH.read_text(encoding="utf-8"))
+    cat = yaml.safe_load(_PATH.read_text(encoding="utf-8"))
+    for p in sorted(_EXT.glob("*.yaml")):
+        extra = yaml.safe_load(p.read_text(encoding="utf-8")) or {}
+        for code, entry in (extra.get("codes") or {}).items():
+            if code in cat["codes"]:
+                raise ValueError(f"{p.name}: reason code {code} already exists")
+            for lang in ("en", "hi"):
+                if lang not in entry:
+                    raise ValueError(f"{p.name}: {code} needs both en and hi text")
+            cat["codes"][code] = entry
+        for trig, entry in (extra.get("triggers") or {}).items():
+            if trig in cat["triggers"]:
+                raise ValueError(f"{p.name}: trigger {trig} already exists")
+            cat["triggers"][trig] = entry
+    return cat
+
+
+def priority(code: str) -> int:
+    return int(catalogue()["codes"].get(code, {}).get("priority", 99))
 
 
 def render_reason(ref: ReasonRef, lang: Lang) -> str:

@@ -12,3 +12,4 @@
 - Response flow (disputes, human review, known-fake registry, hash-chained audit log, signed evidence pack) is our own code. Signing uses the `cryptography` package (Ed25519, Apache-2.0/BSD). The console sign-in is a demo: no passwords are used or stored. The database and signing key live under `var/` and are git-ignored.
 - OCR for screenshots uses Tesseract (English + Hindi) when installed, otherwise RapidOCR (Apache-2.0, pretrained ONNX text-detection and recognition models bundled in the pip package). PDF text and metadata use pypdf (BSD-3). Test PDFs are made with ReportLab. No model was trained for these.
 - `tools/make_payment_screens.py` generates fully synthetic payment screens (made-up app names, people and references) as training data for our own tamper model; the model is trained at the finale only.
+- Per-feature disclosures (models, datasets, APIs, licences) are kept in `docs/disclosure/models.md`, `community.md` and `traction.md`.

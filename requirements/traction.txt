@@ -1,0 +1,5 @@
+# Traction, distribution and operations (branch feat/traction). Install with: pip install -r requirements/traction.txt
+# Runtime needs for the poster generator (QR codes and PDF). Add anything else you use, for example python-telegram-bot, c2pa-python, locust.
+segno>=1.6
+reportlab>=4.2
+httpx>=0.27

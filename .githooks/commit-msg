@@ -1,0 +1,6 @@
+#!/bin/sh
+# Rejects commit messages that credit an AI tool as author or co-author. Enable once: git config core.hooksPath .githooks
+if grep -qiE 'co-authored-by:.*(claude|anthropic)|generated with.*(claude|anthropic)' "$1"; then
+  echo "Commit rejected: remove the Co-Authored-By / 'Generated with' line. Commits go under your own name only." >&2
+  exit 1
+fi

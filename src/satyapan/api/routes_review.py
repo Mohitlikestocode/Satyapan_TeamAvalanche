@@ -12,6 +12,7 @@ from fastapi.responses import HTMLResponse, RedirectResponse
 from pydantic import BaseModel, Field
 
 from ..evidence.pack import IST
+from ..plugins import REGISTRY
 from ..store import db
 from .web import render
 
@@ -134,6 +135,7 @@ def decide(ref: str, body: DecisionIn, request: Request) -> dict:
         raise HTTPException(404, "unknown review")
     except PermissionError as e:
         raise HTTPException(409, str(e))
+    REGISTRY.emit("decision", {"ref": r["ref"], "status": r["status"], "reviewer": me})
     return {"ref": r["ref"], "status": r["status"], "registry_updated": r["status"] == "confirmed"}
 
 

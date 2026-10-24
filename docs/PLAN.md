@@ -22,6 +22,15 @@ Stage 1 decides the top 10. Stage 2 decides the podium.
 
 Spot-check (30) and live journey (25) are the two biggest. Custom models help both, but only if they are measured on data they never saw.
 
+## 1b. Mentor feedback (Saturday): live traction and awareness
+
+Our mentor, who will also judge, agreed with us on two additions:
+
+1. **Live traction.** A public site with real users, counted honestly (team and test traffic excluded), plus a Telegram bot and shop posters to bring people in. Numbers shown on stage must come from the live `/impact` page.
+2. **Awareness and education.** A community place (Scam Watch), real lessons, a Scam Drill with streaks, badges and a leaderboard, and shareable warning cards. This is how people learn and come back.
+
+How the work is divided, file by file, is in `docs/WORK_SPLIT.md`. Each person's brief is in `docs/prompts/`.
+
 ## 2. What "custom models" gets us, and what it risks
 
 The rubric lists three equal ways to show own engineering: **fine-tuning, fused signals, custom pipeline**. Fine-tuning is one of three, worth up to the 15 points. It also lifts the 30-point accuracy score only if the model beats the pretrained baseline on held-out data. A fine-tune on a tiny, leaky dataset does the opposite: it looks great on our own test and fails on the judges' kit.
