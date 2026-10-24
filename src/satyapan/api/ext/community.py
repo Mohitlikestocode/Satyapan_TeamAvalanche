@@ -71,7 +71,7 @@ def post_page(request: Request, post_id: int, new: str = "", dup: str = "", seen
     head = {"en": "Scam warning from Satyapan: ", "hi": "सत्यापन की चेतावनी: "}[lang]
     body = (p["excerpt"][:140] + ("…" if len(p["excerpt"]) > 140 else ""))
     share = cc.whatsapp(f"{head}{body}\n{link}\n" + {"en": "Check before you pay.", "hi": "पैसे भेजने से पहले जाँचें।"}[lang])
-    return render(request, "ext/community/post.html", cc.page("community/post", "Scam report", "community", [["Community", "/community"], ["Report", None]]),
+    return render(request, "ext/community/post.html", cc.page("community/post", "Scam report", "community", [["Community", "/community"], ["Scam report", None]]),
                   p=p, share=share, link=link, new=bool(new), dup=bool(dup), seen=seen, flagged=flagged, err=err)
 
 

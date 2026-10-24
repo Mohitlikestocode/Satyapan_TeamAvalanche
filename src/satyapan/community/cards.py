@@ -287,10 +287,10 @@ def safe_word_card(word: str, who: str, lang: str, site: str) -> bytes:
     while width(word, size, True) > s.w - 2 * s.m - 40 and size > 50:
         size -= 6
     top = s.y + 20
-    s.d.rectangle((s.m, top, s.w - s.m, top + int(size * 1.9)), fill=TINT, outline=NAVY, width=5)
-    s.y = top + int(size * 0.35)
-    s.text(word, size, NAVY, True, 0.9, center=True)
-    s.y = max(s.y, top + int(size * 1.9)) + 40
+    box_h = int(size * 1.6)
+    s.d.rectangle((s.m, top, s.w - s.m, top + box_h), fill=TINT, outline=NAVY, width=5)
+    put(s.d, ((s.w - width(word, size, True)) / 2, top + box_h * 0.68), word, size, NAVY, True)       # centred in the box
+    s.y = top + box_h + 30
     s.text(t["how"], 44, SAFFRON, True, 0.3)
     s.numbered(t["steps"], 36)
     s.d.rectangle((s.m, s.h - 330, s.w - s.m, s.h - 215), fill=RED)

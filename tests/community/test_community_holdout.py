@@ -35,3 +35,14 @@ def test_hindi_rows_are_in_devanagari_and_english_rows_are_not():
     for x in rows(PATH):
         has = any("ऀ" <= ch <= "ॿ" for ch in x["text"])
         assert has == (x["lang"] == "hi"), x["text"][:40]
+
+
+def test_missed_file_holds_only_scams_from_the_holdout_and_matches_what_the_engine_misses():
+    from satyapan.service import analyse_text
+    missed = rows(PATH.with_name("holdout_community_missed.jsonl"))
+    originals = {x["text"]: x for x in rows(PATH)}
+    assert len(missed) == 33 and all(m["label"] == "scam" and originals[m["text"]] == m for m in missed)
+    flagged = {"SUSPICIOUS", "HIGH_RISK", "REGISTRY_HIT"}
+    assert all(analyse_text(m["text"]).tier.value not in flagged for m in missed)
+    caught = [x for x in originals.values() if x["label"] == "scam" and x["text"] not in {m["text"] for m in missed}]
+    assert len(caught) == 7 and all(analyse_text(x["text"]).tier.value in flagged for x in caught)
