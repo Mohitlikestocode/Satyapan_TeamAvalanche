@@ -28,8 +28,11 @@ def ai_rules(text: str, found) -> LayerResult | None:
                        internal={"label_key": "ml_ai_rules", "matches": [m.__dict__ for m in res.matches], "seconds": res.seconds})
 
 
-# payment screenshots, PDFs and QR payloads are not messages: their OCR text would only make false alarms
-ai_rules.skip_kinds = ("screenshot", "pdf", "qr")
+# Runs on every kind of input (message, link, voice transcript, PDF text, QR note and the words printed around it, screenshot text).
+# One exception: a payment RECEIPT (a screenshot that says "payment successful" with a transaction id and no request to pay) is skipped,
+# because its ordinary wording ("paid to ... UPI ID ... amount") made false alarms in measurement.
+ai_rules.skip_kinds = ()
+ai_rules.skip_receipt = True
 
 
 def setup(registry) -> None:

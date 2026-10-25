@@ -114,6 +114,18 @@ Everything below is copied from [`docs/results/`](docs/results) and reproduced b
 Reproduce: `python -m satyapan.eval.report` (needs `var/models/scam_text/`).
 **Where we fail:** scams that look like ordinary messages (a payment screenshot sent as text, a FASTag top-up link, a bare "your bill is due" call) are still missed, and the classifier was trained on mostly synthetic Indian scam wording, so real-world performance is lower than this file suggests. The classifier is only *shipped* because on the held-out file it flagged more scams with no extra false alarms (pre-registered rule in [`docs/models.md`](docs/models.md)); it adds 2 false alarms on the development kit.
 
+### PDFs, chat screenshots and QR cards (AI rule check on)
+
+The AI rule check also reads the text of **PDFs, chat-message screenshots and QR cards** (the words printed around a QR and its payment note). It is switched off for payment *receipts* (a screenshot that says "payment successful" with a transaction id), because their ordinary wording made false alarms.
+
+| Input (invented, own-written, small) | Scams flagged without AI -> with AI | Genuine flagged without -> with |
+|---|---|---|
+| PDFs (10 scam, 10 genuine) | 9 / 10 -> **10 / 10** | 1 / 10 -> 1 / 10 |
+| Chat-message screenshots (8 + 8) | 6 / 8 -> **8 / 8** | 0 / 8 -> 0 / 8 |
+| QR cards (4 + 4) | 2 / 4 -> **4 / 4** | 0 / 4 -> 0 / 4 |
+
+These sets are small and written by the integrator's assistant, so they show that the feature works on these inputs and what it costs in false alarms, not accuracy on the judges' files (`docs/results/ai_media_eval.json`, `python training/text/eval_ai_media.py`). Ready-to-upload examples are in `demo/pdf/` and `demo/qr_cards/`.
+
 ### Payment screenshots
 
 | What | Result |
@@ -160,7 +172,7 @@ Reproduce: `python -m satyapan.eval.report` (needs `var/models/scam_text/`).
 * Cases are purged after **24 h** (7 days only if the user shares for review); **Delete this check** deletes immediately.
 * Visitors get one random cookie to count visits; no accounts, no names. Chat ids (Telegram) are stored only as salted hashes.
 * Limits: request size caps, optional rate limiting (`RATE_LIMIT=1`), strict Content-Security-Policy.
-* **AI rule check (optional, off without a key)**: when a Groq or Grok key is set, the words of a *message* are also checked against 33 rules taken from RBI, SEBI, NPCI, TRAI and MHA advisories by an open model (gpt-oss). Phone numbers, e-mails, account and card numbers and codes are masked first, UPI IDs keep only their bank handle, nothing is stored, the model can only add warnings (never clear a message), and a match counts only if its quote really appears in the message. The check page says so whenever it is on. Screenshots, PDFs and QR payloads never go to it.
+* **AI rule check (optional, off without a key)**: when a Groq or Grok key is set, the words of a *message* are also checked against 33 rules taken from RBI, SEBI, NPCI, TRAI and MHA advisories by an open model (gpt-oss). Phone numbers, e-mails, account and card numbers and codes are masked first, UPI IDs keep only their bank handle, nothing is stored, the model can only add warnings (never clear a message), and a match counts only if its quote really appears in the message. The check page says so whenever it is on. Payment receipts never go to it; PDFs, chat screenshots and QR cards do (masked the same way).
 * **Sarvam**: spoken verdicts send only our pre-written sentences. The user's own text goes to Sarvam **only when they press Explain** (translation) or Listen on that translation; it is never stored or cached by us, and the extracted text is kept only in the user's own browser tab.
 * Moderator sign-in is a demo sign-in, **not real authentication** (say so to a judge).
 * Details: [`docs/disclosure/`](docs/disclosure) (data sources, licences, what each model was trained on).

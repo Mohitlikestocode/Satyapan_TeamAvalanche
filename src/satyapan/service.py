@@ -81,7 +81,7 @@ def analyse_text(text: str, kind: str = "message", topic: str = "", case_id: str
         from .store import db
         matches = db.registry_matches([u.vpa for u in found.upi], [h for h in (hostname(u) for u in found.urls) if h])
     # a hook can opt out of some kinds with `skip_kinds` (the scam-message model was trained on messages, not on payment screens or QR payloads)
-    hooks = [h for h in REGISTRY.text_hooks if kind not in getattr(h, "skip_kinds", ())]
+    hooks = [h for h in REGISTRY.text_hooks if kind not in getattr(h, "skip_kinds", ()) and not (receipt and getattr(h, "skip_receipt", False))]
     hooked = _run_hooks(hooks, text, found) if (use_plugins and usable) else []
     out = fuse(FusionInput(results=[l3res, l4res, *(extra_layers or []), *hooked], registry_matches=matches, quality=quality, media_present=False,
                            payees_confirmed_registered=payee_confirmed, money_ask_present=bool(found.upi or found.ifsc or found.urls)))

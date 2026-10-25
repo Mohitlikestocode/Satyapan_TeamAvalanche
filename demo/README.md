@@ -48,3 +48,6 @@ Say this out loud: on 150 + 150 held-out synthetic screens the check flags 61 ed
 First voice note after the server starts takes about 6 s, later ones 6 to 10 s (CPU). Both clips are synthetic speech from Sarvam, so the "synthetic voice" note is correct for them.
 
 `_outcomes.json` has the raw results and timings.
+
+## PDFs (`pdf/`: "PDF") and QR cards (`qr_cards/`: "Scan or upload a QR code")
+Invented documents. With the AI rule check on (a Groq key in `.env`): the six `scam_*.pdf` files and three `scam_card_*.png` cards come back SUSPICIOUS, the four `genuine_*.pdf` files and two `genuine_card_*.png` cards come back NO RED FLAGS. Without the key the rules still catch most of them (9 of 10 scam PDFs, 2 of 4 scam QR cards in our measurement).
