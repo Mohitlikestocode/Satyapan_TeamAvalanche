@@ -64,7 +64,7 @@ The jury scores each row 1 to 5, weighted. For every row: what it asks, what we 
 | Ask | What we built | Evidence |
 |---|---|---|
 | **Live traction** | Public-site-ready deployment, Telegram bot, shop poster generator with referral counting, pilot sign-ups, and an `/impact` page whose numbers come only from the server's own database with team traffic excluded (`sp_internal` cookie). | `/impact`, `docs/ops.md` |
-| **Awareness and education** | **Scam Watch** (community reports with why-it-was-flagged), lessons in English and Hindi, **Scam Drill** with streaks, badges and a leaderboard, family safe-word card, shareable warning cards. | `/community`, `/learn`, `docs/community.md` |
+| **Awareness and education** | **Scam Watch** (community reports with why-it-was-flagged, discussion under each report, questions to the community, "Share to community" from a result, a Back button on every page), lessons in English and Hindi, **Scam Drill** with streaks, badges and a leaderboard, family safe-word card, shareable warning cards. | `/community`, `/learn`, `docs/community.md` |
 
 ---
 
