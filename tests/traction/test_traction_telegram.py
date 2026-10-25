@@ -257,3 +257,25 @@ def test_explained_text_expires_and_is_never_in_the_database(bot, fake_sarvam):
     b.handle_update(press(f"xl:hi:{case_id}"))
     assert any("15" in m["text"] for m in api.sent)             # told it cannot translate what it no longer holds
     assert "Guaranteed 30%" not in str(db.get_case(case_id).__dict__)
+
+
+def test_real_api_wrapper_never_sends_null_parameters(monkeypatch):
+    """Telegram answers 400 to "reply_markup": null; the fake API used elsewhere in this file could not catch that."""
+    import json
+
+    import httpx
+
+    from satyapan.bots.telegram_bot import TelegramApi
+    posted = []
+
+    def handler(req: httpx.Request) -> httpx.Response:
+        posted.append(json.loads(req.content))
+        return httpx.Response(200, json={"ok": True, "result": {}})
+
+    api = TelegramApi("123:fake")
+    api.http = httpx.Client(transport=httpx.MockTransport(handler))
+    api.send_message(5, "hello")                                        # no buttons
+    api.send_message(5, "hello", {"inline_keyboard": [[{"text": "x", "callback_data": "y"}]]})
+    api.get_updates(None)
+    assert "reply_markup" not in posted[0] and "reply_markup" in posted[1] and "offset" not in posted[2]
+    assert all(v is not None for p in posted for v in p.values())

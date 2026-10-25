@@ -92,6 +92,7 @@ class TelegramApi:
         self.http = httpx.Client(timeout=40)
 
     def call(self, method: str, **params):
+        params = {k: v for k, v in params.items() if v is not None}     # Telegram rejects "reply_markup": null
         r = self.http.post(f"{self.base}/{method}", json=params)
         data = r.json()
         if not data.get("ok"):
@@ -331,6 +332,19 @@ class Bot:
             self.api.send_message(cid, t["deleted"] if ok else t["nothing"])
 
 
+def _warm_up() -> None:
+    """Load the message models once at start, in the background, so the first person to forward something is not left waiting about 30 seconds."""
+    import threading
+
+    def work() -> None:
+        try:
+            analyse_text("warm up the message models", kind="message")
+        except Exception:  # best effort
+            log.exception("warm-up failed")
+
+    threading.Thread(target=work, daemon=True, name="bot-warm-up").start()
+
+
 def offset_file():
     return db.home() / "telegram_offset"
 
@@ -342,6 +356,7 @@ def run() -> None:
         raise SystemExit("Set TELEGRAM_BOT_TOKEN (create a bot with @BotFather).")
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
     load_plugins()
+    _warm_up()
     api = TelegramApi(token)
     bot = Bot(api, os.environ.get("PUBLIC_URL", ""))
     try:
