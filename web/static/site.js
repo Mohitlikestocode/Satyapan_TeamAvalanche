@@ -67,11 +67,8 @@
     }
   });
 
-  // ---- links the design left as "#" -----------------------------------------
-  D.addEventListener("click", function (e) {
-    var a = e.target.closest("a[data-todo]"); if (!a) return;
-    e.preventDefault(); toast("Not available in this demo yet");
-  });
+  // ---- links the design left as "#": controls that do nothing are removed, not left as dead buttons ---------
+  D.querySelectorAll("a[data-todo]").forEach(function (a) { a.remove(); });
   D.addEventListener("click", function (e) {
     var a = e.target.closest("a");
     if (!a || path !== "/report/complaint" || a.textContent.trim().indexOf("Copy text") !== 0) return;
@@ -213,24 +210,11 @@
       });
       D.querySelectorAll("[data-k]").forEach(function (b) { b.textContent = String(n[b.getAttribute("data-k")]); });
       empty.hidden = l.length > 0; wrap.hidden = l.length === 0;
-      note.hidden = !l.some(function (h) { return h.sample; });
+      if (note) note.hidden = !l.some(function (h) { return h.sample; });
       var dr = get("sp-drill"), bar = D.getElementById("drill-bar"), txt = D.getElementById("drill-txt");
       bar.style.width = dr ? "100%" : "0";
       txt.textContent = dr ? "Completed on " + new Date(Number(dr)).toLocaleDateString("en-IN", { day: "numeric", month: "short" }) : "Not started";
     }
-    D.getElementById("load-sample").addEventListener("click", function () {
-      var now = Date.now(), HR = 3600e3;
-      var s = [
-        ["qr", "vip_profits_qr.jpg", "/result/qr", 0.4], ["pdf", "INV-2026-1042.pdf", "/result/invoice", 5],
-        ["screenshot", "payment_9090.png", "/result/screenshot", 26], ["message", "Amazon refund pending...", "/tools/result", 50],
-        ["screenshot", "receipt_blurry.jpg", "/result/cant-tell", 75], ["pdf", "electricity_bill.pdf", "/result/no-flags", 120]
-      ].map(function (x, i) {
-        var t = TIERS[x[2]];
-        return { id: "sample" + i, kind: x[0], label: x[1], at: now - x[3] * HR, url: x[2], tier: t[0], cls: t[1], sample: true };
-      });
-      saveHistory(s.concat(history().filter(function (h) { return !h.sample; })));
-      render();
-    });
     D.getElementById("clear-all").addEventListener("click", function () {
       if (!history().length) { toast("Nothing to delete"); return; }
       if (confirm("Delete all checks saved on this device?")) { saveHistory([]); render(); toast("Deleted"); }

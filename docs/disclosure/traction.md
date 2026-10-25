@@ -3,7 +3,6 @@
 | Item | Source | Licence | Used for | Trained/changed by us? |
 |---|---|---|---|---|
 | FastAPI, Starlette, Uvicorn, Jinja2, httpx | PyPI | MIT / BSD-3 | web server, templates, HTTP client | no |
-| Caddy 2 | caddyserver.com (Docker image `caddy:2`) | Apache-2.0 | automatic HTTPS reverse proxy | no |
 | segno | PyPI | BSD-3 | QR codes on shop posters | no |
 | ReportLab | PyPI | BSD-3 | test PDFs in load tests and tests | no |
 | pytesseract + Tesseract OCR (eng, hin) | Debian packages | Apache-2.0 | reading screenshots on the server | no |

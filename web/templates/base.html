@@ -11,8 +11,8 @@
 <link rel="stylesheet" href="/static/gov.css">
 {% for c in reg.global_css %}<link rel="stylesheet" href="{{ c }}">
 {% endfor %}{% for c in page.extra_css or [] %}<link rel="stylesheet" href="{{ c }}">
-{% endfor %}<script src="/static/site.js?v=20261025e" defer></script>
-<script src="/static/pages.js?v=20261025e" defer></script>
+{% endfor %}<script src="/static/site.js?v=20261025f" defer></script>
+<script src="/static/pages.js?v=20261025f" defer></script>
 {% for j in reg.global_js %}<script src="{{ j }}" defer></script>
 {% endfor %}{% for j in page.extra_js or [] %}<script src="{{ j }}" defer></script>
 {% endfor %}</head>
@@ -109,7 +109,7 @@
       <li><a href="/guardian">{{ tr("Ask family (Guardian Review)", "परिवार से पूछें (अभिभावक समीक्षा)") }}</a></li><li><a href="/wrong">{{ tr("Wrong result?", "गलत नतीजा?") }}</a></li>{% for l, h in reg.footer_extra("If you paid") %}<li><a href="{{ h }}">{{ l }}</a></li>{% endfor %}</ul></nav>
     <nav aria-label="Learn and about"><h2>{{ tr("Learn and about", "सीखें और जानकारी") }}</h2><ul>
       <li><a href="/learn">{{ tr("Learn", "सीखें") }}</a></li><li><a href="/learn/drill">{{ tr("Scam Drill", "स्कैम ड्रिल") }}</a></li><li><a href="/learn/safe-word">{{ tr("Family safe-word card", "परिवार का सेफ़-वर्ड कार्ड") }}</a></li>
-      <li><a href="/how-it-works">{{ tr("How it works and methodology", "यह कैसे काम करता है") }}</a></li><li><a href="/states">{{ tr("System states", "सिस्टम की स्थितियाँ") }}</a></li><li><a href="/console">{{ tr("Reviewer console (pilot)", "समीक्षक कंसोल (पायलट)") }}</a></li>{% for l, h in reg.footer_extra("Learn and about") %}<li><a href="{{ h }}">{{ l }}</a></li>{% endfor %}</ul></nav>
+      <li><a href="/how-it-works">{{ tr("How it works and methodology", "यह कैसे काम करता है") }}</a></li><li><a href="/console">{{ tr("Reviewer console (pilot)", "समीक्षक कंसोल (पायलट)") }}</a></li>{% for l, h in reg.footer_extra("Learn and about") %}<li><a href="{{ h }}">{{ l }}</a></li>{% endfor %}</ul></nav>
   </div>
   <div class="foot-bar"><div class="wrap">
     <p>{{ tr("Independent student project. Not affiliated with any government body, bank or company. Results are advisory only.", "स्वतंत्र छात्र परियोजना। किसी सरकारी संस्था, बैंक या कंपनी से संबद्ध नहीं। नतीजे केवल सलाह हैं।") }}</p>

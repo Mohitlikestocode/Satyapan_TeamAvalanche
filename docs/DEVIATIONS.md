@@ -21,6 +21,6 @@ Judges score "delivery against the Round 1 plan": built what we promised, or cut
 - Hindi text is machine-drafted until a fluent reviewer signs it off.
 - WhatsApp needs paid business approval, so the live chat channel is Telegram.
 - Real payment screenshots were not collected (no permission to use people's payment data). Screenshot numbers are on synthetic screens from unseen layouts and `/results` says "not evaluated" for real ones.
-- Docker and Caddy files are in the repo but were never built or tested; the team runs plain `uvicorn`.
+- No Docker or Caddy: the team decided to run plain `uvicorn` (and removed the unused Docker files).
 - Telegram bot is tested against fake Telegram updates; it has not been run with a real token.
 - No public address yet: a server or tunnel is needed.

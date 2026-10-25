@@ -551,23 +551,6 @@
   ]
  },
  {
-  "route": "states",
-  "template": "pages/states.html",
-  "title": "System states",
-  "kind": "wide",
-  "section": "how",
-  "crumbs": [
-   [
-    "How it works",
-    "/how-it-works"
-   ],
-   [
-    "System states",
-    null
-   ]
-  ]
- },
- {
   "route": "console",
   "template": "pages/console.html",
   "title": "Reviewer console: login",

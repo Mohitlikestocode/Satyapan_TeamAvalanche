@@ -42,7 +42,7 @@ The jury scores each row 1 to 5, weighted. For every row: what it asks, what we 
 
 | Row (weight) | What a 5 needs | What we built | Evidence |
 |---|---|---|---|
-| **1. Working prototype (25)** | Runs end to end, live, on inputs the judge picks | All six input kinds run for real through one engine: message, link, QR image, screenshot, PDF, voice note. Input → detection → alert → action. The site, a Telegram bot and a Sarvam voice all call the same engine in process. Models are warmed up at start so the first judge's check is not slow. | `/check`, [`src/satyapan/service.py`](src/satyapan/service.py), 57 pages crawled in both languages with zero errors, `tests/` (361 tests) |
+| **1. Working prototype (25)** | Runs end to end, live, on inputs the judge picks | All six input kinds run for real through one engine: message, link, QR image, screenshot, PDF, voice note. Input → detection → alert → action. The site, a Telegram bot and a Sarvam voice all call the same engine in process. Models are warmed up at start so the first judge's check is not slow. | `/check`, [`src/satyapan/service.py`](src/satyapan/service.py), 57 pages crawled in both languages with zero errors, `tests/` (415 tests) |
 | **2. Spot-check results and measured accuracy (30)** | Most kit samples right; error rates **including false positives on data never trained on**; names its failure cases | Every number on `/results` is read from a file in [`docs/results/`](docs/results) or computed live by a button. Each has a baseline, a 95% interval, a false-alarm rate, and a named failure list. Data the rules or models saw is labelled **optimistic**. See [section 4](#4-measured-results-including-where-we-fail). | `/results`, `docs/results/*.json`, `python -m satyapan.eval.report` |
 | **3. Own engineering (15)** | Fine-tuning, fused signals, custom pipeline; any member can explain it | **Fine-tuned:** a screenshot tamper U-Net trained on our own synthetic payment-screen generator with held-out layouts, and a scam-message classifier (multilingual-e5-small, full fine-tune, held-out scam families). **Fused signals:** a deterministic fusion step where HIGH RISK needs two independent strong layers or a registry hit; forensics alone caps at SUSPICIOUS. **Custom pipeline:** bilingual (EN/HI/Hinglish) rule lexicon, UPI/IFSC/payee checks, QR decoding with phone-damage repair, look-alike-letter undoing, ffmpeg-sandboxed voice path, plugin registry for conflict-free parallel work. | [`src/satyapan/fusion/rules.py`](src/satyapan/fusion/rules.py), [`layers/l4_rules/`](src/satyapan/layers/l4_rules), [`training/`](training), model cards in [`docs/models.md`](docs/models.md) |
 | **4. Alert and response flow, as built (15)** | A person sees a clear alert and can act; safeguards are running | Every verdict ends in an action: **Ask family** (shareable summary link that expires), **Report** (Ed25519-signed evidence pack, complaint draft for 1930 / cybercrime.gov.in), **Wrong result?** (live reviewer queue, four-eyes rule on the known-fake registry, hash-chained audit log). **Safeguards running:** uploaded files are processed in memory and never written; cases are purged after 24 h (7 days only if shared for review); "Delete this check" really deletes; chat ids are stored only as salted hashes. | `/console`, [`src/satyapan/evidence/`](src/satyapan/evidence), [`src/satyapan/store/db.py`](src/satyapan/store/db.py), `docs/disclosure/*.md` |
@@ -53,7 +53,7 @@ The jury scores each row 1 to 5, weighted. For every row: what it asks, what we 
 | Row (weight) | What we built | Evidence |
 |---|---|---|
 | **1. Problem and user understanding (20)** | Named users and the actual UPI fraud patterns in India: digital arrest, KYC-block links, "refund" collect-request traps, advance-fee loans and lotteries, task-for-pay jobs, fake army buyers on OLX, family-emergency money asks, changed-bank-account invoices, cloned voices. The rule catalogue and every reason text come from these patterns. | `data/kit/*.jsonl`, [`src/satyapan/layers/l4_rules/india.py`](src/satyapan/layers/l4_rules/india.py), `/learn` |
-| **2. Deployability and scale (15)** | Runs from a plain `uvicorn` command on any machine with Python (Docker and Caddy files exist but were never built, see `docs/ops.md`), hardening middleware (CSP, size caps, rate limits), health check, backup, deploy check, measured load test, pilot sign-up form for shops, printable poster with QR, and a runbook saying who runs it and what a pilot needs. | [`docs/ops.md`](docs/ops.md), `scripts/loadtest.py`, `scripts/deploy_check.py`, `/pilot`, `/poster` |
+| **2. Deployability and scale (15)** | Runs from a plain `uvicorn` command on any machine with Python (no Docker needed; see `docs/ops.md`), hardening middleware (CSP, size caps, rate limits), health check, backup, deploy check, measured load test, pilot sign-up form for shops, printable poster with QR, and a runbook saying who runs it and what a pilot needs. | [`docs/ops.md`](docs/ops.md), `scripts/loadtest.py`, `scripts/deploy_check.py`, `/pilot`, `/poster` |
 | **3. Communication and Q&A (10)** | "What we miss" and "what we don't know" are written down: [`docs/JUDGE_QA.md`](docs/JUDGE_QA.md). | `docs/JUDGE_QA.md` |
 | **4. Live user journey (25)** | The whole path on one flow: the scam reaches the user (any of six input kinds, or the Telegram bot) → **what it actually says, explained in the user's own language (11 Indian languages, Sarvam) before any verdict** → plain alert with reasons → the user acts (listen, ask family, report, or dispute) → a human reviewer decides → the registry updates. The judge can vary the input at every step. | `/check`, `/console`, `src/satyapan/bots/telegram_bot.py` |
 | **5. Adversarial robustness (20)** | `/attack` applies real perturbations (spacing, look-alike letters, split UPI IDs, JPEG, shrinking, phone-line audio) and shows the measured drift. We found that look-alike letters let most flagged scams through the rules, so we added a text hook that undoes them, and report the new false-alarm cost too. | `/attack`, `docs/results/attack_text.json`, [`docs/JUDGE_QA.md`](docs/JUDGE_QA.md) |
@@ -204,7 +204,7 @@ pip install -r requirements/models.txt
 Behind a proxy, add `--proxy-headers --forwarded-allow-ips="*"` so printed links use the right address.
 OCR for screenshots: Tesseract with English and Hindi data, or RapidOCR.
 
-**Tests** (361 tests, about two minutes): `python -m pytest -q`
+**Tests** (415 tests, about three minutes): `python -m pytest -q`. **Every feature, end to end, against a running site:** `python scripts/final_check.py http://127.0.0.1:8000` (42 checks).
 
 **Reproduce the numbers**
 
@@ -225,8 +225,8 @@ python tools/make_payment_screens.py out --n 200    # synthetic payment screens 
 | `training/`, `tools/` | model training and evaluation scripts; synthetic data generators |
 | `data/kit/` | development kit and the two held-out message files |
 | `docs/` | `PLAN.md`, `DEVIATIONS.md`, `models.md`, `ops.md`, `community.md`, `JUDGE_QA.md`, `results/`, `disclosure/`, `img/` |
-| `tests/` | 361 tests |
-| `scripts/`, `deploy/` | load test, deploy check, backup; optional Docker and Caddy files (never built here) |
+| `tests/` | 415 tests |
+| `scripts/` | preflight, load test, deploy check, backup, holdout scoring |
 
 ## 9. Honest limits
 

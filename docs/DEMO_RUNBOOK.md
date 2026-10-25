@@ -5,7 +5,7 @@
 1. `git fetch origin && git merge origin/main` on the demo laptop, then `python -m pytest -q` (about 2 minutes, all green).
 2. Models in place: `var/models/` has `tamper.pt`, `faster-whisper-small/`, `spectra-aasist3/`, `voice_calibration.json`, `scam_text/`.
 3. `.env` has `SARVAM_API_KEY`, `INTERNAL_KEY` (any long random string), and `TELEGRAM_BOT_TOKEN` + `PUBLIC_URL` if you use Telegram.
-4. `python scripts/preflight.py` prints READY.
+4. `python scripts/preflight.py` prints READY, and `python scripts/final_check.py http://127.0.0.1:8000` prints 42 PASS lines (it exercises every feature; run it before you reset the database).
 
 ## Morning of the demo
 

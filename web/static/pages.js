@@ -38,7 +38,7 @@
 
   // ---- buttons the design draws but the demo does not back yet --------------
   var LATER = {
-    "/check/voice": ["Play voice note"], "/console": [], "/states": ["Try again later"],
+    "/console": [],
     "/guardian": ["Save as image"], "/warn": ["फ़ोटो के रूप में सेव करें"],
   };
   D.addEventListener("click", function (e) {

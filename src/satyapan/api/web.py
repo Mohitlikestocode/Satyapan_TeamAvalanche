@@ -53,7 +53,7 @@ RELATED = {
     "help": [("Evidence report", "/report"), ("Complaint draft", "/report/complaint"), ("Warn others", "/warn"), ("Wrong result?", "/wrong")],
     "tools": [("Check something", "/check"), ("Shopkeeper check", "/shopkeeper"), ("Helper mode", "/helper"), ("Safety guide", "/learn/safety")],
     "learn": [("Scam Drill", "/learn/drill"), ("Safety guide", "/learn/safety"), ("Family safe-word card", "/learn/safe-word"), ("Check something", "/check")],
-    "how": [("How it works", "/how-it-works"), ("System states", "/states"), ("Check something", "/check")],
+    "how": [("How it works", "/how-it-works"), ("Check something", "/check")],
 }
 
 
@@ -61,7 +61,7 @@ RELATED_HI = {
     "See a sample result": "नमूना नतीजा देखें", "Is this really Amazon?": "क्या यह सच में Amazon है?", "My checks": "मेरी जाँचें", "Scam Drill": "स्कैम ड्रिल",
     "Evidence report": "सबूत रिपोर्ट", "Complaint draft": "शिकायत का मसौदा", "Warn others": "दूसरों को चेताएँ", "Wrong result?": "नतीजा ग़लत है?",
     "Check something": "कुछ जाँचें", "Shopkeeper check": "दुकानदार जाँच", "Helper mode": "सहायक मोड", "Safety guide": "सुरक्षा गाइड",
-    "Family safe-word card": "परिवार का सेफ़-वर्ड कार्ड", "How it works": "यह कैसे काम करता है", "System states": "सिस्टम की स्थितियाँ",
+    "Family safe-word card": "परिवार का सेफ़-वर्ड कार्ड", "How it works": "यह कैसे काम करता है", 
     "Scam Watch: what others saw": "स्कैम वॉच: दूसरों ने क्या देखा",
 }
 templates.env.globals["RELATED_HI"] = RELATED_HI

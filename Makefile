@@ -1,9 +1,8 @@
 PY ?= python
 PORT ?= 8000
-COMPOSE = docker compose -f deploy/docker-compose.yml --env-file .env
 export PYTHONPATH := $(CURDIR)/src
 
-.PHONY: setup run test lint docker up down logs bot deploy-check backup loadtest
+.PHONY: setup run test lint serve bot deploy-check backup loadtest
 setup:
 	$(PY) -m pip install -e ".[dev,ocr]" -r requirements/traction.txt
 run:
@@ -13,17 +12,11 @@ test:
 lint:
 	$(PY) -m ruff check src tests scripts --select E9,F
 
-# --- deployment (needs Docker and a filled-in .env) ---
-docker:
-	docker build -f deploy/Dockerfile -t satyapan --build-arg BUILD_TIME=$$(date -u +%Y-%m-%dT%H:%MZ) .
-up:
-	$(COMPOSE) up -d --build
-down:
-	$(COMPOSE) down
-logs:
-	$(COMPOSE) logs -f --tail=100
+# --- running it (no Docker): reads .env, loads the models in the background ---
+serve:
+	$(PY) -m uvicorn satyapan.api.app:create_app --factory --host 0.0.0.0 --port $(PORT) --proxy-headers --forwarded-allow-ips="*"
 bot:
-	$(COMPOSE) --profile bot up -d
+	$(PY) -m satyapan.bots.telegram_bot
 deploy-check:
 	$(PY) scripts/deploy_check.py $(URL)
 backup:
