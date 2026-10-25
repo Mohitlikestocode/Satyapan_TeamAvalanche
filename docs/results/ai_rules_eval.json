@@ -1,0 +1,198 @@
+{
+ "date": "2026-10-25 00:05 UTC",
+ "provider": "groq",
+ "model": "openai/gpt-oss-120b",
+ "sets": {
+  "holdout_tanish": {
+   "n": 80,
+   "without_ai": {
+    "tpr": {
+     "k": 26,
+     "n": 40,
+     "rate": 0.65,
+     "lo": 0.4950559699353738,
+     "hi": 0.7786566682895086
+    },
+    "fpr": {
+     "k": 0,
+     "n": 40,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.08762453925039232
+    },
+    "ai_unanswered": 0
+   },
+   "with_ai": {
+    "tpr": {
+     "k": 40,
+     "n": 40,
+     "rate": 1.0,
+     "lo": 0.9123754607496077,
+     "hi": 1.0
+    },
+    "fpr": {
+     "k": 0,
+     "n": 40,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.08762453925039232
+    },
+    "ai_unanswered": 0
+   },
+   "failures": [],
+   "seconds": 265
+  },
+  "extra_genuine_team_corpus": {
+   "n": 62,
+   "without_ai": {
+    "tpr": null,
+    "fpr": {
+     "k": 2,
+     "n": 62,
+     "rate": 0.03225806451612903,
+     "lo": 0.008891184997076397,
+     "hi": 0.11020677131018222
+    },
+    "ai_unanswered": 0
+   },
+   "with_ai": {
+    "tpr": null,
+    "fpr": {
+     "k": 2,
+     "n": 62,
+     "rate": 0.03225806451612903,
+     "lo": 0.008891184997076397,
+     "hi": 0.11020677131018222
+    },
+    "ai_unanswered": 0
+   },
+   "failures": [
+    {
+     "kind": "false_alarm",
+     "text": "आपका ऑर्डर आज शाम तक पहुँच जाएगा। डिलीवरी के समय OTP बताना होगा।",
+     "tier": "SUSPICIOUS",
+     "codes": [
+      "OFFER_CREDENTIAL_REQUEST"
+     ]
+    },
+    {
+     "kind": "false_alarm",
+     "text": "Your cab driver Suresh is arriving in a white Swift DL 3C XX 4412. Share the OTP 4471 only when you sit in the car.",
+     "tier": "SUSPICIOUS",
+     "codes": [
+      "ML_GR_ASKS_SECRET",
+      "OFFER_CREDENTIAL_REQUEST"
+     ]
+    }
+   ],
+   "seconds": 91
+  },
+  "dev_kit": {
+   "n": 71,
+   "without_ai": {
+    "tpr": {
+     "k": 38,
+     "n": 38,
+     "rate": 1.0,
+     "lo": 0.90818706741616,
+     "hi": 0.9999999999999999
+    },
+    "fpr": {
+     "k": 2,
+     "n": 33,
+     "rate": 0.06060606060606061,
+     "lo": 0.016780530429070947,
+     "hi": 0.19606581717798194
+    },
+    "ai_unanswered": 0
+   },
+   "with_ai": {
+    "tpr": {
+     "k": 38,
+     "n": 38,
+     "rate": 1.0,
+     "lo": 0.90818706741616,
+     "hi": 0.9999999999999999
+    },
+    "fpr": {
+     "k": 3,
+     "n": 33,
+     "rate": 0.09090909090909091,
+     "lo": 0.03140337104926305,
+     "hi": 0.23572943534351032
+    },
+    "ai_unanswered": 0
+   },
+   "failures": [
+    {
+     "kind": "false_alarm",
+     "text": "Sending you Rs 500 for dinner, my UPI is ravi.k@okaxis. Pay me back whenever.",
+     "tier": "SUSPICIOUS",
+     "codes": [
+      "ML_TEXT_SCAM_LIKE",
+      "PAYEE_UNVERIFIED"
+     ]
+    },
+    {
+     "kind": "false_alarm",
+     "text": "Demat account opening fee Rs 300. Pay at upi://pay?pa=acme.brk@validhdfc&pn=Acme%20Broking",
+     "tier": "SUSPICIOUS",
+     "codes": [
+      "ML_GR_INVEST_PERSONAL_ACCOUNT",
+      "PAYEE_UNVERIFIED"
+     ]
+    },
+    {
+     "kind": "false_alarm",
+     "text": "Telegram channel for daily current affairs. Free, no payment needed. Join using the link in the school group.",
+     "tier": "SUSPICIOUS",
+     "codes": [
+      "ML_TEXT_SCAM_LIKE",
+      "OFFER_OFFPLATFORM"
+     ]
+    }
+   ],
+   "seconds": 88
+  },
+  "holdout_mohit_tuned_on": {
+   "n": 80,
+   "without_ai": {
+    "tpr": {
+     "k": 36,
+     "n": 40,
+     "rate": 0.9,
+     "lo": 0.7694792561952611,
+     "hi": 0.9604211124044252
+    },
+    "fpr": {
+     "k": 0,
+     "n": 40,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.08762453925039232
+    },
+    "ai_unanswered": 0
+   },
+   "with_ai": {
+    "tpr": {
+     "k": 40,
+     "n": 40,
+     "rate": 1.0,
+     "lo": 0.9123754607496077,
+     "hi": 1.0
+    },
+    "fpr": {
+     "k": 0,
+     "n": 40,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.08762453925039232
+    },
+    "ai_unanswered": 0
+   },
+   "failures": [],
+   "seconds": 118
+  }
+ },
+ "note": "The 33 ground rules were written after reading the held-out misses, so held-out numbers for the AI rule check are optimistic. Mohit's set was also used to tune the India rules. False alarms on genuine messages are the key number."
+}
