@@ -18,6 +18,7 @@ import httpx
 
 from ..envfile import load_dotenv
 from ..extract.ocr import read_text
+from ..integrations import sarvam
 from ..extract.qr import decode_qr
 from ..ops import metrics
 from ..plugins import REGISTRY, load_plugins
@@ -49,6 +50,10 @@ TXT = {
         "lang_set": "Language set to English.",
         "family_msg": "Please check with me before I pay. Satyapan says: {headline}. {reason} More: {url}",
         "family_hint": "Forward this message to someone you trust:",
+        "explain": "Explain in my language", "explain_q": "Which language? Pressing one sends the text of your message to Sarvam, an Indian AI company, to translate it. We do not store it.",
+        "explain_gone": "I do not keep what you sent, and it was more than 15 minutes ago, so I can only translate my own answer.",
+        "explain_said": "What it says, in", "explain_ours": "Our check, in", "explain_fail": "The translation service is not available right now.",
+        "explain_note": "This is a plain translation and only a suggestion: it may or may not be a scam. Machine translation can make mistakes.",
     },
     "hi": {
         "welcome": "नमस्ते। मैं सत्यापन हूँ। कोई शक वाला संदेश, लिंक, QR की तस्वीर, स्क्रीनशॉट, PDF या वॉइस नोट मुझे फ़ॉरवर्ड करें। मैं एक मिनट में बताऊँगा कि क्या गड़बड़ दिखती है और पैसे कौन माँग रहा है।\n\nमैं आपकी फ़ाइल नहीं रखता। मैं सिर्फ़ सलाह देता हूँ: आपके लिए कुछ रोकता, चुकाता या दर्ज नहीं करता। मैं आपका OTP, PIN या पासवर्ड कभी नहीं माँगूँगा।\n\nअपनी भाषा चुनें:",
@@ -70,6 +75,10 @@ TXT = {
         "lang_set": "भाषा हिन्दी कर दी गई।",
         "family_msg": "पैसे भेजने से पहले मुझसे बात कर लीजिए। सत्यापन कहता है: {headline}। {reason} और जानें: {url}",
         "family_hint": "यह संदेश किसी भरोसेमंद व्यक्ति को फ़ॉरवर्ड करें:",
+        "explain": "मेरी भाषा में समझाएँ", "explain_q": "कौन सी भाषा? कोई एक दबाने पर आपके संदेश का पाठ अनुवाद के लिए Sarvam (एक भारतीय AI कंपनी) को भेजा जाता है। हम इसे सहेजते नहीं।",
+        "explain_gone": "आपका भेजा हुआ मैं नहीं रखता और उसे 15 मिनट से ज़्यादा हो गए, इसलिए सिर्फ़ अपना जवाब अनुवाद कर सकता हूँ।",
+        "explain_said": "इसमें लिखा है, इस भाषा में:", "explain_ours": "हमारी जाँच, इस भाषा में:", "explain_fail": "अनुवाद सेवा अभी उपलब्ध नहीं है।",
+        "explain_note": "यह सीधा अनुवाद है और सिर्फ़ एक सुझाव: यह धोखाधड़ी हो भी सकता है और नहीं भी। मशीनी अनुवाद में गलतियाँ हो सकती हैं।",
     },
 }
 
@@ -111,6 +120,7 @@ class Bot:
         self.api, self.public_url, self.clock = api, public_url.rstrip("/"), clock
         self._recent: dict[int, deque] = defaultdict(deque)
         self._last: dict[int, str] = {}     # chat -> last case id, kept in memory only
+        self._read: dict[int, tuple[str, float]] = {}   # chat -> (text we read, expiry): memory only, 15 minutes, for "Explain in my language"
 
     # ---- language and limits -----------------------------------------------------------------------------------
     def lang(self, chat_id: int, hint: str | None = None) -> str:
@@ -212,6 +222,7 @@ class Bot:
             return
         db.save_case(res)
         self._last[cid] = res.case_id
+        self._read[cid] = (res.text_read, self.clock() + 900)
         metrics.record_check(kind=kind, channel="telegram", tier=res.tier.value, mode="engine", elapsed_ms=int((time.perf_counter() - t0) * 1000),
                              device_raw=metrics.hash_id(f"tg:{cid}"), hashed=True)
         self._reply(cid, res, lang)
@@ -230,9 +241,36 @@ class Bot:
             lines += ["", f"{t['full']}: {url}"]
         keyboard = [[{"text": t["wrong"], "callback_data": f"wrong:{res.case_id}"}, {"text": t["family"], "callback_data": f"family:{res.case_id}"}],
                     [{"text": t["delete"], "callback_data": f"del:{res.case_id}"}]]
+        if sarvam.configured():
+            keyboard.append([{"text": t["explain"], "callback_data": f"explain:{res.case_id}"}])
         if url.startswith("https://"):
             keyboard.append([{"text": t["open"], "url": url}])
         self.api.send_message(cid, "\n".join(lines), {"inline_keyboard": keyboard})
+
+    def _explain(self, cid: int, code: str, case_id: str, t: dict) -> None:
+        """Translate what the message said (if we still hold it) and our own verdict into `code`. Pressing the language button is the consent."""
+        case = db.get_case(case_id)
+        if code not in sarvam.LANGS or case is None or not sarvam.configured():
+            self.api.send_message(cid, t["explain_fail"])
+            return
+        name = sarvam.LANGS[code][2]
+        text, expiry = self._read.get(cid, ("", 0.0))
+        parts: list[str] = []
+        if text and self.clock() < expiry:
+            got = sarvam.translate_via_english(text, code)
+            if got:
+                parts.append(f"{t['explain_said']} {name}:\n{got[0]}")
+        else:
+            self.api.send_message(cid, t["explain_gone"])
+        v = case.verdicts["en"]
+        sentences = [v.headline, *v.reasons_text[:3], v.action_text]
+        done = [x if code == "en" else sarvam.translate_template(x, code) for x in sentences]
+        if all(done):
+            parts.append(f"{t['explain_ours']} {name}:\n{done[0]}\n" + "\n".join(f"{i}. {r}" for i, r in enumerate(done[1:-1], 1)) + f"\n\n{done[-1]}")
+        if not parts:
+            self.api.send_message(cid, t["explain_fail"])
+            return
+        self.api.send_message(cid, "\n\n".join(parts) + "\n\n" + t["explain_note"])
 
     def _command(self, cid: int, cmd: str, lang: str) -> None:
         t = TXT[lang]
@@ -278,6 +316,13 @@ class Bot:
                 msg = t["family_msg"].format(headline=v.headline, reason=(v.reasons_text[0] if v.reasons_text else ""), url=f"{self.public_url}/g/{case.share_token}")
                 self.api.send_message(cid, t["family_hint"])
                 self.api.send_message(cid, msg)
+        elif action == "explain":
+            codes = list(sarvam.LANGS)
+            rows = [[{"text": sarvam.LANGS[c][2], "callback_data": f"xl:{c}:{arg}"} for c in codes[i:i + 3]] for i in range(0, len(codes), 3)]
+            self.api.send_message(cid, t["explain_q"], {"inline_keyboard": rows})
+        elif action == "xl":
+            code, _, case_id = arg.partition(":")
+            self._explain(cid, code, case_id, t)
         elif action == "del":
             ok = db.delete_case(arg)
             if ok:

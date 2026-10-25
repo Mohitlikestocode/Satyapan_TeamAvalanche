@@ -209,3 +209,51 @@ def test_the_bot_never_calls_anything_safe(bot):
     b.handle_update(msg("Your Amazon order will be delivered today."))
     low = api.last["text"].lower()
     assert api.last["text"].startswith("NO RED FLAGS FOUND") and "not a guarantee" in low and " is safe" not in low
+
+
+@pytest.fixture()
+def fake_sarvam(monkeypatch):
+    import httpx
+    from satyapan.integrations import sarvam
+    sent = []
+
+    def handler(req: httpx.Request) -> httpx.Response:
+        import json
+        body = json.loads(req.content)
+        sent.append(body)
+        return httpx.Response(200, json={"translated_text": f"[{body['target_language_code']}] {body['input']}", "source_language_code": "hi-IN"})
+
+    monkeypatch.setenv("SARVAM_API_KEY", "test-key-not-real")
+    monkeypatch.setattr(sarvam, "http_client", lambda: httpx.Client(transport=httpx.MockTransport(handler)))
+    sarvam._calls.clear()
+    return sent
+
+
+def test_explain_button_appears_only_when_translation_is_set_up(bot, monkeypatch):
+    b, api = bot
+    monkeypatch.delenv("SARVAM_API_KEY", raising=False)
+    b.handle_update(msg(SCAM))
+    assert not any(x.startswith("explain:") for x in buttons(api.last["markup"]))
+
+
+def test_explain_in_my_language_translates_the_message_and_our_verdict(bot, fake_sarvam):
+    b, api = bot
+    b.handle_update(msg(SCAM))
+    case_id = api.last["text"].split("/case/")[1].split()[0]
+    assert f"explain:{case_id}" in buttons(api.last["markup"])
+    b.handle_update(press(f"explain:{case_id}"))
+    assert "Sarvam" in api.last["text"] and f"xl:ta:{case_id}" in buttons(api.last["markup"])      # consent wording and a language list
+    b.handle_update(press(f"xl:ta:{case_id}"))
+    reply = api.last["text"]
+    assert "[ta-IN]" in reply and "Guaranteed 30%" in reply.replace("[en-IN] ", "") and "suggestion" in reply
+    assert b._read[CHAT][0].startswith("Guaranteed")           # held in memory only
+
+
+def test_explained_text_expires_and_is_never_in_the_database(bot, fake_sarvam):
+    b, api = bot
+    b.handle_update(msg(SCAM))
+    case_id = api.last["text"].split("/case/")[1].split()[0]
+    b._read[CHAT] = (b._read[CHAT][0], 0.0)                     # pretend 15 minutes passed
+    b.handle_update(press(f"xl:hi:{case_id}"))
+    assert any("15" in m["text"] for m in api.sent)             # told it cannot translate what it no longer holds
+    assert "Guaranteed 30%" not in str(db.get_case(case_id).__dict__)

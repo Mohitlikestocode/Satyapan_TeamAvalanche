@@ -200,3 +200,16 @@ def translate_template(text: str, target: str) -> str | None:
     p.parent.mkdir(parents=True, exist_ok=True)
     p.write_text(got[0], encoding="utf-8")
     return got[0]
+
+
+def translate_via_english(text: str, target: str) -> tuple[str, str, str | None] | None:
+    """(translation, english version, detected source language) for the user's own text. Indian-language to Indian-language goes through
+    English because that is more accurate than a direct hop. Callers need the user's consent. Nothing is stored here."""
+    first = translate(text, "en")
+    if first is None:
+        return None
+    english, detected = first
+    if target == "en":
+        return english, english, detected
+    second = translate(english, target, source="en")
+    return (second[0], english, detected) if second else None

@@ -62,17 +62,11 @@ def translate(body: TranslateIn, request: Request) -> dict:
     if not sarvam.configured():
         raise HTTPException(503, "translation is not set up on this server")
     _limit(request)
-    # Indian-language to Indian-language goes through English: it is more accurate than a direct hop
-    first = sarvam.translate(body.text, "en")
-    if first is None:
+    got = sarvam.translate_via_english(body.text, body.lang)
+    if got is None:
         raise HTTPException(503, "the translation service is not available right now")
-    english, detected = first
-    if body.lang == "en":
-        return {"lang": "en", "translated": english, "english": english, "detected": detected}
-    second = sarvam.translate(english, body.lang, source="en")
-    if second is None:
-        raise HTTPException(503, "the translation service is not available right now")
-    return {"lang": body.lang, "translated": second[0], "english": english, "detected": detected}
+    translated, english, detected = got
+    return {"lang": body.lang, "translated": translated, "english": english, "detected": detected}
 
 
 @router.post("/api/v1/understand/verdict")
