@@ -2,6 +2,9 @@
 
 Every number is from a file in `docs/results/`. "Optimistic" means we looked at that data while building.
 
+## Do you use an LLM?
+Only as an optional, bounded helper. The core verdict comes from our own rules, our fine-tuned classifiers and a deterministic fusion step. If a Groq or Grok key is set, an open model (gpt-oss) is shown the message, with phone numbers, e-mails and account, card and OTP-like numbers masked, and may only name which of 33 regulator-advisory rules it matches and quote the words. We keep a match only if the quote really appears in the message, the reasons come from our own templates, and the model can only add warnings, never clear a message, so a prompt injection cannot make a scam look safe. Without a key nothing is sent anywhere. Attack mode uses no LLM at all. Sarvam is used for translation and speech only when the user asks.
+
 ## What do you miss right now?
 * **Scams with no fixed wording.** On Tanish's 80 unseen messages the whole system flags **33 of 40 scams (82%)** with **0 of 40 genuine messages** flagged. That file is now optimistic: we looked at its failure categories while improving the rules and the training data, so a fresh blind set is the honest test. Scams that read like ordinary messages (a payment screenshot sent as text, a FASTag top-up link, a plain bill reminder) are still missed.
 * **Edited payment screenshots.** On synthetic screens from layouts the model never saw, the tamper model catches about **39%** of edits (975 / 2,511) and wrongly flags about **5%** of genuine ones. The whole screenshot check flags 61 / 150 edited and 11 / 150 genuine (the 150 + 150 are synthetic screens from unseen layouts).

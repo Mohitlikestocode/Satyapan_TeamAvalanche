@@ -66,6 +66,18 @@ RELATED_HI = {
 }
 templates.env.globals["RELATED_HI"] = RELATED_HI
 
+
+def _ai_check_on() -> bool:
+    """True when this server has an AI provider key, so the check page can say plainly that message words go to it (masked)."""
+    try:
+        from ..layers.l4_semantic import llm_check
+        return llm_check.config() is not None
+    except Exception:
+        return False
+
+
+templates.env.globals["ai_check_on"] = _ai_check_on
+
 FOOTER_COLUMNS = {"Services", "If you paid", "Learn and about"}
 
 

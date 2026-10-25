@@ -107,6 +107,7 @@ Everything below is copied from [`docs/results/`](docs/results) and reproduced b
 | **`holdout_community.jsonl`** (Tanish: 40 scam + 40 genuine, English/Hindi/Hinglish, written without reading the rules) | **33 / 40** (82%) | **0 / 40** | **optimistic**: we looked at this file's failure categories while widening the rules and the synthetic training data, and one threshold was picked by a sweep that included it. A fresh blind set is the honest test. The rules alone get 19/40 |
 | Before the India-specific rules and the retrained model | 7 / 40 | 0 / 40 | kept in `docs/results/text_holdout_before_india_rules.json` |
 | After the India rules, with the original classifier | 26 / 40 | 0 / 40 | |
+| Plus the optional **AI rule check** (open model gpt-oss on Groq, 33 regulator-advisory rules; needs a free key) | **40 / 40** | 0 / 40 | **optimistic**: Ghana wrote the rules after reading this file's misses, and measured it against the older classifier (`docs/results/ai_rules_eval.json`). Adds one false alarm on the dev kit (3/33) |
 | `holdout_traction.jsonl` (drafted by the same assistant that wrote the rules) | 36 / 40 | 0 / 40 | **optimistic**: not independent |
 | Development kit (`messages.jsonl`) | 38 / 38 | 2 / 33 | **optimistic**: the rules were written against it |
 
@@ -159,6 +160,7 @@ Reproduce: `python -m satyapan.eval.report` (needs `var/models/scam_text/`).
 * Cases are purged after **24 h** (7 days only if the user shares for review); **Delete this check** deletes immediately.
 * Visitors get one random cookie to count visits; no accounts, no names. Chat ids (Telegram) are stored only as salted hashes.
 * Limits: request size caps, optional rate limiting (`RATE_LIMIT=1`), strict Content-Security-Policy.
+* **AI rule check (optional, off without a key)**: when a Groq or Grok key is set, the words of a *message* are also checked against 33 rules taken from RBI, SEBI, NPCI, TRAI and MHA advisories by an open model (gpt-oss). Phone numbers, e-mails, account and card numbers and codes are masked first, UPI IDs keep only their bank handle, nothing is stored, the model can only add warnings (never clear a message), and a match counts only if its quote really appears in the message. The check page says so whenever it is on. Screenshots, PDFs and QR payloads never go to it.
 * **Sarvam**: spoken verdicts send only our pre-written sentences. The user's own text goes to Sarvam **only when they press Explain** (translation) or Listen on that translation; it is never stored or cached by us, and the extracted text is kept only in the user's own browser tab.
 * Moderator sign-in is a demo sign-in, **not real authentication** (say so to a judge).
 * Details: [`docs/disclosure/`](docs/disclosure) (data sources, licences, what each model was trained on).

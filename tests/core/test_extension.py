@@ -17,3 +17,15 @@ def test_check_page_accepts_text_from_the_extension_fragment():
     js = (EXT.parent / "web" / "static" / "site.js").read_text(encoding="utf-8")
     assert "#t=" in js and "autorun" in js and "history.replaceState" in js
     assert "#t=" in (EXT / "background.js").read_text(encoding="utf-8")
+
+
+def test_check_page_discloses_the_ai_check_only_when_it_is_on(monkeypatch):
+    from fastapi.testclient import TestClient
+
+    from satyapan.api.app import create_app
+    from satyapan.layers.l4_semantic import llm_check
+    c = TestClient(create_app())
+    monkeypatch.setattr(llm_check, "config", lambda: None)
+    assert "hosted by Groq" not in c.get("/check").text
+    monkeypatch.setattr(llm_check, "config", lambda: object())
+    assert "hosted by Groq" in c.get("/check").text
