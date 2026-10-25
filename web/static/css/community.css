@@ -325,3 +325,12 @@ aside .board{margin-bottom:16px}
   .cm-talk-box{padding:6px 14px 16px}
   .cm-comment .cm-av{width:36px;height:36px;font-size:16px}
 }
+
+/* what kind of post is this: a strip at the top of every card and post */
+.cm-ribbon{display:flex;flex-wrap:wrap;align-items:center;gap:4px 10px;margin:-14px -16px 12px;padding:8px 16px;border-radius:11px 11px 0 0;font-size:14px}
+.cm-post-full .cm-ribbon{margin:-18px -20px 14px;padding:10px 20px}
+.cm-ribbon b{letter-spacing:.02em}
+.cm-ribbon span{opacity:.85}
+.cm-ribbon-warn{background:var(--red-l);color:#8F1B12;border-bottom:1px solid #F0B7B1}
+.cm-ribbon-ask{background:var(--saffron-l);color:#7A3E05;border-bottom:1px solid #F3C58F}
+.cm-intent input:checked+.cm-intent-in .cm-intent-ic{box-shadow:0 0 0 3px #fff,0 0 0 5px currentColor}

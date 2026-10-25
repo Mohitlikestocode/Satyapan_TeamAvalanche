@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% from "ext/community/_cm.html" import pill, kind_label, lang_label, seen_by, platform_label, ic, avatar, who with context %}
+{% from "ext/community/_cm.html" import pill, kind_label, lang_label, seen_by, platform_label, ic, avatar, who, ribbon with context %}
 {% block content %}
 <div class="wrap cm-wrap cm-narrow">
   {% if new %}<div class="cm-note" role="status">
@@ -23,6 +23,7 @@
   <p class="cm-crumb"><a href="/community">‹ {{ tr("All reports", "सभी रिपोर्ट") }}</a></p>
 
   <article class="cm-card cm-post cm-post-full cm-risk-{{ p.tier_class }} {% if p.intent == 'ask' %}cm-ask{% endif %}">
+    {{ ribbon(p) }}
     <header class="cm-post-head">
       {{ avatar(p.author, True) }}
       <div class="cm-post-who"><b>{{ who(p.author) }}</b>

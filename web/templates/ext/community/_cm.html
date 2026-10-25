@@ -22,9 +22,13 @@
 {% macro pill(p) %}<span class="pill pill-{{ p.tier_class }}">{{ p.tier_label }}</span>{% endmacro %}
 {% macro seen_by(n) %}{% if n == 1 %}{{ tr("Seen by 1 person", "1 व्यक्ति ने देखा") }}{% else %}{{ tr("Seen by " ~ n ~ " people", n ~ " लोगों ने देखा") }}{% endif %}{% endmacro %}
 
+{# A strip that says at a glance what kind of post this is. #}
+{% macro ribbon(p) %}{% if p.intent == "ask" %}<div class="cm-ribbon cm-ribbon-ask">{{ ic("help") }}<b>{{ tr("Asking the community", "समुदाय से पूछ रहे हैं") }}</b><span>{{ tr("Is this real? Share what you think.", "क्या यह असली है? अपनी राय बताएँ।") }}</span></div>{% else %}<div class="cm-ribbon cm-ribbon-warn">{{ ic("alert") }}<b>{{ tr("Scam report", "ठगी की रिपोर्ट") }}</b><span>{{ tr("Shared to warn others.", "दूसरों को सावधान करने के लिए।") }}</span></div>{% endif %}{% endmacro %}
+
 {# One post in the feed: who, when, where it was seen, what was said, the verdict, and quick actions. #}
 {% macro card(p) %}
 <article class="cm-card cm-post {% if p.intent == 'ask' %}cm-ask{% endif %} cm-risk-{{ p.tier_class }}">
+  {{ ribbon(p) }}
   <header class="cm-post-head">
     {{ avatar(p.author) }}
     <div class="cm-post-who"><b>{{ who(p.author) }}</b>

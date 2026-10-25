@@ -1,9 +1,10 @@
 {% extends "base.html" %}
 {% from "ext/community/_cm.html" import ic with context %}
+{% set asking = values.intent == "ask" %}
 {% block content %}
 <div class="wrap cm-wrap cm-narrow">
-  <h1>{{ tr("Report a scam you saw", "देखी हुई धोखाधड़ी बताएँ") }}</h1>
-  <p class="cm-lead">{{ tr("Tell us what reached you. Satyapan checks it with the same rules as the Check page and shows people the reasons.", "बताइए आपके पास क्या आया। सत्यापन उसे वही नियमों से जाँचता है जो जाँच वाले पृष्ठ पर हैं, और लोगों को कारण दिखाता है।") }}</p>
+  <h1 data-intent-text data-warn="{{ tr('Report a scam you saw', 'देखी हुई धोखाधड़ी बताएँ') }}" data-ask="{{ tr('Ask the community: is this real?', 'समुदाय से पूछें: क्या यह असली है?') }}">{% if asking %}{{ tr("Ask the community: is this real?", "समुदाय से पूछें: क्या यह असली है?") }}{% else %}{{ tr("Report a scam you saw", "देखी हुई धोखाधड़ी बताएँ") }}{% endif %}</h1>
+  <p class="cm-lead" data-intent-text data-warn="{{ tr('Tell us what reached you. Satyapan checks it with the same rules as the Check page and shows people the reasons.', 'बताइए आपके पास क्या आया। सत्यापन उसे वही नियमों से जाँचता है जो जाँच वाले पृष्ठ पर हैं, और लोगों को कारण दिखाता है।') }}" data-ask="{{ tr('Not sure about something you got? Share it and let others say what they think. Satyapan\'s checks are shown next to it, but they are signs, not proof.', 'किसी चीज़ पर पक्का भरोसा नहीं? उसे साझा करें और दूसरों की राय जानें। सत्यापन की जाँच साथ दिखती है, पर वह संकेत है, प्रमाण नहीं।') }}">{% if asking %}{{ tr("Not sure about something you got? Share it and let others say what they think. Satyapan's checks are shown next to it, but they are signs, not proof.", "किसी चीज़ पर पक्का भरोसा नहीं? उसे साझा करें और दूसरों की राय जानें। सत्यापन की जाँच साथ दिखती है, पर वह संकेत है, प्रमाण नहीं।") }}{% else %}{{ tr("Tell us what reached you. Satyapan checks it with the same rules as the Check page and shows people the reasons.", "बताइए आपके पास क्या आया। सत्यापन उसे वही नियमों से जाँचता है जो जाँच वाले पृष्ठ पर हैं, और लोगों को कारण दिखाता है।") }}{% endif %}</p>
 
   {% if error %}<div class="cm-error" role="alert"><b>{{ tr(error[0], error[1]) }}</b></div>{% endif %}
   {% if case %}<div class="cm-note" role="status"><b>{{ tr("You are sharing your result with the community:", "आप अपना नतीजा समुदाय के साथ साझा कर रहे हैं:") }}</b>
@@ -24,7 +25,7 @@
       </div>
     </fieldset>
     <fieldset>
-      <legend>{{ tr("1. What kind of scam was it?", "1. यह किस तरह की धोखाधड़ी थी?") }}</legend>
+      <legend data-intent-text data-warn="{{ tr('1. What kind of scam was it?', '1. यह किस तरह की धोखाधड़ी थी?') }}" data-ask="{{ tr('1. What is it about?', '1. यह किस बारे में है?') }}">{% if asking %}{{ tr("1. What is it about?", "1. यह किस बारे में है?") }}{% else %}{{ tr("1. What kind of scam was it?", "1. यह किस तरह की धोखाधड़ी थी?") }}{% endif %}</legend>
       <div class="cm-choices">
         {% for key, en, hi in cm_kinds %}
         <label class="cm-choice"><input type="radio" name="kind" value="{{ key }}" {% if values.kind == key %}checked{% endif %} required><span>{{ tr(en, hi) }}</span></label>
@@ -74,7 +75,7 @@
     </div>
 
     <div class="cm-actions">
-      <button type="submit" class="hbtn hbtn-p cm-btn">{{ tr("Send report", "रिपोर्ट भेजें") }}</button>
+      <button type="submit" class="hbtn hbtn-p cm-btn" data-intent-text data-warn="{{ tr('Send report', 'रिपोर्ट भेजें') }}" data-ask="{{ tr('Post my question', 'मेरा सवाल भेजें') }}">{% if asking %}{{ tr("Post my question", "मेरा सवाल भेजें") }}{% else %}{{ tr("Send report", "रिपोर्ट भेजें") }}{% endif %}</button>
       <a class="hbtn hbtn-s" href="/community">{{ tr("Cancel", "रद्द करें") }}</a>
     </div>
     <p class="cm-small">{{ tr("You can send " ~ left ~ " more reports today.", "आज आप " ~ left ~ " और रिपोर्ट भेज सकते हैं।") }}</p>

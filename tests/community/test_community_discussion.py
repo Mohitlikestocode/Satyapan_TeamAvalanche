@@ -353,3 +353,50 @@ def test_report_form_offers_two_clear_choices_in_both_languages():
     assert en.count('name="intent"') == 2 and 'value="ask" checked' in en and "Warn others about a scam" in en
     hi = client("hi").get("/community/report").text
     assert 'value="warn" checked' in hi and "दूसरों को ठगी से सावधान करें" in hi and "पूछें: क्या यह असली है?" in hi
+
+
+# ---- the two choices are easy to tell apart --------------------------------------------------------------
+def test_cards_and_posts_carry_a_strip_that_says_what_kind_of_post_it_is():
+    a = client()
+    report(a, SCAM)
+    report(a, BENIGN, intent="ask")
+    feed = a.get("/community").text
+    assert feed.count("cm-ribbon-warn") == 1 and feed.count("cm-ribbon-ask") == 1
+    assert "Scam report" in feed and "Asking the community" in feed
+    assert "cm-ribbon-ask" in a.get("/community/post/2").text and "cm-ribbon-warn" in a.get("/community/post/1").text
+    hi = client("hi")
+    page = hi.get(report(hi, BENIGN, intent="ask").headers["location"]).text
+    assert "समुदाय से पूछ रहे हैं" in page and "ठगी की रिपोर्ट" not in page
+
+
+def test_report_form_wording_follows_the_choice_without_javascript():
+    ask = client().get("/community/report?intent=ask").text
+    assert "Ask the community: is this real?" in ask and "Post my question" in ask and "1. What is it about?" in ask
+    assert "1. What kind of scam was it?" not in ask.split("<form")[1].split("data-warn")[0]
+    warn = client().get("/community/report").text
+    assert "Send report" in warn and "1. What kind of scam was it?" in warn
+    assert 'data-warn="Send report" data-ask="Post my question"' in warn                 # the script swaps between the two
+    hi = client("hi").get("/community/report?intent=ask").text
+    assert "समुदाय से पूछ रहे हैं" not in hi.split("<h1")[1].split("</h1>")[0] and "मेरा सवाल भेजें" in hi
+
+
+# ---- every kind of input, with either choice, gets the engine's own verdict --------------------------------
+def test_every_input_type_with_either_choice_shows_exactly_the_engines_verdict():
+    from satyapan.community.posts import _prepare_for_engine
+    from satyapan.service import analyse_text
+    samples = [("message", SCAM), ("message", "Your KYC expires today, account will be blocked. Update now: http://hdfc-kyc-update.in/login"),
+               ("message", BENIGN), ("link", "hdfc-kyc-update.in/login"), ("link", "https://www.sbi.co.in"),
+               ("upi", "Send money to refund.help55@paytm for guaranteed returns in our VIP tips group"), ("upi", "quiet.shop12@paytm"),
+               ("call", "Caller said he is from CBI, I am under digital arrest, stay on video call and pay Rs 90000"),
+               ("qr", "QR asked me to enter my UPI PIN to receive Rs 4500 refund")]
+    flagged = {"SUSPICIOUS", "HIGH_RISK", "REGISTRY_HIT"}
+    for i, (kind, text) in enumerate(samples):
+        engine = analyse_text(_prepare_for_engine(text, kind), kind="link" if kind == "link" else "message").tier.value
+        for intent in ("warn", "ask"):
+            c = client()
+            r = c.post("/community/report", data={"kind": kind, "text": text, "consent": "1", "intent": intent}, follow_redirects=False)
+            assert r.status_code == 303, (kind, intent)
+            with store.conn() as conn:
+                row = conn.execute("SELECT tier, status, intent FROM community_posts ORDER BY id DESC LIMIT 1").fetchone()
+            assert row["tier"] == engine and row["intent"] == intent, (kind, intent, text[:30])
+            assert row["status"] == ("approved" if intent == "ask" or engine in flagged else "pending"), (kind, intent, engine)
