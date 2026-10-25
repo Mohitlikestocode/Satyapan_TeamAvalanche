@@ -190,7 +190,7 @@
     var stop = D.querySelector("button.btn.bq");
     if (stop) stop.addEventListener("click", function () {
       saveHistory(history().filter(function (h) { return h.id !== id; }));
-      var done = function () { location.href = "/deletion"; };
+      var done = function () { location.href = "/deletion" + (id ? "?ref=" + encodeURIComponent("SP-" + id.slice(0, 4).toUpperCase() + "-" + id.slice(4, 8).toUpperCase()) : ""); };
       if (id) { fetch("/api/v1/check/" + encodeURIComponent(id), { method: "DELETE" }).then(done, done); } else { done(); }
     });
     if (safe) setTimeout(function () { location.href = to; }, 5000);

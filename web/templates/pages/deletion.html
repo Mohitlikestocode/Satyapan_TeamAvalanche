@@ -41,26 +41,29 @@ a{color:#1F4E8C}a:hover{color:#163A6A}
 {% block content %}
 <div class="sp"><div class="bd">
 <section style="background: #fff; border: 1px solid #D0D5DD; border-radius: 8px; overflow: hidden">
-<div style="background: #0B1F3A; color: #fff; padding: 12px 16px; display: flex; justify-content: space-between; font-size: 13px; font-weight: 700; letter-spacing: .05em"><span>DELETION RECEIPT</span><span>SP-2410-7K3Q</span></div>
+<div style="background: #0B1F3A; color: #fff; padding: 12px 16px; display: flex; justify-content: space-between; font-size: 13px; font-weight: 700; letter-spacing: .05em"><span>{{ tr("DELETION RECEIPT", "मिटाने की रसीद") }}</span><span id="dr-ref">-</span></div>
 <div style="padding: 16px; display: flex; flex-direction: column; gap: 12px">
-<div style="display: flex; gap: 12px; align-items: center"><svg aria-hidden="true" class="i" viewBox="0 0 24 24" style="width: 28px; height: 28px; color: #067647"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg><h1 class="t3" style="font-size: 19px">Your file was deleted at 10:42 IST</h1></div>
-<p class="sm">24 Oct 2026 · vip_profits_qr.jpg</p>
+<div style="display: flex; gap: 12px; align-items: center"><svg aria-hidden="true" class="i" viewBox="0 0 24 24" style="width: 28px; height: 28px; color: #067647"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg><h1 class="t3" style="font-size: 19px" id="dr-head">{{ tr("This result was deleted", "यह नतीजा मिटा दिया गया") }}</h1></div>
+<p class="sm" id="dr-when"></p>
 <div>
-<p class="xs" style="font-weight: 700; letter-spacing: .04em; margin-bottom: 4px">WE KEPT</p>
-<div class="kept"><svg aria-hidden="true" class="i" viewBox="0 0 24 24" style="color: #1F4E8C"><path d="M20 6 9 17l-5-5"></path></svg>The result and reasons</div>
-<div class="kept"><svg aria-hidden="true" class="i" viewBox="0 0 24 24" style="color: #1F4E8C"><path d="M20 6 9 17l-5-5"></path></svg>The report ID</div>
-<div class="kept"><svg aria-hidden="true" class="i" viewBox="0 0 24 24" style="color: #1F4E8C"><path d="M20 6 9 17l-5-5"></path></svg>A file fingerprint (SHA-256), not the file</div>
+<p class="xs" style="font-weight: 700; letter-spacing: .04em; margin-bottom: 4px">{{ tr("DELETED NOW", "अभी मिटाया गया") }}</p>
+<div class="kept"><svg aria-hidden="true" class="i" viewBox="0 0 24 24" style="color: #1F4E8C"><path d="M20 6 9 17l-5-5"></path></svg>{{ tr("The saved result and its reasons", "सहेजा गया नतीजा और उसके कारण") }}</div>
+<div class="kept"><svg aria-hidden="true" class="i" viewBox="0 0 24 24" style="color: #1F4E8C"><path d="M20 6 9 17l-5-5"></path></svg>{{ tr("Its \"ask family\" share link, if you made one", "उसका \"परिवार से पूछें\" लिंक, अगर आपने बनाया था") }}</div>
 </div>
 <div>
-<p class="xs" style="font-weight: 700; letter-spacing: .04em; margin-bottom: 4px">WE DID NOT KEEP</p>
-<div class="kept"><svg aria-hidden="true" class="i" viewBox="0 0 24 24" style="color: #475467"><path d="M18 6 6 18M6 6l12 12"></path></svg>The file itself</div>
-<div class="kept"><svg aria-hidden="true" class="i" viewBox="0 0 24 24" style="color: #475467"><path d="M18 6 6 18M6 6l12 12"></path></svg>Your phone number</div>
-<div class="kept"><svg aria-hidden="true" class="i" viewBox="0 0 24 24" style="color: #475467"><path d="M18 6 6 18M6 6l12 12"></path></svg>Your contacts</div>
+<p class="xs" style="font-weight: 700; letter-spacing: .04em; margin-bottom: 4px">{{ tr("STILL KEPT", "अब भी रखा है") }}</p>
+<div class="kept"><svg aria-hidden="true" class="i" viewBox="0 0 24 24" style="color: #475467"><path d="M18 6 6 18M6 6l12 12"></path></svg>{{ tr("A plain count that a check of this kind happened (no text, no file, no name) in our anonymous traffic numbers", "सिर्फ़ एक सादी गिनती कि इस तरह की जाँच हुई (कोई पाठ, फ़ाइल या नाम नहीं), हमारे बेनाम ट्रैफ़िक आँकड़ों में") }}</div>
+<div class="kept"><svg aria-hidden="true" class="i" viewBox="0 0 24 24" style="color: #475467"><path d="M18 6 6 18M6 6l12 12"></path></svg>{{ tr("A \"wrong result\" request, if you sent one, until a reviewer closes it", "\"नतीजा ग़लत है\" का अनुरोध, अगर आपने भेजा था, जब तक समीक्षक उसे बंद न करे") }}</div>
+</div>
+<div>
+<p class="xs" style="font-weight: 700; letter-spacing: .04em; margin-bottom: 4px">{{ tr("WE NEVER HAD", "हमारे पास कभी नहीं था") }}</p>
+<div class="kept"><svg aria-hidden="true" class="i" viewBox="0 0 24 24" style="color: #475467"><path d="M18 6 6 18M6 6l12 12"></path></svg>{{ tr("The file itself: it was read in memory and thrown away", "फ़ाइल खुद: वह मेमोरी में पढ़ी गई और फेंक दी गई") }}</div>
+<div class="kept"><svg aria-hidden="true" class="i" viewBox="0 0 24 24" style="color: #475467"><path d="M18 6 6 18M6 6l12 12"></path></svg>{{ tr("Your phone number or contacts", "आपका फ़ोन नंबर या कॉन्टैक्ट्स") }}</div>
 </div>
 </div>
 </section>
-<p class="sm">Results are saved only on this phone, under Reports. Nobody else can see them unless you share.</p>
-<button class="btn bd2"><svg aria-hidden="true" class="i" viewBox="0 0 24 24"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>Delete everything now</button>
-<p class="xs">Removes all results, reports and settings from this phone. This cannot be undone.</p>
+<p class="sm">{{ tr("A list of your recent checks (their reference numbers) is kept only in this browser, under My checks.", "आपकी हाल की जाँचों की सूची (उनके संदर्भ नंबर) सिर्फ़ इसी ब्राउज़र में रहती है, \"मेरी जाँचें\" में।") }}</p>
+<button class="btn bd2" id="dr-all"><svg aria-hidden="true" class="i" viewBox="0 0 24 24"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>{{ tr("Delete all my checks now", "मेरी सारी जाँचें अभी मिटाएँ") }}</button>
+<p class="xs" id="dr-note">{{ tr("Deletes every saved result on the server that this browser knows about, and clears this browser's history and settings. This cannot be undone.", "इस ब्राउज़र को पता हर सहेजा नतीजा सर्वर से मिटा देता है, और इस ब्राउज़र का इतिहास और सेटिंग साफ़ कर देता है। यह वापस नहीं हो सकता।") }}</p>
 </div></div>
 {% endblock %}

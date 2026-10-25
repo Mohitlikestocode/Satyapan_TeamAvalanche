@@ -72,7 +72,7 @@
   D.addEventListener("click", function (e) {
     var a = e.target.closest("[data-delete-case]"); if (!a) return;
     e.preventDefault();
-    var id = a.getAttribute("data-delete-case"), go = function () { location.href = "/deletion"; };
+    var id = a.getAttribute("data-delete-case"), go = function () { location.href = "/deletion?ref=" + encodeURIComponent("SP-" + id.slice(0, 4).toUpperCase() + "-" + id.slice(4, 8).toUpperCase()); };
     try { var h = JSON.parse(localStorage.getItem("sp-history") || "[]").filter(function (x) { return x.id !== id; }); localStorage.setItem("sp-history", JSON.stringify(h)); } catch (err) { /* ignore */ }
     fetch("/api/v1/check/" + encodeURIComponent(id), { method: "DELETE" }).then(go, go);
   });
@@ -80,8 +80,23 @@
 
   // ---- deletion receipt -----------------------------------------------------
   if (path === "/deletion") {
-    D.addEventListener("click", function (e) {
-      if (e.target.closest("button.bd2")) toast("Nothing is stored on this demo server. Your files are not kept.");
+    var dq = new URLSearchParams(location.search), dref = dq.get("ref");
+    var when = new Date().toLocaleString("en-IN", { day: "numeric", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit", hour12: false, timeZone: "Asia/Kolkata" }) + " IST";
+    var dr = D.getElementById("dr-ref"), dw = D.getElementById("dr-when");
+    if (dr) dr.textContent = dref || "-";
+    if (dw) dw.textContent = when;
+    var all = D.getElementById("dr-all"), note = D.getElementById("dr-note");
+    if (all) all.addEventListener("click", function () {
+      var ids = [];
+      try { ids = JSON.parse(localStorage.getItem("sp-history") || "[]").filter(function (x) { return x && x.id && !x.sample; }).map(function (x) { return x.id; }); } catch (err) { ids = []; }
+      all.disabled = true;
+      Promise.all(ids.map(function (id) { return fetch("/api/v1/check/" + encodeURIComponent(id), { method: "DELETE" }).catch(function () { return null; }); })).then(function () {
+        try {
+          Object.keys(localStorage).filter(function (k) { return k.indexOf("sp-") === 0; }).forEach(function (k) { localStorage.removeItem(k); });
+          Object.keys(sessionStorage).filter(function (k) { return k.indexOf("sp-") === 0; }).forEach(function (k) { sessionStorage.removeItem(k); });
+        } catch (err) { /* ignore */ }
+        if (note) note.textContent = (ids.length || 0) + " saved result(s) deleted from the server, and this browser's history and settings cleared.";
+      });
     });
   }
 

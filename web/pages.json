@@ -381,7 +381,8 @@
     "Deletion receipt",
     null
    ]
-  ]
+  ],
+  "i18n": "server"
  },
  {
   "route": "tools",
