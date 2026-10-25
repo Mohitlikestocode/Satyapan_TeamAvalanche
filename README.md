@@ -206,38 +206,97 @@ These sets are small and written by the integrator's assistant, so they show tha
 
 ## 7. Install and run
 
-Python 3.12 (**Python 3.13 breaks RapidOCR**; with 3.13 install Tesseract instead).
+Anyone can clone this and run it. No Docker, no account, no paid service is needed to start. Python **3.12** is the safe choice (3.11 works; **3.13 breaks RapidOCR**, so with 3.13 install Tesseract instead).
+
+### Step 1: get the code and install
 
 ```bash
-pip install -e .
-cp .env.example .env         # optional settings; .env is git-ignored and is read at start
-python -m uvicorn satyapan.api.app:create_app --factory --host 0.0.0.0 --port 8000
+git clone https://github.com/Mohitlikestocode/Satyapan_TeamAvalanche.git
+cd Satyapan_TeamAvalanche
+python -m venv .venv
+source .venv/bin/activate            # Windows PowerShell: .venv\Scripts\Activate.ps1
+pip install -e ".[ocr,dev]"          # the app, OCR for screenshots, and the test tools
 ```
 
-**Models** (not in git, about 2 GB): put them in `var/models/`:
-
-```
-var/models/tamper.pt                   screenshot tamper model
-var/models/faster-whisper-small/       speech to text
-var/models/spectra-aasist3/            cloned-voice detector
-var/models/voice_calibration.json      thresholds
-var/models/scam_text/                  scam-message classifier
-pip install -r requirements/models.txt
-```
-
-**Optional services** (all via `.env`): `SARVAM_API_KEY` (spoken verdicts), `TELEGRAM_BOT_TOKEN` + `PUBLIC_URL` (run `python -m satyapan.bots.telegram_bot`), `INTERNAL_KEY` (marks team traffic), `RATE_LIMIT=1`.
-Behind a proxy, add `--proxy-headers --forwarded-allow-ips="*"` so printed links use the right address.
-OCR for screenshots: Tesseract with English and Hindi data, or RapidOCR.
-
-**Tests** (415 tests, about three minutes): `python -m pytest -q`. **Every feature, end to end, against a running site:** `python scripts/final_check.py http://127.0.0.1:8000` (42 checks).
-
-**Reproduce the numbers**
+### Step 2: start the site
 
 ```bash
-python -m satyapan.eval.report                      # message tables -> docs/results/text_*.json
-python scripts/eval_holdout.py data/kit/holdout_community.jsonl
-python tools/make_payment_screens.py out --n 200    # synthetic payment screens (held-out layouts)
+python -m uvicorn satyapan.api.app:create_app --factory --port 8000
 ```
+
+Open **http://127.0.0.1:8000**. This already works with **no models and no keys**: rules, QR, PDF checks, the community pages, lessons, the review queue and Call 1930 all run. Any check that needs a missing model is skipped, and the result page says which one ("not checked: ...").
+(`make serve` does the same and also listens on the network, so a phone on the same Wi-Fi can open `http://<your-laptop-ip>:8000`.)
+
+### Step 3 (optional): switch on the models
+
+```bash
+python scripts/setup_models.py              # shows which model files are present and what each one switches on
+python scripts/setup_models.py --install    # copies our trained files from models_release/ and downloads the public voice models
+pip install -r requirements/models.txt      # torch, faster-whisper, transformers (about 2 GB; add the CUDA index URL for a GPU)
+```
+
+| Model | Switches on | Where it comes from |
+|---|---|---|
+| `var/models/tamper.pt` | payment-screenshot tamper check | **ours**, in `models_release/` (3.7 MB) |
+| `var/models/voice_calibration.json` | cloned-voice thresholds | **ours**, in `models_release/` |
+| `faster-whisper-small/` | voice notes: speech to text | public, downloaded by `--install` (MIT, ~480 MB) |
+| `spectra-aasist3/` | voice notes: cloned-voice detector | public, downloaded by `--install` (Apache-2.0, ~1.3 GB) |
+| `scam_text/` | scam-message classifier (fine-tuned e5-small + our head) | **ours, rebuilt in two commands** (below); the encoder is 470 MB, over GitHub's file limit |
+
+**Rebuild the scam-message classifier** (about 10 to 20 minutes on a GPU, longer on CPU):
+
+```bash
+python training/text/fetch.py                                   # e5-small base model + UCI SMS Spam data (public)
+python training/text/train_classifier.py --mode full            # fine-tune on the team corpus (data/corpus/), held-out families
+python training/text/train_synth_head.py --install              # retrain the head with the synthetic corpus, set the strong/weak thresholds, switch the classifier on
+```
+
+**Retrain the screenshot tamper model** (optional, a few hours on a GPU; `models_release/tamper.pt` is the result of this):
+
+```bash
+python tools/make_payment_screens.py data/f1 --n 12000
+python training/tamper/train.py --data data/f1 --out var/models/tamper.pt --epochs 12
+```
+
+Screenshots are read with OCR: `pip install -e ".[ocr]"` (RapidOCR) is enough; Tesseract with English and Hindi data also works.
+
+### Step 4 (optional): keys and the Telegram bot
+
+```bash
+cp .env.example .env        # Windows: copy .env.example .env   (git-ignored; read at start)
+```
+
+| Setting in `.env` | What it adds | Without it |
+|---|---|---|
+| `SARVAM_API_KEY` | Explain in 11 languages, Listen (spoken verdict) | those two buttons say they are unavailable |
+| `GROQ_API_KEY` | the boxed-in AI rule check (33 regulator rules; can only add warnings) | rules and classifier only |
+| `TELEGRAM_BOT_TOKEN`, `PUBLIC_URL` | the Telegram bot: `python -m satyapan.bots.telegram_bot` (or `make bot`) | no bot; the website is unaffected |
+| `INTERNAL_KEY` | open `/internal?key=...` once per team device so your own testing is not counted as traction | team traffic is counted |
+
+Behind a proxy add `--proxy-headers --forwarded-allow-ips="*"` so printed links use the right address. Keys live only in `.env`; nothing secret is in the repository.
+The **Chrome extension** needs no install step beyond `chrome://extensions` → Developer mode → **Load unpacked** → the `extension/` folder.
+
+### Step 5: check that it works
+
+```bash
+python scripts/preflight.py                         # what this machine has, what is missing
+python -m pytest -q                                 # 415 tests, about three minutes
+python scripts/final_check.py http://127.0.0.1:8000 # every feature end to end against the running site (42 checks)
+```
+
+### Reproduce the numbers in section 4
+
+```bash
+python -m satyapan.eval.report                                    # message tables -> docs/results/text_*.json
+python scripts/eval_holdout.py data/kit/holdout_community.jsonl   # the held-out messages Tanish wrote
+python tools/make_payment_screens.py out --n 200                  # fresh synthetic payment screens (held-out layouts)
+python tools/make_qr_kit.py kit/qr                                # real, scannable QR codes with phone-style damage
+python scripts/loadtest.py http://127.0.0.1:8000                  # load test
+```
+
+Every number in this README is copied from a file in `docs/results/`, and `/results` on the running site shows the same files. **Not reproducible by a stranger:** the voice calibration set needs `python training/voice/fetch_data.py` (public datasets, a few GB), and the AI rule check needs your own `GROQ_API_KEY`, so its numbers can differ slightly between runs.
+
+**Troubleshooting:** `ModuleNotFoundError: satyapan` means `pip install -e .` was not run in the active venv. A port already in use: add `--port 8001`. First check after start is slow (about 30 seconds) while the models load; the Telegram bot warms them up on start.
 
 ---
 

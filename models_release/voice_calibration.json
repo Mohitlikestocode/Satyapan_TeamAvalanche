@@ -1,0 +1,16 @@
+{
+ "made": "2026-10-24T15:00:40+00:00",
+ "seed": 7,
+ "target_fpr": 0.05,
+ "strong_fpr": 0.01,
+ "rule": "flag when score < threshold; higher score = more like a real voice; thresholds from the dev split, all conditions pooled",
+ "primary": {
+  "threshold": 0.6090087890625,
+  "strong_threshold": -1.9509521484375,
+  "n_dev_real": 2096,
+  "dev_eer": 0.03633964753557629
+ },
+ "excluded": {
+  "second": "dev-split EER 67% (limit 30%): it would veto good detections, so the site uses the primary detector alone"
+ }
+}
