@@ -70,6 +70,11 @@
 </div>
 {% endif %}
 
+{% if page.sample %}
+<div role="note" style="background:#FFF4E5;border-bottom:2px solid #F0A640;padding:10px 0;font-size:15px;color:#7A4B00">
+  <div class="wrap"><b>{{ tr("EXAMPLE ONLY", "सिर्फ़ उदाहरण") }}</b> · {{ tr("This is a made-up sample to show how a page looks. It is not a check of anything you sent.", "यह पन्ना कैसा दिखता है, यह दिखाने के लिए बनाया गया नमूना है। यह आपके भेजे किसी चीज़ की जाँच नहीं है।") }} <a href="/check"><b>{{ tr("Make a real check", "असली जाँच करें") }}</b></a></div>
+</div>
+{% endif %}
 {% if page.kind == "screen" or page.kind == "wide" %}
 {% if page.route %}
 <div class="crumbs"><div class="wrap">

@@ -129,12 +129,40 @@ def _chunks(text: str, size: int = TRANSLATE_CHUNK) -> list[str]:
     return [c for c in out if c.strip()]
 
 
+
+_KEEP = None
+
+
+def _keep_re():
+    """UPI IDs, links and long digit strings must come back exactly as they went in, so they are swapped for tokens during translation."""
+    global _KEEP
+    if _KEEP is None:
+        import re
+        _KEEP = re.compile(r"(https?://\S+|upi://\S+|[\w.\-]{2,}@[\w.\-]{2,}|\b[\w\-]+(?:\.[\w\-]+)*\.(?:com|in|xyz|top|co|net|org|online|shop|info|site|club|live|icu|vip)\b\S*|\b\d{9,}\b)", re.IGNORECASE)
+    return _KEEP
+
+
+def _protect(text: str) -> tuple[str, list[str]]:
+    saved: list[str] = []
+
+    def sub(m):
+        saved.append(m.group(0).rstrip(".,;:)"))
+        tail = m.group(0)[len(saved[-1]):]
+        return f"[[Q{len(saved) - 1}]]{tail}"
+    return _keep_re().sub(sub, text), saved
+
+
+def _restore(text: str, saved: list[str]) -> str:
+    import re
+    return re.sub(r"[\[\(【［]{1,2}\s*(?:Q|क्यू)\s*(\d+)\s*[\]\)】］]{1,2}", lambda m: saved[int(m.group(1))] if int(m.group(1)) < len(saved) else m.group(0), text)
+
 def translate(text: str, target: str, source: str = "auto") -> tuple[str, str | None] | None:
     """Translate into `target` (one of LANGS). Returns (translated text, detected source language code) or None.
     The text is never stored here. Callers must have the user's consent when the text is theirs."""
     if not configured() or target not in LANG_CODES or not text.strip():
         return None
-    pieces = _chunks(text[:MAX_TRANSLATE_CHARS])
+    protected, saved = _protect(text[:MAX_TRANSLATE_CHARS])
+    pieces = _chunks(protected)
     day = time.strftime("%Y-%m-%d")
     out: list[str] = []
     detected: str | None = None
@@ -154,7 +182,7 @@ def translate(text: str, target: str, source: str = "auto") -> tuple[str, str | 
                 detected = j.get("source_language_code") or detected
     except (httpx.HTTPError, ValueError):
         return None
-    joined = "\n".join(x for x in out if x)
+    joined = _restore("\n".join(x for x in out if x), saved)
     return (joined, detected) if joined else None
 
 

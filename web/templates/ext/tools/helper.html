@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="case" id="helper">
+  <h1 class="case-h1">{{ tr("Helper mode", "सहायक मोड") }}</h1>
+  <p>{{ tr("For a shopkeeper, bank staff member or volunteer helping people one after another. Check one item for one person, show the answer in their language, then wipe it before the next person.", "दुकानदार, बैंक कर्मचारी या स्वयंसेवक के लिए, जो एक के बाद एक लोगों की मदद करते हैं। एक व्यक्ति की एक चीज़ जाँचें, उनकी भाषा में जवाब दिखाएँ, फिर अगले व्यक्ति से पहले मिटा दें।") }}</p>
+  <p class="sm"><b id="hp-person">{{ tr("Person", "व्यक्ति") }} 1</b> · <span id="hp-done">0</span> {{ tr("helped this session", "की मदद इस सत्र में") }}</p>
+
+  <form id="hp-form" class="ops-form" novalidate>
+    <div><label for="hp-lang">{{ tr("Their language", "उनकी भाषा") }}</label><select id="hp-lang"></select></div>
+    <div><label for="hp-kind">{{ tr("What are they showing you?", "वे आपको क्या दिखा रहे हैं?") }}</label>
+      <select id="hp-kind">
+        <option value="message">{{ tr("A message or phone number", "संदेश या फ़ोन नंबर") }}</option>
+        <option value="link">{{ tr("A link", "लिंक") }}</option>
+        <option value="screenshot">{{ tr("A screenshot or photo", "स्क्रीनशॉट या फ़ोटो") }}</option>
+        <option value="qr">{{ tr("A QR code picture", "QR कोड की तस्वीर") }}</option>
+      </select></div>
+    <div id="hp-text-row"><label for="hp-text">{{ tr("Paste it here", "इसे यहाँ चिपकाएँ") }}</label><textarea id="hp-text" rows="4" maxlength="4000" class="ta-in"></textarea></div>
+    <div id="hp-file-row" hidden><label for="hp-file">{{ tr("Choose the picture", "तस्वीर चुनें") }}</label><input id="hp-file" type="file" accept="image/*"></div>
+    <button class="btn bn" id="hp-go" type="submit" style="width:auto;padding:0 28px;justify-self:start">{{ tr("Check", "जाँचें") }}</button>
+    <p id="hp-err" class="ops-err" role="alert"></p>
+  </form>
+
+  <section id="hp-out" hidden aria-live="polite"></section>
+  <p class="xs" style="color:var(--muted)">{{ tr("Nothing is saved between people. \"End and wipe\" deletes the result from the server and clears this screen. Satyapan only advises: it never blocks or pays anything.", "लोगों के बीच कुछ भी सहेजा नहीं जाता। \"खत्म करें और मिटाएँ\" सर्वर से नतीजा मिटा देता है और यह स्क्रीन साफ़ कर देता है। सत्यापन सिर्फ़ सलाह देता है: यह कुछ भी रोकता या चुकाता नहीं।") }}</p>
+</div>
+{% endblock %}

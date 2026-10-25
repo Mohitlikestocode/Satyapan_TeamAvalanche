@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="case">
+  <h1 class="case-h1">{{ tr("Is this really them?", "क्या यह सच में वही हैं?") }}</h1>
+  <p>{{ tr("Got a call, message, link or number that says it is from Amazon, your bank, a courier or a government office? Paste it here and say who it claims to be. We run our scam checks and compare its links and numbers with that company's real official websites.", "कोई कॉल, संदेश, लिंक या नंबर जो खुद को Amazon, आपका बैंक, कूरियर या सरकारी दफ़्तर बताता है? उसे यहाँ चिपकाएँ और बताएँ कि वह कौन होने का दावा करता है। हम स्कैम जाँच चलाते हैं और उसके लिंक और नंबर को उस कंपनी की असली आधिकारिक वेबसाइटों से मिलाते हैं।") }}</p>
+  {% if error == "empty" %}<p class="ops-err" role="alert">{{ tr("Please paste the message, link or number first.", "कृपया पहले संदेश, लिंक या नंबर चिपकाएँ।") }}</p>{% endif %}
+  <form method="post" action="/tools" class="ops-form">
+    <div><label for="company">{{ tr("Who does it say it is from?", "वह किसकी ओर से होने का दावा करता है?") }}</label>
+      <select id="company" name="company">{% for key, en, hi in options %}<option value="{{ key }}">{{ tr(en, hi) }}</option>{% endfor %}</select></div>
+    <div><label for="text">{{ tr("Paste the message, link or number", "संदेश, लिंक या नंबर चिपकाएँ") }}</label>
+      <textarea id="text" name="text" rows="6" maxlength="4000" required class="ta-in"></textarea></div>
+    <button class="btn bn" type="submit" style="width:auto;padding:0 28px;justify-self:start">{{ tr("Check", "जाँचें") }}</button>
+  </form>
+  <p class="xs" style="color:var(--muted)">{{ tr("What this really does: for Amazon, the main banks, wallets, telecom, couriers and government services we have a built-in list of their official website addresses. A link to anywhere else is flagged. For electricity boards and other companies we have no such list, so only the general checks run. A phone number can never be confirmed as official: we can only say that personal mobile numbers are not how these companies give support.", "यह असल में क्या करता है: Amazon, मुख्य बैंकों, वॉलेट, टेलीकॉम, कूरियर और सरकारी सेवाओं के लिए हमारे पास उनकी आधिकारिक वेबसाइटों के पतों की एक बनी-बनाई सूची है। कहीं और जाने वाला लिंक चिह्नित होता है। बिजली बोर्ड और दूसरी कंपनियों की ऐसी सूची हमारे पास नहीं है, इसलिए सिर्फ़ सामान्य जाँच चलती है। किसी फ़ोन नंबर को आधिकारिक कभी नहीं माना जा सकता: हम सिर्फ़ इतना कह सकते हैं कि ये कंपनियाँ निजी मोबाइल नंबर पर सहायता नहीं देतीं।") }}</p>
+</div>
+{% endblock %}

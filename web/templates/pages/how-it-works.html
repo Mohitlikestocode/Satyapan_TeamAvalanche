@@ -57,9 +57,9 @@ td{padding:12px 16px;border-bottom:1px solid #EAECF0;vertical-align:top;line-hei
 <article class="card">
 <div style="display: flex; gap: 12px; align-items: center"><span class="num">2</span><h2 class="t3">We check</h2></div>
 <div aria-hidden="true" class="dg">
-<div class="bx">Editing and AI-generation signs</div>
-<div class="bx">Who really gets the money</div>
-<div class="bx">Whether the claims add up</div>
+<div class="bx">Signs a screenshot or PDF was edited</div>
+<div class="bx">Who is asking for the money</div>
+<div class="bx">What the words and the voice say</div>
 </div>
 <p class="sm">Each check is ticked only when it really runs. Your file is deleted after.</p>
 </article>
@@ -75,46 +75,39 @@ td{padding:12px 16px;border-bottom:1px solid #EAECF0;vertical-align:top;line-hei
 </section>
 <section style="display: flex; flex-direction: column; gap: 16px">
 <h2 class="h2">What each check can and cannot do</h2>
+<p class="sm" style="max-width: 760px">Every row below is something that really runs in this site today. Where something is a limit, it says so.</p>
 <div class="tbox"><table>
-<thead><tr><th style="width: 20%">Check</th><th style="width: 26%">Uses</th><th style="width: 27%">Can tell you</th><th>Cannot tell you</th></tr></thead>
+<thead><tr><th style="width: 18%">Check</th><th style="width: 30%">Uses</th><th style="width: 26%">Can tell you</th><th>Cannot tell you</th></tr></thead>
 <tbody>
-<tr><td><b>Reading text</b></td><td>Tesseract OCR</td><td>Amounts, names, UPI IDs, numbers in the image</td><td>Handwriting or very blurry text reliably</td></tr>
-<tr><td><b>QR decoding</b></td><td>Open-source QR decoder</td><td>Exactly where a QR sends money</td><td>Who owns that account</td></tr>
-<tr><td><b>Editing signs</b></td><td>Compression and edge analysis, file metadata</td><td>Areas that look different from the rest</td><td>Proof of editing. Chat apps also change images.</td></tr>
-<tr><td><b>AI-generated image</b></td><td>CommunityForensics image detector</td><td>Signs an image may be AI-made</td><td>Certainty, especially for screenshots</td></tr>
-<tr><td><b>PDF check</b></td><td>PDF history, font and text-layer analysis</td><td>Edits after creation, mixed fonts</td><td>Whether the edit was honest</td></tr>
-<tr><td><b>Bank code</b></td><td>Razorpay open IFSC data</td><td>Which bank and branch an IFSC belongs to</td><td>Who owns the account</td></tr>
-<tr><td><b>Adviser register</b></td><td>SEBI public lists (dated snapshot)</td><td>Whether a name appears as registered</td><td>Spelling variants with certainty</td></tr>
-<tr><td><b>Voice and language</b></td><td>faster-whisper speech to text (on our server); Sarvam text to speech, only for reading the answer aloud</td><td>Text from voice notes, Hindi read-aloud</td><td>Whether a voice is cloned</td></tr>
+<tr><td><b>Reading text</b></td><td>RapidOCR, or Tesseract when installed (English and Hindi)</td><td>Amounts, names, UPI IDs and words in a picture</td><td>Handwriting or very blurry text reliably</td></tr>
+<tr><td><b>QR decoding</b></td><td>zxing-cpp, with clean-up of noisy phone photos</td><td>Exactly what a QR contains: UPI ID, amount, note or link</td><td>Who owns that account</td></tr>
+<tr><td><b>Editing signs in screenshots</b></td><td>A small U-Net we trained on generated payment screens, scored at full resolution</td><td>Areas whose pixels look different from the rest; the area is circled</td><td>Proof of editing. On generated screens it catches about 4 in 10 edits. Not evaluated on real phone screenshots.</td></tr>
+<tr><td><b>PDF check</b></td><td>PDF metadata (known online editing tools), text layer, bank-code consistency</td><td>Signs a PDF was re-saved or edited, an IFSC naming a different bank than the bill</td><td>Whether an edit was honest</td></tr>
+<tr><td><b>Payee, bank code and links</b></td><td>Rules on UPI ID format and handle, IFSC format and its 4-letter bank prefix (a built-in table of 18 large banks), look-alike test of link names against well-known brands</td><td>Look-alike links, personal accounts asked for investments, collect-request traps, malformed payment references</td><td>Who owns an account. No public list of valid UPI handles exists, so we never confirm a payee.</td></tr>
+<tr><td><b>Words</b></td><td>English, Hindi and Hinglish rules, plus a scam-message classifier (multilingual-e5-small, fine-tuned by us)</td><td>Advance fees, arrest threats, remote-access apps, PIN grabs, urgency, fake prizes</td><td>Scams written like ordinary messages; languages other than English, Hindi and Hinglish</td></tr>
+<tr><td><b>Voice notes</b></td><td>faster-whisper speech to text on our own server; Spectra-AASIST3 cloned-voice detector</td><td>What was said, and whether the voice sounds synthetic</td><td>Real voices over phone lines are less reliable</td></tr>
+<tr><td><b>Explain in my language</b></td><td>Sarvam translation and text to speech, only when you press Explain or Listen</td><td>What a message says, in 11 Indian languages, before you look at our verdict</td><td>A machine translation can make mistakes</td></tr>
 </tbody>
 </table></div>
 </section>
 <section style="display: flex; flex-direction: column; gap: 16px">
-<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 12px"><h2 class="h2">Test results</h2><span class="pend"><svg aria-hidden="true" class="i" viewBox="0 0 24 24" style="width: 15px; height: 15px"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg>Evaluation pending</span></div>
-<p class="sm" style="max-width: 760px">We will publish measured numbers here with the test set and code. Until a row is measured, it shows "–". We do not show estimates.</p>
-<div class="tbox"><table>
-<thead><tr><th style="width: 30%">Measure</th><th>Payment screenshots</th><th>Invoices (PDF)</th><th>QR codes</th><th>Messages and links</th></tr></thead>
-<tbody>
-<tr><td><b>Detection rate</b><br/><span class="xs">Scam items correctly flagged</span></td><td>– <span class="pend">pending</span></td><td>– <span class="pend">pending</span></td><td>– <span class="pend">pending</span></td><td>– <span class="pend">pending</span></td></tr>
-<tr><td><b>False alarms on genuine items</b><br/><span class="xs">Genuine items wrongly flagged</span></td><td>– <span class="pend">pending</span></td><td>– <span class="pend">pending</span></td><td>– <span class="pend">pending</span></td><td>– <span class="pend">pending</span></td></tr>
-<tr><td><b>"Can't tell" rate</b></td><td>– <span class="pend">pending</span></td><td>– <span class="pend">pending</span></td><td>– <span class="pend">pending</span></td><td>– <span class="pend">pending</span></td></tr>
-<tr><td><b>Test set size</b></td><td>–</td><td>–</td><td>–</td><td>–</td></tr>
-</tbody>
-</table></div>
+<h2 class="h2">Test results</h2>
+<p class="sm" style="max-width: 760px">Every number is measured and published on the <a href="/results">Results page</a>, with the test set, the interval, the false alarms and the named failures. Anything we did not measure says "not evaluated". We do not show estimates.</p>
+<p><a class="btn bp" href="/results" style="width: auto; padding: 0 22px">See the measured results</a> <a class="btn bs" href="/attack" style="width: auto; padding: 0 22px">Attack it yourself</a></p>
 </section>
 <section class="grid3">
 <article class="card">
 <h2 class="t3">Known failure cases</h2>
-<p class="sm" style="color: #0B1F3A">Very small or re-forwarded images. Screenshots from new payment apps we haven't seen. Real businesses that genuinely changed banks. Scam text in languages other than Hindi and English.</p>
+<p class="sm" style="color: #0B1F3A">Scams written like ordinary messages. Edited screenshots that leave few pixel traces. Real phone screenshots: not evaluated. Cloned voices over phone lines. Real businesses that genuinely changed banks.</p>
 </article>
 <article class="card">
 <h2 class="t3">Models and data</h2>
-<div><span class="chip">CommunityForensics</span><span class="chip">Tesseract OCR</span><span class="chip">QR decoder</span><span class="chip">PDF and metadata analysis</span><span class="chip">Razorpay open IFSC data</span><span class="chip">SEBI public lists</span><span class="chip">Sarvam text to speech</span><span class="chip">faster-whisper</span></div>
+<div><span class="chip">RapidOCR / Tesseract</span><span class="chip">zxing-cpp QR decoder</span><span class="chip">our tamper U-Net</span><span class="chip">faster-whisper</span><span class="chip">Spectra-AASIST3</span><span class="chip">multilingual-e5-small (fine-tuned)</span><span class="chip">Sarvam translate and speech</span></div>
 </article>
 <article class="card">
 <h2 class="t3">How to reproduce</h2>
-<p class="sm" style="color: #0B1F3A">Test set and evaluation script: <span class="mono">[REPOSITORY LINK]</span>. Synthetic samples only. No real people's data.</p>
-<p class="xs">Last updated: [DATE]</p>
+<p class="sm" style="color: #0B1F3A">Code, test files and the evaluation commands: <a class="mono" href="https://github.com/Mohitlikestocode/Satyapan_TeamAvalanche">github.com/Mohitlikestocode/Satyapan_TeamAvalanche</a>. Generated and teammate-written samples only. No real people's data.</p>
+<p class="xs">Last updated: 25 Oct 2026</p>
 </article>
 </section>
 </main></div>

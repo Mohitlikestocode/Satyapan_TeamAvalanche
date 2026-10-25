@@ -89,7 +89,7 @@ def get_case(case_id: str) -> dict:
     v = c.verdicts["en"]
     return {"id": c.case_id, "tier": c.tier.value, "headline": v.headline, "reasons": v.reasons_text,
             "reason_codes": v.reason_codes, "action": v.action_text, "outcome": c.outcome or None,
-            "share_token": c.share_token}
+            "share_token": c.share_token, "payees": c.payees, "links": c.links}
 
 
 @router.delete("/check/{case_id}", status_code=204)

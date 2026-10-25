@@ -1,0 +1,16 @@
+codes:
+  LINK_NOT_OFFICIAL_FOR_BRAND:
+    layer: L3
+    priority: 7
+    en: "The message says it is from {company}, but its link goes to {domain}, which is not one of that company's official websites."
+    hi: "संदेश कहता है कि वह {company} की ओर से है, लेकिन उसका लिंक {domain} पर जाता है, जो उस कंपनी की आधिकारिक वेबसाइटों में नहीं है।"
+  LINK_HIDES_DESTINATION:
+    layer: L3
+    priority: 31
+    en: "The link is shortened, so you cannot see where it really goes. A real message from {company} would normally show its own address."
+    hi: "लिंक छोटा करके दिया गया है, इसलिए आप देख नहीं सकते कि वह असल में कहाँ जाता है। {company} का असली संदेश आम तौर पर अपना ही पता दिखाता है।"
+  SUPPORT_NUMBER_PERSONAL:
+    layer: L3
+    priority: 32
+    en: "It asks you to call a personal mobile number. Big companies like {company} do not give customer support on personal mobile numbers: use the number in their official app or website."
+    hi: "यह आपसे एक निजी मोबाइल नंबर पर कॉल करने को कहता है। {company} जैसी बड़ी कंपनियाँ निजी मोबाइल नंबर पर ग्राहक सहायता नहीं देतीं: उनके आधिकारिक ऐप या वेबसाइट का नंबर इस्तेमाल करें।"

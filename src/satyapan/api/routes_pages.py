@@ -5,7 +5,7 @@ import json
 from urllib.parse import quote
 
 from fastapi import APIRouter, Request
-from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
 
 from ..evidence.pack import build_pack, public_key_id, report_id, sign_pack
 from ..plugins import REGISTRY
@@ -62,7 +62,7 @@ def _with_case(route: str, title: str, crumbs, template: str):
 
 def sample(route: str, request: Request):
     meta = next(m for m in PAGES if m["route"] == route)
-    return render(request, meta["template"], meta)
+    return render(request, meta["template"], {**meta, "sample": True})
 
 
 router.add_api_route("/report", _with_case("report", "Evidence report", [["If you paid", "/already-paid"], ["Evidence report", None]], "report.html"),
@@ -83,14 +83,32 @@ def guardian_view(request: Request, token: str):
 PAGES = json.loads((WEB / "pages.json").read_text(encoding="utf-8"))
 
 
+# Design pages that show made-up example content. They get a visible "EXAMPLE ONLY" band so nobody mistakes them for a real result.
+SAMPLE_ROUTES = {"result", "result/qr", "result/invoice", "result/screenshot", "result/cant-tell", "result/no-flags", "explain", "listen",
+                 "helper/verdict", "check/progress", "states", "tools/result", "guardian/share", "guardian/view"}
+# Old design routes whose real versions live elsewhere
+REDIRECTS = {"check/voice": "/models/voice", "report/print": "/report"}
+
+
 def _static(meta: dict):
     def view(request: Request) -> HTMLResponse:
-        return render(request, meta["template"], meta)
+        return render(request, meta["template"], {**meta, "sample": meta["route"] in SAMPLE_ROUTES})
     return view
 
 
+def _redirect(target: str):
+    def view(request: Request) -> RedirectResponse:
+        q = request.url.query
+        return RedirectResponse(target + (("?" + q) if q else ""), status_code=302)
+    return view
+
+
+for _r, _t in REDIRECTS.items():
+    router.add_api_route("/" + _r, _redirect(_t), methods=["GET"], include_in_schema=False, name="redirect:" + _r)
+
+
 for _meta in PAGES:
-    if _meta["route"] in {"report", "report/complaint", "guardian", "wrong/status"} or _meta["route"].startswith("console"):
+    if _meta["route"] in {"report", "report/complaint", "guardian", "wrong/status"} or _meta["route"] in REDIRECTS or _meta["route"].startswith("console"):
         continue  # served above, with a fallback to the design sample where it makes sense
     router.add_api_route("/" + _meta["route"], _static(_meta), methods=["GET"], response_class=HTMLResponse,
                          include_in_schema=False, name="page:" + (_meta["route"] or "home"))

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="case" id="shop">
+  <h1 class="case-h1">{{ tr("Shopkeeper check", "दुकानदार जाँच") }}</h1>
+  <p>{{ tr("A customer shows you a \"payment successful\" screenshot. Upload it here before you hand over the goods. We read who the screenshot says was paid and compare it with your own UPI ID, and we look for signs the picture was edited.", "ग्राहक आपको \"भुगतान सफल\" का स्क्रीनशॉट दिखाता है। सामान देने से पहले उसे यहाँ डालें। हम पढ़ते हैं कि स्क्रीनशॉट के हिसाब से पैसे किसे गए, उसे आपकी अपनी UPI ID से मिलाते हैं, और देखते हैं कि तस्वीर में बदलाव के संकेत हैं या नहीं।") }}</p>
+
+  <form id="shop-form" class="ops-form" novalidate>
+    <div><label for="shop-upi">{{ tr("Your shop's UPI ID", "आपकी दुकान की UPI ID") }}</label>
+      <input id="shop-upi" type="text" autocomplete="off" placeholder="yourshop@okaxis" maxlength="80">
+      <p class="ops-hint">{{ tr("Saved only on this phone, in this browser. We never receive it.", "सिर्फ़ इसी फ़ोन में, इसी ब्राउज़र में सहेजी जाती है। हमें कभी नहीं मिलती।") }}</p></div>
+    <div><label for="shop-amount">{{ tr("Amount the customer should have paid (optional)", "ग्राहक को जितना देना था (वैकल्पिक)") }}</label>
+      <input id="shop-amount" type="text" inputmode="decimal" maxlength="12" placeholder="₹"></div>
+    <div><label for="shop-file">{{ tr("The customer's payment screenshot", "ग्राहक का भुगतान स्क्रीनशॉट") }}</label>
+      <input id="shop-file" type="file" accept="image/*"></div>
+    <button class="btn bn" id="shop-go" type="submit" style="width:auto;padding:0 28px;justify-self:start">{{ tr("Check this screenshot", "यह स्क्रीनशॉट जाँचें") }}</button>
+    <p id="shop-err" class="ops-err" role="alert"></p>
+  </form>
+
+  <section id="shop-out" hidden aria-live="polite"></section>
+
+  <p class="xs" style="color:var(--muted)">{{ tr("Always check your own bank app, soundbox or SMS. A screenshot is not proof of payment, and \"no signs of editing\" does not mean the money arrived. The picture is read in memory and thrown away.", "हमेशा अपना बैंक ऐप, साउंडबॉक्स या SMS देखें। स्क्रीनशॉट भुगतान का सबूत नहीं है, और \"बदलाव का कोई संकेत नहीं\" का मतलब यह नहीं कि पैसे आ गए। तस्वीर सिर्फ़ मेमोरी में पढ़कर फेंक दी जाती है।") }}</p>
+</div>
+{% endblock %}

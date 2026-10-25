@@ -75,3 +75,11 @@ def test_hindi_and_english_verdicts_need_no_translation_service(monkeypatch):
     assert j["headline"] and j["machine_translated"] is False
     assert c.post("/api/v1/understand/verdict", json={"case_id": r["id"], "lang": "ta"}).status_code == 503
     assert c.get("/api/v1/understand/languages").json()["available"] is False
+
+
+def test_upi_ids_links_and_long_numbers_survive_translation():
+    text = "Pay to kbc.claim@oksbi or open http://sbi-yono-kyc.in/update, ref 123456789012."
+    protected, saved = sarvam._protect(text)
+    assert "kbc.claim" not in protected and len(saved) == 3
+    assert sarvam._restore(protected, saved) == text
+    assert sarvam._restore("x [Q0] y ((Q1)) z [[क्यू2]]", ["A", "B", "C"]) == "x A y B z C"
