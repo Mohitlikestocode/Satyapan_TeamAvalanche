@@ -35,3 +35,5 @@ def setup(registry) -> None:
     registry.add_global_js("/static/js/community_share.js")
     registry.add_global_js("/static/js/community_back.js")      # a Back button in the breadcrumb bar of every inner page
     registry.add_global_css("/static/css/community_back.css")
+    registry.add_global_js("/static/js/community_helpline.js")  # a Call 1930 button under every risky verdict
+    registry.add_global_css("/static/css/community_helpline.css")
