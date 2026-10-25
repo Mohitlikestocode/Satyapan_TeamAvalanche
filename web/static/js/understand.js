@@ -20,7 +20,8 @@
       said: "What it says, in", verdict: "Our check, in", listen: "Listen",
       caveat: "This is a plain translation. It is not a verdict. Machine translation can make mistakes, so use the original words if something looks odd.",
       suggest: "This is only a suggestion: the message may or may not be a scam. Check with someone you trust before you pay.",
-      orig: "What we read", chars: "characters"
+      orig: "What we read", chars: "characters",
+      fix: "Heard something wrong? Edit the words and check again", heard: "What we heard (speech to text, on our own server)"
     },
     hi: {
       h: "पहले समझें: इसमें क्या लिखा है?",
@@ -33,7 +34,8 @@
       said: "इसमें लिखा है, इस भाषा में:", verdict: "हमारी जाँच, इस भाषा में:", listen: "सुनें",
       caveat: "यह सीधा अनुवाद है, कोई नतीजा नहीं। मशीनी अनुवाद में गलतियाँ हो सकती हैं, इसलिए कुछ अजीब लगे तो असली शब्द देखें।",
       suggest: "यह सिर्फ़ एक सुझाव है: यह संदेश धोखाधड़ी हो भी सकता है और नहीं भी। पैसे भेजने से पहले किसी भरोसेमंद से पूछें।",
-      orig: "हमने क्या पढ़ा", chars: "अक्षर"
+      orig: "हमने क्या पढ़ा", chars: "अक्षर",
+      fix: "कुछ गलत सुना गया? शब्द ठीक करें और फिर जाँचें", heard: "हमने क्या सुना (स्पीच से टेक्स्ट, हमारे अपने सर्वर पर)"
     }
   };
   function lang() { return D.documentElement.getAttribute("data-lang") === "hi" ? "hi" : "en"; }
@@ -68,7 +70,8 @@
       '<h2 id="und-h">' + esc(t("h")) + "</h2>" +
       '<p class="und-sub">' + esc(t("sub")) + "</p>" +
       (text
-        ? '<details class="und-orig" open><summary>' + esc(t("orig")) + " · " + text.length + " " + esc(t("chars")) + '</summary><blockquote id="und-text"></blockquote></details>'
+        ? '<details class="und-orig" open><summary>' + esc(stored && stored.kind === "voice" ? t("heard") : t("orig")) + " · " + text.length + " " + esc(t("chars")) + '</summary><blockquote id="und-text"></blockquote>' +
+          (stored && stored.kind === "voice" ? '<p class="und-sub" style="padding:0 12px 10px"><a href="/check?lang=' + (lang() === "hi" ? "hi" : "en") + '#t=' + encodeURIComponent(text.slice(0, 3500)) + '">' + esc(t("fix")) + "</a></p>" : "") + "</details>"
         : '<p class="und-none">' + esc(t("none")) + "</p>") +
       '<div class="und-row"><label for="und-lang">' + esc(t("lang")) + '</label><select id="und-lang">' + opts + '</select> <button type="button" class="btn bn" id="und-go">' + esc(t("go")) + "</button></div>" +
       '<p class="und-consent">' + esc(text ? t("consent") : t("consentNoText")) + "</p>" +
