@@ -41,6 +41,8 @@ How a report flows: the raw text lives in memory for one request. `analyse_text`
 | **Community voice badge** | First published comment. |
 | **Upgrade safety** | New columns are added to an existing database on first use (`store._migrate`), so a running site does not need to be reset. |
 
+**Look.** The community pages use a feed layout: a hero with live counts, a "did something suspicious reach you today?" bar with Report, Ask and Check buttons, sort tabs, filter chips (plain links), cards with an avatar, the poster's public handle or "Someone", time ago, the verdict, a quick "I saw this too" and a comment link, a chat-style discussion, and side widgets (trending, recent discussion, how we keep it safe). Icons are inline SVG. The community area uses rounder corners and one gradient in its hero, a deliberate step away from the rest of the site's square look. No emoji, no third-party images or fonts.
+
 New tables: `community_comments`, `community_comment_votes`, `community_comment_abuse`. New columns on `community_posts`: `platform`, `intent`, `case_ref`. New API: `GET /api/v1/community/posts/<id>/comments`; `platform` and `intent` filters and `sort=talk` on `/api/v1/community/posts`; `comments` in `/api/v1/community/stats`.
 
 ### B2: Learn, Scam Drill and gamification

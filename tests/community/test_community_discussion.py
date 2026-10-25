@@ -160,10 +160,10 @@ def test_comments_go_when_the_post_is_deleted_and_commenters_use_their_public_na
     b.post("/me/handle", data={"handle": "Meena_7"})
     comment(b, body="my honest opinion")
     assert listed(a)[0]["name"] == "Meena_7"
-    assert "<b>Meena_7</b>" in a.get("/community/post/1").text and "<b>Someone</b>" not in a.get("/community/post/1").text
+    assert 'cm-comment-top"><b>Meena_7</b>' in a.get("/community/post/1").text and 'cm-comment-top"><b>Someone</b>' not in a.get("/community/post/1").text
     c2 = client()
     comment(c2, body="another from a nameless visitor")
-    assert "<b>Someone</b>" in a.get("/community/post/1").text
+    assert 'cm-comment-top"><b>Someone</b>' in a.get("/community/post/1").text
     a.post("/community/post/1/delete")
     with store.conn() as conn:
         assert conn.execute("SELECT COUNT(*) FROM community_comments").fetchone()[0] == 0
@@ -301,3 +301,55 @@ def test_discussion_pages_in_hindi():
     assert "पूछें: क्या यह असली है?" in a.get("/community/report").text
     assert "कहाँ देखा" in a.get("/community").text
     assert re.search(r"<p>[^<]*</p>", page)
+
+
+# ---- the feed look: who posted, quick actions, chips, time ----------------------------------------------
+def test_feed_cards_show_who_posted_a_quick_vote_for_others_and_comment_links():
+    a, b = client(), client()
+    a.post("/me/handle", data={"handle": "Rekha_52"})
+    report(a, platform="whatsapp")
+    mine = a.get("/community").text
+    assert "Rekha_52" in mine and 'class="cm-av cm-tone-' in mine and ">R</span>" in mine
+    assert 'action="/community/post/1/seen"' not in mine                      # no quick vote on your own post
+    other = b.get("/community").text
+    assert 'action="/community/post/1/seen"' in other and "I saw this too" in other and "Comment" in other
+    assert "cm-av-anon" in other                                              # the visitor has no public name: a plain avatar in the compose bar
+    b.post("/community/post/1/seen")
+    assert 'action="/community/post/1/seen"' not in b.get("/community").text   # counted once: the quick vote goes away
+    api = b.get("/api/v1/community/posts").json()["posts"][0]
+    assert "author" not in api and "_dev" not in api and "dev" not in api      # nothing that identifies a device is ever sent
+
+
+def test_filter_chips_are_plain_links_that_keep_the_other_filters():
+    a = client()
+    report(a, platform="sms")
+    report(a, BENIGN, intent="ask")
+    page = a.get("/community?intent=ask&sort=talk").text
+    assert 'href="/community?intent=ask&amp;sort=week"' in page and 'href="/community?sort=talk"' in page       # All posts keeps the sort
+    assert 'class="cm-chip on" href="/community?intent=ask&amp;sort=talk"' in page or 'cm-chip on' in page
+    assert a.get("/community?kind=message").status_code == 200
+    one = a.get("/community?intent=ask").text
+    assert "electricity bill" in one and "Clear all filters" in one
+    assert "Clear all filters" not in a.get("/community").text
+
+
+def test_time_ago_in_both_languages():
+    a, b = client("en"), client("hi")
+    report(a)
+    assert "just now" in a.get("/community").text
+    assert "अभी" in b.get("/community").text
+
+
+def test_hero_counts_and_empty_compose_bar_are_there_with_no_posts():
+    page = client().get("/community").text
+    assert "Did something suspicious reach you today?" in page and "Report a scam you saw" in page and "Ask: is this real?" in page and "Check it first" in page
+    assert page.count('class="cm-pulse"') == 1 and "No reports yet" in page
+    hi = client("hi").get("/community").text
+    assert "क्या आज आपके पास कुछ संदिग्ध आया?" in hi and "अभी कोई रिपोर्ट नहीं" in hi
+
+
+def test_report_form_offers_two_clear_choices_in_both_languages():
+    en = client("en").get("/community/report?intent=ask").text
+    assert en.count('name="intent"') == 2 and 'value="ask" checked' in en and "Warn others about a scam" in en
+    hi = client("hi").get("/community/report").text
+    assert 'value="warn" checked' in hi and "दूसरों को ठगी से सावधान करें" in hi and "पूछें: क्या यह असली है?" in hi

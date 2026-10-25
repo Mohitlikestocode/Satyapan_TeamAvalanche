@@ -1,10 +1,12 @@
 """Scam Watch: the community feed, the report form, post pages, "I saw this too", abuse reports and moderator tools."""
 from __future__ import annotations
 
+from urllib.parse import urlencode
+
 from fastapi import APIRouter, Form, HTTPException, Request
 from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
 
-from ...community import posts, store
+from ...community import posts, progress, store
 from ...community.sanitise import MAX_INPUT, sanitise
 from ...store import db
 from ..routes_review import fmt_ts, who
@@ -28,10 +30,18 @@ def feed(request: Request, kind: str = "", plang: str = "", sort: str = "new", p
          intent: str = ""):
     lang = _lang(request)
     sort = sort if sort in ("week", "talk") else "new"
-    data = posts.feed(lang, kind, plang, sort, _num(page), platform=platform, intent=intent)
+    _, dev, _ = cc.device(request)
+    data = posts.feed(lang, kind, plang, sort, _num(page), platform=platform, intent=intent, dev=dev)
+    current = {"kind": kind, "plang": plang, "platform": platform, "intent": intent, "sort": sort}
+
+    def link(**kw) -> str:
+        """The feed address with some filters changed: used by the filter chips and tabs, so every one is a plain link."""
+        q = {**current, **kw}
+        q = {k: v for k, v in q.items() if v and not (k == "sort" and v == "new")}
+        return "/community" + ("?" + urlencode(q) if q else "")
     return render(request, "ext/community/feed.html", cc.page("community", "Scam Watch", "community", [["Community", None]]), data=data,
                   trending=posts.trending(lang), stats=posts.stats(), kind=kind, plang=plang, sort=sort, thanks=thanks[:10], platform=platform,
-                  intent=intent, recent=posts.recent_comments(5), filtered=bool(kind or plang or platform or intent or sort != "new"))
+                  intent=intent, recent=posts.recent_comments(5), link=link, me=progress.summary(dev), filtered=bool(kind or plang or platform or intent or sort != "new"))
 
 
 def _case_info(case_id: str, lang: str) -> dict | None:

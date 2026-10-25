@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "ext/community/_cm.html" import ic with context %}
 {% block content %}
 <div class="wrap cm-wrap cm-narrow">
   <h1>{{ tr("Report a scam you saw", "देखी हुई धोखाधड़ी बताएँ") }}</h1>
@@ -11,11 +12,16 @@
 
   <form class="cm-form" method="post" action="/community/report" novalidate>
     {% if case %}<input type="hidden" name="case_id" value="{{ case.id }}">{% endif %}
-    <fieldset>
+    <fieldset class="cm-intent-box">
       <legend>{{ tr("What do you want to do?", "आप क्या करना चाहते हैं?") }}</legend>
-      <div class="cm-choices">{% for key, en, hi in cm_intents %}
-        <label class="cm-choice"><input type="radio" name="intent" value="{{ key }}" {% if (values.intent or "warn") == key %}checked{% endif %}><span>{{ tr(en, hi) }}</span></label>{% endfor %}</div>
-      <p class="cm-help">{{ tr("A question is shown to everyone with Satyapan's checks, so others can tell you what they think.", "सवाल सत्यापन की जाँच के साथ सबको दिखता है, ताकि दूसरे बता सकें कि वे क्या सोचते हैं।") }}</p>
+      <div class="cm-intents">
+        <label class="cm-intent"><input type="radio" name="intent" value="warn" {% if (values.intent or "warn") == "warn" %}checked{% endif %}>
+          <span class="cm-intent-in"><span class="cm-intent-ic cm-intent-warn">{{ ic("alert") }}</span><b>{{ tr("Warn others about a scam", "दूसरों को ठगी से सावधान करें") }}</b>
+          <small>{{ tr("Tell people about a scam you saw, so they spot it first.", "जो ठगी आपने देखी उसके बारे में बताएँ, ताकि लोग उसे पहले पहचान लें।") }}</small></span></label>
+        <label class="cm-intent"><input type="radio" name="intent" value="ask" {% if values.intent == "ask" %}checked{% endif %}>
+          <span class="cm-intent-in"><span class="cm-intent-ic cm-intent-ask">{{ ic("help") }}</span><b>{{ tr("Ask: is this real?", "पूछें: क्या यह असली है?") }}</b>
+          <small>{{ tr("Not sure? Share it and let others tell you what they think. Satyapan's checks are shown with it.", "पक्का नहीं पता? इसे साझा करें और दूसरों की राय जानें। सत्यापन की जाँच भी साथ दिखती है।") }}</small></span></label>
+      </div>
     </fieldset>
     <fieldset>
       <legend>{{ tr("1. What kind of scam was it?", "1. यह किस तरह की धोखाधड़ी थी?") }}</legend>

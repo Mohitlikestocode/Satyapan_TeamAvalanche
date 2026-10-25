@@ -1,16 +1,51 @@
+{# Shared building blocks for the community pages. Icons are inline SVG (no images, no emoji). #}
+{% macro ic(name) %}<svg class="cm-ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false">{% if name == "eye" %}<path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/>
+{% elif name == "chat" %}<path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.4 8.4 0 0 1 3.8-.9h.5a8.5 8.5 0 0 1 8 8z"/>
+{% elif name == "share" %}<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/>
+{% elif name == "thumb" %}<path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.3a2 2 0 0 0 2-1.7l1.4-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/>
+{% elif name == "help" %}<circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3M12 17h.01"/>
+{% elif name == "alert" %}<path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0zM12 9v4M12 17h.01"/>
+{% elif name == "arrow" %}<path d="M5 12h14M13 6l6 6-6 6"/>
+{% elif name == "plus" %}<path d="M12 5v14M5 12h14"/>
+{% elif name == "flag" %}<path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1zM4 22v-7"/>
+{% elif name == "trash" %}<path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/>
+{% elif name == "user" %}<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+{% elif name == "link" %}<path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/>
+{% elif name == "check" %}<path d="m5 12 5 5 9-10"/>
+{% elif name == "shield" %}<path d="M20 13c0 5-3.5 7.5-7.7 9a1 1 0 0 1-.7 0C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.2-2.7a1.2 1.2 0 0 1 1.5 0C14.5 3.8 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/>{% endif %}</svg>{% endmacro %}
+
+{% macro avatar(name, big=False) %}{% if name %}<span class="cm-av cm-tone-{{ cm_tone(name) }} {% if big %}cm-av-lg{% endif %}" aria-hidden="true">{{ cm_initial(name) }}</span>{% else %}<span class="cm-av cm-av-anon {% if big %}cm-av-lg{% endif %}" aria-hidden="true">{{ ic("user") }}</span>{% endif %}{% endmacro %}
+{% macro who(name) %}{{ name or tr("Someone", "कोई") }}{% endmacro %}
 {% macro kind_label(k) %}{% for key, en, hi in cm_kinds %}{% if key == k %}{{ tr(en, hi) }}{% endif %}{% endfor %}{% endmacro %}
 {% macro lang_label(k) %}{% for key, en, hi in cm_langs %}{% if key == k %}{{ tr(en, hi) }}{% endif %}{% endfor %}{% endmacro %}
+{% macro platform_label(k) %}{% for key, en, hi in cm_platforms %}{% if key == k %}{{ tr(en, hi) }}{% endif %}{% endfor %}{% endmacro %}
 {% macro pill(p) %}<span class="pill pill-{{ p.tier_class }}">{{ p.tier_label }}</span>{% endmacro %}
 {% macro seen_by(n) %}{% if n == 1 %}{{ tr("Seen by 1 person", "1 व्यक्ति ने देखा") }}{% else %}{{ tr("Seen by " ~ n ~ " people", n ~ " लोगों ने देखा") }}{% endif %}{% endmacro %}
-{% macro platform_label(k) %}{% for key, en, hi in cm_platforms %}{% if key == k %}{{ tr(en, hi) }}{% endif %}{% endfor %}{% endmacro %}
+
+{# One post in the feed: who, when, where it was seen, what was said, the verdict, and quick actions. #}
 {% macro card(p) %}
-<article class="cm-card {% if p.intent == 'ask' %}cm-ask{% endif %}">
-  <div class="cm-card-top">{% if p.intent == "ask" %}<span class="pill pill-n">{{ tr("Question", "सवाल") }}</span>{% endif %}{{ pill(p) }}<span class="cm-meta">{{ kind_label(p.kind) }}{% if p.platform %} · {{ tr("seen on", "देखा:") }} {{ platform_label(p.platform) }}{% endif %} · {{ p.created|cm_date }}{% if p.place %} · {{ p.place }}{% endif %}</span></div>
-  <p class="cm-excerpt">{{ p.excerpt }}</p>
-  {% if p.entity %}<p class="cm-entity"><span>{% if p.entity_kind == "upi" %}{{ tr("Payee", "भुगतान पाने वाला") }}{% elif p.entity_kind == "domain" %}{{ tr("Website", "वेबसाइट") }}{% else %}{{ tr("Number", "नंबर") }}{% endif %}:</span> <b>{{ p.entity }}</b></p>{% endif %}
-  <div class="cm-card-foot"><b class="cm-seen">{{ seen_by(p.sightings) }}</b>{% if p.comments %}<a class="cm-talk" href="/community/post/{{ p.id }}#comments">{{ tr(p.comments ~ (" comment" if p.comments == 1 else " comments"), p.comments ~ " टिप्पणी") }}</a>{% endif %}<a class="btn-sm" href="/community/post/{{ p.id }}">{{ tr("Open", "खोलें") }}<span class="cm-sr"> {{ tr("report", "रिपोर्ट") }} {{ p.id }}</span></a></div>
+<article class="cm-card cm-post {% if p.intent == 'ask' %}cm-ask{% endif %} cm-risk-{{ p.tier_class }}">
+  <header class="cm-post-head">
+    {{ avatar(p.author) }}
+    <div class="cm-post-who"><b>{{ who(p.author) }}</b>
+      <span class="cm-meta">{{ cm_ago(p.created) }}{% if p.place %} · {{ p.place }}{% endif %}{% if p.platform %} · {{ tr("on", "") }} {{ platform_label(p.platform) }}{% endif %}</span></div>
+    <div class="cm-post-tags">{% if p.intent == "ask" %}<span class="pill pill-n">{{ ic("help") }}{{ tr("Question", "सवाल") }}</span>{% endif %}{{ pill(p) }}</div>
+  </header>
+  <a class="cm-post-body" href="/community/post/{{ p.id }}" aria-label="{{ tr('Open report', 'रिपोर्ट खोलें') }} {{ p.id }}">
+    <p class="cm-excerpt">{{ p.excerpt }}</p>
+  </a>
+  {% if p.entity %}<p class="cm-entity">{{ ic("link") }}<span>{% if p.entity_kind == "upi" %}{{ tr("Payee", "भुगतान पाने वाला") }}{% elif p.entity_kind == "domain" %}{{ tr("Website", "वेबसाइट") }}{% else %}{{ tr("Number", "नंबर") }}{% endif %}:</span> <b>{{ p.entity }}</b></p>{% endif %}
+  <p class="cm-post-sub">{{ kind_label(p.kind) }}{% if p.from_check %} · <span class="cm-verified">{{ ic("shield") }}{{ tr("Shared from a Satyapan check", "सत्यापन की जाँच से साझा") }}</span>{% endif %}</p>
+  <footer class="cm-actionbar">
+    {% if p.can_vote and not p.mine %}<form method="post" action="/community/post/{{ p.id }}/seen" class="cm-qa"><button class="cm-act cm-act-main" type="submit">{{ ic("eye") }}{% if p.intent == "ask" %}{{ tr("I got this too", "मुझे भी आया") }}{% else %}{{ tr("I saw this too", "मैंने भी देखा") }}{% endif %}</button></form>{% endif %}
+    <span class="cm-stat" title="{{ seen_by(p.sightings) }}">{{ ic("eye") }}<b class="cm-seen">{{ seen_by(p.sightings) }}</b></span>
+    <a class="cm-act" href="/community/post/{{ p.id }}#comments">{{ ic("chat") }}{% if p.comments %}{{ tr(p.comments ~ (" comment" if p.comments == 1 else " comments"), p.comments ~ " टिप्पणी") }}{% else %}{{ tr("Comment", "टिप्पणी") }}{% endif %}</a>
+    <a class="cm-act" href="/community/post/{{ p.id }}">{{ ic("arrow") }}{{ tr("Open", "खोलें") }}<span class="cm-sr"> {{ tr("report", "रिपोर्ट") }} {{ p.id }}</span></a>
+  </footer>
 </article>
 {% endmacro %}
+
+{# Used by the Learn pages. #}
 {% macro lvl(l) %}{{ tr("Level " ~ l.level ~ " · " ~ l.name_en, "स्तर " ~ l.level ~ " · " ~ l.name_hi) }}{% endmacro %}
 {% macro bar(l) %}<div class="prog" role="progressbar" aria-valuemin="0" aria-valuemax="{{ l.span }}" aria-valuenow="{{ l.into }}" aria-label="{{ tr('Progress to the next level', 'अगले स्तर तक प्रगति') }}"><i style="width:{{ (100 * l.into / l.span)|round|int }}%"></i></div>{% endmacro %}
 {% macro badge_grid(items) %}<div class="cm-badges">{% for b in items %}

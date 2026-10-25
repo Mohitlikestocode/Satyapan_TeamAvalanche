@@ -5,11 +5,13 @@ Not a router itself (no `router` attribute), so the loader skips it.
 from __future__ import annotations
 
 import secrets
+import time
 from datetime import datetime, timedelta, timezone
 from urllib.parse import quote
 
 from fastapi import Request
 from fastapi.responses import Response
+from jinja2 import pass_context
 
 from ...community import store
 from ..web import DEVICE_COOKIE, templates, wide
@@ -75,7 +77,32 @@ def _date(ts: int | None) -> str:
     return datetime.fromtimestamp(ts, IST).strftime("%d %b %Y") if ts else ""
 
 
+@pass_context
+def _ago(ctx, ts: int | None) -> str:
+    """"5 minutes ago" in the visitor's language; falls back to a date after a month."""
+    if not ts:
+        return ""
+    sec = max(0, int(time.time()) - int(ts))
+    hi = ctx.get("lang") == "hi"
+    for limit, div, en, hin in ((60, 1, "just now", "अभी"), (3600, 60, "{n} min ago", "{n} मिनट पहले"), (86400, 3600, "{n} h ago", "{n} घंटे पहले"),
+                                (30 * 86400, 86400, "{n} days ago", "{n} दिन पहले")):
+        if sec < limit:
+            return (hin if hi else en).format(n=sec // div)
+    return _date(ts)
+
+
+def _initial(name: str | None) -> str:
+    return (name or "?")[:1].upper()
+
+
+def _tone(name: str | None) -> int:
+    return sum(map(ord, name or "")) % 6
+
+
 templates.env.filters["cm_date"] = _date
+templates.env.globals["cm_ago"] = _ago
+templates.env.globals["cm_initial"] = _initial
+templates.env.globals["cm_tone"] = _tone
 templates.env.globals["cm_kinds"] = KIND_LABELS
 templates.env.globals["cm_platforms"] = PLATFORM_LABELS
 templates.env.globals["cm_intents"] = INTENT_LABELS

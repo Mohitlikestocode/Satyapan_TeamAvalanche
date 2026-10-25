@@ -112,7 +112,7 @@ def _view(r, lang: str, total: dict[int, set[str]] | None = None, weekly: dict[i
         "parent_id": r["parent_id"], "sightings": len(total.get(r["id"], ())) if total is not None else None,
         "weekly": len(weekly.get(r["id"], ())) if weekly is not None else None,
         "platform": r["platform"], "intent": r["intent"], "from_check": bool(r["case_ref"]),
-        "comments": (talk or {}).get(r["id"], 0),
+        "comments": (talk or {}).get(r["id"], 0), "author": None, "can_vote": False, "mine": False, "_dev": r["dev"],
     }
 
 
@@ -197,7 +197,7 @@ def comment_counts(c) -> dict[int, int]:
 
 
 def feed(lang: str, kind: str = "", post_lang: str = "", sort: str = "new", page: int = 1, size: int = PAGE_SIZE, platform: str = "",
-         intent: str = "") -> dict:
+         intent: str = "", dev: str | None = None) -> dict:
     where, args = ["status='approved'", "parent_id IS NULL"], []
     if platform in PLATFORMS:
         where.append("platform=?"), args.append(platform)
@@ -222,7 +222,16 @@ def feed(lang: str, kind: str = "", post_lang: str = "", sort: str = "new", page
     n = len(views)
     pages = max(1, -(-n // size))
     page = min(max(1, page), pages)
-    return {"posts": views[(page - 1) * size: page * size], "total": n, "page": page, "pages": pages}
+    shown = views[(page - 1) * size: page * size]
+    with store.conn() as c:
+        names = _names(c, {v["_dev"] for v in shown})
+    for v in shown:
+        d = v.pop("_dev")
+        v["author"], v["mine"] = names.get(d), bool(dev) and d == dev
+        v["can_vote"] = bool(dev) and dev not in total.get(v["id"], set())
+    for v in views:
+        v.pop("_dev", None)
+    return {"posts": shown, "total": n, "page": page, "pages": pages}
 
 
 def trending(lang: str, limit: int = 5) -> list[dict]:
@@ -263,6 +272,8 @@ def get(post_id: int, lang: str, dev: str | None = None, staff: bool = False) ->
         root_id = r["parent_id"] or r["id"]
         total = _cluster_devs(c)
         v = _view(r, lang, total, None, comment_counts(c))
+        v.pop("_dev", None)
+        v["author"] = _names(c, {r["dev"]}).get(r["dev"])
         v["mine"], v["root_id"] = mine, root_id
         v["comments"] = comment_counts(c).get(root_id, 0)
         v["sightings"] = len(total.get(root_id, ()))
