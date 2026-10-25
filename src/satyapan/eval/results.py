@@ -172,12 +172,31 @@ def _from_text_cv(sec: Section, data: dict) -> None:
     sec.split = "leave one scam family out (the model never saw the family it is scored on); threshold from out-of-fold genuine messages"
 
 
+AI_SET_NAMES = {"holdout_tanish": "Tanish's held-out set", "extra_genuine_team_corpus": "Extra genuine messages (team corpus)",
+                "dev_kit": "Development kit", "holdout_mohit_tuned_on": "Mohit's set (rules tuned on it)"}
+
+
+def _from_ai_rules(sec: Section, data: dict) -> None:
+    for key, v in data.get("sets", {}).items():
+        name = AI_SET_NAMES.get(key, key)
+        sec.rows.append(Row(name=f"{name}: rules and models, without the AI rule check", baseline=True,
+                            tpr=_rate(v["without_ai"].get("tpr")), fpr=_rate(v["without_ai"].get("fpr"))))
+        sec.rows.append(Row(name=f"{name}: with the AI rule check ({data.get('model', '')})", baseline=False,
+                            tpr=_rate(v["with_ai"].get("tpr")), fpr=_rate(v["with_ai"].get("fpr"))))
+        sec.failures += [f for f in v.get("failures", [])]
+    sec.hardware = f"{data.get('provider', '')} API"
+    sec.reproduce = "python training/text/eval_ai_rules.py"
+    sec.split = data.get("note", "")
+
+
 def _apply(sec: Section, path: Path, data: dict, first: bool) -> None:
     sec.status = "measured"
     sec.files.append(path.name)
     if first:
         sec.date = data.get("date") or _mtime(path)
-    if "modes" in data and "protocol" in data:
+    if "sets" in data and "provider" in data:
+        _from_ai_rules(sec, data)
+    elif "modes" in data and "protocol" in data:
         _from_text_cv(sec, data)
     elif data.get("schema") == 1:
         _from_generic(sec, data)
@@ -217,6 +236,12 @@ def sections(results_dir: Path | None = None) -> list[Section]:
                  "40 स्कैम और 40 असली संदेश, एक ऐसे टीम सदस्य ने लिखे जिसने नियम नहीं पढ़े। किसी चीज़ की ट्रेनिंग में इस्तेमाल नहीं हुए; "
                  "नियम लिखने वाले ने इसकी कुछ लाइनें देखी थीं, इसलिए इसे लगभग, पूरी तरह नहीं, अनदेखा मानें।"),
                 ("scam messages", "स्कैम संदेश"), ("genuine messages", "असली संदेश"), dataset="data/kit/holdout_*.jsonl"),
+        Section("ai_rules", ("Messages: AI check against 33 scam-warning rules", "संदेश: 33 ठगी-चेतावनी नियमों पर AI जाँच"),
+                ("The whole message check with and without the AI rule check. The rules were written after we read the held-out misses, so "
+                 "the catch rate is optimistic; the false alarms on genuine messages are the number to trust.",
+                 "पूरी संदेश जाँच, AI नियम जाँच के साथ और बिना। नियम अलग रखे संदेशों की चूकें पढ़ने के बाद लिखे गए, इसलिए पकड़ने की दर आशावादी है; "
+                 "असली संदेशों पर गलत चेतावनियाँ भरोसे लायक नंबर हैं।"),
+                ("scam messages", "स्कैम संदेश"), ("genuine messages", "असली संदेश"), held_out=False),
         Section("text_holdout_tuned", ("Messages: second held-out set, rules tuned on it (indicative only)",
                                        "संदेश: दूसरा अलग रखा सेट, नियम इसी पर बनाए गए (सिर्फ़ संकेत के लिए)"),
                 ("Mohit's 40 scam and 40 genuine messages. New rules were written after this file existed, so these numbers are optimistic and are never added to the held-out number above.",
@@ -247,6 +272,7 @@ def sections(results_dir: Path | None = None) -> list[Section]:
         "screenshot_synthetic": ["tamper_test.json"] + sorted(p.name for p in d.glob("tamper_test_*.json")),
         "text_holdout": ["text_holdout.json"],
         "text_holdout_tuned": ["text_holdout_tuned.json"],
+        "ai_rules": ["ai_rules_eval.json"],
         "text_kit": ["text_kit.json"],
         "text_model_cv": ["text_model_cv.json"],
         "text_model_synth": ["text_model_synth.json"],
