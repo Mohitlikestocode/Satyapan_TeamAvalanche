@@ -30,7 +30,7 @@ Then open the site and:
 5. **Understand first.** On every result, above our verdict, a panel shows what we read from your message, screenshot, PDF or voice note. Pick any of 11 Indian languages and press **Explain**: Sarvam translates it (via English for accuracy), then shows our verdict in the same language, each with a **Listen** button. It says plainly that this is a suggestion and the message may or may not be a scam.
 6. Press **Listen** (Sarvam voice), **Ask family** (WhatsApp share), **Wrong result?** (goes to a real review queue) or **Report** (signed evidence pack).
 
-`demo/` has ready-made inputs (scam messages, QR codes, payment screens, voice notes) with the results we measured, including the ones we miss; `docs/DEMO_RUNBOOK.md` is the demo-day script. The models (screenshot tamper detector, voice detectors, scam-message classifier) are optional downloads that go in `var/models/`: see [section 7](#7-install-and-run). Without them the site still runs and says which checks it could not do.
+**Browser extension** (`extension/`, Chrome/Edge/Brave, no store needed): select text or right-click a link, choose "Check with Satyapan", and the site opens with it filled in and checked. No host permissions; the text travels in the URL fragment, which is never sent to a server. `demo/` has ready-made inputs (scam messages, QR codes, payment screens, voice notes) with the results we measured, including the ones we miss; `docs/DEMO_RUNBOOK.md` is the demo-day script. The models (screenshot tamper detector, voice detectors, scam-message classifier) are optional downloads that go in `var/models/`: see [section 7](#7-install-and-run). Without them the site still runs and says which checks it could not do.
 
 ---
 

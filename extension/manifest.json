@@ -1,0 +1,10 @@
+{
+  "manifest_version": 3,
+  "name": "Satyapan: verify before you pay",
+  "version": "0.1.0",
+  "description": "Right-click a message or link and check it with Satyapan before you pay. Opens the Satyapan site with your text filled in.",
+  "icons": { "16": "icons/icon16.png", "48": "icons/icon48.png", "128": "icons/icon128.png" },
+  "permissions": ["contextMenus", "storage"],
+  "background": { "service_worker": "background.js" },
+  "action": { "default_popup": "popup.html", "default_title": "Check with Satyapan", "default_icon": { "16": "icons/icon16.png", "48": "icons/icon48.png" } }
+}

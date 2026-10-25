@@ -134,6 +134,19 @@
     opts.forEach(function (o, i) { o.addEventListener("click", function () { pick(i, true); }); });
     var wanted = KINDS.indexOf(new URLSearchParams(location.search).get("type") || "");
     if (wanted >= 0) pick(wanted, false);
+    // From the browser extension: the text arrives after "#t=" (a fragment, never sent to a server). Fill it in, clear the address bar,
+    // and run the check only when the extension asked for it (autorun=1), because its user chose "Check with Satyapan" from the menu.
+    var frag = location.hash.match(/^#t=(.*)$/);
+    if (frag) {
+      var incoming = "";
+      try { incoming = decodeURIComponent(frag[1]); } catch (e) { incoming = ""; }
+      if (incoming.trim()) {
+        pick(/^\s*(https?:\/\/|www\.)\S+\s*$/i.test(incoming) ? 3 : 4, false);
+        ta.value = incoming.slice(0, 4000);
+        try { history.replaceState(null, "", location.pathname + location.search.replace(/[?&]autorun=1/, "")); } catch (e) { /* ignore */ }
+        if (new URLSearchParams(location.search).get("autorun") === "1") setTimeout(function () { go.click(); }, 400);
+      }
+    }
     input.addEventListener("change", function () {
       var f = input.files[0]; if (!f) return;
       if (f.size > 20 * 1024 * 1024) { err.textContent = "That file is too large (limit 20 MB)."; input.value = ""; return; }

@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<style>
+  body{font:14px/1.45 system-ui,sans-serif;margin:0;width:340px;color:#0B1F3A}
+  header{background:#0B2A4A;color:#fff;padding:10px 14px;font-weight:700;font-size:16px}
+  main{padding:12px 14px}
+  textarea{width:100%;box-sizing:border-box;min-height:90px;font:inherit;padding:8px;border:1px solid #98A2B3;border-radius:6px}
+  button{font:inherit;font-weight:600;min-height:38px;padding:0 16px;border-radius:6px;border:1px solid #1F4E8C;background:#1F4E8C;color:#fff;cursor:pointer;margin-top:8px}
+  .sec{background:#fff;color:#1F4E8C}
+  label{display:block;margin-top:12px;font-size:12px;color:#475467}
+  input{width:100%;box-sizing:border-box;font:inherit;padding:6px 8px;border:1px solid #98A2B3;border-radius:6px}
+  p{margin:8px 0 0;font-size:12px;color:#475467}
+</style>
+</head>
+<body>
+<header>Satyapan · verify before you pay</header>
+<main>
+  <textarea id="t" placeholder="Paste a message, link or phone number"></textarea>
+  <button id="go">Check it</button>
+  <label for="srv">Satyapan server</label>
+  <input id="srv" placeholder="http://127.0.0.1:8000">
+  <label for="lang">Language of the check page</label>
+  <input id="lang" placeholder="en or hi" maxlength="2" style="width:70px">
+  <p>Tip: select text on any page, right-click, and choose “Check with Satyapan”. Your text is passed in the web address after # and is not sent to a server until you press Check on the Satyapan page. Satyapan only advises: it never blocks or pays anything.</p>
+</main>
+<script src="popup.js"></script>
+</body>
+</html>
