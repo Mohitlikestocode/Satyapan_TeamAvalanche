@@ -30,6 +30,14 @@
     {% for p in q.approved %}{{ row(p, [("remove", tr("Remove", "हटाएँ"))]) }}{% endfor %}</tbody></table></div>
   {% else %}<p class="cm-empty-s">{{ tr("No public posts yet.", "अभी कोई सार्वजनिक पोस्ट नहीं।") }}</p>{% endif %}
 
+  <h2 class="cm-h2">{{ tr("Comments waiting or hidden", "इंतज़ार में या छिपी टिप्पणियाँ") }}</h2>
+  {% if q.comments %}<div class="tbl-wrap"><table class="tbl"><thead><tr><th>ID</th><th>{{ tr("Post", "पोस्ट") }}</th><th>{{ tr("Cleaned text", "साफ़ किया पाठ") }}</th><th>{{ tr("Notes", "टिप्पणी") }}</th><th>{{ tr("Action", "कार्रवाई") }}</th></tr></thead><tbody>
+    {% for m in q.comments %}<tr><td>#{{ m.id }}</td><td><a href="/community/post/{{ m.post_id }}">#{{ m.post_id }}</a></td><td class="cm-excerpt">{{ m.body }}</td>
+      <td>{{ m.status }} {% for f in m.flags %}<span class="pill pill-a">{{ f }}</span> {% endfor %}{% for r, n in m.abuse %}<span class="pill pill-r">{{ r }} × {{ n }}</span> {% endfor %}</td>
+      <td class="cm-row-acts"><form method="post" action="/community/moderate/comment/{{ m.id }}/approve"><button class="btn-sm" type="submit">{{ tr("Publish", "प्रकाशित करें") }}</button></form>
+        <form method="post" action="/community/moderate/comment/{{ m.id }}/remove"><button class="btn-sm danger" type="submit">{{ tr("Remove", "हटाएँ") }}</button></form></td></tr>{% endfor %}</tbody></table></div>
+  {% else %}<p class="cm-empty-s">{{ tr("No comments are waiting.", "कोई टिप्पणी इंतज़ार में नहीं है।") }}</p>{% endif %}
+
   <h2 class="cm-h2">{{ tr("Recent moderation log", "हाल का निगरानी लॉग") }}</h2>
   {% if trail %}<ul class="list">{% for a in trail %}<li><b>{{ a.action }}</b> · {{ a.target }} · {{ a.actor }} · {{ fmt_ts(a.ts) }}<br><span class="cm-small">{{ a.detail }}</span></li>{% endfor %}</ul>
   {% else %}<p class="cm-empty-s">{{ tr("No actions yet.", "अभी कोई कार्रवाई नहीं।") }}</p>{% endif %}

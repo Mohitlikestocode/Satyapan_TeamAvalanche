@@ -64,3 +64,16 @@
     if (D.cookie.indexOf("sp_tz=" + off) < 0) D.cookie = "sp_tz=" + off + "; path=/; max-age=31536000; samesite=lax";
   } catch (err) { /* cookies blocked: the server falls back to India time */ }
 })();
+
+
+/* The report form: when the visitor switches between "warn others" and "ask the community", the headings and the button change wording. */
+(function () {
+  var D = document, radios = D.querySelectorAll('input[name="intent"]');
+  if (!radios.length) return;
+  function apply() {
+    var ask = D.querySelector('input[name="intent"][value="ask"]').checked;
+    D.querySelectorAll("[data-intent-text]").forEach(function (el) { el.textContent = el.getAttribute(ask ? "data-ask" : "data-warn"); });
+  }
+  radios.forEach(function (r) { r.addEventListener("change", apply); });
+  apply();
+})();

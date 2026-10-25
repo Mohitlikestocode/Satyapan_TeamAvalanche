@@ -26,6 +26,25 @@ How a report flows: the raw text lives in memory for one request. `analyse_text`
 
 **Abuse.** One privacy complaint hides a post at once; three different devices hide it for any other reason. A moderator then restores or removes it.
 
+### B1b: discussion, "seen on", questions, and sharing a result (added after the first release)
+
+| Feature | How it works |
+|---|---|
+| **Discussion under every report** | Each public report has a "Discussion" section. A comment is one of: *I saw this too* (with where: WhatsApp, SMS, Telegram, Instagram/Facebook, YouTube, phone call, e-mail, website/advert, elsewhere; no words needed), *My opinion*, or *A tip: what to do*. Up to 500 characters, run through the same sanitiser as reports (numbers, e-mails and names hidden). A clean comment is published at once; a doubtful one waits for a moderator and only its author sees it until then. |
+| **Helpful, report, delete** | "Helpful" once per device (not on your own comment). A privacy complaint hides a comment at once; three other complaints hide it too; a moderator restores or removes it. Authors can erase their own comment. Deleting or removing a post erases its comments. |
+| **Who is shown** | The public handle chosen on My progress, otherwise "Someone". Never a real name. |
+| **"Seen on" platform** | An optional field on each report; shown on the card and post; a filter in the feed. |
+| **Ask the community** | The report form has two intents: *warn others* or *ask: is this real?*. A question is published once it is clean, with the engine's verdict (and its "not a guarantee" wording), is labelled "Question", is never merged into a scam report, and is left out of Trending. The vote button reads "I got this too". |
+| **Feed** | Filters: type, language, seen on, posts (reports or questions); sort: newest, most seen this week, most discussed; comment counts on cards; a "Recent discussion" box; a comments count at the top. |
+| **Share to community** | A button next to the existing share buttons on the result page (`/case/<id>`, beside Listen and Ask family) and on the Ask-family page (beside Share on WhatsApp). It opens `/community/report?case=<id>`, starts the report from the payee, link and number the check found (the check never kept the message), and keeps the check's own verdict. The post is marked "Shared from a Satyapan check". The button is added by `web/static/js/community_share.js` because those two pages are core templates. |
+| **Family Guardian badge** | Now given when Share or Copy is pressed on the Ask-family page, using the core `guardian` event (`/api/guardian/shared`), instead of when the page is opened. |
+| **Community voice badge** | First published comment. |
+| **Upgrade safety** | New columns are added to an existing database on first use (`store._migrate`), so a running site does not need to be reset. |
+
+**Look.** The community pages use a feed layout: a hero with live counts, a "did something suspicious reach you today?" bar with Report, Ask and Check buttons, sort tabs, filter chips (plain links), cards with an avatar, the poster's public handle or "Someone", time ago, the verdict, a quick "I saw this too" and a comment link, a chat-style discussion, and side widgets (trending, recent discussion, how we keep it safe). Icons are inline SVG. The community area uses rounder corners and one gradient in its hero, a deliberate step away from the rest of the site's square look. No emoji, no third-party images or fonts.
+
+New tables: `community_comments`, `community_comment_votes`, `community_comment_abuse`. New columns on `community_posts`: `platform`, `intent`, `case_ref`. New API: `GET /api/v1/community/posts/<id>/comments`; `platform` and `intent` filters and `sort=talk` on `/api/v1/community/posts`; `comments` in `/api/v1/community/stats`.
+
 ### B2: Learn, Scam Drill and gamification
 
 | Page or API | What it does |
@@ -79,7 +98,7 @@ A genuine message reported by mistake gets "NO RED FLAGS FOUND" or "CAN'T TELL",
 - **XP farming**: answering twice gives nothing, rounds are capped per day, XP for lessons is once. Many phones could still be scripted. Not defended.
 - **Clone or guess handles**: handles are unique and filtered; look-alike spellings (for example a capital I for a lowercase l) are not folded.
 - **Recovery code guessing**: 60 bits, 10 tries per device per day; code holders can use the progress, so the page tells people to keep it private.
-- **Family Guardian badge** is given on opening Ask family for a real result, not on the actual send (see `docs/requests/community.md`).
+- **Comment spam and brigading**: a group of phones can post many comments. Limits (20 a day per device), the sanitiser, abuse reports and moderation are the defence; there is no per-device reputation yet.
 
 ## Not done, or done in a limited way (said plainly)
 

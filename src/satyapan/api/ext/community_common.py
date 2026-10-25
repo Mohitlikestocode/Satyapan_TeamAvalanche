@@ -5,11 +5,13 @@ Not a router itself (no `router` attribute), so the loader skips it.
 from __future__ import annotations
 
 import secrets
+import time
 from datetime import datetime, timedelta, timezone
 from urllib.parse import quote
 
 from fastapi import Request
 from fastapi.responses import Response
+from jinja2 import pass_context
 
 from ...community import store
 from ..web import DEVICE_COOKIE, templates, wide
@@ -24,7 +26,16 @@ LANG_LABELS = [("en", "English", "अंग्रेज़ी"), ("hi", "हि�
 ABUSE_LABELS = [("spam", "Spam or advertising", "स्पैम या विज्ञापन"), ("personal_info", "Shows someone's private details", "किसी की निजी जानकारी दिख रही है"),
                 ("not_a_scam", "This is not a scam", "यह धोखाधड़ी नहीं है"), ("abusive", "Rude or harmful", "अभद्र या हानिकारक"),
                 ("other", "Something else", "कुछ और")]
+PLATFORM_LABELS = [("whatsapp", "WhatsApp", "WhatsApp"), ("sms", "SMS", "SMS"), ("telegram", "Telegram", "टेलीग्राम"),
+                   ("social", "Instagram or Facebook", "इंस्टाग्राम या फ़ेसबुक"), ("youtube", "YouTube", "यूट्यूब"), ("call", "Phone call", "फ़ोन कॉल"),
+                   ("email", "E-mail", "ई-मेल"), ("web", "A website or advert", "कोई वेबसाइट या विज्ञापन"), ("other", "Somewhere else", "कहीं और")]
+INTENT_LABELS = [("warn", "Warn others about a scam", "दूसरों को ठगी से सावधान करें"), ("ask", "Ask: is this real?", "पूछें: क्या यह असली है?")]
+COMMENT_KIND_LABELS = [("saw", "I saw this too", "मैंने भी देखा"), ("opinion", "My opinion", "मेरी राय"), ("tip", "A tip: what to do", "सुझाव: क्या करें")]
 ERRORS = {
+    "comment_short": ("Please write a little more (at least 3 characters).", "कृपया थोड़ा और लिखें (कम से कम 3 अक्षर)।"),
+    "comment_long": ("That comment is too long. Please keep it under 500 characters.", "यह टिप्पणी बहुत लंबी है। कृपया 500 अक्षरों से कम रखें।"),
+    "comment_limit": ("You have reached today's limit of 20 comments. Please come back tomorrow.", "आज की 20 टिप्पणियों की सीमा पूरी हो गई। कृपया कल आइए।"),
+    "post_closed": ("This report is not open for comments.", "इस रिपोर्ट पर टिप्पणी नहीं की जा सकती।"),
     "consent": ("Please tick the box to agree that your report will be public.", "कृपया बॉक्स पर टिक करें कि आपकी रिपोर्ट सबको दिखेगी।"),
     "too_short": ("Please write a little more (at least 8 characters).", "कृपया थोड़ा और लिखें (कम से कम 8 अक्षर)।"),
     "too_long": ("That is too long. Please keep it under 1,000 characters.", "यह बहुत लंबा है। कृपया 1,000 अक्षरों से कम रखें।"),
@@ -66,7 +77,35 @@ def _date(ts: int | None) -> str:
     return datetime.fromtimestamp(ts, IST).strftime("%d %b %Y") if ts else ""
 
 
+@pass_context
+def _ago(ctx, ts: int | None) -> str:
+    """"5 minutes ago" in the visitor's language; falls back to a date after a month."""
+    if not ts:
+        return ""
+    sec = max(0, int(time.time()) - int(ts))
+    hi = ctx.get("lang") == "hi"
+    for limit, div, en, hin in ((60, 1, "just now", "अभी"), (3600, 60, "{n} min ago", "{n} मिनट पहले"), (86400, 3600, "{n} h ago", "{n} घंटे पहले"),
+                                (30 * 86400, 86400, "{n} days ago", "{n} दिन पहले")):
+        if sec < limit:
+            return (hin if hi else en).format(n=sec // div)
+    return _date(ts)
+
+
+def _initial(name: str | None) -> str:
+    return (name or "?")[:1].upper()
+
+
+def _tone(name: str | None) -> int:
+    return sum(map(ord, name or "")) % 6
+
+
 templates.env.filters["cm_date"] = _date
+templates.env.globals["cm_ago"] = _ago
+templates.env.globals["cm_initial"] = _initial
+templates.env.globals["cm_tone"] = _tone
 templates.env.globals["cm_kinds"] = KIND_LABELS
+templates.env.globals["cm_platforms"] = PLATFORM_LABELS
+templates.env.globals["cm_intents"] = INTENT_LABELS
+templates.env.globals["cm_ckinds"] = COMMENT_KIND_LABELS
 templates.env.globals["cm_langs"] = LANG_LABELS
 templates.env.globals["cm_abuse"] = ABUSE_LABELS

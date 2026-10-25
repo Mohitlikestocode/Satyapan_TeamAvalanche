@@ -1,56 +1,83 @@
 {% extends "base.html" %}
-{% from "ext/community/_cm.html" import card, kind_label, lang_label with context %}
+{% from "ext/community/_cm.html" import card, ic, avatar, platform_label, kind_label with context %}
 {% block content %}
 <div class="wrap cm-wrap">
-  <header class="cm-head">
-    <div>
+  <header class="cm-hero">
+    <div class="cm-hero-text">
+      <span class="cm-eyebrow">{{ ic("shield") }}{{ tr("Community", "समुदाय") }}</span>
       <h1>{{ tr("Scam Watch", "स्कैम वॉच") }}</h1>
-      <p class="cm-lead">{{ tr("Scams that real people saw, shared so you can spot them first. Reports are checked by Satyapan's rules and cleaned of phone numbers and names before anyone sees them.", "असली लोगों ने जो धोखाधड़ी देखी, वह यहाँ है, ताकि आप उसे पहले पहचान लें। हर रिपोर्ट सत्यापन के नियमों से जाँची जाती है और दिखने से पहले उसमें से फ़ोन नंबर और नाम हटा दिए जाते हैं।") }}</p>
+      <p class="cm-lead">{{ tr("Real people sharing the scams they came across, so you can spot them first. Every report is checked by Satyapan's rules and cleaned of phone numbers and names before anyone sees it.", "असली लोग जो ठगी उनके सामने आई उसे साझा करते हैं, ताकि आप उसे पहले पहचान लें। हर रिपोर्ट सत्यापन के नियमों से जाँची जाती है और दिखने से पहले उसमें से फ़ोन नंबर और नाम हटा दिए जाते हैं।") }}</p>
     </div>
-    <a class="hbtn hbtn-p" href="/community/report">{{ tr("Report a scam you saw", "देखी हुई धोखाधड़ी बताएँ") }}</a>
+    <ul class="cm-pulse" aria-label="{{ tr('Counts from this site', 'इस साइट की गिनती') }}">
+      <li><b>{{ stats.posts }}</b><span>{{ tr("Scams reported", "बताई गई धोखाधड़ी") }}</span></li>
+      <li><b>{{ stats.sightings }}</b><span>{{ tr("Times seen", "कितनी बार देखा गया") }}</span></li>
+      <li><b>{{ stats.sightings_week }}</b><span>{{ tr("Seen this week", "इस हफ़्ते देखा गया") }}</span></li>
+      <li><b>{{ stats.comments }}</b><span>{{ tr("Comments", "टिप्पणियाँ") }}</span></li>
+    </ul>
   </header>
 
   {% if thanks %}<div class="cm-note" role="status">{% if thanks == "deleted" %}{{ tr("Your post was deleted. The text is gone from our database.", "आपकी पोस्ट मिटा दी गई। लिखा हुआ हमारे डेटाबेस से हट गया।") }}{% else %}{{ tr("Thank you.", "धन्यवाद।") }}{% endif %}</div>{% endif %}
 
-  <section class="kpis cm-kpis" aria-label="{{ tr('Counts from this site', 'इस साइट की गिनती') }}">
-    <div class="kpi"><small>{{ tr("Scams reported", "बताई गई धोखाधड़ी") }}</small><b>{{ stats.posts }}</b></div>
-    <div class="kpi kpi-r"><small>{{ tr("Times seen", "कितनी बार देखा गया") }}</small><b>{{ stats.sightings }}</b></div>
-    <div class="kpi kpi-a"><small>{{ tr("Seen this week", "इस हफ़्ते देखा गया") }}</small><b>{{ stats.sightings_week }}</b></div>
-  </section>
-
   <div class="cm-cols">
     <section aria-labelledby="feed-h">
-      <h2 id="feed-h" class="cm-h2">{{ tr("What people reported", "लोगों ने क्या बताया") }}</h2>
-      <form class="cm-filters" method="get" action="/community">
-        <label>{{ tr("Type", "प्रकार") }}
-          <select name="kind"><option value="">{{ tr("All", "सभी") }}</option>
-          {% for key, en, hi in cm_kinds %}<option value="{{ key }}" {% if kind == key %}selected{% endif %}>{{ tr(en, hi) }}</option>{% endfor %}</select></label>
-        <label>{{ tr("Language", "भाषा") }}
-          <select name="plang"><option value="">{{ tr("All", "सभी") }}</option>
-          {% for key, en, hi in cm_langs %}<option value="{{ key }}" {% if plang == key %}selected{% endif %}>{{ tr(en, hi) }}</option>{% endfor %}</select></label>
-        <label>{{ tr("Show", "दिखाएँ") }}
-          <select name="sort"><option value="new" {% if sort != "week" %}selected{% endif %}>{{ tr("Newest first", "सबसे नए पहले") }}</option>
-          <option value="week" {% if sort == "week" %}selected{% endif %}>{{ tr("Most seen this week", "इस हफ़्ते सबसे ज़्यादा देखे गए") }}</option></select></label>
-        <button class="btn-sm" type="submit">{{ tr("Apply", "लागू करें") }}</button>
-        {% if filtered %}<a class="btn-sm" href="/community">{{ tr("Clear", "हटाएँ") }}</a>{% endif %}
-      </form>
+      <h2 id="feed-h" class="cm-sr">{{ tr("What people reported", "लोगों ने क्या बताया") }}</h2>
+
+      <div class="cm-compose">
+        {{ avatar(me.handle if me else None, True) }}
+        <div class="cm-compose-body">
+          <p class="cm-compose-q">{{ tr("Did something suspicious reach you today?", "क्या आज आपके पास कुछ संदिग्ध आया?") }}</p>
+          <div class="cm-compose-acts">
+            <a class="cm-btn-warn" href="/community/report">{{ ic("alert") }}{{ tr("Report a scam you saw", "देखी हुई धोखाधड़ी बताएँ") }}</a>
+            <a class="cm-btn-ask" href="/community/report?intent=ask">{{ ic("help") }}{{ tr("Ask: is this real?", "पूछें: क्या यह असली है?") }}</a>
+            <a class="cm-btn-plain" href="/check">{{ ic("shield") }}{{ tr("Check it first", "पहले जाँचें") }}</a>
+          </div>
+        </div>
+      </div>
+
+      <nav class="cm-tabs" aria-label="{{ tr('Sort posts', 'पोस्ट क्रम') }}">
+        <a href="{{ link(sort='new') }}" {% if sort == "new" %}class="on" aria-current="true"{% endif %}>{{ tr("Newest", "नए") }}</a>
+        <a href="{{ link(sort='week') }}" {% if sort == "week" %}class="on" aria-current="true"{% endif %}>{{ tr("Most seen this week", "इस हफ़्ते सबसे ज़्यादा देखे") }}</a>
+        <a href="{{ link(sort='talk') }}" {% if sort == "talk" %}class="on" aria-current="true"{% endif %}>{{ tr("Most discussed", "सबसे ज़्यादा चर्चा") }}</a>
+      </nav>
+      <div class="cm-chips" role="group" aria-label="{{ tr('Filter posts', 'पोस्ट फ़िल्टर') }}">
+        <a class="cm-chip {% if not intent %}on{% endif %}" href="{{ link(intent='') }}">{{ tr("All posts", "सभी पोस्ट") }}</a>
+        <a class="cm-chip {% if intent == 'warn' %}on{% endif %}" href="{{ link(intent='warn') }}">{{ tr("Scam reports", "ठगी की रिपोर्ट") }}</a>
+        <a class="cm-chip {% if intent == 'ask' %}on{% endif %}" href="{{ link(intent='ask') }}">{{ tr("Questions", "सवाल") }}</a>
+        <span class="cm-chip-sep" aria-hidden="true"></span>
+        {% for key, en, hi in cm_kinds %}<a class="cm-chip {% if kind == key %}on{% endif %}" href="{{ link(kind=('' if kind == key else key)) }}">{{ tr(en.split(' (')[0], hi.split(' (')[0]) }}</a>{% endfor %}
+      </div>
+      <details class="cm-more-filters" {% if platform or plang %}open{% endif %}><summary>{{ tr("More filters: where it was seen, language", "और फ़िल्टर: कहाँ देखा, भाषा") }}</summary>
+        <form class="cm-filters" method="get" action="/community">
+          <input type="hidden" name="kind" value="{{ kind }}"><input type="hidden" name="intent" value="{{ intent }}"><input type="hidden" name="sort" value="{{ sort }}">
+          <label>{{ tr("Seen on", "कहाँ देखा") }}
+            <select name="platform"><option value="">{{ tr("Anywhere", "कहीं भी") }}</option>
+            {% for key, en, hi in cm_platforms %}<option value="{{ key }}" {% if platform == key %}selected{% endif %}>{{ tr(en, hi) }}</option>{% endfor %}</select></label>
+          <label>{{ tr("Language", "भाषा") }}
+            <select name="plang"><option value="">{{ tr("All", "सभी") }}</option>
+            {% for key, en, hi in cm_langs %}<option value="{{ key }}" {% if plang == key %}selected{% endif %}>{{ tr(en, hi) }}</option>{% endfor %}</select></label>
+          <button class="btn-sm" type="submit">{{ tr("Apply", "लागू करें") }}</button>
+        </form>
+      </details>
+      {% if filtered %}<p class="cm-clear"><a href="/community">{{ tr("Clear all filters", "सारे फ़िल्टर हटाएँ") }}</a></p>{% endif %}
 
       {% if data.posts %}
       <div class="cm-list">{% for p in data.posts %}{{ card(p) }}{% endfor %}</div>
       {% if data.pages > 1 %}
       <nav class="cm-pager" aria-label="{{ tr('Pages', 'पृष्ठ') }}">
-        {% set q = "&kind=" ~ kind ~ "&plang=" ~ plang ~ "&sort=" ~ sort %}
+        {% set q = "&kind=" ~ kind ~ "&plang=" ~ plang ~ "&sort=" ~ sort ~ "&platform=" ~ platform ~ "&intent=" ~ intent %}
         {% if data.page > 1 %}<a class="btn-sm" href="/community?page={{ data.page - 1 }}{{ q }}">‹ {{ tr("Newer", "नए") }}</a>{% endif %}
         <span>{{ tr("Page " ~ data.page ~ " of " ~ data.pages, "पृष्ठ " ~ data.page ~ " / " ~ data.pages) }}</span>
         {% if data.page < data.pages %}<a class="btn-sm" href="/community?page={{ data.page + 1 }}{{ q }}">{{ tr("Older", "पुराने") }} ›</a>{% endif %}
       </nav>{% endif %}
       {% else %}
-      <div class="empty cm-empty">
+      <div class="cm-empty">
         {% if filtered %}
+        <div class="cm-empty-ic">{{ ic("shield") }}</div>
         <h3>{{ tr("Nothing matches these filters", "इन फ़िल्टर से कुछ नहीं मिला") }}</h3>
-        <p>{{ tr("Try clearing the filters.", "फ़िल्टर हटाकर देखें।") }}</p>
-        <a class="btn-sm" href="/community">{{ tr("Clear filters", "फ़िल्टर हटाएँ") }}</a>
+        <p>{{ tr("Try clearing the filters, or be the first to post about this.", "फ़िल्टर हटाकर देखें, या इस बारे में सबसे पहले आप लिखें।") }}</p>
+        <a class="hbtn hbtn-s" href="/community">{{ tr("Clear filters", "फ़िल्टर हटाएँ") }}</a>
         {% else %}
+        <div class="cm-empty-ic">{{ ic("shield") }}</div>
         <h3>{{ tr("No reports yet", "अभी कोई रिपोर्ट नहीं") }}</h3>
         <p>{{ tr("Nothing has been reported here yet. If you saw a suspicious message, link, call or UPI ID, you can be the first to warn others.", "यहाँ अभी तक कुछ नहीं बताया गया। अगर आपने कोई संदिग्ध संदेश, लिंक, कॉल या UPI आईडी देखी है, तो सबसे पहले आप दूसरों को सावधान करें।") }}</p>
         <a class="hbtn hbtn-p" href="/community/report">{{ tr("Report a scam you saw", "देखी हुई धोखाधड़ी बताएँ") }}</a>
@@ -59,16 +86,27 @@
       {% endif %}
     </section>
 
-    <aside aria-label="{{ tr('Side panel', 'साइड पैनल') }}">
-      <section class="board cm-trend">
+    <aside aria-label="{{ tr('Side panel', 'साइड पैनल') }}" class="cm-side">
+      <section class="cm-widget">
         <h3>{{ tr("Trending this week", "इस हफ़्ते चर्चा में") }}</h3>
         {% if trending %}
         <ol class="cm-trend-list">{% for t in trending %}
-          <li><a href="/community/post/{{ t.id }}"><b>{{ t.entity }}</b><span>{{ tr("seen by " ~ t.count, t.count ~ " ने देखा") }}</span></a></li>{% endfor %}</ol>
+          <li><a href="/community/post/{{ t.id }}"><span class="cm-rank">{{ loop.index }}</span><b>{{ t.entity }}</b><span class="cm-trend-n">{{ tr("seen by " ~ t.count, t.count ~ " ने देखा") }}</span></a></li>{% endfor %}</ol>
         {% else %}<p class="cm-pad">{{ tr("Nothing has been seen this week yet.", "इस हफ़्ते अभी कुछ नहीं देखा गया।") }}</p>{% endif %}
         <p class="cm-pad cm-small">{{ tr("Counted from reports and \"I saw this too\" taps on this site, one per device.", "इस साइट की रिपोर्ट और \"मैंने भी देखा\" से गिना गया, हर डिवाइस से एक।") }}</p>
       </section>
-      <section class="board cm-trend">
+      <section class="cm-widget">
+        <h3>{{ tr("Recent discussion", "हाल की चर्चा") }}</h3>
+        {% if recent %}<ul class="cm-recent">{% for m in recent %}<li><a href="/community/post/{{ m.post_id }}#c{{ m.id }}">{{ ic("chat") }}<span><b>{% if m.kind == "saw" %}{{ tr("Saw this", "देखा") }}{% if m.platform %} ({{ platform_label(m.platform) }}){% endif %}{% elif m.kind == "tip" %}{{ tr("Tip", "सुझाव") }}{% else %}{{ tr("Opinion", "राय") }}{% endif %}</b>{% if m.body %}: {{ m.body[:70] }}{% if m.body|length > 70 %}…{% endif %}{% endif %}</span></a></li>{% endfor %}</ul>
+        {% else %}<p class="cm-pad">{{ tr("No comments yet. Open a report and say what you think.", "अभी कोई टिप्पणी नहीं। कोई रिपोर्ट खोलकर अपनी राय बताएँ।") }}</p>{% endif %}
+      </section>
+      <section class="cm-widget cm-safe">
+        <h3>{{ ic("shield") }}{{ tr("How we keep this safe", "हम इसे सुरक्षित कैसे रखते हैं") }}</h3>
+        <ul class="ticks cm-pad"><li>{{ tr("Phone numbers, e-mails and names are hidden before saving.", "फ़ोन नंबर, ई-मेल और नाम सहेजने से पहले छिपा दिए जाते हैं।") }}</li>
+          <li>{{ tr("Links show only the website name and cannot be clicked.", "लिंक सिर्फ़ वेबसाइट का नाम दिखाते हैं, उन पर क्लिक नहीं होता।") }}</li>
+          <li>{{ tr("Anything doubtful waits for a person to look at it.", "जो संदिग्ध लगे वह किसी व्यक्ति की जाँच का इंतज़ार करता है।") }}</li></ul>
+      </section>
+      <section class="cm-widget">
         <h3>{{ tr("Check, learn, warn", "जाँचें, सीखें, चेताएँ") }}</h3>
         <ul class="list">
           <li><a href="/check">{{ tr("Check a message or link before you pay", "पैसे भेजने से पहले संदेश या लिंक जाँचें") }}</a></li>

@@ -39,6 +39,18 @@ CREATE TABLE IF NOT EXISTS community_events(
   id INTEGER PRIMARY KEY AUTOINCREMENT, dev TEXT NOT NULL, kind TEXT NOT NULL, ts INTEGER NOT NULL
 );
 CREATE INDEX IF NOT EXISTS community_events_lookup ON community_events(dev, kind, ts);
+CREATE TABLE IF NOT EXISTS community_comments(
+  id INTEGER PRIMARY KEY AUTOINCREMENT, post_id INTEGER NOT NULL, dev TEXT NOT NULL, created INTEGER NOT NULL, kind TEXT NOT NULL,
+  platform TEXT NOT NULL DEFAULT '', body TEXT NOT NULL, status TEXT NOT NULL, flags TEXT NOT NULL DEFAULT '[]'
+);
+CREATE INDEX IF NOT EXISTS community_comments_post ON community_comments(post_id, status, created);
+CREATE TABLE IF NOT EXISTS community_comment_votes(
+  comment_id INTEGER NOT NULL, dev TEXT NOT NULL, ts INTEGER NOT NULL, PRIMARY KEY(comment_id, dev)
+);
+CREATE TABLE IF NOT EXISTS community_comment_abuse(
+  id INTEGER PRIMARY KEY AUTOINCREMENT, comment_id INTEGER NOT NULL, dev TEXT NOT NULL, reason TEXT NOT NULL, ts INTEGER NOT NULL,
+  status TEXT NOT NULL DEFAULT 'open', UNIQUE(comment_id, dev)
+);
 CREATE TABLE IF NOT EXISTS learn_profiles(
   id INTEGER PRIMARY KEY AUTOINCREMENT, created INTEGER NOT NULL, handle TEXT, handle_lc TEXT UNIQUE, recovery_hash TEXT,
   xp INTEGER NOT NULL DEFAULT 0, streak INTEGER NOT NULL DEFAULT 0, best_streak INTEGER NOT NULL DEFAULT 0, last_day TEXT,
@@ -72,11 +84,25 @@ DEVICE_RE = re.compile(r"^[A-Za-z0-9_\-]{8,64}$")
 DAY = 24 * 3600
 
 
+# Columns added after the first release. CREATE TABLE IF NOT EXISTS does not touch an existing table, so older databases are upgraded here.
+ADDED_COLUMNS = {"community_posts": [("platform", "TEXT NOT NULL DEFAULT ''"), ("intent", "TEXT NOT NULL DEFAULT 'warn'"),
+                                      ("case_ref", "INTEGER NOT NULL DEFAULT 0")]}
+
+
+def _migrate(c: sqlite3.Connection) -> None:
+    for table, cols in ADDED_COLUMNS.items():
+        have = {r["name"] for r in c.execute(f"PRAGMA table_info({table})")}
+        for name, decl in cols:
+            if name not in have:
+                c.execute(f"ALTER TABLE {table} ADD COLUMN {name} {decl}")
+
+
 @contextmanager
 def conn() -> Iterator[sqlite3.Connection]:
     """The core connection with this area's tables guaranteed to exist (IF NOT EXISTS, so it is cheap and safe in every test home)."""
     with db.conn() as c:
         c.executescript(SCHEMA)
+        _migrate(c)
         yield c
 
 

@@ -1,14 +1,31 @@
 {% extends "base.html" %}
+{% from "ext/community/_cm.html" import ic with context %}
+{% set asking = values.intent == "ask" %}
 {% block content %}
 <div class="wrap cm-wrap cm-narrow">
-  <h1>{{ tr("Report a scam you saw", "देखी हुई धोखाधड़ी बताएँ") }}</h1>
-  <p class="cm-lead">{{ tr("Tell us what reached you. Satyapan checks it with the same rules as the Check page and shows people the reasons.", "बताइए आपके पास क्या आया। सत्यापन उसे वही नियमों से जाँचता है जो जाँच वाले पृष्ठ पर हैं, और लोगों को कारण दिखाता है।") }}</p>
+  <h1 data-intent-text data-warn="{{ tr('Report a scam you saw', 'देखी हुई धोखाधड़ी बताएँ') }}" data-ask="{{ tr('Ask the community: is this real?', 'समुदाय से पूछें: क्या यह असली है?') }}">{% if asking %}{{ tr("Ask the community: is this real?", "समुदाय से पूछें: क्या यह असली है?") }}{% else %}{{ tr("Report a scam you saw", "देखी हुई धोखाधड़ी बताएँ") }}{% endif %}</h1>
+  <p class="cm-lead" data-intent-text data-warn="{{ tr('Tell us what reached you. Satyapan checks it with the same rules as the Check page and shows people the reasons.', 'बताइए आपके पास क्या आया। सत्यापन उसे वही नियमों से जाँचता है जो जाँच वाले पृष्ठ पर हैं, और लोगों को कारण दिखाता है।') }}" data-ask="{{ tr('Not sure about something you got? Share it and let others say what they think. Satyapan\'s checks are shown next to it, but they are signs, not proof.', 'किसी चीज़ पर पक्का भरोसा नहीं? उसे साझा करें और दूसरों की राय जानें। सत्यापन की जाँच साथ दिखती है, पर वह संकेत है, प्रमाण नहीं।') }}">{% if asking %}{{ tr("Not sure about something you got? Share it and let others say what they think. Satyapan's checks are shown next to it, but they are signs, not proof.", "किसी चीज़ पर पक्का भरोसा नहीं? उसे साझा करें और दूसरों की राय जानें। सत्यापन की जाँच साथ दिखती है, पर वह संकेत है, प्रमाण नहीं।") }}{% else %}{{ tr("Tell us what reached you. Satyapan checks it with the same rules as the Check page and shows people the reasons.", "बताइए आपके पास क्या आया। सत्यापन उसे वही नियमों से जाँचता है जो जाँच वाले पृष्ठ पर हैं, और लोगों को कारण दिखाता है।") }}{% endif %}</p>
 
   {% if error %}<div class="cm-error" role="alert"><b>{{ tr(error[0], error[1]) }}</b></div>{% endif %}
+  {% if case %}<div class="cm-note" role="status"><b>{{ tr("You are sharing your result with the community:", "आप अपना नतीजा समुदाय के साथ साझा कर रहे हैं:") }}</b>
+    <span class="pill pill-{{ case.tier_class }}">{{ case.headline }}</span><br>
+    {{ tr("We started the report with the payee, link and number that your check found. Add what happened in your own words. Your name and the original message are never saved.", "हमने रिपोर्ट आपकी जाँच में मिले भुगतान-पाने वाले, लिंक और नंबर से शुरू की है। जो हुआ वह अपने शब्दों में जोड़ें। आपका नाम और मूल संदेश कभी सहेजे नहीं जाते।") }}</div>{% endif %}
 
   <form class="cm-form" method="post" action="/community/report" novalidate>
+    {% if case %}<input type="hidden" name="case_id" value="{{ case.id }}">{% endif %}
+    <fieldset class="cm-intent-box">
+      <legend>{{ tr("What do you want to do?", "आप क्या करना चाहते हैं?") }}</legend>
+      <div class="cm-intents">
+        <label class="cm-intent"><input type="radio" name="intent" value="warn" {% if (values.intent or "warn") == "warn" %}checked{% endif %}>
+          <span class="cm-intent-in"><span class="cm-intent-ic cm-intent-warn">{{ ic("alert") }}</span><b>{{ tr("Warn others about a scam", "दूसरों को ठगी से सावधान करें") }}</b>
+          <small>{{ tr("Tell people about a scam you saw, so they spot it first.", "जो ठगी आपने देखी उसके बारे में बताएँ, ताकि लोग उसे पहले पहचान लें।") }}</small></span></label>
+        <label class="cm-intent"><input type="radio" name="intent" value="ask" {% if values.intent == "ask" %}checked{% endif %}>
+          <span class="cm-intent-in"><span class="cm-intent-ic cm-intent-ask">{{ ic("help") }}</span><b>{{ tr("Ask: is this real?", "पूछें: क्या यह असली है?") }}</b>
+          <small>{{ tr("Not sure? Share it and let others tell you what they think. Satyapan's checks are shown with it.", "पक्का नहीं पता? इसे साझा करें और दूसरों की राय जानें। सत्यापन की जाँच भी साथ दिखती है।") }}</small></span></label>
+      </div>
+    </fieldset>
     <fieldset>
-      <legend>{{ tr("1. What kind of scam was it?", "1. यह किस तरह की धोखाधड़ी थी?") }}</legend>
+      <legend data-intent-text data-warn="{{ tr('1. What kind of scam was it?', '1. यह किस तरह की धोखाधड़ी थी?') }}" data-ask="{{ tr('1. What is it about?', '1. यह किस बारे में है?') }}">{% if asking %}{{ tr("1. What is it about?", "1. यह किस बारे में है?") }}{% else %}{{ tr("1. What kind of scam was it?", "1. यह किस तरह की धोखाधड़ी थी?") }}{% endif %}</legend>
       <div class="cm-choices">
         {% for key, en, hi in cm_kinds %}
         <label class="cm-choice"><input type="radio" name="kind" value="{{ key }}" {% if values.kind == key %}checked{% endif %} required><span>{{ tr(en, hi) }}</span></label>
@@ -28,6 +45,10 @@
       <p id="cm-preview-text" class="cm-excerpt"></p>
       <p id="cm-preview-note" class="cm-small"></p>
     </section>
+
+    <div class="cm-field"><label for="cm-platform">{{ tr("Where did you see it? (optional)", "आपने इसे कहाँ देखा? (वैकल्पिक)") }}</label>
+      <select id="cm-platform" name="platform"><option value="">{{ tr("Choose", "चुनें") }}</option>
+      {% for key, en, hi in cm_platforms %}<option value="{{ key }}" {% if values.platform == key %}selected{% endif %}>{{ tr(en, hi) }}</option>{% endfor %}</select></div>
 
     <div class="cm-two">
       <div class="cm-field"><label for="cm-place">{{ tr("3. City or state (optional)", "3. शहर या राज्य (वैकल्पिक)") }}</label>
@@ -54,7 +75,7 @@
     </div>
 
     <div class="cm-actions">
-      <button type="submit" class="hbtn hbtn-p cm-btn">{{ tr("Send report", "रिपोर्ट भेजें") }}</button>
+      <button type="submit" class="hbtn hbtn-p cm-btn" data-intent-text data-warn="{{ tr('Send report', 'रिपोर्ट भेजें') }}" data-ask="{{ tr('Post my question', 'मेरा सवाल भेजें') }}">{% if asking %}{{ tr("Post my question", "मेरा सवाल भेजें") }}{% else %}{{ tr("Send report", "रिपोर्ट भेजें") }}{% endif %}</button>
       <a class="hbtn hbtn-s" href="/community">{{ tr("Cancel", "रद्द करें") }}</a>
     </div>
     <p class="cm-small">{{ tr("You can send " ~ left ~ " more reports today.", "आज आप " ~ left ~ " और रिपोर्ट भेज सकते हैं।") }}</p>
