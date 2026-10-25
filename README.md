@@ -92,7 +92,32 @@ Before any verdict, the result page shows **what the message actually says**, th
 |---|---|
 | ![Company check](docs/img/company-check.png) **Is this really them?** Say which company a message claims to be (Amazon, a bank, a courier, a government service); links and phone numbers are compared with that company's real official addresses. | ![Helper mode](docs/img/helper-mode.png) **Helper mode**: one item per person, the answer in their language, then wipe before the next person. |
 
-Also real: **Shopkeeper check** (the customer's screenshot is read and its payee is compared with your own UPI ID and amount), **Telegram bot** `@Satyapanbot` (forward anything; "Explain in my language" button), and the **browser extension** in `extension/`.
+Also real: **Shopkeeper check** (the customer's screenshot is read and its payee is compared with your own UPI ID and amount), **Telegram bot** `@Satyapanbot` (forward anything; see below), and the **browser extension** in `extension/`.
+
+### Telegram: forward a scam, get the answer in the same chat
+
+People already live in chat apps, so the same engine is available as a Telegram bot: **[t.me/Satyapanbot](https://t.me/Satyapanbot)**.
+
+![Satyapan on Telegram](docs/img/telegram-bot.png)
+
+**How to use it:** open the bot, press Start, choose English or हिन्दी, then send or forward a message, a link, a QR picture, a payment screenshot, a PDF or a voice note.
+
+**What comes back** (usually within a few seconds): the verdict (HIGH RISK, SUSPICIOUS, CAN'T TELL or NO RED FLAGS FOUND), up to three plain reasons written from our own reviewed templates, what to do next, and the line "Shows signs only; not proof. Satyapan is advisory: it never moves or blocks money." When the site has a public address, the reply also links to the full result page. Under every answer are four buttons:
+
+| Button | What it does |
+|---|---|
+| **Wrong result?** | Asks whether a human reviewer may see this result, then opens a review ticket and replies with a reference number and a status page, exactly like the website. |
+| **Ask family** | Gives a ready-to-forward message ("Please check with me before I pay. Satyapan says: ...") with a short-lived share link, to send to someone you trust. |
+| **Delete my result** | Deletes the saved result at once. `/delete` does the same for the last result. |
+| **Explain in my language** | Pick one of 11 Indian languages (Hindi, Bengali, Tamil, Telugu, Marathi, Gujarati, Kannada, Malayalam, Punjabi, Odia, English). The bot replies with what the message said, translated, and our verdict in that language, with the line that this is only a suggestion. Pressing a language is the consent to send the text to Sarvam; it is held in memory for 15 minutes and never stored. |
+
+Commands: `/start`, `/lang` (switch English or Hindi), `/delete`, `/privacy` (says in plain words what is kept).
+
+**It is the same engine as the website**, not a separate simplified one: the same rules, scam-message classifier, optional AI rule check, screenshot tamper model, QR and PDF checks and voice pipeline. Checks made through Telegram are counted on `/impact` as the "telegram" channel, next to the website.
+
+**Safeguards that are running:** private chats only (groups are ignored); at most 10 checks a minute per chat; files up to 20 MB are read in memory and never written to disk; the saved result lasts 24 hours so the web link works, and `/delete` removes it sooner; the chat id is stored only as a salted hash, never a name or phone number.
+
+**How it runs:** it polls Telegram itself (no public web address needed for the bot), started with `make bot` or `python -m satyapan.bots.telegram_bot`, with `TELEGRAM_BOT_TOKEN` in `.env`. It has to run on a machine that is switched on; the first minute after a start is slower while the models load. WhatsApp would need paid business approval, which is why Telegram is the live chat channel.
 
 ---
 
