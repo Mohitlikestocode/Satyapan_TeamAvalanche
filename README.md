@@ -14,6 +14,15 @@ Verdict tiers: **HIGH RISK**, **SUSPICIOUS**, **CAN'T TELL**, **NO RED FLAGS FOU
 
 ---
 
+## We took it to real people, and they changed what we built
+
+| | |
+|---|---|
+| ![Amazon team member](docs/img/field/amazon-team.jpg) **An Amazon team member:** *"Can anyone, from anywhere, learn this?"* So we added **Explain in my language**: 11 Indian languages with Sarvam translation and spoken voice. | ![Lawyer and mother](docs/img/field/lawyer-mother.jpg) **A lawyer and a mother:** *"Can it reach and warn people?"* So we built **Scam Watch**, Lessons, Scam Drill and shareable warning cards. |
+| ![Security staff](docs/img/field/security-staff.jpg) **Security staff:** *"I want a call button if this happens to me."* So every page has a one-tap **Call 1930** and a complaint draft. | ![Amazon customer experience](docs/img/field/amazon-leaders.jpg) **Amazon, head of customer experience:** *"Think beyond the app."* So the same engine now runs on the website, **Telegram** and a **Chrome extension**; next is a partner API in refund flows, WhatsApp and SMS. |
+
+---
+
 ## 1. Try it in two minutes
 
 ```bash
