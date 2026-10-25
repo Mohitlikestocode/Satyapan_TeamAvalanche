@@ -38,3 +38,5 @@
   .ml-kv{grid-template-columns:1fr}
   .ml-tbl{font-size:14px}
 }
+.ml-hit{background:var(--amber-l)}
+.ml-hit th{font-weight:700}

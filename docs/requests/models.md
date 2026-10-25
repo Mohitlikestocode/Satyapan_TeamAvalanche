@@ -45,3 +45,11 @@ the shopkeeper journey.
 
 `/models/voice` shows the transcript for the visitor to correct before checking, as the `/check/voice` design promises.
 If you want the core check form to use it, point its voice option to `/models/voice`. The plain API path works without this.
+
+## 5. AI rule check needs a key on the server (`.env`)
+
+The AI rule check (`plugins/models_llm.py`) reads `GROQ_API_KEY` from `.env` (core `envfile.py` loads it). Please add
+`GROQ_API_KEY=` to `.env.example` (your file) and put the real key in the server's `.env`. Without it the check is simply off and
+the rules run alone. Free-tier Groq allows about 8,000 tokens a minute per model (about 5 checks a minute per model); the code
+falls back from gpt-oss-120b to gpt-oss-20b to qwen3.8-27b on a rate limit, about 15 checks a minute in total. For a busy demo a
+paid Groq tier, or a local Ollama `gpt-oss:20b` (`SATYAPAN_LLM_BASE_URL=http://localhost:11434/v1`), removes the limit.

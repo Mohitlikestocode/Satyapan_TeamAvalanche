@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% set tiers = {"HIGH_RISK": tr("High risk", "बहुत ज़्यादा खतरा"), "SUSPICIOUS": tr("Suspicious", "संदिग्ध"), "CANT_TELL": tr("Can't tell", "कह नहीं सकते"),
+                "NO_RED_FLAGS": tr("No red flags found", "कोई खतरे का संकेत नहीं मिला"), "REGISTRY_HIT": tr("Known scam", "जाना-पहचाना स्कैम")} %}
+{% block content %}
+<section class="ml-head">
+  <div class="wrap">
+    <h1>{{ tr("Why is this a scam?", "यह ठगी क्यों है?") }}</h1>
+    <p class="ml-lead">{{ tr("Type or paste any message, in any language. We check it against 33 warning rules taken from RBI, SEBI, NPCI, TRAI and police advisories, and show exactly which rules it breaks and which words broke them.",
+                             "कोई भी संदेश, किसी भी भाषा में, लिखें या चिपकाएँ। हम इसे आरबीआई, सेबी, एनपीसीआई, ट्राई और पुलिस की सलाहों से लिए 33 चेतावनी नियमों पर जाँचते हैं, और दिखाते हैं कि यह कौन-से नियम तोड़ता है और किन शब्दों से।") }}</p>
+  </div>
+</section>
+
+<div class="wrap ml-body">
+  <section class="board" aria-labelledby="ml-ex-h">
+    <h3 id="ml-ex-h">{{ tr("Check a message", "संदेश जाँचें") }}</h3>
+    <form class="ml-form ml-pad" method="post" action="/models/explain">
+      <label for="ml-ex-text">{{ tr("Message", "संदेश") }}</label>
+      <textarea id="ml-ex-text" name="text" maxlength="4000" required placeholder="{{ tr('For example: In 15 days your money will double, guaranteed. Pay today.', 'जैसे: 15 दिन में आपका पैसा दोगुना, गारंटी के साथ। आज ही भुगतान करें।') }}">{{ original or "" }}</textarea>
+      <button type="submit" class="hbtn hbtn-p">{{ tr("Check against the rules", "नियमों पर जाँचें") }}</button>
+      <p class="dnote">{{ ai_on and tr("The rule check uses an AI model (gpt-oss on Groq). Phone numbers, e-mails, account numbers and codes are removed before the text is sent; nothing is stored. The AI only says which rules match; the verdict and the reasons are ours.",
+                                       "नियम जाँच में AI मॉडल (Groq पर gpt-oss) लगता है। भेजने से पहले फ़ोन नंबर, ई-मेल, खाता नंबर और कोड हटा दिए जाते हैं; कुछ भी सेव नहीं होता। AI सिर्फ़ बताता है कि कौन-से नियम मिले; नतीजा और कारण हमारे हैं।")
+                                    or tr("The AI rule check is not set up on this server, so only our fixed rules run.", "इस सर्वर पर AI नियम जाँच सेट नहीं है, इसलिए सिर्फ़ हमारे तय नियम चलते हैं।") }}</p>
+    </form>
+  </section>
+
+  {% if res %}
+  {% set tcls = {"HIGH_RISK": "r", "REGISTRY_HIT": "r", "SUSPICIOUS": "a", "CANT_TELL": "n", "NO_RED_FLAGS": "g"}[res.tier.value] %}
+  <section class="vbanner vb-{{ tcls }}" aria-labelledby="ml-exv">
+    <div class="vb-icon" aria-hidden="true">{% if tcls == "g" %}✓{% elif tcls == "n" %}?{% elif tcls == "a" %}!{% else %}✕{% endif %}</div>
+    <div>
+      <h2 id="ml-exv" class="vb-h">{{ verdict.headline }}</h2>
+      <p class="vb-act">{{ verdict.action_text }}</p>
+    </div>
+  </section>
+  <section class="board" aria-labelledby="ml-exw">
+    <h3 id="ml-exw">{{ tr("Why we think this", "हम ऐसा क्यों मानते हैं") }}
+      <span class="pill pill-n">{{ matched|length }} / {{ rules|length }} {{ tr("rules broken", "नियम टूटे") }}</span></h3>
+    <div class="ml-pad">
+      <ul class="rlist">{% for r in verdict.reasons_text %}<li>{{ r }}</li>{% endfor %}</ul>
+      {% if ai is none and ai_on %}<p class="ml-none">{{ tr("The AI rule check did not answer in time, so only our fixed rules were used.", "AI नियम जाँच ने समय पर जवाब नहीं दिया, इसलिए सिर्फ़ हमारे तय नियम लगे।") }}</p>{% endif %}
+      <p><a class="hbtn hbtn-s" href="/case/{{ res.case_id }}">{{ tr("Open the full result (next steps, Ask family, report)", "पूरा नतीजा खोलें (अगले कदम, परिवार से पूछें, रिपोर्ट)") }}</a></p>
+    </div>
+  </section>
+  {% endif %}
+
+  <section class="board" aria-labelledby="ml-exr">
+    <h3 id="ml-exr">{{ tr("The 33 rules", "33 नियम") }}</h3>
+    <div class="tbl-wrap">
+      <table class="tbl ml-tbl">
+        <thead><tr><th scope="col">{{ tr("Rule", "नियम") }}</th>{% if res %}<th scope="col">{{ tr("This message", "यह संदेश") }}</th>{% endif %}<th scope="col">{{ tr("Basis", "आधार") }}</th></tr></thead>
+        <tbody>
+        {% for r in rules %}
+          {% set m = matched.get(r.id) if matched else none %}
+          <tr{% if m %} class="ml-hit"{% endif %}>
+            <th scope="row"><small class="ml-muted">{{ r.id }} · {{ groups[r.group][1] if lang == "hi" else groups[r.group][0] }}</small><br>{{ r.look_for }}</th>
+            {% if res %}<td>{% if m %}<span class="ml-changed">{{ tr("Broken", "टूटा") }}{% if r.strong and m.confidence == "high" %} ({{ tr("strong sign", "मज़बूत संकेत") }}){% endif %}</span><br><q class="ml-ftext">{{ m.quote }}</q>{% else %}<span class="ml-muted">–</span>{% endif %}</td>{% endif %}
+            <td>{% if r.basis == "heuristic" %}{{ tr("Our common-sense benchmark", "हमारा सामान्य-समझ पैमाना") }}{% elif r.basis == "official" %}<a href="{{ r.source }}" rel="noopener noreferrer" target="_blank">{{ tr("Official advisory", "आधिकारिक सलाह") }}</a>{% else %}<a href="{{ r.source }}" rel="noopener noreferrer" target="_blank">{{ tr("Known scam pattern", "जाना-पहचाना ठगी तरीका") }}</a>{% endif %}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <p class="dnote ml-pad">{{ tr("Rule descriptions are in English because they are what the AI reads; the reasons you see in a result are in your language.", "नियमों का विवरण अंग्रेज़ी में है क्योंकि AI यही पढ़ता है; नतीजे में कारण आपकी भाषा में दिखते हैं।") }}</p>
+  </section>
+</div>
+{% endblock %}

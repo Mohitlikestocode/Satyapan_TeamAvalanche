@@ -9,3 +9,170 @@ codes:
     priority: 24
     en: "The wording is very similar to known scam messages."
     hi: "शब्द जाने-पहचाने स्कैम संदेशों से बहुत मिलते हैं।"
+
+  # ---- AI rule check (layers/l4_semantic/ground_rules.py). The model only picks which rule matched; this text is ours. ----
+  ML_GR_GUARANTEED_RETURN:
+    layer: L4
+    priority: 11
+    en: "It promises guaranteed or risk-free returns. No genuine investment can guarantee returns, and SEBI-registered advisers are not allowed to."
+    hi: "यह पक्के या बिना जोखिम के मुनाफ़े का वादा करता है। कोई भी असली निवेश मुनाफ़े की गारंटी नहीं दे सकता, और सेबी-पंजीकृत सलाहकारों को इसकी अनुमति नहीं है।"
+  ML_GR_HIGH_RETURN:
+    layer: L4
+    priority: 12
+    en: "It promises returns far above normal (bank deposits pay about 6-8% a year). Money that 'doubles' quickly is a classic scam promise."
+    hi: "यह सामान्य से बहुत ज़्यादा मुनाफ़े का वादा करता है (बैंक जमा पर सालाना लगभग 6-8% मिलता है)। जल्दी 'दोगुना' होने वाला पैसा ठगी का पुराना वादा है।"
+  ML_GR_UNREGISTERED_TIPS:
+    layer: L4
+    priority: 20
+    en: "It offers trading or stock tips through a chat group without a SEBI registration number. SEBI warns against such tips."
+    hi: "यह बिना सेबी पंजीकरण नंबर के चैट ग्रुप में ट्रेडिंग या शेयर टिप्स देता है। सेबी ऐसी टिप्स से सावधान करता है।"
+  ML_GR_IPO_QUOTA:
+    layer: L4
+    priority: 18
+    en: "It claims a special IPO or 'institutional' quota. Allotment is by the exchange's rules, never by a private offer."
+    hi: "यह किसी खास IPO या 'संस्थागत' कोटे का दावा करता है। शेयर आवंटन एक्सचेंज के नियमों से होता है, किसी निजी पेशकश से नहीं।"
+  ML_GR_INVEST_PERSONAL_ACCOUNT:
+    layer: L4
+    priority: 13
+    en: "It asks you to send investment money to a personal account or an unknown app. Invest only through a SEBI-registered broker's own app."
+    hi: "यह निवेश का पैसा किसी व्यक्ति के खाते या अनजान ऐप में भेजने को कहता है। सिर्फ़ सेबी-पंजीकृत ब्रोकर के अपने ऐप से निवेश करें।"
+  ML_GR_FEE_TO_WITHDRAW:
+    layer: L4
+    priority: 12
+    en: "It asks you to pay a fee or tax before you can withdraw or receive money. Genuine payouts never need you to pay first."
+    hi: "यह पैसा निकालने या पाने से पहले शुल्क या टैक्स भरने को कहता है। असली भुगतान के लिए पहले पैसे नहीं देने पड़ते।"
+  ML_GR_ASKS_SECRET:
+    layer: L4
+    priority: 10
+    en: "It asks for your OTP, PIN, CVV or password. No bank, government office or company will ever ask for these."
+    hi: "यह आपका OTP, PIN, CVV या पासवर्ड माँगता है। कोई बैंक, सरकारी दफ़्तर या कंपनी कभी यह नहीं माँगती।"
+  ML_GR_PIN_TO_RECEIVE:
+    layer: L4
+    priority: 10
+    en: "It says you must enter your UPI PIN or scan a QR to receive money. A UPI PIN is only ever needed to send money."
+    hi: "यह कहता है कि पैसे पाने के लिए UPI PIN डालें या QR स्कैन करें। UPI PIN सिर्फ़ पैसे भेजने के लिए लगता है।"
+  ML_GR_REMOTE_APP:
+    layer: L4
+    priority: 11
+    en: "It asks you to install a screen-sharing or unknown app. Such apps let someone else control your phone and bank apps."
+    hi: "यह स्क्रीन-शेयरिंग या अनजान ऐप डालने को कहता है। ऐसे ऐप से कोई और आपका फ़ोन और बैंक ऐप चला सकता है।"
+  ML_GR_KYC_LINK:
+    layer: L4
+    priority: 12
+    en: "It threatens to block your account unless you update KYC or PAN through a link or call. Banks do not do KYC this way."
+    hi: "यह धमकी देता है कि लिंक या कॉल से KYC या PAN अपडेट न करने पर खाता बंद होगा। बैंक इस तरह KYC नहीं करते।"
+  ML_GR_SUSPICIOUS_LINK:
+    layer: L4
+    priority: 26
+    en: "It has a link that is not the organisation's own website. Open your bank or app directly instead of using the link."
+    hi: "इसमें ऐसा लिंक है जो संस्था की अपनी वेबसाइट नहीं है। लिंक के बजाय अपना बैंक या ऐप सीधे खोलें।"
+  ML_GR_DEADLINE:
+    layer: L4
+    priority: 27
+    en: "It pushes you to act within hours. Genuine banks and offices give you time and never rush a payment."
+    hi: "यह आपको कुछ ही घंटों में कदम उठाने का दबाव डालता है। असली बैंक और दफ़्तर समय देते हैं और भुगतान के लिए जल्दी नहीं मचाते।"
+  ML_GR_BLOCK_THREAT:
+    layer: L4
+    priority: 22
+    en: "It threatens to cut your electricity, SIM or account. TRAI and power companies do not send such threats from personal numbers."
+    hi: "यह बिजली, सिम या खाता काटने की धमकी देता है। ट्राई और बिजली कंपनियाँ निजी नंबरों से ऐसी धमकियाँ नहीं भेजतीं।"
+  ML_GR_SECRECY:
+    layer: L4
+    priority: 14
+    en: "It tells you to keep this secret. Scammers isolate people so nobody can warn them. Tell someone you trust."
+    hi: "यह इसे गुप्त रखने को कहता है। ठग लोगों को अकेला करते हैं ताकि कोई उन्हें सावधान न कर सके। किसी भरोसेमंद को बताएँ।"
+  ML_GR_DIGITAL_ARREST:
+    layer: L4
+    priority: 10
+    en: "It claims a police, CBI or court case and asks for money or a video call. There is no 'digital arrest' in Indian law; agencies never collect money this way."
+    hi: "यह पुलिस, सीबीआई या अदालत के केस का दावा करके पैसे या वीडियो कॉल माँगता है। भारतीय कानून में 'डिजिटल अरेस्ट' जैसा कुछ नहीं है; एजेंसियाँ इस तरह पैसे नहीं लेतीं।"
+  ML_GR_TAX_REFUND:
+    layer: L4
+    priority: 13
+    en: "It offers a tax refund or government benefit through a link or asks for bank details. The Income Tax Department does not send refund links."
+    hi: "यह लिंक से टैक्स रिफ़ंड या सरकारी लाभ देने या बैंक जानकारी माँगने की बात करता है। आयकर विभाग रिफ़ंड लिंक नहीं भेजता।"
+  ML_GR_FAKE_SUPPORT:
+    layer: L4
+    priority: 21
+    en: "Someone claiming to be customer care contacted you first or gave a personal number. Use only the helpline inside the official app."
+    hi: "ग्राहक सेवा होने का दावा करने वाले ने ख़ुद संपर्क किया या निजी नंबर दिया। सिर्फ़ आधिकारिक ऐप के अंदर दी गई हेल्पलाइन इस्तेमाल करें।"
+  ML_GR_NEW_NUMBER_RELATIVE:
+    layer: L4
+    priority: 11
+    en: "Someone says they are family on a new number and needs money urgently. Call them back on the number you already have first."
+    hi: "कोई नए नंबर से परिवार का होने का दावा करके तुरंत पैसे माँग रहा है। पहले उन्हें अपने पास पहले से मौजूद नंबर पर फ़ोन करें।"
+  ML_GR_BRAND_OR_OFFICIAL_NAME:
+    layer: L4
+    priority: 30
+    en: "It uses the name of a bank, regulator or well-known company to look official. Anyone can type a name into a message."
+    hi: "यह आधिकारिक दिखने के लिए किसी बैंक, नियामक या मशहूर कंपनी का नाम इस्तेमाल करता है। संदेश में कोई भी नाम लिख सकता है।"
+  ML_GR_PAY_TO_GET:
+    layer: L4
+    priority: 12
+    en: "It asks for a fee before giving you a job, loan, prize or parcel. Paying first to receive something is the most common scam."
+    hi: "यह नौकरी, लोन, इनाम या पार्सल देने से पहले शुल्क माँगता है। कुछ पाने के लिए पहले पैसे देना सबसे आम ठगी है।"
+  ML_GR_LOTTERY:
+    layer: L4
+    priority: 13
+    en: "It says you won a prize or lottery you never entered. Nobody wins a draw they did not join."
+    hi: "यह कहता है कि आपने ऐसा इनाम या लॉटरी जीती जिसमें आपने हिस्सा ही नहीं लिया। बिना भाग लिए कोई ड्रॉ नहीं जीतता।"
+  ML_GR_TASK_JOB:
+    layer: L4
+    priority: 12
+    en: "It offers money for simple online tasks or a job that needs a deposit. Genuine employers never charge you to work."
+    hi: "यह आसान ऑनलाइन काम के बदले पैसे या ऐसी नौकरी देता है जिसमें पहले पैसे जमा करने हों। असली नियोक्ता काम के लिए पैसे नहीं लेते।"
+  ML_GR_LOAN_APP:
+    layer: L4
+    priority: 13
+    en: "It offers an instant loan with no documents through an app. Borrow only from RBI-regulated banks or NBFCs that name themselves."
+    hi: "यह किसी ऐप से बिना कागज़ के तुरंत लोन देता है। सिर्फ़ आरबीआई-नियंत्रित बैंक या NBFC से लोन लें जो अपना नाम बताते हों।"
+  ML_GR_PARCEL_CUSTOMS:
+    layer: L4
+    priority: 14
+    en: "It says your parcel is held and asks for a fee or details. Check the courier's own website with your tracking number."
+    hi: "यह कहता है कि आपका पार्सल रुका है और शुल्क या जानकारी माँगता है। अपने ट्रैकिंग नंबर से कूरियर की अपनी वेबसाइट देखें।"
+  ML_GR_MISTAKEN_TRANSFER:
+    layer: L4
+    priority: 20
+    en: "It says money was sent to you by mistake and asks you to return it. Check your own bank app; never approve a request to 'return' money."
+    hi: "यह कहता है कि ग़लती से आपको पैसे भेजे गए और लौटाने को कहता है। अपना बैंक ऐप देखें; पैसे 'लौटाने' का अनुरोध कभी मंज़ूर न करें।"
+  ML_GR_FAKE_PAYMENT_PROOF:
+    layer: L4
+    priority: 15
+    en: "It asks you to trust a screenshot that a payment was made. Check your own bank or UPI app before handing anything over."
+    hi: "यह आपसे भुगतान के स्क्रीनशॉट पर भरोसा करने को कहता है। कुछ भी देने से पहले अपना बैंक या UPI ऐप देखें।"
+  ML_GR_ACCOUNT_CHANGED:
+    layer: L4
+    priority: 12
+    en: "It says the bank account or UPI ID has changed. Confirm by calling a number you already have before paying the new one."
+    hi: "यह कहता है कि बैंक खाता या UPI ID बदल गई है। नए खाते में पैसे भेजने से पहले पहले से मौजूद नंबर पर फ़ोन करके पुष्टि करें।"
+  ML_GR_EXTORTION:
+    layer: L4
+    priority: 10
+    en: "It threatens to leak private material unless you pay. Do not pay; report it at cybercrime.gov.in or call 1930."
+    hi: "यह पैसे न देने पर निजी सामग्री फैलाने की धमकी देता है। पैसे न दें; cybercrime.gov.in पर शिकायत करें या 1930 पर कॉल करें।"
+  ML_GR_ADVANCE_TOKEN:
+    layer: L4
+    priority: 19
+    en: "It asks for an advance or token amount from someone you have not met. See the item or person first; never pay in advance."
+    hi: "यह किसी ऐसे व्यक्ति के लिए पहले से पैसे या टोकन माँगता है जिससे आप मिले नहीं। पहले सामान या व्यक्ति को देखें; कभी पहले भुगतान न करें।"
+  ML_GR_TOO_GOOD:
+    layer: L4
+    priority: 28
+    en: "The offer is too good to be true."
+    hi: "यह पेशकश सच होने के लिए बहुत अच्छी है।"
+  ML_GR_OFF_PLATFORM:
+    layer: L4
+    priority: 29
+    en: "It asks you to pay or talk outside the official app or website, where you lose all protection."
+    hi: "यह आधिकारिक ऐप या वेबसाइट के बाहर भुगतान या बात करने को कहता है, जहाँ आपकी कोई सुरक्षा नहीं रहती।"
+  ML_GR_CRYPTO_PLATFORM:
+    layer: L4
+    priority: 13
+    en: "It asks you to deposit money or crypto on an unknown trading or mining platform. Such platforms often block withdrawals."
+    hi: "यह किसी अनजान ट्रेडिंग या माइनिंग प्लेटफ़ॉर्म पर पैसा या क्रिप्टो जमा करने को कहता है। ऐसे प्लेटफ़ॉर्म अक्सर पैसा निकालने नहीं देते।"
+  ML_GR_SUBSIDY_FEE:
+    layer: L4
+    priority: 13
+    en: "It says a government benefit needs a payment, an OTP or an app to be released. Government benefits never charge a release fee."
+    hi: "यह कहता है कि सरकारी लाभ पाने के लिए भुगतान, OTP या ऐप चाहिए। सरकारी लाभ के लिए कभी कोई शुल्क नहीं लगता।"
