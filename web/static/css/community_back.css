@@ -1,0 +1,10 @@
+/* The Back button (see js/community_back.js). Sits in the breadcrumb bar; works at 375 px and with large text. */
+.cm-crumbs-flex{display:flex;align-items:center;flex-wrap:wrap;gap:4px 14px}
+.cm-crumbs-flex ol{padding:6px 0}
+.cm-back{display:inline-flex;align-items:center;gap:4px;min-height:40px;padding:0 14px 0 8px;border:1px solid var(--blue,#0B3D91);border-radius:var(--r,3px);background:#fff;color:var(--blue,#0B3D91);font-weight:700;font-size:15px;line-height:1;text-decoration:none;white-space:nowrap}
+.cm-back:hover{background:var(--blue-l,#E8EEF8);color:var(--blue-d,#072A66)}
+.cm-back:focus-visible{outline:3px solid #F5A524;outline-offset:2px}
+.cm-back svg{flex:none}
+.cm-backbar{background:#fff;border-bottom:1px solid var(--line2,#E1E6ED);padding:6px 0}
+@media (max-width:760px){.cm-back{min-height:44px}}
+@media print{.cm-back,.cm-backbar{display:none!important}}

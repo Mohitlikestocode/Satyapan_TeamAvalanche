@@ -33,3 +33,5 @@ def setup(registry) -> None:
     registry.add_related("community", "Make a warning card", "/warn")
     registry.on("guardian", family_shared)
     registry.add_global_js("/static/js/community_share.js")
+    registry.add_global_js("/static/js/community_back.js")      # a Back button in the breadcrumb bar of every inner page
+    registry.add_global_css("/static/css/community_back.css")
