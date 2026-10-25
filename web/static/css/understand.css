@@ -17,3 +17,7 @@
 .und-err{padding:10px 12px;background:#FEF3F2;border:1px solid #FDA29B;border-radius:6px}
 .und-busy{font-weight:600;color:#1F4E8C}
 @media (max-width:600px){.und{margin:12px 12px 0;padding:14px}.und-row select{width:100%}}
+.und-row button,.und-listen{font:inherit;font-weight:600;font-size:16px;cursor:pointer;border-radius:6px}
+.und-row button{min-height:44px;padding:0 22px;background:#1F4E8C;color:#fff;border:1px solid #1F4E8C}
+.und-row button:disabled{opacity:.6;cursor:wait}
+.und-listen{background:#fff;color:#1F4E8C;border:1px solid #1F4E8C}

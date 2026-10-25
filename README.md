@@ -79,6 +79,21 @@ The jury scores each row 1 to 5, weighted. For every row: what it asks, what we 
 | ![Impact](docs/img/impact.png) **/impact** on a fresh start: it starts at zero and counts only real visitors; team traffic is excluded | ![Poster](docs/img/poster.png) **Shop poster** with a QR that opens Satyapan, and referral counting |
 | ![Hindi check page](docs/img/check-hindi.png) **Hindi**: the shell, the check page, reasons and the spoken verdict switch language; any page opens in Hindi with `?lang=hi` | ![Screenshot model](docs/img/screenshot-model.png) **Screenshot check**: the suspected edit is circled, with the honest caveat |
 
+### New: understand first, in your own language
+
+Before any verdict, the result page shows **what the message actually says**, then explains it in the visitor's language (11 Indian languages, via Sarvam). Our verdict follows in the same language, with a Listen button for each part. The same flow is in the Telegram bot and works from the browser extension.
+
+![Tamil explanation](docs/img/explain-tamil.png)
+![Telugu explanation](docs/img/explain-telugu.png)
+
+### New: real tools, not examples
+
+| | |
+|---|---|
+| ![Company check](docs/img/company-check.png) **Is this really them?** Say which company a message claims to be (Amazon, a bank, a courier, a government service); links and phone numbers are compared with that company's real official addresses. | ![Helper mode](docs/img/helper-mode.png) **Helper mode**: one item per person, the answer in their language, then wipe before the next person. |
+
+Also real: **Shopkeeper check** (the customer's screenshot is read and its payee is compared with your own UPI ID and amount), **Telegram bot** `@Satyapanbot` (forward anything; "Explain in my language" button), and the **browser extension** in `extension/`.
+
 ---
 
 ## 4. Measured results, including where we fail

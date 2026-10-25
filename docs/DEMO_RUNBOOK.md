@@ -24,14 +24,19 @@ To start the counters (`/impact`, Scam Watch, "My checks" history) at zero, stop
 ## The 5-minute path (all inputs are in `demo/`)
 
 1. **Home** → "Check now". Say who it is for: a person about to pay someone they are not sure about.
-2. **Message**: paste "Digital arrest (Hindi)" → SUSPICIOUS, reason in Hindi, press **Listen**.
-3. **Let the judge type their own message** (this is the row worth 25 points). Genuine ones should say "no red flags found" with "this is not a guarantee".
-4. **QR**: upload `collect_trap__clean.png` → "Enter PIN to receive": explain why receiving money never needs a PIN.
-5. **Voice note**: `voice/scam_hi.wav` → transcript, scam words, synthetic-voice note.
-6. **Screenshot**: `screens/edited_000003.jpg` → the edit is circled. Then show `edited_000002.jpg` is **missed**: say "we catch about 4 in 10 edits, here is one we miss". Honesty scores.
-7. **Act**: **Ask family** (WhatsApp share), **Report** (signed evidence pack), **Wrong result?** on a genuine message flagged → reference number → open `/console` to show the human reviewer decide.
-8. **/results** and **/attack**: every number is read from a file, named failures, attacks measured.
-9. **/impact**, **/poster**, **/community**, **/learn**: traction and education.
+2. **Let the judge type their own message** (this is the 25-point row). In any language, even Hinglish.
+3. On the result, the first thing shown is **"First, what does this say?"**. Pick the judge's own language (Tamil, Telugu, Bengali, Marathi…) and press **Explain**: it shows what the message says, then our verdict, in that language. Press **Listen**. Say: "This is for people who are more comfortable in their own language: they understand it first, then decide whether to trust our verdict."
+4. **Hindi message** from `demo/messages.txt` ("Digital arrest, Hindi") → SUSPICIOUS with reasons in Hindi.
+5. **QR**: upload `qr/collect_trap__clean.png` → "Enter PIN to receive": receiving money never needs a PIN.
+6. **Voice note**: `voice/scam_hi.wav` → transcript, scam words, synthetic-voice note.
+7. **Screenshot**: `screens/edited_000003.jpg` → the edit is circled. Then show `edited_000002.jpg` is **missed**: say "we catch about 4 in 10 edits, here is one we miss". Honesty scores.
+8. **Is this really them?** (menu: "Is this real?"): choose Amazon, paste a message with a look-alike link and a personal number → flagged as not an official Amazon address.
+9. **Shopkeeper check**: save a UPI ID, upload `screens/genuine_000000.jpg` (it pays `sharma_kirana@ibl`): with a different shop ID it warns "money went to someone else"; with `sharma_kirana@ibl` it says "names your UPI ID, but check your own app".
+10. **Telegram**: forward a scam message to **@Satyapanbot** on a phone; press "Explain in my language".
+11. **Extension**: select text on any page, right-click → "Check with Satyapan".
+12. **Act**: **Ask family** (WhatsApp share), **Report** (signed evidence pack), **Wrong result?** → reference number → `/console` shows the human reviewer decide, **Delete now** → real deletion receipt.
+13. **/results** and **/attack**: every number is read from a file, named failures, attacks measured.
+14. **/impact**, **/poster**, **/community**, **/learn**: traction and education.
 
 ## If something breaks
 
