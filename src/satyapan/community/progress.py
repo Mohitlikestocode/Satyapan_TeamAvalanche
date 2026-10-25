@@ -41,6 +41,8 @@ BADGES = [
     ("family_guardian", "Family Guardian", "परिवार रक्षक", "Open Ask family for a check, so someone you trust can look at it with you.",
      "किसी जाँच के लिए \"परिवार से पूछें\" खोलें, ताकि कोई भरोसेमंद आपके साथ उसे देखे।", lambda s: s["family_open"] >= 1),
     ("scam_watcher", "Scam Watcher", "स्कैम वॉचर", "Have a Scam Watch report published.", "स्कैम वॉच पर आपकी एक रिपोर्ट प्रकाशित हो।", lambda s: s["posts_approved"] >= 1),
+    ("community_voice", "Community voice", "समुदाय की आवाज़", "Have a comment published under a Scam Watch report.", "स्कैम वॉच की किसी रिपोर्ट के नीचे आपकी टिप्पणी प्रकाशित हो।",
+     lambda s: s["comments"] >= 1),
     ("challenger", "Challenger", "चुनौती देने वाला", "Someone plays a challenge you sent.", "आपकी भेजी चुनौती कोई और खेले।", lambda s: s["invite_accepted"] >= 1),
     ("scam_aware", "Scam-Aware", "स्कैम-सजग", "Earn the learning certificate.", "सीखने का प्रमाणपत्र पाएँ।", lambda s: s["certified"] >= 1),
 ]
@@ -154,6 +156,7 @@ def _stats(c: sqlite3.Connection, pid: int) -> dict:
         "spotted": sum(1 for q in right if (qq := content.question(q)) and content.is_scam_type(qq)), "best_streak": p["best_streak"],
         "lessons": c.execute("SELECT COUNT(*) FROM learn_reads WHERE profile_id=?", (pid,)).fetchone()[0],
         "family_open": count("family_open"), "posts_approved": count("post_approved"), "certified": count("certificate"),
+        "comments": count("comment_posted"),
         "invite_accepted": c.execute("SELECT COUNT(*) FROM learn_invites WHERE inviter_profile=?", (pid,)).fetchone()[0],
     }
 

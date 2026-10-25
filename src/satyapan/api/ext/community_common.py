@@ -24,7 +24,16 @@ LANG_LABELS = [("en", "English", "अंग्रेज़ी"), ("hi", "हि�
 ABUSE_LABELS = [("spam", "Spam or advertising", "स्पैम या विज्ञापन"), ("personal_info", "Shows someone's private details", "किसी की निजी जानकारी दिख रही है"),
                 ("not_a_scam", "This is not a scam", "यह धोखाधड़ी नहीं है"), ("abusive", "Rude or harmful", "अभद्र या हानिकारक"),
                 ("other", "Something else", "कुछ और")]
+PLATFORM_LABELS = [("whatsapp", "WhatsApp", "WhatsApp"), ("sms", "SMS", "SMS"), ("telegram", "Telegram", "टेलीग्राम"),
+                   ("social", "Instagram or Facebook", "इंस्टाग्राम या फ़ेसबुक"), ("youtube", "YouTube", "यूट्यूब"), ("call", "Phone call", "फ़ोन कॉल"),
+                   ("email", "E-mail", "ई-मेल"), ("web", "A website or advert", "कोई वेबसाइट या विज्ञापन"), ("other", "Somewhere else", "कहीं और")]
+INTENT_LABELS = [("warn", "Warn others about a scam", "दूसरों को ठगी से सावधान करें"), ("ask", "Ask: is this real?", "पूछें: क्या यह असली है?")]
+COMMENT_KIND_LABELS = [("saw", "I saw this too", "मैंने भी देखा"), ("opinion", "My opinion", "मेरी राय"), ("tip", "A tip: what to do", "सुझाव: क्या करें")]
 ERRORS = {
+    "comment_short": ("Please write a little more (at least 3 characters).", "कृपया थोड़ा और लिखें (कम से कम 3 अक्षर)।"),
+    "comment_long": ("That comment is too long. Please keep it under 500 characters.", "यह टिप्पणी बहुत लंबी है। कृपया 500 अक्षरों से कम रखें।"),
+    "comment_limit": ("You have reached today's limit of 20 comments. Please come back tomorrow.", "आज की 20 टिप्पणियों की सीमा पूरी हो गई। कृपया कल आइए।"),
+    "post_closed": ("This report is not open for comments.", "इस रिपोर्ट पर टिप्पणी नहीं की जा सकती।"),
     "consent": ("Please tick the box to agree that your report will be public.", "कृपया बॉक्स पर टिक करें कि आपकी रिपोर्ट सबको दिखेगी।"),
     "too_short": ("Please write a little more (at least 8 characters).", "कृपया थोड़ा और लिखें (कम से कम 8 अक्षर)।"),
     "too_long": ("That is too long. Please keep it under 1,000 characters.", "यह बहुत लंबा है। कृपया 1,000 अक्षरों से कम रखें।"),
@@ -68,5 +77,8 @@ def _date(ts: int | None) -> str:
 
 templates.env.filters["cm_date"] = _date
 templates.env.globals["cm_kinds"] = KIND_LABELS
+templates.env.globals["cm_platforms"] = PLATFORM_LABELS
+templates.env.globals["cm_intents"] = INTENT_LABELS
+templates.env.globals["cm_ckinds"] = COMMENT_KIND_LABELS
 templates.env.globals["cm_langs"] = LANG_LABELS
 templates.env.globals["cm_abuse"] = ABUSE_LABELS

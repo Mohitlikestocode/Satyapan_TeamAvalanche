@@ -235,7 +235,7 @@ def test_trending_orders_by_distinct_devices():
 
 def test_stats_come_from_the_database():
     c = client()
-    assert c.get("/api/v1/community/stats").json() == {"posts": 0, "sightings": 0, "sightings_week": 0}
+    assert c.get("/api/v1/community/stats").json() == {"posts": 0, "sightings": 0, "sightings_week": 0, "comments": 0}
     report(c)
     assert c.get("/api/v1/community/stats").json()["posts"] == 1
 
@@ -344,9 +344,10 @@ def test_hindi_pages_and_unknown_post():
     assert "देखी हुई धोखाधड़ी बताएँ" in c.get("/community/report").text
     assert c.get("/community/post/999").status_code == 404
     r = report(c)
-    assert "मैंने भी देखा" not in c.get(r.headers["location"]).text      # the author is already counted
+    assert 'action="/community/post/1/seen"' not in c.get(r.headers["location"]).text      # the author is already counted
     d = client("hi")
-    assert "मैंने भी देखा" in d.get(r.headers["location"].split("?")[0]).text
+    page = d.get(r.headers["location"].split("?")[0]).text
+    assert 'action="/community/post/1/seen"' in page and "चर्चा" in page
 
 
 def test_database_has_no_unhashed_device():

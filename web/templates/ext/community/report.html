@@ -5,8 +5,18 @@
   <p class="cm-lead">{{ tr("Tell us what reached you. Satyapan checks it with the same rules as the Check page and shows people the reasons.", "बताइए आपके पास क्या आया। सत्यापन उसे वही नियमों से जाँचता है जो जाँच वाले पृष्ठ पर हैं, और लोगों को कारण दिखाता है।") }}</p>
 
   {% if error %}<div class="cm-error" role="alert"><b>{{ tr(error[0], error[1]) }}</b></div>{% endif %}
+  {% if case %}<div class="cm-note" role="status"><b>{{ tr("You are sharing your result with the community:", "आप अपना नतीजा समुदाय के साथ साझा कर रहे हैं:") }}</b>
+    <span class="pill pill-{{ case.tier_class }}">{{ case.headline }}</span><br>
+    {{ tr("We started the report with the payee, link and number that your check found. Add what happened in your own words. Your name and the original message are never saved.", "हमने रिपोर्ट आपकी जाँच में मिले भुगतान-पाने वाले, लिंक और नंबर से शुरू की है। जो हुआ वह अपने शब्दों में जोड़ें। आपका नाम और मूल संदेश कभी सहेजे नहीं जाते।") }}</div>{% endif %}
 
   <form class="cm-form" method="post" action="/community/report" novalidate>
+    {% if case %}<input type="hidden" name="case_id" value="{{ case.id }}">{% endif %}
+    <fieldset>
+      <legend>{{ tr("What do you want to do?", "आप क्या करना चाहते हैं?") }}</legend>
+      <div class="cm-choices">{% for key, en, hi in cm_intents %}
+        <label class="cm-choice"><input type="radio" name="intent" value="{{ key }}" {% if (values.intent or "warn") == key %}checked{% endif %}><span>{{ tr(en, hi) }}</span></label>{% endfor %}</div>
+      <p class="cm-help">{{ tr("A question is shown to everyone with Satyapan's checks, so others can tell you what they think.", "सवाल सत्यापन की जाँच के साथ सबको दिखता है, ताकि दूसरे बता सकें कि वे क्या सोचते हैं।") }}</p>
+    </fieldset>
     <fieldset>
       <legend>{{ tr("1. What kind of scam was it?", "1. यह किस तरह की धोखाधड़ी थी?") }}</legend>
       <div class="cm-choices">
@@ -28,6 +38,10 @@
       <p id="cm-preview-text" class="cm-excerpt"></p>
       <p id="cm-preview-note" class="cm-small"></p>
     </section>
+
+    <div class="cm-field"><label for="cm-platform">{{ tr("Where did you see it? (optional)", "आपने इसे कहाँ देखा? (वैकल्पिक)") }}</label>
+      <select id="cm-platform" name="platform"><option value="">{{ tr("Choose", "चुनें") }}</option>
+      {% for key, en, hi in cm_platforms %}<option value="{{ key }}" {% if values.platform == key %}selected{% endif %}>{{ tr(en, hi) }}</option>{% endfor %}</select></div>
 
     <div class="cm-two">
       <div class="cm-field"><label for="cm-place">{{ tr("3. City or state (optional)", "3. शहर या राज्य (वैकल्पिक)") }}</label>

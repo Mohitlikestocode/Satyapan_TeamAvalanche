@@ -6,7 +6,6 @@ official web addresses (layers/l3_payee/brand.py). The result is an ordinary sav
 from __future__ import annotations
 
 import time
-import uuid
 
 from fastapi import APIRouter, Form, Request
 from fastapi.responses import HTMLResponse, RedirectResponse

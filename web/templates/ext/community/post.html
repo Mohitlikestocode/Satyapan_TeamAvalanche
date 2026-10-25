@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% from "ext/community/_cm.html" import pill, kind_label, lang_label, seen_by with context %}
+{% from "ext/community/_cm.html" import pill, kind_label, lang_label, seen_by, platform_label with context %}
 {% block content %}
 <div class="wrap cm-wrap cm-narrow">
   {% if new %}<div class="cm-note" role="status">
@@ -29,8 +29,8 @@
     </div>
   </section>
 
-  <p class="cm-meta">{{ kind_label(p.kind) }} · {{ lang_label(p.lang) }} · {{ p.created|cm_date }}{% if p.place %} · {{ p.place }}{% endif %}</p>
-  <h2 class="cm-h2">{{ tr("What was reported", "क्या बताया गया") }}</h2>
+  <p class="cm-meta">{% if p.intent == "ask" %}<span class="pill pill-n">{{ tr("Question to the community", "समुदाय से सवाल") }}</span> {% endif %}{% if p.from_check %}<span class="pill pill-g">{{ tr("Shared from a Satyapan check", "सत्यापन की जाँच से साझा") }}</span> {% endif %}{{ kind_label(p.kind) }}{% if p.platform %} · {{ tr("seen on", "देखा:") }} {{ platform_label(p.platform) }}{% endif %} · {{ lang_label(p.lang) }} · {{ p.created|cm_date }}{% if p.place %} · {{ p.place }}{% endif %}</p>
+  <h2 class="cm-h2">{% if p.intent == "ask" %}{{ tr("What they are asking about", "वे किस बारे में पूछ रहे हैं") }}{% else %}{{ tr("What was reported", "क्या बताया गया") }}{% endif %}</h2>
   <blockquote class="cm-quote"><p class="cm-excerpt">{{ p.excerpt }}</p></blockquote>
   <p class="cm-small">{{ tr("Links are shown as a website name and cannot be clicked. Never open them. Phone numbers, names and long numbers were hidden before this was saved.", "लिंक सिर्फ़ वेबसाइट के नाम की तरह दिखते हैं और उन पर क्लिक नहीं होता। उन्हें कभी न खोलें। सहेजने से पहले फ़ोन नंबर, नाम और लंबे नंबर छिपा दिए गए।") }}</p>
   {% if p.entity %}<dl class="kv2 cm-kv"><div><dt>{% if p.entity_kind == "upi" %}{{ tr("Payee", "भुगतान पाने वाला") }}{% elif p.entity_kind == "domain" %}{{ tr("Website", "वेबसाइट") }}{% else %}{{ tr("Number", "नंबर") }}{% endif %}</dt><dd class="mono">{{ p.entity }}</dd></div></dl>{% endif %}
@@ -46,13 +46,62 @@
     {% if p.others %}<details class="faq"><summary>{{ tr("Other versions people reported", "लोगों ने जो दूसरे रूप बताए") }} ({{ p.others|length }})</summary>
       {% for o in p.others %}<p class="cm-excerpt">{{ o.excerpt }}</p>{% endfor %}</details>{% endif %}
     <div class="cm-actions">
-      {% if p.can_vote %}<form method="post" action="/community/post/{{ p.root_id }}/seen"><button class="hbtn hbtn-p cm-btn" type="submit">{{ tr("I saw this too", "मैंने भी देखा") }}</button></form>
+      {% if p.can_vote %}<form method="post" action="/community/post/{{ p.root_id }}/seen"><button class="hbtn hbtn-p cm-btn" type="submit">{% if p.intent == "ask" %}{{ tr("I got this too", "मुझे भी आया") }}{% else %}{{ tr("I saw this too", "मैंने भी देखा") }}{% endif %}</button></form>
       {% elif p.voted or p.mine %}<span class="pill pill-g">{{ tr("You are counted", "आप गिने गए हैं") }}</span>{% endif %}
       <a class="hbtn hbtn-s" href="{{ share }}" rel="noopener" target="_blank">{{ tr("Share on WhatsApp", "WhatsApp पर भेजें") }}</a>
       <button class="hbtn hbtn-s" type="button" data-cm-copy="{{ link }}">{{ tr("Copy link", "लिंक कॉपी करें") }}</button>
     </div>
     <p class="cm-actions-b"><a class="btn-sm" href="/check">{{ tr("Check something similar", "इसी जैसी कोई चीज़ जाँचें") }}</a>
       <a class="btn-sm" href="/warn?post={{ p.root_id }}">{{ tr("Make a warning card", "चेतावनी कार्ड बनाएँ") }}</a></p>
+  </section>{% endif %}
+
+  {% if p.status == "approved" %}
+  <section class="cm-talk-box" id="comments" aria-labelledby="cm-th">
+    <h2 id="cm-th" class="cm-h2">{{ tr("Discussion", "चर्चा") }} <span class="cm-count-pill">{{ talk|selectattr("status", "equalto", "approved")|list|length }}</span></h2>
+    <p class="cm-small">{{ tr("Say what you think, where you saw it, or what helped. Be kind. Do not write phone numbers, names or addresses: they are hidden automatically, and a person checks anything doubtful.", "बताइए आप क्या सोचते हैं, आपने इसे कहाँ देखा, या किस बात से मदद मिली। विनम्र रहें। फ़ोन नंबर, नाम या पते न लिखें: वे अपने आप छिपा दिए जाते हैं, और संदिग्ध टिप्पणी कोई व्यक्ति देखता है।") }}</p>
+    {% if note == "comment_approved" %}<div class="cm-note" role="status">{{ tr("Thank you. Your comment is published.", "धन्यवाद। आपकी टिप्पणी प्रकाशित हो गई।") }}</div>
+    {% elif note == "comment_pending" %}<div class="cm-note" role="status">{{ tr("Thank you. A person will look at your comment first. Only you can see it until then.", "धन्यवाद। पहले कोई व्यक्ति आपकी टिप्पणी देखेगा। तब तक इसे सिर्फ़ आप देख सकते हैं।") }}</div>
+    {% elif note == "helpful_ok" %}<div class="cm-note" role="status">{{ tr("Thank you for saying it helped.", "बताने के लिए धन्यवाद कि इससे मदद मिली।") }}</div>
+    {% elif note == "helpful_already" %}<div class="cm-note" role="status">{{ tr("You already marked that one.", "आप इसे पहले ही चिह्नित कर चुके हैं।") }}</div>
+    {% elif note == "helpful_own" %}<div class="cm-note" role="status">{{ tr("You cannot mark your own comment.", "आप अपनी ही टिप्पणी को चिह्नित नहीं कर सकते।") }}</div>
+    {% elif note == "helpful_limit" %}<div class="cm-error" role="alert">{{ tr("You have reached today's limit. Please come back tomorrow.", "आज की सीमा पूरी हो गई। कृपया कल आइए।") }}</div>
+    {% elif note == "creport_ok" %}<div class="cm-note" role="status">{{ tr("Thank you. We will look at that comment.", "धन्यवाद। हम उस टिप्पणी को देखेंगे।") }}</div>
+    {% elif note == "creport_already" %}<div class="cm-note" role="status">{{ tr("You already reported that comment.", "आप उस टिप्पणी की शिकायत पहले कर चुके हैं।") }}</div>
+    {% elif note == "cdeleted" %}<div class="cm-note" role="status">{{ tr("Your comment was deleted.", "आपकी टिप्पणी मिटा दी गई।") }}</div>{% endif %}
+    {% if cerror %}<div class="cm-error" role="alert"><b>{{ tr(cerror[0], cerror[1]) }}</b></div>{% endif %}
+
+    {% if talk %}<ol class="cm-comments">{% for m in talk %}
+      <li class="cm-comment {% if m.status != 'approved' %}cm-waiting{% endif %}" id="c{{ m.id }}">
+        <div class="cm-comment-top"><b>{{ m.name or tr("Someone", "कोई") }}</b>
+          <span class="pill {% if m.kind == 'saw' %}pill-r{% elif m.kind == 'tip' %}pill-g{% else %}pill-n{% endif %}">{% if m.kind == "saw" %}{{ tr("Saw this", "देखा") }}{% elif m.kind == "tip" %}{{ tr("Tip", "सुझाव") }}{% else %}{{ tr("Opinion", "राय") }}{% endif %}</span>
+          {% if m.platform %}<span class="cm-meta">{{ tr("on", "") }} {{ platform_label(m.platform) }}</span>{% endif %}
+          <span class="cm-meta">{{ m.created|cm_date }}</span>
+          {% if m.status != "approved" %}<span class="pill pill-a">{{ tr("Waiting for a person", "व्यक्ति की जाँच का इंतज़ार") }}</span>{% endif %}</div>
+        {% if m.body %}<p class="cm-excerpt">{{ m.body }}</p>{% elif m.kind == "saw" %}<p class="cm-excerpt">{{ tr("I saw this too", "मैंने भी देखा") }}{% if m.platform %}: {{ platform_label(m.platform) }}{% endif %}</p>{% endif %}
+        <div class="cm-comment-acts">
+          {% if m.status == "approved" %}<span class="cm-small">{{ tr(m.helpful ~ " found this helpful", m.helpful ~ " को यह काम का लगा") }}</span>
+            {% if not m.mine and not m.voted %}<form method="post" action="/community/comment/{{ m.id }}/helpful"><input type="hidden" name="post" value="{{ p.root_id }}"><button class="btn-sm" type="submit">{{ tr("Helpful", "काम का") }}</button></form>{% endif %}{% endif %}
+          {% if m.mine %}<form method="post" action="/community/comment/{{ m.id }}/delete"><input type="hidden" name="post" value="{{ p.root_id }}"><button class="btn-sm danger" type="submit" data-cm-confirm="{{ tr('Delete this comment? It cannot be brought back.', 'यह टिप्पणी मिटाएँ? यह वापस नहीं आएगी।') }}">{{ tr("Delete", "मिटाएँ") }}</button></form>
+          {% elif m.status == "approved" and not m.reported %}<details class="cm-abuse"><summary>{{ tr("Report", "शिकायत") }}</summary>
+            <form method="post" action="/community/comment/{{ m.id }}/abuse"><input type="hidden" name="post" value="{{ p.root_id }}">
+              <fieldset><legend>{{ tr("What is wrong with it?", "इसमें क्या ग़लत है?") }}</legend>{% for key, en, hi in cm_abuse %}<label class="cm-choice"><input type="radio" name="reason" value="{{ key }}" {% if loop.first %}checked{% endif %}><span>{{ tr(en, hi) }}</span></label>{% endfor %}</fieldset>
+              <button class="btn-sm danger" type="submit">{{ tr("Send", "भेजें") }}</button></form></details>{% endif %}
+        </div>
+      </li>{% endfor %}</ol>
+    {% else %}<p class="cm-empty-s">{{ tr("No comments yet. Be the first to say what you think.", "अभी कोई टिप्पणी नहीं। सबसे पहले अपनी राय बताइए।") }}</p>{% endif %}
+
+    <form class="cm-form cm-comment-form" method="post" action="/community/post/{{ p.id }}/comment" novalidate>
+      <fieldset><legend>{{ tr("Add to the discussion", "चर्चा में जोड़ें") }}</legend>
+        <div class="cm-choices">{% for key, en, hi in cm_ckinds %}<label class="cm-choice"><input type="radio" name="kind" value="{{ key }}" {% if loop.first and p.intent != "ask" or key == "opinion" and p.intent == "ask" %}checked{% endif %}><span>{{ tr(en, hi) }}</span></label>{% endfor %}</div>
+        <div class="cm-field"><label for="cm-cplat">{{ tr("Where did you see it? (for \"I saw this too\")", "आपने इसे कहाँ देखा? (\"मैंने भी देखा\" के लिए)") }}</label>
+          <select id="cm-cplat" name="platform"><option value="">{{ tr("Choose", "चुनें") }}</option>{% for key, en, hi in cm_platforms %}<option value="{{ key }}">{{ tr(en, hi) }}</option>{% endfor %}</select></div>
+        <div class="cm-field"><label for="cm-cbody">{{ tr("Your comment", "आपकी टिप्पणी") }}</label>
+          <textarea id="cm-cbody" name="body" rows="3" maxlength="500"></textarea><p class="cm-help">{{ tr("Up to 500 characters. You can leave this empty if you only want to say where you saw it.", "500 अक्षर तक। अगर सिर्फ़ यह बताना है कि कहाँ देखा, तो इसे खाली छोड़ सकते हैं।") }}</p></div>
+        <div class="cm-hp" aria-hidden="true"><label>Website<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+        <button class="hbtn hbtn-p cm-btn" type="submit">{{ tr("Post comment", "टिप्पणी भेजें") }}</button>
+      </fieldset>
+    </form>
+    <p class="cm-small">{{ tr("Your name is never shown. If you chose a public name on My progress, comments show that name; otherwise \"Someone\".", "आपका नाम कभी नहीं दिखता। अगर आपने \"मेरी प्रगति\" में सार्वजनिक नाम चुना है तो वही दिखेगा; नहीं तो \"कोई\"।") }}</p>
   </section>{% endif %}
 
   <section class="cm-more">

@@ -94,13 +94,14 @@ def test_navigation_footer_and_related_links_are_registered():
     assert 'href="/me"' in page and 'href="/warn"' in page and 'href="/learn/posters"' in page
 
 
-def test_asking_family_for_a_real_result_gives_the_family_guardian_badge():
+def test_asking_family_gives_the_family_guardian_badge_when_share_is_pressed():
     c = client()
     case = c.post("/api/v1/check", data={"kind": "message", "text": SCAM}).json()["id"]
+    assert c.get(f"/guardian?case={case}").status_code == 200                      # only opening the page is not enough
     assert c.get("/api/v1/learn/me").json()["started"] is False
-    c.get("/guardian?case=does-not-exist")
-    assert c.get("/api/v1/learn/me").json()["started"] is False
-    assert c.get(f"/guardian?case={case}").status_code == 200
+    c.post("/api/guardian/shared?case=does-not-exist")
+    assert c.get("/api/v1/learn/me").json()["started"] is False                    # an unknown result earns nothing
+    assert c.post(f"/api/guardian/shared?case={case}").status_code == 200          # the beacon the page sends on Share or Copy
     me = c.get("/api/v1/learn/me").json()
     assert me["started"] and "family_guardian" in me["badges"]
 
