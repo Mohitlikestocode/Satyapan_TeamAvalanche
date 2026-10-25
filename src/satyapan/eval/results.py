@@ -231,6 +231,11 @@ def sections(results_dir: Path | None = None) -> list[Section]:
                  "हमारा फ़ाइन-ट्यून किया संदेश मॉडल, हर स्कैम प्रकार पर उसे उस प्रकार के बिना ट्रेन करने के बाद परखा गया। टीम का लिखा डेटा, इसलिए आशावादी।"),
                 ("scam messages", "स्कैम संदेश"), ("genuine messages", "असली संदेश"), held_out=False,
                 dataset="data/corpus/team_*.jsonl (team-written) + UCI SMS Spam Collection; data/kit never used"),
+        Section("text_model_synth", ("Scam-message model (retrained): scam families it never saw", "स्कैम-संदेश मॉडल (दोबारा ट्रेन): स्कैम के वे प्रकार जो उसने कभी नहीं देखे"),
+                ("The retrained message model scored on each scam family after training without that family, on our synthetic and teammate-written messages. Synthetic data, so optimistic.",
+                 "दोबारा ट्रेन किया संदेश मॉडल, हर स्कैम प्रकार पर उसे उस प्रकार के बिना ट्रेन करने के बाद परखा गया, हमारे बनाए और टीम के लिखे संदेशों पर। बनावटी डेटा, इसलिए आशावादी।"),
+                ("scam messages", "स्कैम संदेश"), ("genuine messages", "असली संदेश"), held_out=False,
+                dataset="tools/make_scam_corpus.py (synthetic) + data/corpus/team_*.jsonl; data/kit never trained on"),
         Section("voice", ("Voice notes: cloned-voice detector", "वॉइस नोट: नकली (क्लोन) आवाज़ पहचान"),
                 ("Real and machine-made speech from speakers kept out of calibration, also after chat-app re-encoding.",
                  "असली और मशीन से बनी आवाज़, ऐसे वक्ताओं की जो कैलिब्रेशन में नहीं थे, चैट-ऐप री-एन्कोडिंग के बाद भी।"),
@@ -244,6 +249,7 @@ def sections(results_dir: Path | None = None) -> list[Section]:
         "text_holdout_tuned": ["text_holdout_tuned.json"],
         "text_kit": ["text_kit.json"],
         "text_model_cv": ["text_model_cv.json"],
+        "text_model_synth": ["text_model_synth.json"],
         "voice": ["voice_test.json"],
     }
     for sec in out:

@@ -84,17 +84,25 @@ def main() -> None:
     pct_strong, pct_weak = float(np.quantile(real_g, 0.99)), float(np.quantile(real_g, 0.95))
     strong, weak = a.strong, a.weak          # the percentiles (pct_*) were too lax on harder genuine messages; the sweep picked these
     sc = oof[y == 1]
+    fam_rows = {f: rate(int(((oof > weak) & (fam == f) & (y == 1)).sum()), int(((fam == f) & (y == 1)).sum())) for f in sorted(set(fam[y == 1]))}
     out = {
-        "date": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC"), "seed": a.seed, "C": a.C,
-        "train": {"scams": int(y.sum()), "genuine": int((y == 0).sum()), "synthetic": len(synth), "team_corpus_weight": 3},
-        "thresholds": {"strong": strong, "weak": weak, "percentile_suggestion": {"strong_p99": pct_strong, "weak_p95": pct_weak}, "chosen_from": f"{len(real_g)} genuine messages: team corpus (out-of-fold), dev kit and holdout_traction (never trained on). Tanish's holdout_community is test-only. strong = 99th percentile, weak = 95th"},
-        "recall_unseen_family": {"strong": rate(int((sc > strong).sum()), len(sc)), "weak": rate(int((sc > weak).sum()), len(sc))},
-        "genuine_flagged_threshold_pool": {"strong": rate(int((real_g > strong).sum()), len(real_g)), "weak": rate(int((real_g > weak).sum()), len(real_g))},
-        "per_family_recall_at_weak": {f: rate(int(((oof > weak) & (fam == f) & (y == 1)).sum()), int(((fam == f) & (y == 1)).sum())) for f in sorted(set(fam[y == 1]))},
+        "schema": 1, "dataset": "synthetic corpus (tools/make_scam_corpus.py) plus the teammate corpus; each scam family scored by a model trained without it",
+        "held_out": False, "split": f"{int(y.sum())} scams in {len(set(fam[y == 1]))} families, {int((y == 0).sum())} genuine; thresholds from {len(real_g)} genuine messages outside holdout_community",
+        "hardware": "CPU", "date": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC"), "reproduce": "python training/text/train_synth_head.py --install",
+        "rows": [
+            {"name": f"Wording alone raises a flag (score above {strong:.2f})", "baseline": False, "tpr": rate(int((sc > strong).sum()), len(sc)),
+             "fpr": rate(int((real_g > strong).sum()), len(real_g))},
+            {"name": f"Wording counts as one weak sign (score above {weak:.2f})", "baseline": False, "tpr": rate(int((sc > weak).sum()), len(sc)),
+             "fpr": rate(int((real_g > weak).sum()), len(real_g))},
+        ],
+        "conditions": [{"name": f"family:{f}", "row": f"Wording counts as one weak sign (score above {weak:.2f})", "tpr": r, "fpr": None} for f, r in fam_rows.items()],
+        "failures": [],
+        "seed": a.seed, "C": a.C, "train": {"scams": int(y.sum()), "genuine": int((y == 0).sum()), "synthetic": len(synth), "team_corpus_weight": 3},
+        "thresholds": {"strong": strong, "weak": weak, "percentile_suggestion": {"strong_p99": pct_strong, "weak_p95": pct_weak},
+                       "chosen_from": f"{len(real_g)} genuine messages: team corpus (out-of-fold), dev kit and holdout_traction (never trained on); strong/weak then fixed by a sweep, see docs/results/holdout_traction_NOTE.md"},
     }
     print(f"train {len(train)}; thresholds strong {strong:.3f} weak {weak:.3f}")
-    print(f"recall on scam families never seen: strong {out['recall_unseen_family']['strong']['rate']:.2f}, weak {out['recall_unseen_family']['weak']['rate']:.2f}; "
-          f"genuine pool flagged: strong {out['genuine_flagged_threshold_pool']['strong']['k']}/{len(real_g)}, weak {out['genuine_flagged_threshold_pool']['weak']['k']}/{len(real_g)}")
+    print("rows:", [(r["name"][:40], r["tpr"]["k"], r["tpr"]["n"], r["fpr"]["k"], r["fpr"]["n"]) for r in out["rows"]])
 
     if a.install:
         clf = LogisticRegression(C=a.C, max_iter=3000, class_weight="balanced").fit(X, y)
